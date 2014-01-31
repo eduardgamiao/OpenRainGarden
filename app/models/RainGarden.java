@@ -17,10 +17,10 @@ public class RainGarden {
   private String description;
   private String imperviousSurfaceSize;
   private String rainGardenSize;
-  private Boolean downSpoutsDisconnected = false;
-  private Boolean soilAmended = false;
+  private Boolean downSpoutsDisconnected;
+  private Boolean soilAmended;
   private String soilAmenedType;
-  private Boolean publishInformation = false;
+  private Boolean allowInformationPublishing = false;
   
   /**
    * @param firstName First name of garden's owner.
@@ -61,7 +61,7 @@ public class RainGarden {
     this.downSpoutsDisconnected = downSpoutsDisconnected;
     this.soilAmended = soilAmended;
     this.soilAmenedType = soilAmenedType;
-    this.publishInformation = publishInformation;
+    this.allowInformationPublishing = publishInformation;
   }
   
 
@@ -99,6 +99,7 @@ public class RainGarden {
   public String getTelephone() {
     return telephone;
   }
+
 
   /**
    * @param telephone the telephone to set
@@ -289,18 +290,20 @@ public class RainGarden {
     this.soilAmenedType = soilAmenedType;
   }
 
-  /**
-   * @return the publishInformation
-   */
-  public Boolean getPublishInformation() {
-    return publishInformation;
-  }
 
   /**
-   * @param publishInformation the publishInformation to set
+   * @return the allowInformationPublishing
    */
-  public void setPublishInformation(Boolean publishInformation) {
-    this.publishInformation = publishInformation;
+  public Boolean getAllowInformationPublishing() {
+    return allowInformationPublishing;
+  }
+
+
+  /**
+   * @param allowInformationPublishing the allowInformationPublishing to set
+   */
+  public void setAllowInformationPublishing(Boolean allowInformationPublishing) {
+    this.allowInformationPublishing = allowInformationPublishing;
   }
   
 }

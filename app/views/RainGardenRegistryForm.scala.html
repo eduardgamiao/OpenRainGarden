@@ -1,0 +1,25 @@
+@(formData: Form[views.formdata.RainGardenFormData]) 
+
+@import helper._
+@import bootstrap3._
+
+@Main("Rain Garden Registry Form") {
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+      @form(routes.Application.postRainGardenRegister(), 'class -> "form-horizontal"){
+
+         @text(formData("firstName"), "First Name", "First Name", "")
+         @text(formData("lastName"), "Last Name", "Last Name", "")
+
+
+         <div class="form-group">
+           <div class="col-sm-offset-2 col-sm-10">
+              <button id="submit" type="submit" class="btn btn default">Register</button>
+            </div>
+         </div>
+      </div>
+     </div>
+  }
+  </div>
+}
