@@ -1,11 +1,18 @@
-<h2>Open Rain Garden</h2>
+## Open Rain Garden
 
 ![screenshot](https://raw.github.com/eduardgamiao/OpenRainGarden/milestone1/doc/play-bootstrap-template-home.png)
 
-<h3>Introduction</h3>
+### Introduction
 
-<h3>Installation</h3>
+### Features
 
-<h3>Notes</h3>
+### Installation
 
-<h3>Credits</h3>
+### Credits
+
+### Wiki Links
+[Related Technology](https://github.com/OpenRainGarden/OpenRainGarden/wiki/RelatedTechnology)
+
+[Team Meetings](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Team-Meetings)
+
+[User Interviews](https://github.com/OpenRainGarden/OpenRainGarden/wiki/UserInterviews)
