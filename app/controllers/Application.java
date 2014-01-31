@@ -33,7 +33,7 @@ public class Application extends Controller {
   
   /**
    * Returns the created/edited rain garden page.
-   * @return The resulting rain garden page.
+   * @return The resulting rain garden page if information was valid, else the registration form.
    */
   public static Result postRainGardenRegister() {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
