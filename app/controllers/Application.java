@@ -38,7 +38,7 @@ public class Application extends Controller {
   public static Result postRainGardenRegister() {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
-      return TODO;
+      return badRequest(RainGardenRegistryForm.render(formData));
     } 
     else {
       RainGardenFormData form = formData.get();

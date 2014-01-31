@@ -143,6 +143,13 @@ public class RainGardenFormData {
   public List<ValidationError> validate() {
     ArrayList<ValidationError> errors = new ArrayList<>();
     
+    if (this.firstName.length() == 0 || this.firstName == null) {
+      errors.add(new ValidationError("firstName", "First name is required."));
+    }
+    if (this.lastName.length() == 0 || this.lastName == null) {
+      errors.add(new ValidationError("lastName", "Last name is required."));
+    }
+    
     return errors.isEmpty() ? null : errors;
   }
   
