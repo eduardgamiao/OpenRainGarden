@@ -55,7 +55,7 @@ public class RainGardenFormData {
   public Boolean downSpoutsDisconnected;
   
   /** Soil amended. */
-  public Boolean soilAmended;
+  public String soilAmended;
   
   /** Material used to amend soil. */
   public String soilAmenedType;
@@ -91,7 +91,7 @@ public class RainGardenFormData {
    */
   public RainGardenFormData(String firstName, String lastName, String email, String telephone, String address,
       String city, String state, String zipCode, String country, String propertyType, String description,
-      String imperviousSurfaceSize, String rainGardenSize, Boolean downSpoutsDisconnected, Boolean soilAmended,
+      String imperviousSurfaceSize, String rainGardenSize, Boolean downSpoutsDisconnected, String soilAmended,
       String soilAmenedType, Boolean allowInformationPublishing) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -131,7 +131,12 @@ public class RainGardenFormData {
     this.imperviousSurfaceSize = rainGarden.getImperviousSurfaceSize();
     this.rainGardenSize = rainGarden.getRainGardenSize();
     this.downSpoutsDisconnected = rainGarden.getDownSpoutsDisconnected();
-    this.soilAmended = rainGarden.getSoilAmended();
+    if (rainGarden.getSoilAmended()) {
+      this.soilAmended = "Yes";
+    }
+    else {
+      this.soilAmended = "No";
+    }
     this.soilAmenedType = rainGarden.getSoilAmenedType();
     this.allowInformationPublishing = rainGarden.getAllowInformationPublishing();
   }

@@ -1,8 +1,12 @@
 package controllers;
 
+import java.util.List;
+import models.RainGarden;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.DownspoutDisconnectedType;
+import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.html.Index;
 import views.html.Page1;
@@ -28,7 +32,8 @@ public class Application extends Controller {
   public static Result registerRainGarden() {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
-    return ok(RainGardenRegistryForm.render(formData));
+    return ok(RainGardenRegistryForm.render(formData, DownspoutDisconnectedType.getChoiceList(),
+              PropertyTypes.getTypes()));
   }
   
   /**
@@ -38,11 +43,11 @@ public class Application extends Controller {
   public static Result postRainGardenRegister() {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
-      return badRequest(RainGardenRegistryForm.render(formData));
+      return badRequest(RainGardenRegistryForm.render(formData, DownspoutDisconnectedType.getChoiceList(),
+                        PropertyTypes.getTypes()));
     } 
     else {
       RainGardenFormData form = formData.get();
-      System.out.println(form.firstName + " " + form.lastName);
       return TODO;
     }
     
