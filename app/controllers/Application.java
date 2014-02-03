@@ -9,6 +9,7 @@ import views.formdata.DownspoutDisconnectedType;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.html.Index;
+import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RainGardenRegistryForm;
 
@@ -51,6 +52,10 @@ public class Application extends Controller {
       return TODO;
     }
     
+  }
+  
+  public static Result browseGarden() {
+    return ok(BrowseGardens.render("Browse Rain Gardens"));
   }
   
   /**

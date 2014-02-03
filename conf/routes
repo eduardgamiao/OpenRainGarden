@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 GET     /page1                      controllers.Application.page1()
 GET     /register                   controllers.Application.registerRainGarden()
+GET     /browse-garden                     controllers.Application.browseGarden()
 POST    /register                   controllers.Application.postRainGardenRegister()
 
 # Map static resources from the /public folder to the /assets URL path
