@@ -54,6 +54,10 @@ public class Application extends Controller {
     
   }
   
+  /**
+   * Brings up the rain garden profile page.
+   * @return The rain garden profile page.
+   */
   public static Result browseGarden() {
     return ok(BrowseGardens.render("Browse Rain Gardens"));
   }
