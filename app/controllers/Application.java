@@ -1,7 +1,10 @@
 package controllers;
 
+import java.io.File;
 import java.util.List;
 import models.RainGarden;
+import play.api.mvc.MultipartFormData;
+import play.api.mvc.MultipartFormData.FilePart;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -68,6 +71,23 @@ public class Application extends Controller {
    */
   public static Result page1() {
     return ok(Page1.render("Welcome to Page1."));
-    
+  }
+  
+  /**
+   * 
+   * @return
+   */
+  public static Result upload() {
+    play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
+    play.mvc.Http.MultipartFormData.FilePart picture = body.getFile("picture");
+    if (picture != null) {
+      String fileName = picture.getFilename();
+      String contentType = picture.getContentType(); 
+      File file = picture.getFile();
+      return ok("File uploaded");
+    } else {
+      flash("error", "Missing file");
+      return redirect(routes.Application.index());    
+    }
   }
 }
