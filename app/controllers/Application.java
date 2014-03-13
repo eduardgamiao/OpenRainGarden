@@ -1,7 +1,9 @@
 package controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import com.google.common.io.Files;
 import models.RainGarden;
 import play.api.mvc.MultipartFormData;
 import play.api.mvc.MultipartFormData.FilePart;
@@ -76,14 +78,18 @@ public class Application extends Controller {
   /**
    * 
    * @return
+   * @throws IOException 
    */
-  public static Result upload() {
+  public static Result upload() throws IOException {
     play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
     play.mvc.Http.MultipartFormData.FilePart picture = body.getFile("picture");
     if (picture != null) {
       String fileName = picture.getFilename();
       String contentType = picture.getContentType(); 
       File file = picture.getFile();
+      File destinationFile = new File("./public/images/" + file.getName());
+      Files.copy(file, destinationFile);
+      System.out.println(destinationFile.getAbsolutePath());
       return ok("File uploaded");
     } else {
       flash("error", "Missing file");
