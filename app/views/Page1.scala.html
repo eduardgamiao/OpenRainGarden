@@ -4,9 +4,6 @@
 
 @Main("Page1") {
    <div class="container">
-    @form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
-      <input type="file" name="picture">
-        <p><input type="submit"></p>
-    }
+    @message
    </div>
 }

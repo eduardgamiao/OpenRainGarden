@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Date;
-
 /**
  * An object that represents a rain garden.
  */
@@ -12,7 +10,7 @@ public class RainGarden {
   private String address;
   private String hideAddress;
   private String description;
-  private Date dateInstalled;
+  private String dateInstalled;
   
   /**
    * @return the title
@@ -77,13 +75,13 @@ public class RainGarden {
   /**
    * @return the dateInstalled
    */
-  public Date getDateInstalled() {
+  public String getDateInstalled() {
     return dateInstalled;
   }
   /**
    * @param dateInstalled the dateInstalled to set
    */
-  public void setDateInstalled(Date dateInstalled) {
+  public void setDateInstalled(String dateInstalled) {
     this.dateInstalled = dateInstalled;
   }
   

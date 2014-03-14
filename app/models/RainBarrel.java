@@ -3,9 +3,9 @@ package models;
 import java.util.Date;
 
 /**
- * An object that represents a rain garden.
+ * An object that represents a rain barrel.
  */
-public class RainGarden {
+public class RainBarrel {
 
   private String title;
   private String propertyType;
