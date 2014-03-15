@@ -12,6 +12,7 @@ import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
 import views.html.Login;
+import views.html.UploadRainGardenPicture;
 import views.formdata.LoginFormData;
 
 /**
@@ -35,7 +36,7 @@ public class Application extends Controller {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
     return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
-              DateTypes.getMonthTypes(), DateTypes.getMonthTypes(), DateTypes.getMonthTypes()));
+              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes()));
   }
   
   /**
@@ -45,17 +46,16 @@ public class Application extends Controller {
   public static Result postRainGardenRegister() {
       Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
       
-      if (formData.hasErrors()) {    
+      if (formData.hasErrors()) {  
         return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
-                          PropertyTypes.getTypes(), DateTypes.getMonthTypes(), DateTypes.getMonthTypes(), 
-                          DateTypes.getMonthTypes()));      
+                          PropertyTypes.getTypes(), DateTypes.getMonthTypes(), DateTypes.getDayTypes(), 
+                          DateTypes.getYearTypes()));      
       }
       else {
         RainGardenFormData data = formData.get();
-        System.out.println(data.hideAddress);
-        return ok(Index.render(data.title));
-      }
-      
+        System.out.println(data.propertyType + " " + data.address);
+        return redirect("./upload");
+      }      
     }
   
   /**
@@ -93,6 +93,18 @@ public class Application extends Controller {
 	  LoginFormData data = formData.get();
 	  System.out.format("%s %s", data.email, data.password);
 	  return ok(Login.render(formData));
+  }
+  
+  public static Result uploadRainGardenPicture() {
+    return ok(UploadRainGardenPicture.render("Upload Rain Garden Photo"));        
+  }
+  
+  /**
+   * Returns the rain garden profile page..
+   * @return The rain garden profile page.
+   */
+  public static Result upload() {
+    return TODO;
   }
   
 }

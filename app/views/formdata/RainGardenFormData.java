@@ -100,6 +100,7 @@ public class RainGardenFormData {
     if (this.month.equals("")) {
       errors.add(new ValidationError("year", "Please select a year."));     
     }
+    
     return errors.isEmpty() ? null : errors;
   }
   

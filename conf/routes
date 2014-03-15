@@ -6,7 +6,9 @@
 GET     /                           controllers.Application.index()
 GET     /register                   controllers.Application.registerRainGarden()
 GET     /browse-garden              controllers.Application.browseGarden()
-POST    /register                   controllers.Application.postRainGardenRegister()
+GET     /register1                   controllers.Application.postRainGardenRegister()
+GET     /upload                     controllers.Application.uploadRainGardenPicture()
+POST    /upload                     controllers.Application.upload()
 GET		/login						controllers.Application.login()
 POST	/login						controllers.Application.postLogin()
 
