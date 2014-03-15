@@ -1,8 +1,6 @@
 package models;
 
 import play.db.ebean.Model;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserInfo extends Model {
 	private static final long serialVersionUID = 1L;

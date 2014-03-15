@@ -9,7 +9,6 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.testServer;
 import static play.test.Helpers.running;
-import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Integration tests running on an instance of the application.
