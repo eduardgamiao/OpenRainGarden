@@ -1,9 +1,15 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import org.apache.commons.io.FilenameUtils;
+import com.google.common.io.Files;
 import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.formdata.DateTypes;
 import views.formdata.DownspoutDisconnectedType;
@@ -107,10 +113,23 @@ public class Application extends Controller {
   /**
    * Returns the rain garden profile page..
    * @return The rain garden profile page.
+   * @throws IOException 
    */
-  public static Result upload() {
-    System.out.println(RainGardenDB.getRainGardens().size());
-    return TODO;
+  public static Result upload() throws IOException {
+    play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
+    System.out.println(request().body().asMultipartFormData() == null);
+    play.mvc.Http.MultipartFormData.FilePart picture = body.getFile("picture");
+    if (picture != null) {
+      String fileName = picture.getFilename();
+      String contentType = picture.getContentType(); 
+      File file = picture.getFile();
+      File destinationFile = new File("./public/images/" + file.getName());
+      //Files.copy(file, destinationFile);
+      return ok(contentType);
+    } else {
+      flash("error", "Missing file");
+      return redirect(routes.Application.index());    
+    }
   }
   
 }
