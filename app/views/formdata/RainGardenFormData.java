@@ -31,8 +31,14 @@ public class RainGardenFormData {
   /** Description of rain garden. */
   public String description; 
   
-  /** Installation date. */
-  public String dateInstalled;
+  /** Installation month. */
+  public String month;
+  
+  /** Installation day. */
+  public String day;
+  
+  /** Installation year. */
+  public String year;
  
   /**
    * Default constructor.
@@ -59,9 +65,9 @@ public class RainGardenFormData {
     this.address = address;
     this.hideAddress = hideAddress;
     this.description = description;
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYY");  
-    Calendar calendar = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-    this.dateInstalled = sdf.format(calendar.getTime());
+    this.month = month;
+    this.day = day;
+    this.year = year;
   }
   
   /**
@@ -74,7 +80,6 @@ public class RainGardenFormData {
     this.address = rainGarden.getAddress();
     this.hideAddress = rainGarden.getHideAddress();
     this.description = rainGarden.getDescription();
-    this.dateInstalled = rainGarden.getDateInstalled();
   }
   
   /**

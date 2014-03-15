@@ -10,6 +10,7 @@ import play.api.mvc.MultipartFormData.FilePart;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.DateTypes;
 import views.formdata.DownspoutDisconnectedType;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
@@ -40,7 +41,8 @@ public class Application extends Controller {
   public static Result registerRainGarden() {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
-    return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes()));
+    return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
+              DateTypes.getMonthTypes(), DateTypes.getMonthTypes(), DateTypes.getMonthTypes()));
   }
   
   /**
@@ -51,11 +53,13 @@ public class Application extends Controller {
       Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
       
       if (formData.hasErrors()) {    
-        return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes()));
-      
+        return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
+                          PropertyTypes.getTypes(), DateTypes.getMonthTypes(), DateTypes.getMonthTypes(), 
+                          DateTypes.getMonthTypes()));      
       }
       else {
         RainGardenFormData data = formData.get();
+        System.out.println(data.propertyType);
         return ok(Index.render(data.title));
       }
       
