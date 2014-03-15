@@ -1,5 +1,5 @@
 @(month: Field, day: Field, year: Field, label: String, monthMap: Map[String, Boolean], dayMap: Map[String, Boolean], 
-  yearMap: Map[String, Boolean],isMultiple: Boolean, help:String)
+  yearMap: Map[String, Boolean], isMultiple: Boolean, help:String)
 
   <div class="form-group @if(month.hasErrors || day.hasErrors || year.hasErrors) {has-error}">
     <label class="col-sm-2 control-label" for="dateInstalled">@label</label>

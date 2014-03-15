@@ -86,8 +86,8 @@ public class DateTypes {
    * @return A mapping of years.
    */
   public static Map<String, Boolean> getYearTypes(String year) {
-    Map<String, Boolean> dayMap = DateTypes.getDayTypes();
-    if (isDay(year)) {
+    Map<String, Boolean> dayMap = DateTypes.getYearTypes();
+    if (isYear(year)) {
       dayMap.put(year, true);
     }
     return dayMap;
@@ -131,7 +131,7 @@ public class DateTypes {
   public static boolean isYear(String yearInput) {
     if (NumberUtils.isDigits(yearInput)) {
       int year = NumberUtils.createInteger(yearInput);
-        return (year >= Calendar.getInstance().get(Calendar.YEAR)) && (year <= YEAR_START);
+        return (year <= Calendar.getInstance().get(Calendar.YEAR)) && (year >= YEAR_START);
     }
     else {
       return false;

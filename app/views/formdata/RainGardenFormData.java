@@ -94,10 +94,10 @@ public class RainGardenFormData {
     if (this.month.equals("")) {
       errors.add(new ValidationError("month", "Please select a month."));     
     }    
-    if (this.month.equals("")) {
+    if (this.day.equals("")) {
       errors.add(new ValidationError("day", "Please select a day."));     
     }    
-    if (this.month.equals("")) {
+    if (this.year.equals("")) {
       errors.add(new ValidationError("year", "Please select a year."));     
     }
     

@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -44,16 +47,17 @@ public class Application extends Controller {
    * @return The resulting rain garden page if information was valid, else the registration form.
    */
   public static Result postRainGardenRegister() {
-      Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
-      
+      Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();      
       if (formData.hasErrors()) {  
+        Map<String, String> dataMap = formData.data();
         return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
-                          PropertyTypes.getTypes(), DateTypes.getMonthTypes(), DateTypes.getDayTypes(), 
-                          DateTypes.getYearTypes()));      
+                          PropertyTypes.getTypes(dataMap.get("propertyType")), 
+                          DateTypes.getMonthTypes(dataMap.get("month")), 
+                          DateTypes.getDayTypes(dataMap.get("day")), 
+                          DateTypes.getYearTypes(dataMap.get("year"))));      
       }
       else {
         RainGardenFormData data = formData.get();
-        System.out.println(data.propertyType + " " + data.address);
         return redirect("./upload");
       }      
     }
