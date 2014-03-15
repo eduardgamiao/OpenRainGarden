@@ -1,33 +1,29 @@
-@(formData: Form[views.formdata.RainGardenFormData], choiceList: List[String], propertyTypes: Map[String, Boolean]) 
+@(formData: Form[views.formdata.RainGardenFormData], choiceList: List[String], propertyTypes: Map[String, Boolean])
 
-@import helper._
-@import bootstrap3._
+@import helper._ 
+@import bootstrap3._ 
 
 @Main("Rain Garden Registry Form") {
   <div class="container">
-    <div class="panel panel-default col-md-10 col-md-offset-1">
-      <div class="panel-heading">
-      <h1>Register Rain Garden</h1>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+             <div class="panel-title"><h1>Register Rain Garden</h1></div>           
+          </div>
+          <div class="panel-body">
+            @form(routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'id -> "register") {
+              @text(formData("title"), "Title", "Title of Rain Garden", "") 
+              @bootstrap3.select(formData("propertyType"), "Property Type", propertyTypes, false, "") 
+              @textwithstyle(formData("address"), "Rain Garden Address", "Address of Rain Garden", "", "top:0.8em;") 
+              @hideaddress(formData("hideAddress"), "Hide Address", choiceList, "")
+              @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Garden Description", "")
+              @bootstrap3.dateadded(formData("month"), "Date Installed", propertyTypes, propertyTypes, propertyTypes, false, "")
+              <button id="submit" type="submit" class="btn btn default pull-right">Continue</button>
+          </div>
+        </div>
       </div>
-      <div class="col-md-12">
-      @form(routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'id -> "register"){
-         @text(formData("title"), "Title", "Title of Rain Garden", "")
-         @bootstrap3.select(formData("propertyType"), "Property Type", propertyTypes, false, "") 
-         @text(formData("address"), "Rain Garden Address", "Address of Rain Garden", "")         
-         @radiobuttons(formData("hideAddress"), "Hide Address", choiceList, "")   
-         @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Garden Description", "")
-         @bootstrap3.select(formData("month"), "Property Type", propertyTypes, false, "") 
-         @bootstrap3.select(formData("day"), "Property Type", propertyTypes, false, "") 
-         @bootstrap3.select(formData("Year"), "Property Type", propertyTypes, false, "") 
-
-                                                                      
-         <div class="form-group">
-           <div class="col-sm-offset-2 col-sm-10">
-              <button id="submit" type="submit" class="btn btn default">Register</button>
-            </div>
-         </div>
-      </div>
-     </div>
-  }
+    </div>
+    }
   </div>
 }

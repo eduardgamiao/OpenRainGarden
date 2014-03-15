@@ -88,7 +88,7 @@ public class RainGardenFormData {
       errors.add(new ValidationError("propertyType", "Please select a property type."));
     }
     if (this.address.length() == 0 || this.address == null) {
-      errors.add(new ValidationError("propertyType", "Please enter an address"));
+      errors.add(new ValidationError("address", "Please enter an address"));
     }
     
     return errors.isEmpty() ? null : errors;
