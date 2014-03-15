@@ -59,7 +59,7 @@ public class Application extends Controller {
       }
       else {
         RainGardenFormData data = formData.get();
-        System.out.println(data.propertyType);
+        System.out.println(data.hideAddress);
         return ok(Index.render(data.title));
       }
       

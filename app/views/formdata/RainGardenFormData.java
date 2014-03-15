@@ -95,7 +95,15 @@ public class RainGardenFormData {
     if (this.address.length() == 0 || this.address == null) {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
-    
+    if (this.month.equals("")) {
+      errors.add(new ValidationError("month", "Please select a month."));     
+    }    
+    if (this.month.equals("")) {
+      errors.add(new ValidationError("day", "Please select a day."));     
+    }    
+    if (this.month.equals("")) {
+      errors.add(new ValidationError("year", "Please select a year."));     
+    }
     return errors.isEmpty() ? null : errors;
   }
   

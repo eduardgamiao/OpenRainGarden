@@ -1,13 +1,13 @@
-@(field: Field, label: String, monthMap: Map[String, Boolean], dayMap: Map[String, Boolean], 
+@(month: Field, day: Field, year: Field, label: String, monthMap: Map[String, Boolean], dayMap: Map[String, Boolean], 
   yearMap: Map[String, Boolean],isMultiple: Boolean, help:String)
 
-  <div class="form-group @if(field.hasErrors) {has-error}">
-    <label class="col-sm-2 control-label" for="@field.id">@label</label>
-    <div class="col-sm-2">
+  <div class="form-group @if(month.hasErrors || day.hasErrors || year.hasErrors) {has-error}">
+    <label class="col-sm-2 control-label" for="dateInstalled">@label</label>
+    <div class="col-sm-3">
       <select
         class="form-control"
-        id="@field.id"
-        name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
+        id="@month.id"
+        name="@if(isMultiple) {@(month.name + "[]")} else {@month.name}"
         @if(isMultiple) {multiple="multiple"}>
         @if(!isMultiple) {<option class="blank" value="">Month</option>}
         @for((optionName, isSelected) <- monthMap) {
@@ -15,13 +15,13 @@
         }
       </select>
       <span class="help-block">@help</span>
-      <span class="help-block">@{field.error.map { error => error.message }}</span>
+      <span class="help-block">@{month.error.map { error => error.message }}</span>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
         class="form-control"
-        id="@field.id"
-        name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
+        id="@day.id"
+        name="@if(isMultiple) {@(day.name + "[]")} else {@day.name}"
         @if(isMultiple) {multiple="multiple"}>
         @if(!isMultiple) {<option class="blank" value="">Day</option>}
         @for((optionName, isSelected) <- dayMap) {
@@ -29,13 +29,13 @@
         }
       </select>
       <span class="help-block">@help</span>
-      <span class="help-block">@{field.error.map { error => error.message }}</span>
+      <span class="help-block">@{day.error.map { error => error.message }}</span>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
         class="form-control"
-        id="@field.id"
-        name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
+        id="@year.id"
+        name="@if(isMultiple) {@(year.name + "[]")} else {@year.name}"
         @if(isMultiple) {multiple="multiple"}>
         @if(!isMultiple) {<option class="blank" value="">Year</option>}
         @for((optionName, isSelected) <- yearMap) {
@@ -43,6 +43,6 @@
         }
       </select>
       <span class="help-block">@help</span>
-      <span class="help-block">@{field.error.map { error => error.message }}</span>
+      <span class="help-block">@{year.error.map { error => error.message }}</span>
     </div>
   </div>

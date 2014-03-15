@@ -19,8 +19,8 @@
               @textwithstyle(formData("address"), "Rain Garden Address", "Address of Rain Garden", "", "top:0.8em;") 
               @hideaddress(formData("hideAddress"), "Hide Address", choiceList, "")
               @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Garden Description", "")
-              @bootstrap3.dateadded(formData("month"), "Date Installed", monthTypes, dayTypes, yearTypes, 
-                                    false, "")
+              @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
+                                    "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
               <button id="submit" type="submit" class="btn btn default pull-right">Continue</button>
           </div>
         </div>
