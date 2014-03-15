@@ -1,8 +1,7 @@
 package controllers;
 
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
+import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -33,10 +32,12 @@ public class Application extends Controller {
   
   /**
    * Returns the created/edited rain garden page.
+   * @param id ID of rain garden.
    * @return The resulting rain garden page.
    */
-  public static Result registerRainGarden() {
-    RainGardenFormData data = new RainGardenFormData();
+  public static Result registerRainGarden(Long id) {
+    RainGardenFormData data = (id == 0) 
+        ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
     return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
               DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes()));
@@ -57,7 +58,7 @@ public class Application extends Controller {
                           DateTypes.getYearTypes(dataMap.get("year"))));      
       }
       else {
-        RainGardenFormData data = formData.get();
+        System.out.println(RainGardenDB.addRainGarden(formData.get()).getID());
         return redirect("./upload");
       }      
     }
@@ -108,6 +109,7 @@ public class Application extends Controller {
    * @return The rain garden profile page.
    */
   public static Result upload() {
+    System.out.println(RainGardenDB.getRainGardens().size());
     return TODO;
   }
   

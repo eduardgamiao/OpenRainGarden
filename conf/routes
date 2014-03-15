@@ -4,13 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /register                   controllers.Application.registerRainGarden()
+GET     /rain-garden/register       controllers.Application.registerRainGarden(id: Long ?= 0)
 GET     /browse-garden              controllers.Application.browseGarden()
-POST    /register                   controllers.Application.postRainGardenRegister()
-GET     /upload                     controllers.Application.uploadRainGardenPicture()
-POST    /upload                     controllers.Application.upload()
-GET		/login						controllers.Application.login()
-POST	/login						controllers.Application.postLogin()
+POST    /rain-garden/register       controllers.Application.postRainGardenRegister()
+GET     /rain-garden/upload         controllers.Application.uploadRainGardenPicture()
+POST    /rain-garden/upload         controllers.Application.upload()
+GET		  /login					          	controllers.Application.login()
+POST	  /login						          controllers.Application.postLogin()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

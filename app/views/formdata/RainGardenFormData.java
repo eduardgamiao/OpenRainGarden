@@ -12,6 +12,9 @@ import models.RainGarden;
  */
 public class RainGardenFormData {
   
+  /** ID of rain garden. */
+  public long id = 0;
+  
   /** Title of rain garden. */
   public String title;
   

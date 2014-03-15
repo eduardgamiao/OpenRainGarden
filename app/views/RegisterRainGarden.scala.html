@@ -14,6 +14,7 @@
           </div>
           <div class="panel-body">
             @form(routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'id -> "register") {
+              @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Rain Garden", "") 
               @bootstrap3.select(formData("propertyType"), "Property Type", propertyTypes, false, "") 
               @textwithstyle(formData("address"), "Rain Garden Address", "Address of Rain Garden", "", "top:0.8em;") 

@@ -5,6 +5,7 @@ package models;
  */
 public class RainGarden {
 
+  private Long id;
   private String title;
   private String propertyType;
   private String address;
@@ -12,6 +13,39 @@ public class RainGarden {
   private String description;
   private String dateInstalled;
   
+  /**
+   * Constructor.
+   * @param id Rain garden ID.
+   * @param title Title of rain garden.
+   * @param propertyType Property type of rain garden location.
+   * @param address Address of rain garden.
+   * @param hideAddress Hide address from public view.
+   * @param description Description of rain garden.
+   * @param dateInstalled Installation date of rain garden.
+   */
+  public RainGarden(Long id, String title, String propertyType, String address, String hideAddress, String description,
+      String dateInstalled) {
+    this.id = id;
+    this.title = title;
+    this.propertyType = propertyType;
+    this.address = address;
+    this.hideAddress = hideAddress;
+    this.description = description;
+    this.dateInstalled = dateInstalled;
+  } 
+  
+  /**
+   * @return the id
+   */
+  public Long getID() {
+    return id;
+  }
+  /**
+   * @param id the id to set
+   */
+  public void setID(Long id) {
+    this.id = id;
+  }
   /**
    * @return the title
    */
