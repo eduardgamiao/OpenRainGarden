@@ -17,6 +17,8 @@ import views.html.Index;
 import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
+import views.html.Login;
+import views.formdata.LoginFormData;
 
 /**
  * Implements the controllers for this application.
@@ -74,4 +76,26 @@ public class Application extends Controller {
   public static Result page1() {
     return ok(Page1.render("Welcome to Page1."));
   }
+  
+  /**
+   * Returns login page
+   * @return Log in
+   */
+  public static Result login() {
+	  Form<LoginFormData> formData = Form.form(LoginFormData.class);
+	  return ok(Login.render(formData));
+  }
+  
+  /**
+   * Processes the log in form
+   * @return
+   */
+  public static Result postLogin() {
+	  System.out.println("Post Login");
+	  Form<LoginFormData> formData = Form.form(LoginFormData.class).bindFromRequest();
+	  LoginFormData data = formData.get();
+	  System.out.format("%s %s", data.email, data.password);
+	  return ok(Login.render(formData));
+  }
+  
 }
