@@ -56,19 +56,22 @@ public class Application extends Controller {
    * @return The resulting rain garden page if information was valid, else the registration form.
    */
   public static Result postRainGardenRegister() {
-      Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();      
-      if (formData.hasErrors()) {  
-        Map<String, String> dataMap = formData.data();
-        return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
-                          PropertyTypes.getTypes(dataMap.get("propertyType")), 
-                          DateTypes.getMonthTypes(dataMap.get("month")), 
-                          DateTypes.getDayTypes(dataMap.get("day")), 
-                          DateTypes.getYearTypes(dataMap.get("year"))));      
-      }
-      else {
-        System.out.println(RainGardenDB.addRainGarden(formData.get()).getID());
-        return redirect("./upload");
-      }      
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      Map<String, String> dataMap = formData.data();
+      return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
+                        PropertyTypes.getTypes(dataMap.get("propertyType")), 
+                        DateTypes.getMonthTypes(dataMap.get("month")), 
+                        DateTypes.getDayTypes(dataMap.get("day")), 
+                        DateTypes.getYearTypes(dataMap.get("year"))));   
+    } 
+    else {
+      RainGardenFormData data = formData.get();
+      MultipartFormData body = request().body().asMultipartFormData();
+      FilePart resourceFile = body.getFile("uploadFile");
+      System.out.println(resourceFile.getContentType());
+      return ok(Index.render(data.propertyType));
+     }     
     }
   
   /**
@@ -127,6 +130,7 @@ public class Application extends Controller {
         UploadResource resource = filledForm.get();
         MultipartFormData body = request().body().asMultipartFormData();
         FilePart resourceFile = body.getFile("resourceFile");
+        System.out.println(resourceFile.getContentType());
         return ok(Index.render("Oh snap!"));
      }    
   }

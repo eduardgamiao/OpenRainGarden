@@ -1,13 +1,14 @@
 @(uploadForm: Form[views.formdata.UploadResource], message: String)
 
 @import helper._
+@import bootstrap3._
 
 @Main("Page1") {
    <div class="container">
     @form(action = routes.Application.uploadAction(), 'enctype -> "multipart/form-data") {
     
-        @inputText(uploadForm("lang"))
-        @inputText(uploadForm("country"))
+        @text(uploadForm("lang"), "Lang", "Lang", "")
+        @text(uploadForm("country"), "Country", "Country", "")
         @inputFile(uploadForm("resourceFile"))
 
       <p>

@@ -13,7 +13,7 @@
              <div class="panel-title"><h1>Register Rain Garden</h1></div>           
           </div>
           <div class="panel-body">
-            @form(routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'id -> "register") {
+    @form(action = routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
               @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Rain Garden", "") 
               @bootstrap3.select(formData("propertyType"), "Property Type", propertyTypes, false, "") 
@@ -22,7 +22,8 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Garden Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              <button id="submit" type="submit" class="btn btn default pull-right">Continue</button>
+               @file(formData("uploadFile"), "Upload File")
+              <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
           </div>
         </div>
       </div>
