@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.commons.io.FilenameUtils;
 import com.google.common.io.Files;
 import models.RainGardenDB;
@@ -15,6 +16,7 @@ import views.formdata.DateTypes;
 import views.formdata.DownspoutDisconnectedType;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
+import views.formdata.UploadResource;
 import views.html.Index;
 import views.html.BrowseGardens;
 import views.html.Page1;
@@ -82,7 +84,9 @@ public class Application extends Controller {
    * @return The Page1.
    */
   public static Result page1() {
-    return ok(Page1.render("Welcome to Page1."));
+    UploadResource resource = new UploadResource();
+    Form<UploadResource> formData = Form.form(UploadResource.class).fill(resource);
+    return ok(Page1.render(formData, "Welcome to Page1."));
   }
   
   /**
@@ -110,6 +114,23 @@ public class Application extends Controller {
     return ok(UploadRainGardenPicture.render("Upload Rain Garden Photo"));        
   }
   
+  /**
+   * A test page.
+   * @return A test page.
+   */
+  public static Result uploadAction() {
+    Form<UploadResource> filledForm = Form.form(UploadResource.class).bindFromRequest();
+
+    if (filledForm.hasErrors()) {
+        return TODO;
+    } else {
+        UploadResource resource = filledForm.get();
+        MultipartFormData body = request().body().asMultipartFormData();
+        FilePart resourceFile = body.getFile("resourceFile");
+        return ok(Index.render("Oh snap!"));
+     }    
+  }
+   
   /**
    * Returns the rain garden profile page..
    * @return The rain garden profile page.

@@ -12,7 +12,7 @@
              <div class="panel-title"><h1>Upload Rain Garden Photo</h1></div>           
           </div>
           <div class="panel-body">
-            @form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
+            @form(routes.Application.uploadAction(), 'enctype -> "multipart/form-data") {
               <input type="file" name="picture">
               <p><input type="submit"></p>
           </div>

@@ -1,9 +1,18 @@
-@(message: String)
+@(uploadForm: Form[views.formdata.UploadResource], message: String)
 
 @import helper._
 
 @Main("Page1") {
    <div class="container">
-    @message
+    @form(action = routes.Application.uploadAction(), 'enctype -> "multipart/form-data") {
+    
+        @inputText(uploadForm("lang"))
+        @inputText(uploadForm("country"))
+        @inputFile(uploadForm("resourceFile"))
+
+      <p>
+          <input type="submit">
+      </p>
+  }
    </div>
 }
