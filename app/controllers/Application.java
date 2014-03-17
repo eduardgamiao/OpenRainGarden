@@ -24,6 +24,7 @@ import views.html.RegisterRainGarden;
 import views.html.Login;
 import views.html.UploadRainGardenPicture;
 import views.formdata.LoginFormData;
+import views.html.SignUp;
 
 /**
  * Implements the controllers for this application.
@@ -90,6 +91,10 @@ public class Application extends Controller {
     UploadResource resource = new UploadResource();
     Form<UploadResource> formData = Form.form(UploadResource.class).fill(resource);
     return ok(Page1.render(formData, "Welcome to Page1."));
+  }
+  
+  public static Result signup() {
+	  return ok(SignUp.render("Sign up"));
   }
   
   /**
