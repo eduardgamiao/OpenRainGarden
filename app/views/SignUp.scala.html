@@ -1,6 +1,8 @@
-@(message:String)
+@(signupForm: Form[views.formdata.SignUpFormData])
 
-@Main("Signup") {
+@import helper._
+
+@Main("Sign Up") {
 <div class="container">
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
@@ -9,40 +11,53 @@
 					<h3 class="panel-title">Sign-up Form</h3>
 				</div>
 				<div class="panel-body" style="color: black;">
-					<form class="form-horizontal" role="form">
+					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="email" class="form-control" id="inputEmail3"
-									placeholder="Name">
+								<input type="text" class="form-control"
+										name="@signupForm("name").name"
+										id="@signupForm("name").id"
+										value="@signupForm("name").value"
+										placeholder="Name">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="email" class="form-control" id="inputEmail3"
-									placeholder="Email">
+								<input type="email" class="form-control"
+										name="@signupForm("email").name"
+										id="@signupForm("email").id"
+										value="@signupForm("email").value"
+										placeholder="Email">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">Telephone</label>
 							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="email" class="form-control" id="inputEmail3"
-									placeholder="Telephone">
+								<input type="text" class="form-control"
+										name="@signupForm("telephone").name"
+										id="@signupForm("telephone").id"
+										value="@signupForm("telephone").value"
+										placeholder="Telephone">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="email" class="form-control" id="inputEmail3"
-									placeholder="Password">
+								<input type="password" class="form-control"
+										name="@signupForm("password").name"
+										id="@signupForm("password").id"
+										value="@signupForm("password").value"
+										placeholder="Password">
 							</div>
 						</div>
-					</form>
-					<div class="col-sm-offset-2 col-sm-10">
-						<a href="#"><button type="submit"
-								class="btn btn-default">Signup</button></a>
-					</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Sign Up</button>
+							</div>
+						</div>
+					}
 				</div>
 			</div>
 		</div>

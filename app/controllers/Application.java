@@ -25,6 +25,7 @@ import views.html.Login;
 import views.html.UploadRainGardenPicture;
 import views.formdata.LoginFormData;
 import views.html.SignUp;
+import views.formdata.SignUpFormData;
 
 /**
  * Implements the controllers for this application.
@@ -93,8 +94,21 @@ public class Application extends Controller {
     return ok(Page1.render(formData, "Welcome to Page1."));
   }
   
+  /**
+   * Returns the sign in page
+   * @return sign in page
+   */
   public static Result signup() {
-	  return ok(SignUp.render("Sign up"));
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class);
+	  return ok(SignUp.render(formData));
+  }
+  
+  public static Result postSignUp() {
+	  System.out.println("Post Sign Up");
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
+	  SignUpFormData data = formData.get();
+	  System.out.println(data.name + " " + data.email + " " + data.telephone + " " + data.password);
+	  return ok(SignUp.render(formData));
   }
   
   /**
@@ -114,7 +128,7 @@ public class Application extends Controller {
 	  System.out.println("Post Login");
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class).bindFromRequest();
 	  LoginFormData data = formData.get();
-	  System.out.format("%s %s", data.email, data.password);
+	  System.out.format("%s %s\n", data.email, data.password);
 	  return ok(Login.render(formData));
   }
   
