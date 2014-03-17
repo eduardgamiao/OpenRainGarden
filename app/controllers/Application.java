@@ -103,6 +103,10 @@ public class Application extends Controller {
 	  return ok(SignUp.render(formData));
   }
   
+  /**
+   * Processes the sign up form
+   * @return
+   */
   public static Result postSignUp() {
 	  System.out.println("Post Sign Up");
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
