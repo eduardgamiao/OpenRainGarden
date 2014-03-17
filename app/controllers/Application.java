@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.apache.commons.io.FilenameUtils;
+
 import com.google.common.io.Files;
+
 import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -110,9 +113,15 @@ public class Application extends Controller {
   public static Result postSignUp() {
 	  System.out.println("Post Sign Up");
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
-	  SignUpFormData data = formData.get();
-	  System.out.println(data.name + " " + data.email + " " + data.telephone + " " + data.password);
-	  return ok(SignUp.render(formData));
+	  if (formData.hasErrors() == true) {
+		  System.out.println("Sign up Errors found.");
+		  return badRequest(SignUp.render(formData));
+	  }
+	  else {
+		  SignUpFormData data = formData.get();
+		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
+		  return ok(SignUp.render(formData));
+	  }
   }
   
   /**

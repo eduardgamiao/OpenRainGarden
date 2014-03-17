@@ -6,14 +6,16 @@ public class UserInfo extends Model {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String name;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private String telephone;
 	private String password;
 	private boolean admin = false;
 
-	public UserInfo(String name, String email, String telephone, String password) {
-		this.name = name;
+	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.email = email;
 		this.telephone = telephone;
 		this.password = password;		
@@ -27,12 +29,20 @@ public class UserInfo extends Model {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getEmail() {
