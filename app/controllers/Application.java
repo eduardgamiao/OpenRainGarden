@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import org.apache.commons.io.FilenameUtils;
-import com.google.common.io.Files;
+import models.PlantDB;
 import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -25,7 +23,6 @@ import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
 import views.html.Login;
-import views.html.UploadRainGardenPicture;
 import views.formdata.LoginFormData;
 import views.html.SignUp;
 import views.formdata.SignUpFormData;
@@ -102,9 +99,7 @@ public class Application extends Controller {
    * @return The Page1.
    */
   public static Result page1() {
-    UploadResource resource = new UploadResource();
-    Form<UploadResource> formData = Form.form(UploadResource.class).fill(resource);
-    return ok(Page1.render(formData, "Welcome to Page1."));
+    return ok(Page1.render("Welcome to Page1.", PlantDB.getPlants()));
   }
   
   /**
@@ -154,49 +149,4 @@ public class Application extends Controller {
 	  System.out.format("%s %s\n", data.email, data.password);
 	  return ok(Login.render(formData));
   }
-  
-  public static Result uploadRainGardenPicture() {
-    return ok(UploadRainGardenPicture.render("Upload Rain Garden Photo"));        
-  }
-  
-  /**
-   * A test page.
-   * @return A test page.
-   */
-  public static Result uploadAction() {
-    Form<UploadResource> filledForm = Form.form(UploadResource.class).bindFromRequest();
-
-    if (filledForm.hasErrors()) {
-        return TODO;
-    } else {
-        UploadResource resource = filledForm.get();
-        MultipartFormData body = request().body().asMultipartFormData();
-        FilePart resourceFile = body.getFile("resourceFile");
-        System.out.println(resourceFile.getContentType());
-        return ok(Index.render("Oh snap!"));
-     }    
-  }
-   
-  /**
-   * Returns the rain garden profile page..
-   * @return The rain garden profile page.
-   * @throws IOException 
-   */
-  public static Result upload() throws IOException {
-    play.mvc.Http.MultipartFormData body = request().body().asMultipartFormData();
-    System.out.println(request().body().asMultipartFormData() == null);
-    play.mvc.Http.MultipartFormData.FilePart picture = body.getFile("picture");
-    if (picture != null) {
-      String fileName = picture.getFilename();
-      String contentType = picture.getContentType(); 
-      File file = picture.getFile();
-      File destinationFile = new File("./public/images/" + file.getName());
-      //Files.copy(file, destinationFile);
-      return ok(contentType);
-    } else {
-      flash("error", "Missing file");
-      return redirect(routes.Application.index());    
-    }
-  }
-  
 }

@@ -1,19 +1,27 @@
-@(uploadForm: Form[views.formdata.UploadResource], message: String)
+@(message: String, plantList: List[Plant])
 
 @import helper._
 @import bootstrap3._
 
 @Main("Page1") {
    <div class="container">
-    @form(action = routes.Application.uploadAction(), 'enctype -> "multipart/form-data") {
-    
-        @text(uploadForm("lang"), "Lang", "Lang", "")
-        @text(uploadForm("country"), "Country", "Country", "")
-        @inputFile(uploadForm("resourceFile"))
-
-      <p>
-          <input type="submit">
-      </p>
-  }
+    <table class="table table-borderd">
+    <tr>
+      <th>Plant Name</th>
+      <th>Scientific Name</th>
+      <th>Placement</th>
+      <th>Growth</th>
+      <th>Climate</th>
+      </tr>
+      @for(plant <- plantList) {
+        <tr>
+         <td>@plant.getName()</td>
+         <td>@plant.getScientificName()</td>
+         <td>@plant.getPlacement()</td>
+         <td>@plant.getGrowth()</td>
+         <td>@plant.getClimateType()</td>
+        </tr>
+      }
+    </table>
    </div>
 }
