@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 /**
  * An object that represents a rain garden.
  */
@@ -12,6 +14,7 @@ public class RainGarden {
   private String hideAddress;
   private String description;
   private String dateInstalled;
+  private List<String> plants;
   
   /**
    * Constructor.
@@ -117,6 +120,20 @@ public class RainGarden {
    */
   public void setDateInstalled(String dateInstalled) {
     this.dateInstalled = dateInstalled;
+  }
+
+  /**
+   * @return the plants
+   */
+  public List<String> getPlants() {
+    return plants;
+  }
+
+  /**
+   * @param plants the plants to set
+   */
+  public void setPlants(List<String> plants) {
+    this.plants = plants;
   }
   
 }

@@ -38,6 +38,9 @@ public class RainGardenFormData {
   
   /** Installation year. */
   public String year;
+  
+  /** Plants used. */
+  public List<String> plants;
  
   /**
    * Default constructor.

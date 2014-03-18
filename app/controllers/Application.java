@@ -2,13 +2,12 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.apache.commons.io.FilenameUtils;
-
 import com.google.common.io.Files;
-
 import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -17,6 +16,7 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.formdata.DateTypes;
 import views.formdata.DownspoutDisconnectedType;
+import views.formdata.PlantTypes;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.formdata.UploadResource;
@@ -53,7 +53,8 @@ public class Application extends Controller {
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
     return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
-              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes()));
+              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
+              PlantTypes.getPlantMap()));
   }
   
   /**
@@ -64,17 +65,26 @@ public class Application extends Controller {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
+      List<String> plantList = new ArrayList<String>();
+      for (String key : dataMap.keySet()) {
+        if (key.contains("plants")) {
+          plantList.add(dataMap.get(key));
+        }
+      }
       return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
-                        DateTypes.getYearTypes(dataMap.get("year"))));   
+                        DateTypes.getYearTypes(dataMap.get("year")),
+                        PlantTypes.getPlantMap(plantList)));   
     } 
     else {
       RainGardenFormData data = formData.get();
       MultipartFormData body = request().body().asMultipartFormData();
-      FilePart resourceFile = body.getFile("uploadFile");
-      System.out.println(resourceFile.getContentType());
+      FilePart picture = body.getFile("uploadFile");
+      if (picture != null) {  
+        System.out.println(picture.getContentType());
+      }
       return ok(Index.render(data.propertyType));
      }     
     }
