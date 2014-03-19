@@ -56,23 +56,25 @@
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:white;">
                           <ul class="list-group">
                                                     <li class="list-group-item">  
-                          <h4>Plants</h4>                       
-              <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
-                data-placement="right" title="&#8216;&#256;kulikuli"
-                data-content="                <p>Scientific Name: Sessuvium portulacastrum</p>
-                <p>Placement: Inlet</p>
-                <p>Growth: Ground Cover</p>
-                <br />
-                <a href=&#34;http://nativeplants.hawaii.edu/plant/view/Sesuvium_portulacastrum&#34; target=&#34;tab&#34;>More Information</a>">&#8216;&#256;kulikuli
-              </button>
-              <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
-                data-placement="right" title="Kupukupu"
-                data-content="                <p>Scientific Name: Nephrolepis cordifolia</p>
-                <p>Placement: Slope/Berm</p>
-                <p>Growth: Fern</p>
-                <br />
-                <a href=&#34;http://nativeplants.hawaii.edu/plant/view/Nephrolepis_cordifolia&#34; target=&#34;tab&#34;>More Information</a>">Kupukupu
-              </button></li>
+                          <h4>Plants</h4>
+                          @if(!(rainGarden.getPlants().isEmpty)) {    
+                            @for(plant <- rainGarden.getPlants()) {
+                             <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
+                              data-placement="top" title="@plant"
+                              data-content="                
+                              <p>Scientific Name: @PlantDB.getPlant(plant).getScientificName()</p>
+                              <p>Placement: @PlantDB.getPlant(plant).getPlacement()</p>
+                              <p>Growth: @PlantDB.getPlant(plant).getGrowth()</p>
+                              <p>Climate Type: @PlantDB.getPlant(plant).getClimateType()</p>
+                              <br />">@PlantDB.getPlant(plant).getName()
+                              </button>
+                            }
+                          } else {
+                            <p>No plants</p>
+                          }   
+               
+
+              </li>
 </ul>
             </div>
           </div>

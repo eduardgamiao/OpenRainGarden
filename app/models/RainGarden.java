@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class RainGarden {
   private String hideAddress;
   private String description;
   private String dateInstalled;
-  private List<String> plants;
+  private List<String> plants = new ArrayList<String>();
   
   /**
    * Constructor.
@@ -25,9 +26,10 @@ public class RainGarden {
    * @param hideAddress Hide address from public view.
    * @param description Description of rain garden.
    * @param dateInstalled Installation date of rain garden.
+   * @param plants List of plants used in rain garden.
    */
   public RainGarden(Long id, String title, String propertyType, String address, String hideAddress, String description,
-      String dateInstalled) {
+      String dateInstalled, List<String> plants) {
     this.id = id;
     this.title = title;
     this.propertyType = propertyType;
@@ -35,6 +37,7 @@ public class RainGarden {
     this.hideAddress = hideAddress;
     this.description = description;
     this.dateInstalled = dateInstalled;
+    this.plants = plants;
   } 
   
   /**

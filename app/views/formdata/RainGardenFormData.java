@@ -40,19 +40,19 @@ public class RainGardenFormData {
   public String year;
   
   /** Plants used. */
-  public List<String> plants;
+  public List<String> plants = new ArrayList<String>();
   
   /** Size of rain garden. */
-  public int rainGardenSize;
+  public String rainGardenSize;
   
   /** Size of water flow source. */
-  public int waterFlowSourceSize;
+  public String waterFlowSourceSize;
   
   /** Description of water flow. */
   public String waterFlowDescription;
   
   /** Infiltration rate. */
-  public double infiltrationRate;
+  public String infiltrationRate;
   
   /** Number of rain gardens. */
   public String numberOfRainGardens;
@@ -83,8 +83,8 @@ public class RainGardenFormData {
    * @param numberOfRainGardens Number of rain gardens.
    */
   public RainGardenFormData(long id, String title, String propertyType, String address, String hideAddress,
-      String description, String month, String day, String year, List<String> plants, int rainGardenSize,
-      int waterFlowSource, String waterFlowDescription, double infiltrationRate, String numberOfRainGardens) {
+      String description, String month, String day, String year, List<String> plants, String rainGardenSize,
+      String waterFlowSource, String waterFlowDescription, String infiltrationRate, String numberOfRainGardens) {
     this.id = id;
     this.title = title;
     this.propertyType = propertyType;
@@ -136,9 +136,39 @@ public class RainGardenFormData {
     if (this.year.equals("")) {
       errors.add(new ValidationError("year", "Please select a year."));     
     }
+    if (!(this.rainGardenSize.isEmpty()) && !(isValidInteger(this.rainGardenSize))) {
+      errors.add(new ValidationError("rainGardenSize", 
+          "Please enter a positive number for you rain garden's size."));       
+    }
+    if (!(this.waterFlowSourceSize.isEmpty()) && !(isValidInteger(this.waterFlowSourceSize))) {
+      errors.add(new ValidationError("waterFlowSourceSize", 
+          "Please enter a positive number for your water flow source size."));       
+    }
+    if (!(this.infiltrationRate.isEmpty()) && !(isValidDouble(this.infiltrationRate))) {
+      errors.add(new ValidationError("infiltrationRate", 
+          "Please enter a positive number for your rain garden's infiltration rate."));       
+    }
     
     return errors.isEmpty() ? null : errors;
   }
+ 
+  /**
+   * Checks if an input is all numerical characters.
+   * @param input The input to check.
+   * @return True if the input is all numerical characters, false otherwise. 
+   */
+  private static boolean isValidInteger(String input) {
+      return input.matches(".*[0-9].*");
+  }
   
+  
+  /**
+   * Checks if an input is all numerical characters.
+   * @param input The input to check.
+   * @return True if the input is all numerical characters, false otherwise. 
+   */
+  private static boolean isValidDouble(String input) {
+      return input.matches("[0-9]{1,13}(\\.[0-9]*)?");
+  }
 
 }

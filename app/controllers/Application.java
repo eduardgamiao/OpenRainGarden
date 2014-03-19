@@ -85,6 +85,7 @@ public class Application extends Controller {
     else {
       RainGardenFormData data = formData.get();
       RainGarden garden = RainGardenDB.addRainGarden(data);
+      System.out.println(data.rainGardenSize + " | " + data.waterFlowSourceSize + " | " + data.infiltrationRate);
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
