@@ -1,0 +1,82 @@
+@(rainGarden: RainGarden, plantList: List[Plant])
+
+@Main("View Garden") {
+   <div class="container">
+       <div class="row">
+      <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+          <div class="row">
+            <div class="col-md-12">
+              <img src="@routes.Assets.at("images/rg" + rainGarden.getID())" class="img-responsive center-block"
+                style="width: 100%; height: 400px;" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <h3
+                style="position: relative; bottom: 1.9em; background-color: rgba(0, 0, 0, 0.5); width: 100%; color: white;">
+                @if(!(rainGarden.getTitle.equals(""))) {rainGarden.getTitle()} else {Rain Garden}</h3>
+            </div>
+          </div>
+          <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+            <ul class="list-group" style="text-align: center;">
+              <li class="list-group-item">Owner: </li>
+              <li class="list-group-item">Type: Rain Garden</li>
+              <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
+              <li class="list-group-item">Address: @if(rainGarden.getHideAddress.equals("Yes")) {N/A} else {rainGarden.getAddress()}</li>
+              <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
+              <li class="list-group-item">Number of Garden(s): 1</li>
+            </ul>
+          </div>
+          <div class="row" style="color: black; font-size: 14px; padding-left: 1em; padding-right: 1em;">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+              <p>@if(rainGarden.getDescription().equals("")) {No Description} else {rainGarden.getDescription()}</p>
+            </div>
+            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
+              <ul class="list-group" style="text-align: center;">
+              <li class="list-group-item">Owner: </li>
+              <li class="list-group-item">Type: Rain Garden</li>
+              <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
+              <li class="list-group-item">Address: @if(rainGarden.getHideAddress.equals("Yes")) {N/A} else {rainGarden.getAddress()}</li>
+              <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
+                <li class="list-group-item">Number of Garden(s): 1</li>
+              </ul>
+            </div>
+          </div>
+          <div class="row" style="color: black; font-size: 14px;  padding: 0 2em 0 2em;">
+              <div class="page-header">
+              <h4>Additional Information</h4>
+            </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <b>Rain Garden Size:</b> N/A<br />
+                <b>Size of Roof/Impervious Surface:</b> N/A<br />
+                <b>Waterflow Description:</b> The waterflow for this rain garden comes mainly from my house's roof.<br />
+                <b>Infiltration Rate:</b> N/A<br /><br/>                
+              </div>
+                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:white;">
+                          <ul class="list-group">
+                                                    <li class="list-group-item">  
+                          <h4>Plants</h4>                       
+              <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
+                data-placement="right" title="&#8216;&#256;kulikuli"
+                data-content="                <p>Scientific Name: Sessuvium portulacastrum</p>
+                <p>Placement: Inlet</p>
+                <p>Growth: Ground Cover</p>
+                <br />
+                <a href=&#34;http://nativeplants.hawaii.edu/plant/view/Sesuvium_portulacastrum&#34; target=&#34;tab&#34;>More Information</a>">&#8216;&#256;kulikuli
+              </button>
+              <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
+                data-placement="right" title="Kupukupu"
+                data-content="                <p>Scientific Name: Nephrolepis cordifolia</p>
+                <p>Placement: Slope/Berm</p>
+                <p>Growth: Fern</p>
+                <br />
+                <a href=&#34;http://nativeplants.hawaii.edu/plant/view/Nephrolepis_cordifolia&#34; target=&#34;tab&#34;>More Information</a>">Kupukupu
+              </button></li>
+</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+   </div>
+}

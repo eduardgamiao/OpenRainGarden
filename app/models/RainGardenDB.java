@@ -51,13 +51,7 @@ public class RainGardenDB {
    * @return The rain garden with the matching ID.
    */
   public static RainGarden getRainGarden(long id) {
-    RainGarden garden = gardens.get(id);
-    if (garden == null) {
-      throw new RuntimeException("Rain Garden ID is not valid.");
-    }
-    else {
-      return garden;
-    }
+   return gardens.get(id);
   }
 
   /**

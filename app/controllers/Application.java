@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.io.FilenameUtils;
+import com.google.common.io.Files;
 import models.PlantDB;
+import models.RainGarden;
 import models.RainGardenDB;
 import play.data.Form;
 import play.mvc.Controller;
@@ -23,6 +26,7 @@ import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
 import views.html.Login;
+import views.html.ViewGarden;
 import views.formdata.LoginFormData;
 import views.html.SignUp;
 import views.formdata.SignUpFormData;
@@ -57,8 +61,9 @@ public class Application extends Controller {
   /**
    * Returns the created/edited rain garden page.
    * @return The resulting rain garden page if information was valid, else the registration form.
+   * @throws IOException 
    */
-  public static Result postRainGardenRegister() {
+  public static Result postRainGardenRegister() throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
@@ -77,14 +82,30 @@ public class Application extends Controller {
     } 
     else {
       RainGardenFormData data = formData.get();
+      RainGarden garden = RainGardenDB.addRainGarden(data);
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
-      if (picture != null) {  
-        System.out.println(picture.getContentType());
-      }
-      return ok(Index.render(data.propertyType));
+      if (picture != null) {
+        File source = picture.getFile();
+        File destination = new File("public/images/rg" + garden.getID());
+        source.renameTo(destination);
+     }
+      return ok(ViewGarden.render(garden, PlantDB.getPlants()));
      }     
     }
+  
+  /**
+   * View garden page.
+   * @param id ID of garden to view.
+   * @return The garden view page of the rain garden mathcing the given ID. 
+   */
+  public static Result viewGarden(Long id) {
+    RainGarden garden = RainGardenDB.getRainGarden(id);
+    if (garden != null) {
+     return ok(ViewGarden.render(garden, PlantDB.getPlants()));
+    }
+    return badRequest(Index.render("Error"));
+  }
   
   /**
    * Brings up the rain garden profile page.
@@ -156,5 +177,14 @@ public class Application extends Controller {
 		  session("email", formData.get().email);
 		  return redirect(routes.Application.index());
 	  }
+  }
+  
+  /**
+   * Get the file extension from an existing file.
+   * @param path The path to the file.
+   * @return The extension of the file.
+   */
+  private static String getFileExtension(String path) {
+    return path;
   }
 }
