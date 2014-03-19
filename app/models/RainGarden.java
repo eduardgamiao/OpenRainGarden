@@ -16,20 +16,33 @@ public class RainGarden {
   private String description;
   private String dateInstalled;
   private List<String> plants = new ArrayList<String>();
+  private String rainGardenSize = "N/A";
+  private String waterFlowSourceSize = "N/A";
+  private String waterFlowDescription = "N/A";
+  private String infiltrationRate = "N/A";
+  private String numberOfRainGardens = "N/A";
+  
+  
   
   /**
    * Constructor.
-   * @param id Rain garden ID.
-   * @param title Title of rain garden.
-   * @param propertyType Property type of rain garden location.
+   * @param id ID of rain garden.
+   * @param title Title of rain garden
+   * @param propertyType Property type of rain garden's address.
    * @param address Address of rain garden.
-   * @param hideAddress Hide address from public view.
+   * @param hideAddress Specify whether or not to hide address from public viewing. 
    * @param description Description of rain garden.
-   * @param dateInstalled Installation date of rain garden.
-   * @param plants List of plants used in rain garden.
+   * @param dateInstalled Date installed.
+   * @param plants Plants used in rain garden.
+   * @param rainGardenSize Size of rain garden.
+   * @param waterFlowSourceSize Size of water flow source.
+   * @param waterFlowDescription Description of water flow.
+   * @param infiltrationRate Infiltration rate.
+   * @param numberOfRainGardens Number of rain gardens.
    */
   public RainGarden(Long id, String title, String propertyType, String address, String hideAddress, String description,
-      String dateInstalled, List<String> plants) {
+      String dateInstalled, List<String> plants, String rainGardenSize, String waterFlowSourceSize,
+      String waterFlowDescription, String infiltrationRate, String numberOfRainGardens) {
     this.id = id;
     this.title = title;
     this.propertyType = propertyType;
@@ -38,8 +51,22 @@ public class RainGarden {
     this.description = description;
     this.dateInstalled = dateInstalled;
     this.plants = plants;
-  } 
-  
+    if (!rainGardenSize.isEmpty()) {
+      this.rainGardenSize = rainGardenSize;
+    }
+    if (!waterFlowSourceSize.isEmpty()) {
+      this.waterFlowSourceSize = waterFlowSourceSize;
+    }
+    if (!waterFlowSourceSize.isEmpty()) {
+      this.waterFlowDescription = waterFlowDescription;
+    }
+    if (!infiltrationRate.isEmpty()) {
+      this.infiltrationRate = infiltrationRate;
+    }
+    if (!numberOfRainGardens.isEmpty()) {
+      this.numberOfRainGardens = numberOfRainGardens;
+    }
+  }
   /**
    * @return the id
    */
@@ -137,6 +164,76 @@ public class RainGarden {
    */
   public void setPlants(List<String> plants) {
     this.plants = plants;
+  }
+
+  /**
+   * @return the rainGardenSize
+   */
+  public String getRainGardenSize() {
+    return rainGardenSize;
+  }
+
+  /**
+   * @param rainGardenSize the rainGardenSize to set
+   */
+  public void setRainGardenSize(String rainGardenSize) {
+    this.rainGardenSize = rainGardenSize;
+  }
+
+  /**
+   * @return the waterFlowSourceSize
+   */
+  public String getWaterFlowSourceSize() {
+    return waterFlowSourceSize;
+  }
+
+  /**
+   * @param waterFlowSourceSize the waterFlowSourceSize to set
+   */
+  public void setWaterFlowSourceSize(String waterFlowSourceSize) {
+    this.waterFlowSourceSize = waterFlowSourceSize;
+  }
+
+  /**
+   * @return the waterFlowDescription
+   */
+  public String getWaterFlowDescription() {
+    return waterFlowDescription;
+  }
+
+  /**
+   * @param waterFlowDescription the waterFlowDescription to set
+   */
+  public void setWaterFlowDescription(String waterFlowDescription) {
+    this.waterFlowDescription = waterFlowDescription;
+  }
+
+  /**
+   * @return the infiltrationRate
+   */
+  public String getInfiltrationRate() {
+    return infiltrationRate;
+  }
+
+  /**
+   * @param infiltrationRate the infiltrationRate to set
+   */
+  public void setInfiltrationRate(String infiltrationRate) {
+    this.infiltrationRate = infiltrationRate;
+  }
+
+  /**
+   * @return the numberOfRainGardens
+   */
+  public String getNumberOfRainGardens() {
+    return numberOfRainGardens;
+  }
+
+  /**
+   * @param numberOfRainGardens the numberOfRainGardens to set
+   */
+  public void setNumberOfRainGardens(String numberOfRainGardens) {
+    this.numberOfRainGardens = numberOfRainGardens;
   }
   
 }

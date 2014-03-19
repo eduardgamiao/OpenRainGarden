@@ -24,14 +24,16 @@ public class RainGardenDB {
       long id = gardens.size() + 1;
       garden = new RainGarden(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
-                              formData.plants);
+                              formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
+                              formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
       gardens.put(id, garden);
       return garden;
     }
     else {
       garden = new RainGarden(formData.id, formData.title, formData.propertyType, formData.address, 
           formData.hideAddress,  formData.description, formData.month + "/" + formData.day + "/" + formData.year, 
-          formData.plants);
+          formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
+          formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
       gardens.put(garden.getID(), garden);
       return garden;
     }

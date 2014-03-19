@@ -25,7 +25,7 @@
               <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
               <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
               <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
-              <li class="list-group-item">Number of Garden(s): 1</li>
+              <li class="list-group-item">Number of Garden(s): @rainGarden.getNumberOfRainGardens()</li>
             </ul>
           </div>
           <div class="row" style="color: black; font-size: 14px; padding-left: 1em; padding-right: 1em;">
@@ -39,7 +39,7 @@
               <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
               <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
               <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
-              <li class="list-group-item">Number of Garden(s): 1</li>
+              <li class="list-group-item">Number of Garden(s): @rainGarden.getNumberOfRainGardens()</li>
               </ul>
             </div>
           </div>
@@ -48,10 +48,10 @@
               <h4>Additional Information</h4>
             </div>
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <b>Rain Garden Size:</b> N/A<br />
-                <b>Size of Roof/Impervious Surface:</b> N/A<br />
-                <b>Waterflow Description:</b> The waterflow for this rain garden comes mainly from my house's roof.<br />
-                <b>Infiltration Rate:</b> N/A<br /><br/>                
+                <b>Rain Garden Size:</b> @rainGarden.getRainGardenSize()<br />
+                <b>Size of Roof/Impervious Surface:</b> @rainGarden.getWaterFlowSourceSize()<br />
+                <b>Waterflow Description:</b> @rainGarden.getWaterFlowDescription()<br />
+                <b>Infiltration Rate:</b> @rainGarden.getInfiltrationRate()<br /><br/>                
               </div>
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:white;">
                           <ul class="list-group">
