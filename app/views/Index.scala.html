@@ -1,5 +1,12 @@
-@(message: String) @Main("Home") {
-<div class="row featurette ">
+@(title: String)(content: Html)
+
+
+@Main("Home") {
+
+
+      <!-- START THE FEATURETTES -->
+	  
+	<div class="row featurette ">
         <div class="col-md-7 ">
           <h2 class="featurette-heading">What Harm Can A Little Rainwater Do?</h2><br>
           <p class="lead">When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth.</p>
@@ -12,8 +19,17 @@
 		  </p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive"  alt="500x500" src="route.Assets.at(path="/public/images/alawai.png"))">         
+          <img class="featurette-image img-responsive"  alt="500x500" src="public/images/alawai.png">
         </div>
       </div>
+      
+      <hr class="featurette-divider">
+
+
+
+
+</body>
+
+
 
 }
