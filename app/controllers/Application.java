@@ -135,7 +135,7 @@ public class Application extends Controller {
    */
   public static Result login() {
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class);
-	  return ok(Login.render(formData));
+	  return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData));
   }
   
   /**
@@ -145,8 +145,16 @@ public class Application extends Controller {
   public static Result postLogin() {
 	  System.out.println("Post Login");
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class).bindFromRequest();
-	  LoginFormData data = formData.get();
-	  System.out.format("%s %s\n", data.email, data.password);
-	  return ok(Login.render(formData));
+	  
+	  if (formData.hasErrors() == true) {
+		  System.out.println("Login errors found");
+		  flash("error", "Login credentials not valid.");
+		  return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData));
+	  }
+	  else {
+		  session().clear();
+		  session("email", formData.get().email);
+		  return redirect(routes.Application.index());
+	  }
   }
 }

@@ -8,6 +8,7 @@ import models.PlantDB;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import models.UserInfoDB;
 
 /**
  * Implements a Global object for the Play Framework.
@@ -28,6 +29,9 @@ public class Global extends GlobalSettings {
   public void onStart(Application app) {
     // Populate plant database.
     populatePlantDB();
+    
+    //Add phoney users
+    UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
   }
   
   /**
