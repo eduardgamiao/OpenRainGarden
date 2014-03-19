@@ -20,6 +20,7 @@ import views.formdata.DownspoutDisconnectedType;
 import views.formdata.PlantTypes;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
+import views.formdata.SolutionAmountType;
 import views.formdata.UploadResource;
 import views.html.Index;
 import views.html.BrowseGardens;
@@ -55,7 +56,7 @@ public class Application extends Controller {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
     return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
               DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
-              PlantTypes.getPlantMap()));
+              PlantTypes.getPlantMap(), SolutionAmountType.getTypes()));
   }
   
   /**
@@ -78,7 +79,8 @@ public class Application extends Controller {
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
                         DateTypes.getYearTypes(dataMap.get("year")),
-                        PlantTypes.getPlantMap(plantList)));   
+                        PlantTypes.getPlantMap(plantList),
+                        SolutionAmountType.getTypes(dataMap.get("numberOfRainGardens"))));   
     } 
     else {
       RainGardenFormData data = formData.get();

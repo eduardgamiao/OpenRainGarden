@@ -1,6 +1,6 @@
 @(formData: Form[views.formdata.RainGardenFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
-  plantMap: Map[String, Boolean])
+  plantMap: Map[String, Boolean], amountTypes: Map[String, Boolean])
 
 @import helper._ 
 @import bootstrap3._ 
@@ -25,7 +25,12 @@
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
               @file(formData("uploadFile"), "Upload File")
               <div class="page-header"><h3>Additional Information</h3></div>
-              @bootstrap3.checkboxes(formData("plants"), "Plants", plantMap, "")              
+              @bootstrap3.checkboxes(formData("plants"), "Plants", plantMap, "")
+              @text(formData("rainGardenSize"), "Rain Garden Size", "Size of Rain Garden (sq. ft.)", "")
+              @text(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Size of Roof/Impervious Pavement that feeds Rain Garden (sq. ft.)", "")
+              @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description", "")
+              @text(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil (in/hr)", "")
+              @bootstrap3.select(formData("numberOfRainGardens"), "Number of Rain Gardens", amountTypes, false, "")                 
               <hr/>
               <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
           </div>

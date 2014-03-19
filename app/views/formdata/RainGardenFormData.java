@@ -41,6 +41,21 @@ public class RainGardenFormData {
   
   /** Plants used. */
   public List<String> plants;
+  
+  /** Size of rain garden. */
+  public int rainGardenSize;
+  
+  /** Size of water flow source. */
+  public int waterFlowSourceSize;
+  
+  /** Description of water flow. */
+  public String waterFlowDescription;
+  
+  /** Infiltration rate. */
+  public double infiltrationRate;
+  
+  /** Number of rain gardens. */
+  public String numberOfRainGardens;
  
   /**
    * Default constructor.
@@ -51,18 +66,27 @@ public class RainGardenFormData {
 
   /**
    * Constructor.
-   * @param name Name of rain garden.
-   * @param propertyType Property type of rain garden location.
-   * @param address Address of rain garden.
-   * @param hideAddress Hide address of rain garden.
-   * @param description Description of rain garden.
-   * @param month Month rain garden was installed.
-   * @param day Day rain garden was installed.
-   * @param year Year rain garden was installed. 
+   * @param id ID of garden.
+   * @param title Title of garden.
+   * @param propertyType Property type of garden.
+   * @param address Address of garden.
+   * @param hideAddress Hide address of garden.
+   * @param description Description of garden.
+   * @param month Month installed.
+   * @param day Day installed.
+   * @param year Year installed.
+   * @param plants Plants used in garden.
+   * @param rainGardenSize Size of rain garden.
+   * @param waterFlowSource Size of water flow source.
+   * @param waterFlowDescription Water flow description.
+   * @param infiltrationRate Infiltration rate.
+   * @param numberOfRainGardens Number of rain gardens.
    */
-  public RainGardenFormData(String name, String propertyType, String address, String hideAddress, 
-                            String description, String month, String day, String year) {
-    this.title = name;
+  public RainGardenFormData(long id, String title, String propertyType, String address, String hideAddress,
+      String description, String month, String day, String year, List<String> plants, int rainGardenSize,
+      int waterFlowSource, String waterFlowDescription, double infiltrationRate, String numberOfRainGardens) {
+    this.id = id;
+    this.title = title;
     this.propertyType = propertyType;
     this.address = address;
     this.hideAddress = hideAddress;
@@ -70,7 +94,13 @@ public class RainGardenFormData {
     this.month = month;
     this.day = day;
     this.year = year;
-  }
+    this.plants = plants;
+    this.rainGardenSize = rainGardenSize;
+    this.waterFlowSourceSize = waterFlowSource;
+    this.waterFlowDescription = waterFlowDescription;
+    this.infiltrationRate = infiltrationRate;
+    this.numberOfRainGardens = numberOfRainGardens;
+  } 
   
   /**
    * Constructor.
