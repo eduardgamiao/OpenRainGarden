@@ -11,6 +11,7 @@ import models.PlantDB;
 import models.RainGarden;
 import models.RainGardenDB;
 import play.data.Form;
+import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -31,6 +32,7 @@ import views.html.ViewGarden;
 import views.formdata.LoginFormData;
 import views.html.SignUp;
 import views.formdata.SignUpFormData;
+import views.html.RegisterMenu;
 
 /**
  * Implements the controllers for this application.
@@ -43,6 +45,14 @@ public class Application extends Controller {
    */
   public static Result index() {
     return ok(Index.render("Home"));
+  }
+  
+  /**
+   * Returns the registration navigation menu.
+   * @return The registration navigation menu page.
+   */
+  public static Result registerMenu() {
+    return ok(RegisterMenu.render("Registration - Main"));
   }
   
   /**
@@ -66,6 +76,7 @@ public class Application extends Controller {
    */
   public static Result postRainGardenRegister() throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
+    String uploadErrorMessage = "";
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
       List<String> plantList = new ArrayList<String>();
@@ -74,6 +85,8 @@ public class Application extends Controller {
           plantList.add(dataMap.get(key));
         }
       }
+      MultipartFormData body = request().body().asMultipartFormData();
+      FilePart picture = body.getFile("uploadFile");            
       return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -89,9 +102,30 @@ public class Application extends Controller {
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
-        File source = picture.getFile();
-        File destination = new File("public/images/rg" + garden.getID());
-        source.renameTo(destination);
+        if (picture.getContentType().contains("image")) {
+          File source = picture.getFile();
+          File destination = new File("public/images/rg" + garden.getID());
+          source.renameTo(destination);
+        }
+        else {
+          List<ValidationError> uploadErrors;
+          if (formData.errors().get("uploadFile") != null) {
+            uploadErrors = formData.errors().get("uploadFile");
+          }
+          else {
+            uploadErrors = new ArrayList<ValidationError>();
+          }
+          uploadErrors.add(new ValidationError("uploadFile", "The file " + picture.getFilename() + " is not a valid file type. Please select a .jpg or .png."));
+          formData.errors().put("uploadFile", uploadErrors);
+          return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
+              PropertyTypes.getTypes(data.propertyType), 
+              DateTypes.getMonthTypes(data.month), 
+              DateTypes.getDayTypes(data.day), 
+              DateTypes.getYearTypes(data.year),
+              PlantTypes.getPlantMap(data.plants),
+              SolutionAmountType.getTypes(data.numberOfRainGardens)));
+          
+        }
      }
       return ok(ViewGarden.render(garden, PlantDB.getPlants()));
      }     
