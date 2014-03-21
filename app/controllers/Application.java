@@ -127,7 +127,7 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the sign in page
+   * Returns the sign in page.
    * @return sign in page
    */
   public static Result signup() {
@@ -136,7 +136,7 @@ public class Application extends Controller {
   }
   
   /**
-   * Processes the sign up form
+   * Processes the sign up form.
    * @return
    */
   public static Result postSignUp() {

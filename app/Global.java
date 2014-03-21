@@ -2,12 +2,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Calendar;
 import models.Plant;
 import models.PlantDB;
 import play.Application;
 import play.GlobalSettings;
-import play.Logger;
 import models.UserInfoDB;
 
 /**
