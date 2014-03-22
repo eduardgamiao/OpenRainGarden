@@ -38,6 +38,7 @@ import views.html.RegisterMenu;
  * Implements the controllers for this application.
  */
 public class Application extends Controller {
+  private static final long MAX_FILE_SIZE = 2621440;
 
   /**
    * Returns the home page. 
@@ -76,7 +77,7 @@ public class Application extends Controller {
    */
   public static Result postRainGardenRegister() throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
-    String uploadErrorMessage = "";
+    validateUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
       List<String> plantList = new ArrayList<String>();
@@ -84,9 +85,7 @@ public class Application extends Controller {
         if (key.contains("plants")) {
           plantList.add(dataMap.get(key));
         }
-      }
-      MultipartFormData body = request().body().asMultipartFormData();
-      FilePart picture = body.getFile("uploadFile");            
+      }          
       return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -98,35 +97,13 @@ public class Application extends Controller {
     else {
       RainGardenFormData data = formData.get();
       RainGarden garden = RainGardenDB.addRainGarden(data);
-      System.out.println(data.rainGardenSize + " | " + data.waterFlowSourceSize + " | " + data.infiltrationRate);
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
-        if (picture.getContentType().contains("image")) {
           File source = picture.getFile();
           File destination = new File("public/images/rg" + garden.getID());
           source.renameTo(destination);
-        }
-        else {
-          List<ValidationError> uploadErrors;
-          if (formData.errors().get("uploadFile") != null) {
-            uploadErrors = formData.errors().get("uploadFile");
-          }
-          else {
-            uploadErrors = new ArrayList<ValidationError>();
-          }
-          uploadErrors.add(new ValidationError("uploadFile", "The file " + picture.getFilename() + " is not a valid file type. Please select a .jpg or .png."));
-          formData.errors().put("uploadFile", uploadErrors);
-          return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
-              PropertyTypes.getTypes(data.propertyType), 
-              DateTypes.getMonthTypes(data.month), 
-              DateTypes.getDayTypes(data.day), 
-              DateTypes.getYearTypes(data.year),
-              PlantTypes.getPlantMap(data.plants),
-              SolutionAmountType.getTypes(data.numberOfRainGardens)));
-          
-        }
-     }
+      }
       return ok(ViewGarden.render(garden, PlantDB.getPlants()));
      }     
     }
@@ -217,11 +194,30 @@ public class Application extends Controller {
   }
   
   /**
-   * Get the file extension from an existing file.
-   * @param path The path to the file.
-   * @return The extension of the file.
+   * Validate a given form's upload file.
+   * @param formData The form to check.
+   * @param body Multipart form data that holds the uploaded file to check.
+   * @return A form with validated upload data.
    */
-  private static String getFileExtension(String path) {
-    return path;
+  private static Form<RainGardenFormData> validateUpload(Form<RainGardenFormData> formData, MultipartFormData body) {
+    List<ValidationError> errors = new ArrayList<ValidationError>();
+    if (formData.errors().get("uploadFile") != null) {
+      errors = formData.errors().get("uploadFile");
+    }
+    FilePart picture = body.getFile("uploadFile"); 
+    if (picture != null) {
+      if (!(picture.getContentType().contains("image"))) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is not an accepted "
+            + "file type. Please select a file with the extension .jpg/.jpeg or .png"));
+      }
+      if (picture.getFile().length() > MAX_FILE_SIZE) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is too large. "
+            + "Please select a file that is under 2.5 MB"));
+      }
+    }
+    if (!errors.isEmpty()) {
+      formData.errors().put("uploadFile", errors);
+    }
+    return formData;
   }
 }
