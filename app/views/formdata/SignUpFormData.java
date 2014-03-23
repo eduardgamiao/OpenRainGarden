@@ -3,27 +3,30 @@ package views.formdata;
 import java.util.List;
 import java.util.ArrayList;
 import play.data.validation.ValidationError;
-import models.UserInfo;
 
 /**
- * Backing class for Sign in form
+ * Backing class for Sign in form.
  * @author Kyle
  *
  */
 public class SignUpFormData {
-	/** First Name of user   */
+	/** First Name of user.   */
 	public String firstName;
-	/** Last Name of user	 */
+	
+	/** Last Name of user.	 */
 	public String lastName;
-	/** Email of user	 */
+	
+	/** Email of user.	 */
 	public String email;
-	/** Telephone of user	 */
+	
+	/** Telephone of user.	 */
 	public String telephone;
-	/** Password of user	 */
+	
+	/** Password of user.	 */
 	public String password;
 	
 	/**
-	 * Validation for Sign Up Form
+	 * Validation for Sign Up Form.
 	 * @return A list of errors (empty list if form is valid)
 	 */
 	public List<ValidationError> validate() {

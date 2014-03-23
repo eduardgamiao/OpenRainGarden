@@ -1,19 +1,86 @@
 package models;
 
-import java.util.Date;
-
 /**
  * An object that represents a rain barrel.
  */
 public class RainBarrel {
 
+  private Long id;
   private String title;
   private String propertyType;
   private String address;
   private String hideAddress;
   private String description;
-  private Date dateInstalled;
+  private String dateInstalled;
+  private String rainBarrelType;
+  private String capacity;
+  private String color;
+  private String material;
+  private String estimatedCost;
+  private String waterUse;
+  private String overflowFrequency;
+  private String cover;
+  private String obtainedFrom;
+  private String installationType;
+  private String numberOfRainBarrel; 
+    
+  /**
+   * Constructor.
+   * @param id ID of rain barrel.
+   * @param title Title of rain barrel.
+   * @param propertyType Property type of rain barrel address.
+   * @param address Address of rain barrel.
+   * @param hideAddress Hide address from public.
+   * @param description Description of rain barrel.
+   * @param dateInstalled Date barrel was installed.
+   * @param rainBarrelType Type of rain barrel.
+   * @param capacity Capacity of rain barrel.
+   * @param color Color of rain barrel.
+   * @param material Material of rain barrel.
+   * @param estimatedCost Cost of rain barrel.
+   * @param waterUse Water usage from rain barrel collection.
+   * @param overflowFrequency Overflow frequency.
+   * @param cover Cover type for barrel.
+   * @param obtainedFrom Place rain barrel was obtained.
+   * @param installationType Type of installation for rain barrel.
+   * @param numberOfRainBarrel Number of rain barrels on property. 
+   */
+  public RainBarrel(Long id, String title, String propertyType, String address, String hideAddress, String description,
+      String dateInstalled, String rainBarrelType, String capacity, String color, String material,
+      String estimatedCost, String waterUse, String overflowFrequency, String cover, String obtainedFrom,
+      String installationType, String numberOfRainBarrel) {
+    this.id = id;
+    this.title = title;
+    this.propertyType = propertyType;
+    this.address = address;
+    this.hideAddress = hideAddress;
+    this.description = description;
+    this.dateInstalled = dateInstalled;
+    this.rainBarrelType = rainBarrelType;
+    this.capacity = capacity;
+    this.color = color;
+    this.material = material;
+    this.estimatedCost = estimatedCost;
+    this.waterUse = waterUse;
+    this.overflowFrequency = overflowFrequency;
+    this.cover = cover;
+    this.obtainedFrom = obtainedFrom;
+    this.installationType = installationType;
+    this.numberOfRainBarrel = numberOfRainBarrel;
+  }
   
+  /**
+   * @return the id
+   */
+  public Long getID() {
+    return id;
+  }
+  /**
+   * @param id the id to set
+   */
+  public void setID(Long id) {
+    this.id = id;
+  }
   /**
    * @return the title
    */
@@ -77,14 +144,203 @@ public class RainBarrel {
   /**
    * @return the dateInstalled
    */
-  public Date getDateInstalled() {
+  public String getDateInstalled() {
     return dateInstalled;
   }
   /**
    * @param dateInstalled the dateInstalled to set
    */
-  public void setDateInstalled(Date dateInstalled) {
+  public void setDateInstalled(String dateInstalled) {
     this.dateInstalled = dateInstalled;
   }
+
+  /**
+   * @return the numberOfRainGardens
+   */
+  public String getNumberOfRainGardens() {
+    return numberOfRainBarrel;
+  }
+
+  /**
+   * @param numberOfRainGardens the numberOfRainGardens to set
+   */
+  public void setNumberOfRainGardens(String numberOfRainGardens) {
+    this.numberOfRainBarrel = numberOfRainGardens;
+  }
+
+  /**
+   * @return the rainBarrelType
+   */
+  public String getRainBarrelType() {
+    return rainBarrelType;
+  }
+
+  /**
+   * @param rainBarrelType the rainBarrelType to set
+   */
+  public void setRainBarrelType(String rainBarrelType) {
+    this.rainBarrelType = rainBarrelType;
+  }
+
+  /**
+   * @return the capacity
+   */
+  public String getCapacity() {
+    return capacity;
+  }
+
+  /**
+   * @param capacity the capacity to set
+   */
+  public void setCapacity(String capacity) {
+    this.capacity = capacity;
+  }
+
+  /**
+   * @return the color
+   */
+  public String getColor() {
+    return color;
+  }
+
+  /**
+   * @param color the color to set
+   */
+  public void setColor(String color) {
+    this.color = color;
+  }
+
+  /**
+   * @return the material
+   */
+  public String getMaterial() {
+    return material;
+  }
+
+  /**
+   * @param material the material to set
+   */
+  public void setMaterial(String material) {
+    this.material = material;
+  }
+
+  /**
+   * @return the estimatedCost
+   */
+  public String getEstimatedCost() {
+    return estimatedCost;
+  }
+
+  /**
+   * @param estimatedCost the estimatedCost to set
+   */
+  public void setEstimatedCost(String estimatedCost) {
+    this.estimatedCost = estimatedCost;
+  }
+
+  /**
+   * @return the waterUse
+   */
+  public String getWaterUse() {
+    return waterUse;
+  }
+
+  /**
+   * @param waterUse the waterUse to set
+   */
+  public void setWaterUse(String waterUse) {
+    this.waterUse = waterUse;
+  }
+
+  /**
+   * @return the overflowFrequency
+   */
+  public String getOverflowFrequency() {
+    return overflowFrequency;
+  }
+
+  /**
+   * @param overflowFrequency the overflowFrequency to set
+   */
+  public void setOverflowFrequency(String overflowFrequency) {
+    this.overflowFrequency = overflowFrequency;
+  }
+
+  /**
+   * @return the cover
+   */
+  public String getCover() {
+    return cover;
+  }
+
+  /**
+   * @param cover the cover to set
+   */
+  public void setCover(String cover) {
+    this.cover = cover;
+  }
+
+  /**
+   * @return the obtainedFrom
+   */
+  public String getObtainedFrom() {
+    return obtainedFrom;
+  }
+
+  /**
+   * @param obtainedFrom the obtainedFrom to set
+   */
+  public void setObtainedFrom(String obtainedFrom) {
+    this.obtainedFrom = obtainedFrom;
+  }
+
+  /**
+   * @return the installationType
+   */
+  public String getInstallationType() {
+    return installationType;
+  }
+
+  /**
+   * @param installationType the installationType to set
+   */
+  public void setInstallationType(String installationType) {
+    this.installationType = installationType;
+  }
   
+  /**
+   * Get month installed.
+   * @return The month the rain barrel was installed.
+   */
+  public String getMonthInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 0) {
+    return date[0];
+    }
+    return "";
+  }
+  
+  /**
+   * Get day installed.
+   * @return The day the rain barrel was installed.
+   */
+  public String getDayInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 1) {
+    return date[1];
+    }
+    return "";
+  }
+  
+  /**
+   * Get year installed.
+   * @return The year the rain barrel was installed.
+   */
+  public String getYearInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 2) {
+    return date[2];
+    }
+    return "";
+  }  
 }

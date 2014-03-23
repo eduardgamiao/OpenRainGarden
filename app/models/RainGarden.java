@@ -236,4 +236,40 @@ public class RainGarden {
     this.numberOfRainGardens = numberOfRainGardens;
   }
   
+  /**
+   * Get month installed.
+   * @return The month the rain garden was installed.
+   */
+  public String getMonthInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 0) {
+    return date[0];
+    }
+    return "";
+  }
+  
+  /**
+   * Get day installed.
+   * @return The day the rain garden was installed.
+   */
+  public String getDayInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 1) {
+    return date[1];
+    }
+    return "";
+  }
+  
+  /**
+   * Get year installed.
+   * @return The year the rain garden was installed.
+   */
+  public String getYearInstalled() {
+    String [] date = this.getDateInstalled().split("/");
+    if (date.length > 2) {
+    return date[2];
+    }
+    return "";
+  }
+  
 }

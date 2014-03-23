@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Implements types of Surfers.
+ * Implements types of properties.
  */
 public class PropertyTypes {
   

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implements choices for downspouts disconnected drop down.
+ * Implements choices for yes/no choices on forms.
  * @author eduardgamiao
  *
  */
-public class DownspoutDisconnectedType {
+public class YesNoChoiceType {
   
   private static String [] types = {"Yes", "No"};
 
   /**
-   * Return list of choices for downspout disconnected.
+   * Return list of choices for any yes/no choice.
    * @return List of strings that represent the choices.
    */
   public static List<String> getChoiceList() {

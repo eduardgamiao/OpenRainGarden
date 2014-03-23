@@ -7,6 +7,10 @@ import models.PlantDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
+import play.*;
+import play.mvc.*;
+
+import static play.mvc.Results.*;
 
 /**
  * Implements a Global object for the Play Framework.

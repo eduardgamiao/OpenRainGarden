@@ -107,11 +107,21 @@ public class RainGardenFormData {
    * @param rainGarden RainGarden object. 
    */
   public RainGardenFormData(RainGarden rainGarden) {
+    this.id = rainGarden.getID();
     this.title = rainGarden.getTitle();
     this.propertyType = rainGarden.getPropertyType();
     this.address = rainGarden.getAddress();
     this.hideAddress = rainGarden.getHideAddress();
     this.description = rainGarden.getDescription();
+    this.month = rainGarden.getMonthInstalled();
+    this.day = rainGarden.getMonthInstalled();
+    this.year = rainGarden.getYearInstalled();
+    this.plants = rainGarden.getPlants();
+    this.rainGardenSize = rainGarden.getRainGardenSize();
+    this.waterFlowSourceSize = rainGarden.getWaterFlowSourceSize();
+    this.waterFlowDescription = rainGarden.getWaterFlowDescription();
+    this.infiltrationRate = rainGarden.getInfiltrationRate();
+    this.numberOfRainGardens = rainGarden.getNumberOfRainGardens();
   }
   
   /**

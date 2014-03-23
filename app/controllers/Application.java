@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.io.FilenameUtils;
 import com.google.common.io.Files;
 import models.PlantDB;
+import models.RainBarrel;
+import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
 import play.data.Form;
@@ -16,13 +18,18 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import views.formdata.CoverTypes;
 import views.formdata.DateTypes;
-import views.formdata.DownspoutDisconnectedType;
+import views.formdata.InstallationTypes;
+import views.formdata.MaterialTypes;
+import views.formdata.RainBarrelFormData;
+import views.formdata.RainBarrelTypes;
+import views.formdata.WaterUsageTypes;
+import views.formdata.YesNoChoiceType;
 import views.formdata.PlantTypes;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.formdata.SolutionAmountType;
-import views.formdata.UploadResource;
 import views.html.Index;
 import views.html.BrowseGardens;
 import views.html.Page1;
@@ -33,6 +40,7 @@ import views.formdata.LoginFormData;
 import views.html.SignUp;
 import views.formdata.SignUpFormData;
 import views.html.RegisterMenu;
+import views.html.RegisterRainBarrel;
 
 /**
  * Implements the controllers for this application.
@@ -65,7 +73,7 @@ public class Application extends Controller {
     RainGardenFormData data = (id == 0) 
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
-    return ok(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), PropertyTypes.getTypes(), 
+    return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), PropertyTypes.getTypes(), 
               DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
               PlantTypes.getPlantMap(), SolutionAmountType.getTypes()));
   }
@@ -73,11 +81,10 @@ public class Application extends Controller {
   /**
    * Returns the created/edited rain garden page.
    * @return The resulting rain garden page if information was valid, else the registration form.
-   * @throws IOException 
    */
-  public static Result postRainGardenRegister() throws IOException {
+  public static Result postRainGardenRegister() {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
-    validateUpload(formData, request().body().asMultipartFormData());
+    validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
       List<String> plantList = new ArrayList<String>();
@@ -86,7 +93,7 @@ public class Application extends Controller {
           plantList.add(dataMap.get(key));
         }
       }          
-      return badRequest(RegisterRainGarden.render(formData, DownspoutDisconnectedType.getChoiceList(), 
+      return badRequest(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
@@ -105,6 +112,57 @@ public class Application extends Controller {
           source.renameTo(destination);
       }
       return ok(ViewGarden.render(garden, PlantDB.getPlants()));
+     }     
+    }
+  
+  /**
+   * Returns the created/edited rain garden page.
+   * @param id ID of rain garden.
+   * @return The resulting rain garden page.
+   */
+  public static Result registerRainBarrel(Long id) {
+    RainBarrelFormData data = (id == 0) 
+        ? new RainBarrelFormData() : new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
+    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data); 
+    return ok(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), PropertyTypes.getTypes(), 
+              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
+              RainBarrelTypes.getRainBarrelTypes(), MaterialTypes.getMaterialTypes(),
+              WaterUsageTypes.getWaterUsageTypes(), CoverTypes.getCoverTypes(), 
+              InstallationTypes.getInstallationTypes(), SolutionAmountType.getTypes()));
+  }
+  
+  /**
+   * Returns the created/edited rain garden page.
+   * @return The resulting rain garden page if information was valid, else the registration form.
+   */
+  public static Result postRainBarrelRegister() {
+    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).bindFromRequest();
+    validateBarrelUpload(formData, request().body().asMultipartFormData());
+    if (formData.hasErrors()) {
+      Map<String, String> dataMap = formData.data();
+      return badRequest(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), 
+                        PropertyTypes.getTypes(dataMap.get("propertyType")), 
+                        DateTypes.getMonthTypes(dataMap.get("month")), 
+                        DateTypes.getDayTypes(dataMap.get("day")), 
+                        DateTypes.getYearTypes(dataMap.get("year")),
+                        RainBarrelTypes.getRainBarrelTypes(dataMap.get("rainBarrelType")),
+                        MaterialTypes.getMaterialTypes(dataMap.get("material")),
+                        WaterUsageTypes.getWaterUsageTypes(dataMap.get("waterUse")),
+                        CoverTypes.getCoverTypes(dataMap.get("cover")),
+                        InstallationTypes.getInstallationTypes(dataMap.get("installationType")),
+                        SolutionAmountType.getTypes(dataMap.get("numberOfRainBarrels"))));   
+    } 
+    else {
+      RainBarrelFormData data = formData.get();
+      RainBarrel barrel = RainBarrelDB.addRainBarrel(data);
+      MultipartFormData body = request().body().asMultipartFormData();
+      FilePart picture = body.getFile("uploadFile");
+      if (picture != null) {
+          File source = picture.getFile();
+          File destination = new File("public/images/rb" + barrel.getID());
+          source.renameTo(destination);
+      }
+      return TODO;
      }     
     }
   
@@ -199,7 +257,37 @@ public class Application extends Controller {
    * @param body Multipart form data that holds the uploaded file to check.
    * @return A form with validated upload data.
    */
-  private static Form<RainGardenFormData> validateUpload(Form<RainGardenFormData> formData, MultipartFormData body) {
+  private static Form<RainGardenFormData> validateGardenUpload(Form<RainGardenFormData> formData, 
+      MultipartFormData body) {
+    List<ValidationError> errors = new ArrayList<ValidationError>();
+    if (formData.errors().get("uploadFile") != null) {
+      errors = formData.errors().get("uploadFile");
+    }
+    FilePart picture = body.getFile("uploadFile"); 
+    if (picture != null) {
+      if (!(picture.getContentType().contains("image"))) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is not an accepted "
+            + "file type. Please select a file with the extension .jpg/.jpeg or .png"));
+      }
+      if (picture.getFile().length() > MAX_FILE_SIZE) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is too large. "
+            + "Please select a file that is under 2.5 MB"));
+      }
+    }
+    if (!errors.isEmpty()) {
+      formData.errors().put("uploadFile", errors);
+    }
+    return formData;
+  }
+  
+  /**
+   * Validate a given form's upload file.
+   * @param formData The form to check.
+   * @param body Multipart form data that holds the uploaded file to check.
+   * @return A form with validated upload data.
+   */
+  private static Form<RainBarrelFormData> validateBarrelUpload(Form<RainBarrelFormData> formData,
+      MultipartFormData body) {
     List<ValidationError> errors = new ArrayList<ValidationError>();
     if (formData.errors().get("uploadFile") != null) {
       errors = formData.errors().get("uploadFile");
