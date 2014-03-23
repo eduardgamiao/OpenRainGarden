@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FilenameUtils;
+
 import com.google.common.io.Files;
+
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
+import models.UserInfoDB;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -218,7 +222,11 @@ public class Application extends Controller {
 	  else {
 		  SignUpFormData data = formData.get();
 		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
-		  return ok(SignUp.render(formData));
+		  
+		  //create new userinfo and add it to the "database"
+		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
+		  
+		  return redirect(routes.Application.login());
 	  }
   }
   
