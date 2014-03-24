@@ -5,11 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.io.FilenameUtils;
-
 import com.google.common.io.Files;
-
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
@@ -19,6 +16,7 @@ import models.UserInfoDB;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
+import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
@@ -73,19 +71,21 @@ public class Application extends Controller {
    * @param id ID of rain garden.
    * @return The resulting rain garden page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result registerRainGarden(Long id) {
     RainGardenFormData data = (id == 0) 
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
-    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data); 
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
     return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), PropertyTypes.getTypes(), 
               DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
-              PlantTypes.getPlantMap(), SolutionAmountType.getTypes()));
+              PlantTypes.getPlantMap(), SolutionAmountType.getTypes(), Secured.getUserInfo(ctx())));
   }
   
   /**
    * Returns the created/edited rain garden page.
    * @return The resulting rain garden page if information was valid, else the registration form.
    */
+  @Security.Authenticated(Secured.class)
   public static Result postRainGardenRegister() {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     validateGardenUpload(formData, request().body().asMultipartFormData());
@@ -103,7 +103,8 @@ public class Application extends Controller {
                         DateTypes.getDayTypes(dataMap.get("day")), 
                         DateTypes.getYearTypes(dataMap.get("year")),
                         PlantTypes.getPlantMap(plantList),
-                        SolutionAmountType.getTypes(dataMap.get("numberOfRainGardens"))));   
+                        SolutionAmountType.getTypes(dataMap.get("numberOfRainGardens")),
+                        Secured.getUserInfo(ctx())));   
     } 
     else {
       RainGardenFormData data = formData.get();
@@ -124,6 +125,7 @@ public class Application extends Controller {
    * @param id ID of rain garden.
    * @return The resulting rain garden page.
    */
+  @Security.Authenticated(Secured.class)
   public static Result registerRainBarrel(Long id) {
     RainBarrelFormData data = (id == 0) 
         ? new RainBarrelFormData() : new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
@@ -139,6 +141,7 @@ public class Application extends Controller {
    * Returns the created/edited rain garden page.
    * @return The resulting rain garden page if information was valid, else the registration form.
    */
+  @Security.Authenticated(Secured.class)
   public static Result postRainBarrelRegister() {
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).bindFromRequest();
     validateBarrelUpload(formData, request().body().asMultipartFormData());
