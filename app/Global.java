@@ -3,15 +3,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.h2.engine.Session;
 import models.Plant;
 import models.PlantDB;
+import models.RainGarden;
+import models.RainGardenDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
 import play.*;
 import play.mvc.*;
+import views.formdata.RainGardenFormData;
 import static play.mvc.Results.*;
 
 /**
@@ -36,6 +41,16 @@ public class Global extends GlobalSettings {
     
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
+        
+    // Add rain garden.
+    List<String> plants = new ArrayList<String>();
+    plants.add("‘Ahu‘awa");
+    plants.add("Kāwelu");
+    plants.add("Mau‘u ‘aki ‘aki");
+    RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", "564 Though Lane", 
+        "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "25", "200", 
+        "Water flows from roof into garden.", "0.75", "2"), UserInfoDB.getUser("johnsmith@gmail.com"));
+    Logger.info(garden.getNumberOfRainGardens());
   }
 
   /**
@@ -44,6 +59,7 @@ public class Global extends GlobalSettings {
    * @param app A Play Framework application.
    */
   public void onStop(Application app) {
+    // Clean upload folder. Delete this code once backing database is added.
     try {
       FileUtils.cleanDirectory(new File("public/images/upload"));
     }

@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-
 import com.google.common.io.Files;
-
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
@@ -81,9 +79,12 @@ public class Application extends Controller {
     RainGardenFormData data = (id == 0) 
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
-    return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), PropertyTypes.getTypes(), 
-              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
-              PlantTypes.getPlantMap(), SolutionAmountType.getTypes(), Secured.getUserInfo(ctx())));
+    Map<String, String> dataMap = formData.data();
+    return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
+              PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
+              DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
+              PlantTypes.getPlantMap(data.plants), SolutionAmountType.getTypes(data.numberOfRainGardens), 
+              Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -119,8 +120,7 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           File destination = new File("public/images/upload/rg" + garden.getID());
-          source.renameTo(destination);          
-          RainGardenDB.getRainGarden(garden.getID()).setHasPicture(true);
+          source.renameTo(destination);
       }
       return redirect("/view/rain-garden/" + garden.getID());
      }     
@@ -174,7 +174,6 @@ public class Application extends Controller {
           File source = picture.getFile();
           File destination = new File("public/images/upload/rb" + barrel.getID());
           source.renameTo(destination);
-          RainBarrelDB.getRainBarrel(barrel.getID()).setHasPicture(true);
       }
       return redirect("/view/rain-barrel/" + barrel.getID());
      }     

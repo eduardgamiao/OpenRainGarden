@@ -1,7 +1,10 @@
 package models;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 
 /**
  * An object that represents a rain garden.
@@ -21,7 +24,6 @@ public class RainGarden {
   private String waterFlowDescription = "N/A";
   private String infiltrationRate = "N/A";
   private String numberOfRainGardens = "N/A";
-  private boolean hasPicture = false;
   private UserInfo owner;
   
   /**
@@ -252,16 +254,12 @@ public class RainGarden {
   
   /**
    * @return the hasPicture
+   * @throws IOException 
    */
-  public boolean hasPicture() {
-    return hasPicture;
+  public boolean hasPicture() throws IOException {
+    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/rg" + this.id));
   }
-  /**
-   * @param hasPicture the hasPicture to set
-   */
-  public void setHasPicture(boolean hasPicture) {
-    this.hasPicture = hasPicture;
-  }
+
   /**
    * Get month installed.
    * @return The month the rain garden was installed.
@@ -309,9 +307,10 @@ public class RainGarden {
   /**
    * Get the picture name tied to a rain garden.
    * @return The name of the picture tied to the rain garden.
+   * @throws IOException 
    */
-  public String getPictureName() {
-    if (this.hasPicture) {
+  public String getPictureName() throws IOException {
+    if (hasPicture()) {
       return "upload/rg" + this.id;
     }
     return "placeholder.gif";

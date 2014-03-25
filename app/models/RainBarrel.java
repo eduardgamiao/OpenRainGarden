@@ -1,5 +1,9 @@
 package models;
 
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+
 /**
  * An object that represents a rain barrel.
  */
@@ -23,7 +27,6 @@ public class RainBarrel {
   private String obtainedFrom = "N/A";
   private String installationType = "N/A";
   private String numberOfRainBarrels = "N/A";
-  private boolean hasPicture = false;
   private UserInfo owner;
     
   /**
@@ -370,16 +373,10 @@ public class RainBarrel {
 
   /**
    * @return the hasPicture
+   * @throws IOException Thrown if there is an error during file checking.
    */
-  public boolean hasPicture() {
-    return hasPicture;
-  }
-
-  /**
-   * @param hasPicture the hasPicture to set
-   */
-  public void setHasPicture(boolean hasPicture) {
-    this.hasPicture = hasPicture;
+  public boolean hasPicture() throws IOException {
+    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/rb" + this.id));
   }
 
   /**
@@ -399,9 +396,10 @@ public class RainBarrel {
   /**
    * Get the picture name tied to a rain barrel..
    * @return The name of the picture tied to the rain barrel.
+   * @throws IOException Thrown if there is an error during file checking.
    */
-  public String getPictureName() {
-    if (this.hasPicture) {
+  public String getPictureName() throws IOException {
+    if (hasPicture()) {
       return "upload/rb" + this.id;
     }
     return "placeholder.gif";

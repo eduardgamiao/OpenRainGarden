@@ -16,11 +16,11 @@ public class SolutionAmountType {
    * @return A mapping of solution amount types.
    */
   public static Map<String, Boolean> getTypes() {
-    Map<String, Boolean> propertyMap = new LinkedHashMap<String, Boolean>();
+    Map<String, Boolean> amountMap = new LinkedHashMap<String, Boolean>();
     for (String type : types) {
-      propertyMap.put(type, false);
+      amountMap.put(type, false);
     }
-    return propertyMap;
+    return amountMap;
   }
   
   /**
@@ -29,11 +29,11 @@ public class SolutionAmountType {
    * @return A mapping of solution amounts types.
    */
   public static Map<String, Boolean> getTypes(String type) {
-    Map<String, Boolean> propertyMap = SolutionAmountType.getTypes();
+    Map<String, Boolean> amountMap = SolutionAmountType.getTypes();
     if (isType(type)) {
-      propertyMap.put(type, true);
+      amountMap.put(type, true);
     }
-    return propertyMap;
+    return amountMap;
   }
   
   /**
@@ -42,7 +42,7 @@ public class SolutionAmountType {
    * @return True if the type is valid, false otherwise. 
    */
   public static Boolean isType(String type) {
-    return PropertyTypes.getTypes().containsKey(type);
+    return SolutionAmountType.getTypes().containsKey(type);
   }
   
 }
