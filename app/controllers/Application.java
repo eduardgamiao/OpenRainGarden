@@ -47,6 +47,7 @@ import views.html.SignUp;
 import views.formdata.SignUpFormData;
 import views.html.RegisterMenu;
 import views.html.RegisterRainBarrel;
+import views.html.LearnMore;
 
 /**
  * Implements the controllers for this application.
@@ -282,10 +283,23 @@ public class Application extends Controller {
 	  }
   }
   
+  /**
+   * Logout the current user
+   * @return the index page
+   */
   @Security.Authenticated(Secured.class)
   public static Result logout() {
 	  session().clear();
 	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Returns the Learn More page
+   * @return
+   */
+  public static Result learnmore() {
+	  
+	  return ok(LearnMore.render("Learn More"));
   }
   
   /**
