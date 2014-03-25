@@ -2,7 +2,7 @@
 
 ### Wiki Links
 * [Related Technology](https://github.com/OpenRainGarden/OpenRainGarden/wiki/RelatedTechnology)  
-* [Team Meetings/Check-In](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Team-Meetings)  
+* [Team Meetings/Check-In](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Team-Meetings-&-Check-In)  
 * [User Interviews](https://github.com/OpenRainGarden/OpenRainGarden/wiki/UserInterviews)  
 * [Mockup](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Mockup)  
 * [UI-Mockup](http://openraingarden.github.io/uimockup)
