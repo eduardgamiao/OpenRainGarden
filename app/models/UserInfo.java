@@ -15,6 +15,7 @@ public class UserInfo extends Model {
 	private String password;
 	private boolean admin = false;
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
+	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;
@@ -93,5 +94,27 @@ public class UserInfo extends Model {
   public void setGardens(List<RainGarden> gardens) {
     this.gardens = gardens;
   }
-	
+  
+  /**
+   * @return the barrels
+   */
+  public List<RainBarrel> getBarrels() {
+    return barrels;
+  }
+
+  /**
+   * @param barrels the barrels to set
+   */
+  public void setBarrels(List<RainBarrel> barrels) {
+    this.barrels = barrels;
+  }
+
+  /**
+   * Return name of UserInfo.
+   * @return The name of the UserInfo.
+   */
+  public String getName() {
+    return this.firstName + " " + this.lastName;
+  }
+ 	
 }

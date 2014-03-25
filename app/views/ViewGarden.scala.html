@@ -1,6 +1,6 @@
 @(rainGarden: RainGarden, plantList: List[Plant])
 
-@Main("View Garden") {
+@Main("View Rain Garden") {
    <div class="container">
        <div class="row">
       <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
@@ -20,7 +20,7 @@
           </div>
           <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
             <ul class="list-group" style="text-align: center;">
-              <li class="list-group-item">Owner: @rainGarden.getOwner().getFirstName() @rainGarden.getOwner().getLastName()</li>
+              <li class="list-group-item">Owner: @rainGarden.getOwner().getName()</li>
               <li class="list-group-item">Type: Rain Garden</li>
               <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
               <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
               <ul class="list-group" style="text-align: center;">
-              <li class="list-group-item">Owner: </li>
+              <li class="list-group-item">Owner: @rainGarden.getOwner().getName()</li>
               <li class="list-group-item">Type: Rain Garden</li>
               <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
               <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
@@ -50,7 +50,7 @@
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <b>Rain Garden Size:</b> @rainGarden.getRainGardenSize()<br />
                 <b>Size of Roof/Impervious Surface:</b> @rainGarden.getWaterFlowSourceSize()<br />
-                <b>Waterflow Description:</b> @rainGarden.getWaterFlowDescription()<br />
+                <b>Water Flow Description:</b> @rainGarden.getWaterFlowDescription()<br />
                 <b>Infiltration Rate:</b> @rainGarden.getInfiltrationRate()<br /><br/>                
               </div>
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:white;">

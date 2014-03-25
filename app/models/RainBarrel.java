@@ -22,7 +22,9 @@ public class RainBarrel {
   private String cover;
   private String obtainedFrom;
   private String installationType;
-  private String numberOfRainBarrel; 
+  private String numberOfRainBarrels;
+  private boolean hasPicture = false;
+  private UserInfo owner;
     
   /**
    * Constructor.
@@ -66,7 +68,7 @@ public class RainBarrel {
     this.cover = cover;
     this.obtainedFrom = obtainedFrom;
     this.installationType = installationType;
-    this.numberOfRainBarrel = numberOfRainBarrel;
+    this.numberOfRainBarrels = numberOfRainBarrel;
   }
   
   /**
@@ -157,15 +159,15 @@ public class RainBarrel {
   /**
    * @return the numberOfRainGardens
    */
-  public String getNumberOfRainGardens() {
-    return numberOfRainBarrel;
+  public String getNumberOfRainBarrels() {
+    return numberOfRainBarrels;
   }
 
   /**
-   * @param numberOfRainGardens the numberOfRainGardens to set
+   * @param numberOfRainBarrels the numberOfRainGardens to set
    */
-  public void setNumberOfRainGardens(String numberOfRainGardens) {
-    this.numberOfRainBarrel = numberOfRainGardens;
+  public void setNumberOfRainBarrels(String numberOfRainBarrels) {
+    this.numberOfRainBarrels = numberOfRainBarrels;
   }
 
   /**
@@ -342,5 +344,44 @@ public class RainBarrel {
     return date[2];
     }
     return "";
-  }  
+  }
+
+  /**
+   * @return the hasPicture
+   */
+  public boolean hasPicture() {
+    return hasPicture;
+  }
+
+  /**
+   * @param hasPicture the hasPicture to set
+   */
+  public void setHasPicture(boolean hasPicture) {
+    this.hasPicture = hasPicture;
+  }
+
+  /**
+   * @return the owner
+   */
+  public UserInfo getOwner() {
+    return owner;
+  }
+
+  /**
+   * @param owner the owner to set
+   */
+  public void setOwner(UserInfo owner) {
+    this.owner = owner;
+  } 
+  
+  /**
+   * Get the picture name tied to a rain barrel..
+   * @return The name of the picture tied to the rain barrel.
+   */
+  public String getPictureName() {
+    if (this.hasPicture) {
+      return "rb" + this.id;
+    }
+    return "placeholder.gif";
+  }
 }

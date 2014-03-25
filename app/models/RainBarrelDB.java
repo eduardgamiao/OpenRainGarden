@@ -19,7 +19,7 @@ public class RainBarrelDB {
    * @param formData Rain barrel form data.
    * @return The rain barrel that has been added.
    */
-  public static RainBarrel addRainBarrel(RainBarrelFormData formData) {
+  public static RainBarrel addRainBarrel(RainBarrelFormData formData, UserInfo userInfo) {
     RainBarrel barrel;
     if (formData.id == 0) {
       long id = barrels.size() + 1;
@@ -28,6 +28,8 @@ public class RainBarrelDB {
                               formData.rainBarrelType, formData.capacity, formData.color, formData.material, 
                               formData.estimatedCost, formData.waterUse, formData.overflowFrequency, formData.cover,
                               formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
+      barrel.setOwner(userInfo);
+      userInfo.getBarrels().add(barrel);
       barrels.put(id, barrel);
       return barrel;
     }
@@ -38,6 +40,8 @@ public class RainBarrelDB {
                               formData.rainBarrelType, formData.capacity, formData.color, formData.material, 
                               formData.estimatedCost, formData.waterUse, formData.overflowFrequency, formData.cover,
                               formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
+      barrel.setOwner(userInfo);
+      userInfo.getBarrels().add(barrel);
       barrels.put(barrel.getID(), barrel);
       return barrel;
     }

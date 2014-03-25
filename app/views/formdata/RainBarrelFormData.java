@@ -151,7 +151,7 @@ public class RainBarrelFormData {
     this.cover = rainBarrel.getCover();
     this.obtainedFrom = rainBarrel.getObtainedFrom();
     this.installationType = rainBarrel.getInstallationType();
-    this.numberOfRainBarrels = rainBarrel.getNumberOfRainGardens();
+    this.numberOfRainBarrels = rainBarrel.getNumberOfRainBarrels();
   }
   
   /**

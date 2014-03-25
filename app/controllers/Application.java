@@ -41,6 +41,7 @@ import views.html.Page1;
 import views.html.RegisterRainGarden;
 import views.html.Login;
 import views.html.ViewGarden;
+import views.html.ViewBarrel;
 import views.formdata.LoginFormData;
 import views.html.SignUp;
 import views.formdata.SignUpFormData;
@@ -165,27 +166,41 @@ public class Application extends Controller {
     } 
     else {
       RainBarrelFormData data = formData.get();
-      RainBarrel barrel = RainBarrelDB.addRainBarrel(data);
+      RainBarrel barrel = RainBarrelDB.addRainBarrel(data, Secured.getUserInfo(ctx()));
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
           File source = picture.getFile();
-          File destination = new File("public/images/rb" + barrel.getID());
+          File destination = new File("public/images/upload/rb" + barrel.getID());
           source.renameTo(destination);
+          RainBarrelDB.getRainBarrel(barrel.getID()).setHasPicture(true);
       }
-      return TODO;
+      return redirect("/view/rain-barrel/" + barrel.getID());
      }     
     }
   
   /**
    * View garden page.
    * @param id ID of garden to view.
-   * @return The garden view page of the rain garden mathcing the given ID. 
+   * @return The garden view page of the rain garden matching the given ID. 
    */
   public static Result viewGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
     if (garden != null) {
      return ok(ViewGarden.render(garden, PlantDB.getPlants()));
+    }
+    return badRequest(Index.render("Error"));
+  }
+  
+  /**
+   * View barrel page.
+   * @param id ID of barrel to view.
+   * @return The barrel view page of the rain barrel matching the given ID. 
+   */
+  public static Result viewBarrel(Long id) {
+    RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    if (barrel != null) {
+     return ok(ViewBarrel.render(barrel));
     }
     return badRequest(Index.render("Error"));
   }
