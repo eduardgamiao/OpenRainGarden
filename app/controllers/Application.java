@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FilenameUtils;
+
 import com.google.common.io.Files;
+
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
@@ -261,6 +264,12 @@ public class Application extends Controller {
 		  session("email", formData.get().email);
 		  return redirect(routes.Application.index());
 	  }
+  }
+  
+  @Security.Authenticated(Secured.class)
+  public static Result logout() {
+	  session().clear();
+	  return redirect(routes.Application.index());
   }
   
   /**

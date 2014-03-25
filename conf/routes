@@ -11,11 +11,12 @@ POST    /register/rain-garden       controllers.Application.postRainGardenRegist
 GET     /register/rain-barrel       controllers.Application.registerRainBarrel(id: Long ?= 0)
 POST    /register/rain-barrel       controllers.Application.postRainBarrelRegister()
 GET     /browse/rain-garden         controllers.Application.browseGarden()
-GET		  /login           						controllers.Application.login()
-POST	  /login				           		controllers.Application.postLogin()
-GET		  /signup						          controllers.Application.signup()
-POST	  /signup						          controllers.Application.postSignUp()
+GET		/login           			controllers.Application.login()
+POST	/login				        controllers.Application.postLogin()
+GET		/signup						controllers.Application.signup()
+POST	/signup						controllers.Application.postSignUp()
 GET     /view/rain-garden/:id       controllers.Application.viewGarden(id: Long)
+GET		/logout						controllers.Application.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
