@@ -21,8 +21,8 @@ public class RainGarden {
   private String waterFlowDescription = "N/A";
   private String infiltrationRate = "N/A";
   private String numberOfRainGardens = "N/A";
-  
-  
+  private boolean hasPicture = false;
+  private UserInfo owner;
   
   /**
    * Constructor.
@@ -237,6 +237,32 @@ public class RainGarden {
   }
   
   /**
+   * @return the owner.
+   */
+  public UserInfo getOwner() {
+    return owner;
+  }
+  
+  /**
+   * @param owner the owner to set
+   */
+  public void setOwner(UserInfo owner) {
+    this.owner = owner;
+  }
+  
+  /**
+   * @return the hasPicture
+   */
+  public boolean hasPicture() {
+    return hasPicture;
+  }
+  /**
+   * @param hasPicture the hasPicture to set
+   */
+  public void setHasPicture(boolean hasPicture) {
+    this.hasPicture = hasPicture;
+  }
+  /**
    * Get month installed.
    * @return The month the rain garden was installed.
    */
@@ -270,6 +296,25 @@ public class RainGarden {
     return date[2];
     }
     return "";
+  }
+  
+  /**
+   * Return name of owner.
+   * @return The owner's name.
+   */
+  public String getNameOfOwner() {
+    return this.owner.getFirstName() + " " + this.owner.getLastName();
+  }
+  
+  /**
+   * Get the picture name tied to a rain garden.
+   * @return The name of the picture tied to the rain garden.
+   */
+  public String getPictureName() {
+    if (this.hasPicture) {
+      return "rg" + this.id;
+    }
+    return "placeholder.gif";
   }
   
 }

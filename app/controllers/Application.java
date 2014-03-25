@@ -108,7 +108,7 @@ public class Application extends Controller {
     } 
     else {
       RainGardenFormData data = formData.get();
-      RainGarden garden = RainGardenDB.addRainGarden(data);
+      RainGarden garden = RainGardenDB.addRainGarden(data, Secured.getUserInfo(ctx()));
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
@@ -198,8 +198,9 @@ public class Application extends Controller {
    * Returns page1, a simple example of a second page to illustrate navigation.
    * @return The Page1.
    */
+  @Security.Authenticated(Secured.class)
   public static Result page1() {
-    return ok(Page1.render("Welcome to Page1.", PlantDB.getPlants()));
+    return ok(Page1.render("Welcome to Page1.", Secured.getUserInfo(ctx())));
   }
   
   /**

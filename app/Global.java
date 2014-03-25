@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.h2.engine.Session;
 import models.Plant;
 import models.PlantDB;
 import play.Application;
@@ -9,7 +10,6 @@ import play.GlobalSettings;
 import models.UserInfoDB;
 import play.*;
 import play.mvc.*;
-
 import static play.mvc.Results.*;
 
 /**
@@ -35,7 +35,7 @@ public class Global extends GlobalSettings {
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
   }
-  
+
   /**
    * Populate plant database with plants from file.
    */

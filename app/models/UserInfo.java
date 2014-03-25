@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
 import play.db.ebean.Model;
 
 public class UserInfo extends Model {
@@ -12,6 +14,7 @@ public class UserInfo extends Model {
 	private String telephone;
 	private String password;
 	private boolean admin = false;
+	private List<RainGarden> gardens = new ArrayList<RainGarden>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;
@@ -76,5 +79,19 @@ public class UserInfo extends Model {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
+
+  /**
+   * @return the gardens
+   */
+  public List<RainGarden> getGardens() {
+    return gardens;
+  }
+
+  /**
+   * @param gardens the gardens to set
+   */
+  public void setGardens(List<RainGarden> gardens) {
+    this.gardens = gardens;
+  }
 	
 }

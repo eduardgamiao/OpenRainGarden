@@ -16,9 +16,10 @@ public class RainGardenDB {
    * Add rain garden.
    * 
    * @param formData Data form data.
+   * @param userInfo Registering user.
    * @return The rain garden that has been added.
    */
-  public static RainGarden addRainGarden(RainGardenFormData formData) {
+  public static RainGarden addRainGarden(RainGardenFormData formData, UserInfo userInfo) {
     RainGarden garden;
     if (formData.id == 0) {
       long id = gardens.size() + 1;
@@ -26,6 +27,8 @@ public class RainGardenDB {
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
                               formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
+      garden.setOwner(userInfo);
+      garden.getOwner().getGardens().add(garden);
       gardens.put(id, garden);
       return garden;
     }
@@ -34,6 +37,8 @@ public class RainGardenDB {
           formData.hideAddress,  formData.description, formData.month + "/" + formData.day + "/" + formData.year, 
           formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
           formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
+      garden.setOwner(userInfo);
+      garden.getOwner().getGardens().add(garden);
       gardens.put(garden.getID(), garden);
       return garden;
     }

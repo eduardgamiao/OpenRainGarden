@@ -1,4 +1,4 @@
-@(message: String, plantList: List[Plant])
+@(message: String, userInfo: UserInfo)
 
 @import helper._
 @import bootstrap3._
@@ -7,19 +7,11 @@
    <div class="container">
     <table class="table table-borderd">
     <tr>
-      <th>Plant Name</th>
-      <th>Scientific Name</th>
-      <th>Placement</th>
-      <th>Growth</th>
-      <th>Climate</th>
+      <th>Garden</th>
       </tr>
-      @for(plant <- plantList) {
+      @for(garden <- userInfo.getGardens()) {
         <tr>
-         <td>@plant.getName()</td>
-         <td>@plant.getScientificName()</td>
-         <td>@plant.getPlacement()</td>
-         <td>@plant.getGrowth()</td>
-         <td>@plant.getClimateType()</td>
+         <td>@garden.getAddress()</td>
         </tr>
       }
     </table>
