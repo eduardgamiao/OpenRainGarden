@@ -1,5 +1,8 @@
 body {
 	padding-top: 70px;
+	color: #5a5a5a  !important;
+  	font-family:font-family: "Open Sans",sans-serif;
+	
 }
 
 .navbar-inverse {
@@ -29,4 +32,125 @@ body {
 
 navbar a {
 	color: white;
+}
+
+.featurette-heading{
+	font-size: 36px;
+	font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", serif;
+	font-weight: bold;
+}
+.btn {
+	background-color: #3F60AD;
+	border-color: #3F60AD;
+}
+
+/* index page style
+------------------------- */
+
+.featurette-divider {
+  margin: 0px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.press-banner {
+	background-image: url(../images/index_banner.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='@img', sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='@img', sizingMethod='scale')";
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	height: 261px;
+	color: #555555;
+	padding: 100px 0;
+	font-family:font-family: "Open Sans",sans-serif;
+	margin-top: -30px;
+}
+.header{
+	width: 100%;
+	height: 261px;
+	display: table;
+	clear: both;
+	height: 261px;
+	margin: 0 auto;
+	overflow: hidden;
+	background-attachment: scroll;
+	background-image: url(public/images/header.png);
+	background-position: center bottom;
+	background-repeat: no-repeat;
+}
+.joinus{
+	/*height:300px;	*/
+}
+.m{
+	text-align: center;	
+
+}
+footer{
+	margin-top: 200px;
+	margin-left: 20%;	
+	margin-right: 20%;	
+}
+.section-content {
+display:block;
+border-top: 1px solid #e9e9e9;
+border-bottom: 1px solid #e9e9e9;
+padding: 60px 0;
+background-attachment: fixed;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+overflow: hidden;
+position: relative !important;
+-webkit-backface-visibility: hidden;
+}
+.section-content video {
+position: absolute;
+right: 0;
+top: 0;
+min-height: 100%;
+min-width: 100%;
+width: auto;
+height: auto;
+z-index: -1000;
+}
+.press-banner h1{
+	padding-top: 17px;
+	padding-right: 17px;
+	padding-bottom: 17px;
+	padding-left: 17px;
+	background-color: #EEEEEE;
+	opacity:0.5;
+}
+
+.bigFont {
+    font-size: 30px;
+  }
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  .press-banner h1{
+	margin-top: 70px;
+  }
+  .bigFont {
+    font-size: 35px;
+  }
+  .featurette-heading {
+    font-size: 50px;
+  }
+
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 80px;
+  }
 }
