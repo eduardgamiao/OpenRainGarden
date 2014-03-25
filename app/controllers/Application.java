@@ -116,11 +116,11 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
           File source = picture.getFile();
-          File destination = new File("public/images/rg" + garden.getID());
+          File destination = new File("public/images/upload/rg" + garden.getID());
           source.renameTo(destination);          
           RainGardenDB.getRainGarden(garden.getID()).setHasPicture(true);
       }
-      return redirect("rain-garden/view/" + garden.getID());
+      return redirect("/view/rain-garden/" + garden.getID());
      }     
     }
   

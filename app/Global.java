@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.apache.commons.io.FileUtils;
 import org.h2.engine.Session;
 import models.Plant;
 import models.PlantDB;
@@ -36,6 +38,21 @@ public class Global extends GlobalSettings {
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
   }
 
+  /**
+   * Termination method for this Play Framework web application.
+   * 
+   * @param app A Play Framework application.
+   */
+  public void onStop(Application app) {
+    try {
+      FileUtils.cleanDirectory(new File("public/images/upload"));
+    }
+    catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+  
   /**
    * Populate plant database with plants from file.
    */
