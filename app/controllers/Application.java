@@ -117,9 +117,10 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           File destination = new File("public/images/rg" + garden.getID());
-          source.renameTo(destination);
+          source.renameTo(destination);          
+          RainGardenDB.getRainGarden(garden.getID()).setHasPicture(true);
       }
-      return ok(ViewGarden.render(garden, PlantDB.getPlants()));
+      return redirect("rain-garden/view/" + garden.getID());
      }     
     }
   
