@@ -29,7 +29,7 @@ public class SolutionAmountType {
    * @return A mapping of solution amounts types.
    */
   public static Map<String, Boolean> getTypes(String type) {
-    Map<String, Boolean> propertyMap = PropertyTypes.getTypes();
+    Map<String, Boolean> propertyMap = SolutionAmountType.getTypes();
     if (isType(type)) {
       propertyMap.put(type, true);
     }

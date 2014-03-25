@@ -33,8 +33,8 @@
               @text(formData("estimatedCost"), "Estimated Cost", "Estimated Cost of Rain Barrel", "")  
               @bootstrap3.select(formData("waterUse"), "Water Usage", "Please Select Use of Water from Rain Barrel", usageTypes, false, "")
               @textwithstyle(formData("overflowFrequency"), "Overflow Frequency", "Frequency of Rain Barrel Overflow", "", "top:0.8em;")                
-              @bootstrap3.select(formData("cover"), "Cover", "Please Select Cover for Rain Barrel", usageTypes, false, "")
-              @text(formData("obtainedFrom"), "Place of Acquisition", "Place Where Rain Barrel was Acquired","")                
+              @bootstrap3.select(formData("cover"), "Cover", "Please Select Cover for Rain Barrel", coverTypes, false, "")
+              @textwithstyle(formData("obtainedFrom"), "Place of Acquisition", "Place Where Rain Barrel was Acquired","", "top:0.8em;")                
               @bootstrap3.selectwithstyle(formData("installationType"), "Installation Method", "Please Select Method of Installation", installationTypes, false, "", "top:0.8em;")                
               @bootstrap3.selectwithstyle(formData("numberOfRainBarrels"), "Number of Rain Barrel(s)", "Please Select Number of Rain Barrel(s)", amountTypes, false, "",  "top:0.8em;")   
                                             

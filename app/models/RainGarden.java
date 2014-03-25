@@ -312,7 +312,7 @@ public class RainGarden {
    */
   public String getPictureName() {
     if (this.hasPicture) {
-      return "rg" + this.id;
+      return "upload/rg" + this.id;
     }
     return "placeholder.gif";
   }

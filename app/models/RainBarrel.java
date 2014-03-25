@@ -12,17 +12,17 @@ public class RainBarrel {
   private String hideAddress;
   private String description;
   private String dateInstalled;
-  private String rainBarrelType;
-  private String capacity;
-  private String color;
-  private String material;
-  private String estimatedCost;
-  private String waterUse;
-  private String overflowFrequency;
-  private String cover;
-  private String obtainedFrom;
-  private String installationType;
-  private String numberOfRainBarrels;
+  private String rainBarrelType = "N/A";
+  private String capacity = "N/A";
+  private String color = "N/A";
+  private String material = "N/A";
+  private String estimatedCost = "N/A";
+  private String waterUse = "N/A";
+  private String overflowFrequency = "N/A";
+  private String cover = "N/A";
+  private String obtainedFrom = "N/A";
+  private String installationType = "N/A";
+  private String numberOfRainBarrels = "N/A";
   private boolean hasPicture = false;
   private UserInfo owner;
     
@@ -58,17 +58,39 @@ public class RainBarrel {
     this.hideAddress = hideAddress;
     this.description = description;
     this.dateInstalled = dateInstalled;
-    this.rainBarrelType = rainBarrelType;
-    this.capacity = capacity;
-    this.color = color;
-    this.material = material;
-    this.estimatedCost = estimatedCost;
-    this.waterUse = waterUse;
-    this.overflowFrequency = overflowFrequency;
-    this.cover = cover;
-    this.obtainedFrom = obtainedFrom;
-    this.installationType = installationType;
-    this.numberOfRainBarrels = numberOfRainBarrel;
+    if (!rainBarrelType.isEmpty()) {
+      this.rainBarrelType = rainBarrelType;
+    }
+    if (!capacity.isEmpty()) {
+      this.capacity = capacity;
+    }
+    if (!color.isEmpty()) {
+      this.color = color;
+    }
+    if (!material.isEmpty()) {
+      this.material = material;
+    }
+    if (!estimatedCost.isEmpty()) {
+      this.estimatedCost = estimatedCost;
+    }
+    if (!waterUse.isEmpty()) {
+      this.waterUse = waterUse;
+    }
+    if (!overflowFrequency.isEmpty()) {
+      this.overflowFrequency = overflowFrequency;
+    }
+    if (!cover.isEmpty()) {
+      this.cover = cover;
+    }
+    if (!obtainedFrom.isEmpty()) {
+      this.obtainedFrom = obtainedFrom;
+    }
+    if (!installationType.isEmpty()) {
+      this.installationType = installationType;
+    }
+    if (!numberOfRainBarrels.isEmpty()) {
+      this.numberOfRainBarrels = numberOfRainBarrel;
+    }
   }
   
   /**
@@ -380,7 +402,7 @@ public class RainBarrel {
    */
   public String getPictureName() {
     if (this.hasPicture) {
-      return "rb" + this.id;
+      return "upload/rb" + this.id;
     }
     return "placeholder.gif";
   }

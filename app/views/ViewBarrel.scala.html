@@ -7,7 +7,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@routes.Assets.at("images/upload/" + rainBarrel.getPictureName())" class="img-responsive center-block"
+              <img src="@routes.Assets.at("images/" + rainBarrel.getPictureName())" class="img-responsive center-block"
                 style="width: 100%; height: 400px;" />
             </div>
           </div>
@@ -46,15 +46,20 @@
           <div class="row" style="color: black; font-size: 14px;  padding: 0 2em 0 2em;">
               <div class="page-header">
               <h4>Additional Information</h4>
-              <table class="table">
-                <tr>
-                  <th>Field</th><th>Value</th>                  
-                </tr>
-                <tr>
-                  <td></td><td></td>
-                </tr>
-              </table>
-            </div>
+              </div>              
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                 <ul class="list-group" style="text-align: center;">
+                  <li class="list-group-item">Rain Barrel: Type @rainBarrel.getRainBarrelType()</li>
+                  <li class="list-group-item">Color: @rainBarrel.getColor()</li>
+                  <li class="list-group-item">Material Type: @rainBarrel.getMaterial()</li>
+                  <li class="list-group-item">Estimated Cost: @rainBarrel.getEstimatedCost()</li>
+                  <li class="list-group-item">Water Usage: @rainBarrel.getWaterUse()</li>                       
+                  <li class="list-group-item">Overflow Frequency: @rainBarrel.getOverflowFrequency</li>
+                  <li class="list-group-item">Rain Barrel Cover: @rainBarrel.getCover()</li>
+                  <li class="list-group-item">Place of Acquisition: @rainBarrel.getObtainedFrom()</li>
+                  <li class="list-group-item">Installation Method: @rainBarrel.getInstallationType()</li>
+                </ul>
+              </div>
           </div>
         </div>
       </div>
