@@ -1,6 +1,7 @@
 @(signupForm: Form[views.formdata.SignUpFormData])
 
 @import helper._
+@import bootstrap3._
 
 @Main("Sign Up") {
 <div class="container">
@@ -12,61 +13,12 @@
 				</div>
 				<div class="panel-body" style="color: black;">
 					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
-						<div class="form-group @if(signupForm("firstName").hasErrors) {has-error}">
-							<label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
-							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="text" class="form-control"
-										name="@signupForm("firstName").name"
-										id="@signupForm("firstName").id"
-										value="@signupForm("firstName").value"
-										placeholder="First Name">
-								<span class="help-block">@{signupForm("firstName").error.map {error => error.message}}</span>
-							</div>
-						</div>
-						<div class="form-group @if(signupForm("lastName").hasErrors) {has-error}">
-							<label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
-							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="text" class="form-control"
-										name="@signupForm("lastName").name"
-										id="@signupForm("lastName").id"
-										value="@signupForm("lastName").value"
-										placeholder="Last Name">
-								<span class="help-block">@{signupForm("lastName").error.map {error => error.message}}</span>
-							</div>
-						</div>
-						<div class="form-group @if(signupForm("email").hasErrors) {has-error}">
-							<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="email" class="form-control"
-										name="@signupForm("email").name"
-										id="@signupForm("email").id"
-										value="@signupForm("email").value"
-										placeholder="Email">
-								<span class="help-block">@{signupForm("email").error.map {error => error.message}}</span>
-							</div>
-						</div>
-						<div class="form-group @if(signupForm("telephone").hasErrors) {has-error}">
-							<label for="inputEmail3" class="col-sm-2 control-label">Telephone</label>
-							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="text" class="form-control"
-										name="@signupForm("telephone").name"
-										id="@signupForm("telephone").id"
-										value="@signupForm("telephone").value"
-										placeholder="Telephone">
-								<span class="help-block">@{signupForm("telephone").error.map {error => error.message}}</span>
-							</div>
-						</div>
-						<div class="form-group @if(signupForm("password").hasErrors) {has-error}">
-							<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
-							<div class="col-sm-9" style="padding-left: 25px;">
-								<input type="password" class="form-control"
-										name="@signupForm("password").name"
-										id="@signupForm("password").id"
-										value="@signupForm("password").value"
-										placeholder="Password">
-								<span class="help-block">@{signupForm("password").error.map {error => error.message}}</span>
-							</div>
-						</div>
+						@text(signupForm("firstName"), "First Name", "First Name", "");
+						@text(signupForm("lastName"), "Last Name", "Last Name", "");
+						@email(signupForm("email"), "Email", "Email", "");
+						@telephone(signupForm("telephone"), "Telephone", "Telephone", "");
+						@password(signupForm("password"), "Password", "Password", "");
+
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<button type="submit" class="btn btn-default">Sign Up</button>

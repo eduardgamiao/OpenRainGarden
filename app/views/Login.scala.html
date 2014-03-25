@@ -1,6 +1,7 @@
 @(page: String, isLoggedIn: Boolean, userInfo: UserInfo, loginForm: Form[views.formdata.LoginFormData])
 
 @import helper._
+@import bootstrap3._
 
 @Main("Login") {
 	<div class="container">
@@ -12,28 +13,8 @@
 					</div>
 					<div class="panel-body" style="color: black;">
 						@form(routes.Application.postLogin(), 'class -> "form-horizontal") {
-							<div class="form-group @if(loginForm("email").hasErrors) {has-error}">
-								<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-								<div class="col-sm-9" style="padding-left: 25px;">
-									<input type="email" class="form-control"
-										name="@loginForm("email").name"
-										id="@loginForm("email").id"
-										value="@loginForm("email").value"
-										placeholder="Email">
-									<span class="help-block">@{loginForm("email").error.map {error => error.message}}</span>
-								</div>
-							</div>
-							<div class="form-group @if(loginForm("password").hasErrors) {has-error}">
-								<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
-								<div class="col-sm-9" style="padding-left: 25px;">
-									<input type="password" class="form-control"
-										name="@loginForm("password").name"
-										id="@loginForm("password").id"
-										value="@loginForm("password").value"
-										placeholder="Password">
-									<span class="help-block">@{loginForm("password").error.map {error => error.message}}</span>
-								</div>
-							</div>
+							@email(loginForm("email"), "Email", "Email", "");
+							@password(loginForm("password"), "Password", "Password", "");
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<button type="submit" class="btn btn-default">Login</button>
