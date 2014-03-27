@@ -1,4 +1,4 @@
-@(message: String)
+@(gardenList: List[Resource], barrelList: List[Resource], paverList: List[Resource])
 
 @import helper._
 @import bootstrap3._
@@ -15,73 +15,34 @@
 				practices and education/outreach programs. HOK's mission is to "protect ocean health by restorting the aina: mauka to makai."</p>
 				<p style="color:black">HOK is a leader in Storm Water Best Management Practices in Hawai'i. Please visit HOK's website to learn more about how you can reduce the impacts
 				of storm water pollution and help protect our oceans! <a href="http://www.huihawaii.org">www.huihawaii.org</a></p>
+				
 				<div class="well" id="garden_resources">
 					<h4 sytle="color:black">Rain Garden Resources</h4>
 					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/hokprogram.jpg">
-								<div class="caption">
-									<a href="http://www.huihawaii.org/rain-gardens.html" target="_blank"><h3 align="center">Hui o Ko'olaupoko Rain Garden Program</h3></a></br>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/raingardenmanual.jpg">
-								<div class="caption">
-									<a href="http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf" target="_blank"><h3 align="center">Hawaii Rain Garden Manual</h3></a></br>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/nativeplantmanual.jpg">
-								<div class="caption">
-									<a href="http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf" target="_blank"><h3 align="center">Native Plant Care Manual</h3></a></br>
-								</div>
-							</div>
-						</div>
+						@for(garden <- gardenList) {
+							@resource(garden)
+						}
 					</div>
 				</div>
+				
 				<div class="well" id="barrel_resources">
 					<h4 sytle="color:black">Rain Barrel Resources</h4>					
 					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/watersupplyprogram.jpg">
-								<div class="caption">
-									<a href="http://www.hbws.org/cssweb/display.cfm?sid=2091" target="_blank"><h3 align="center">Honolulu Board of Water Supply Rain Barrel Program</h3></a></br>
-								</div>
-							</div>
-						</div>
+						@for(barrel <- barrelList) {
+							@resource(barrel)
+						}
 					</div>
-					
 				</div>
+				
 				<div class="well" id="paver_resources">
-					<h4 sytle="color:black">Pervious Paver Resources</h4>					
+					<h4 sytle="color:black">Permeable Paver Resources</h4>					
 					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/aquapave.jpg">
-								<div class="caption">
-									<a href="http://www.aquapave.com/index.htm" target="_blank"><h3 align="center">AquaPave</h3></a></br>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-								<img src="assets/images/futurastone.jpg">
-								<div class="caption">
-									<a href="http://futurastonehawaii.com/" target="_blank"><h3 align="center">Futura Stone of Hawaii</h3></a></br>
-								</div>
-							</div>
-						</div>
+						@for(paver <- paverList) {
+							@resource(paver)
+						}
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
