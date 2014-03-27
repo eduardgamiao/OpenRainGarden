@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import models.IndexContentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
 import models.PlantDB;
@@ -60,7 +62,7 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result index() {
-    return ok(Index.render("Home"));
+    return ok(Index.render(IndexContentDB.getBlocks()));
   }
   
   /**
@@ -239,7 +241,8 @@ public class Application extends Controller {
     if (garden != null) {
      return ok(ViewGarden.render(garden, PlantDB.getPlants()));
     }
-    return badRequest(Index.render("Error"));
+    //return badRequest(Index.render("Error"));
+    return ok(BrowseGardens.render("Error"));
   }
   
   /**
@@ -252,7 +255,8 @@ public class Application extends Controller {
     if (barrel != null) {
      return ok(ViewBarrel.render(barrel));
     }
-    return badRequest(Index.render("Error"));
+    //return badRequest(Index.render("Error"));
+    return ok(BrowseGardens.render("Error"));
   }
   
   /**

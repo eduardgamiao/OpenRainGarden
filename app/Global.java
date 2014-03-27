@@ -5,7 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.io.FileUtils;
+
+import models.IndexContent;
+import models.IndexContentDB;
 import models.Plant;
 import models.PlantDB;
 import models.RainGardenDB;
@@ -98,5 +102,17 @@ public class Global extends GlobalSettings {
     catch (IOException e) {
       e.printStackTrace();
     }
+  }
+  private static void populateIndexContentDB() {
+	  IndexContent i  = new IndexContent("1","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
+	  IndexContent i1 = new IndexContent("2","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
+	  IndexContent i2 = new IndexContent("3","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
+	  IndexContent i3 = new IndexContent("4","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
+	  
+	  IndexContentDB.addPlant(i);
+	  IndexContentDB.addPlant(i1);
+	  IndexContentDB.addPlant(i2);
+	  IndexContentDB.addPlant(i3);
+	  
   }
 }
