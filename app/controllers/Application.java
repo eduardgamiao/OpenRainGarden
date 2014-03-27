@@ -241,8 +241,7 @@ public class Application extends Controller {
     if (garden != null) {
      return ok(ViewGarden.render(garden, PlantDB.getPlants()));
     }
-    //return badRequest(Index.render("Error"));
-    return ok(BrowseGardens.render("Error"));
+    return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
   
   /**
