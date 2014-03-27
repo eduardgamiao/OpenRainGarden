@@ -1,4 +1,4 @@
-@(plantList: List[IndexContent])
+@(blocks: List[IndexContent])
 
 @Main("Home") {
 
@@ -28,6 +28,30 @@
       </div>
       
       <hr class="featurette-divider">
+      
+      
+      @for(block <- blocks) {
+	      <div class="row featurette ">
+	        <div class="col-md-7 ">
+	          <h2 class="featurette-heading">@block.getTitle()</h2><br>
+	          <p class="lead">@block.getContent()</p>    
+	
+			  <p class="joinus text-center">
+			    <a href="signup.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>	
+				<a href="gallery.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>
+				<a href="map.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>
+			  </p>
+	        </div>
+	        <div class="col-md-5">
+	          <img class="featurette-image img-responsive"  alt="500x500" src="@routes.Assets.at("@block.getPicUrl()")">
+	        </div>
+	      </div>
+	      
+	      <hr class="featurette-divider">
+      }
+      
+      
+      
 	</div>
 
 
