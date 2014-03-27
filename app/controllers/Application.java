@@ -254,8 +254,7 @@ public class Application extends Controller {
     if (barrel != null) {
      return ok(ViewBarrel.render(barrel));
     }
-    //return badRequest(Index.render("Error"));
-    return ok(BrowseGardens.render("Error"));
+    return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
   
   /**
