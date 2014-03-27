@@ -12,6 +12,7 @@ import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
 import models.UserInfoDB;
+import models.ResourceDB;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -346,8 +347,7 @@ public class Application extends Controller {
    * @return
    */
   public static Result learnmore() {
-	  
-	  return ok(LearnMore.render("Learn More"));
+      return ok(LearnMore.render(ResourceDB.getGardenList(), ResourceDB.getBarrelList(), ResourceDB.getPaverList()));
   }
   
   /**
