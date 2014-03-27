@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import views.formdata.RainBarrelFormData;
-import views.formdata.RainGardenFormData;
 
 /**
  * Stores a list of contacts in a data structure.
@@ -17,6 +16,7 @@ public class RainBarrelDB {
    * Add rain barrel.
    * 
    * @param formData Rain barrel form data.
+   * @param userInfo User tied to rain barrel.
    * @return The rain barrel that has been added.
    */
   public static RainBarrel addRainBarrel(RainBarrelFormData formData, UserInfo userInfo) {

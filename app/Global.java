@@ -6,18 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
-import org.h2.engine.Session;
 import models.Plant;
 import models.PlantDB;
-import models.RainGarden;
 import models.RainGardenDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
-import play.*;
-import play.mvc.*;
 import views.formdata.RainGardenFormData;
-import static play.mvc.Results.*;
 
 /**
  * Implements a Global object for the Play Framework.

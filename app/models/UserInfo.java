@@ -16,6 +16,7 @@ public class UserInfo extends Model {
 	private boolean admin = false;
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
+  private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;
@@ -107,6 +108,20 @@ public class UserInfo extends Model {
    */
   public void setBarrels(List<RainBarrel> barrels) {
     this.barrels = barrels;
+  }
+
+  /**
+   * @return the pavers
+   */
+  public List<PermeablePavers> getPavers() {
+    return pavers;
+  }
+
+  /**
+   * @param pavers the pavers to set
+   */
+  public void setPavers(List<PermeablePavers> pavers) {
+    this.pavers = pavers;
   }
 
   /**

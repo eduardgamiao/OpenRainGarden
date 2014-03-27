@@ -1,0 +1,40 @@
+@(formData: Form[views.formdata.PermeablePaversFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
+  monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
+  materialType: Map[String, Boolean], userInfo: UserInfo)
+
+@import helper._ 
+@import bootstrap3._ 
+
+@Main("Register: Permeable Pavers") {
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+             <div class="panel-title"><h1>Register Permeable Pavers</h1></div>           
+          </div>
+          <div class="panel-body">
+    @form(action = routes.Application.postPermeablePaversRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+              @hidden(formData("id"))
+              @text(formData("title"), "Title", "Title of Permeable Paver", "") 
+              @bootstrap3.select(formData("propertyType"), "Property Type", "Please Select a Property Type", propertyTypes, false, "") 
+              @textwithstyle(formData("address"), "Permeable Paver Address", "Address of Permeable Paver", "", "top:0.8em;") 
+              @hideaddress(formData("hideAddress"), "Hide Address", choiceList, "")
+              @bootstrap3.textarea(formData("description"), "5", "Description", "Permeable Paver Description", "")
+              @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
+                                    "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
+              @file(formData("uploadFile"), "Upload File")
+              <div class="page-header"><h3>Additional Information</h3></div> 
+              @bootstrap3.select(formData("material"), "Material", "Please Select a Paver Material Type", materialType, false, "")
+              @text(formData("previousMaterial"), "Previous Material", "Material of Previous Pavement", "")
+              @text(formData("size"), "Size", "Size of Permeable Paver (sq. ft.)", "")
+              @text(formData("installer"), "Pavement Installer", "Person/Company that Installed Pavement", "")                                                        
+              <hr/>
+              <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+}
