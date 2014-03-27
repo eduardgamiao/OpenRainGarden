@@ -5,14 +5,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+
 import com.google.common.io.Files;
+
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
+import models.ResourceDB;
 import models.UserInfoDB;
 import play.data.Form;
 import play.data.validation.ValidationError;
@@ -297,8 +301,7 @@ public class Application extends Controller {
    * @return
    */
   public static Result learnmore() {
-	  
-	  return ok(LearnMore.render("Learn More"));
+	  return ok(LearnMore.render(ResourceDB.getGardenList(), ResourceDB.getBarrelList(), ResourceDB.getPaverList()));
   }
   
   /**
