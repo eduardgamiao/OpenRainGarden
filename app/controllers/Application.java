@@ -245,6 +245,20 @@ public class Application extends Controller {
   }
   
   /**
+   * Delete a garden from application.
+   * @param id ID of garden to delete.
+   * @return The index page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result deleteGarden(Long id) {
+    RainGarden garden = RainGardenDB.getRainGarden(id);
+    if (garden != null) {
+      System.out.println("Deleting rg" + garden.getID() + ".");
+    }
+    return ok(Index.render(IndexContentDB.getBlocks()));
+  }
+  
+  /**
    * View barrel page.
    * @param id ID of barrel to view.
    * @return The barrel view page of the rain barrel matching the given ID. 

@@ -131,5 +131,12 @@ public class UserInfo extends Model {
   public String getName() {
     return this.firstName + " " + this.lastName;
   }
- 	
+  
+  /**
+   * Delete a rain garden from the user's list.
+   * @param garden The rain garden to delete.
+   */
+  public void deleteGarden(RainGarden garden) {
+    this.getGardens().remove(garden);
+  }
 }
