@@ -5,15 +5,10 @@
 
 @Main("Page1") {
    <div class="container">
-    <table class="table table-borderd">
-    <tr>
-      <th>Garden</th>
-      </tr>
-      @for(garden <- userInfo.getGardens()) {
-        <tr>
-         <td>@garden.getAddress()</td>
-        </tr>
+    <ul>
+      @for(garden <- RainGardenDB.getRainGardens()) {
+      <li><a href="/view/rain-garden/@garden.getID()">Rain Garden @garden.getID()</a></li>
       }
-    </table>
+    </ul>
    </div>
 }

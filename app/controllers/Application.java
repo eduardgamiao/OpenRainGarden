@@ -253,9 +253,11 @@ public class Application extends Controller {
   public static Result deleteGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
     if (garden != null) {
-      System.out.println("Deleting rg" + garden.getID() + ".");
+      garden.getOwner().deleteGarden(garden);
+      RainGardenDB.deleteRainGarden(garden.getID());
     }
-    return ok(Index.render(IndexContentDB.getBlocks()));
+    // Redirect to user page once implemented.
+    return redirect(routes.Application.index());
   }
   
   /**
