@@ -226,7 +226,7 @@ public class PermeablePavers {
    * @throws IOException 
    */
   public boolean hasPicture() throws IOException {
-    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/rg" + this.id));
+    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/pp" + this.id));
   }
 
   /**

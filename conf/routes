@@ -20,6 +20,7 @@ POST	  /signup						          controllers.Application.postSignUp()
 GET     /view/rain-garden/:id       controllers.Application.viewGarden(id: Long)
 GET     /delete/rain-garden/:id     controllers.Application.deleteGarden(id: Long)
 GET     /view/rain-barrel/:id       controllers.Application.viewBarrel(id: Long)
+GET     /view/permeable-pavers/:id  controllers.Application.viewPaver(id: Long)
 GET		  /logout  						        controllers.Application.logout()
 GET		  /learnmore         					controllers.Application.learnmore()
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import models.IndexContentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
@@ -20,6 +19,7 @@ import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.Request;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.formdata.CoverTypes;
@@ -50,6 +50,7 @@ import views.html.RegisterMenu;
 import views.html.RegisterRainBarrel;
 import views.html.LearnMore;
 import views.html.RegisterPermeablePavers;
+import views.html.ViewPaver;
 
 /**
  * Implements the controllers for this application.
@@ -269,6 +270,19 @@ public class Application extends Controller {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
     if (barrel != null) {
      return ok(ViewBarrel.render(barrel));
+    }
+    return badRequest(Index.render(IndexContentDB.getBlocks()));
+  }
+  
+  /**
+   * View paver page.
+   * @param id ID of paver to view.
+   * @return The paver view page of the permeable paver matching the given ID. 
+   */
+  public static Result viewPaver(Long id) {
+    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    if (paver != null) {
+     return ok(ViewPaver.render(paver));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
