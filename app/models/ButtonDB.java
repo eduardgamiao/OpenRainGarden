@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A database of plants.
+ * A database of index page button.
  * @author vinson gao
  *
  */
-public class IndexContentDB {
+public class ButtonDB {
 
-  private static Map<String, IndexContent> block = new LinkedHashMap<String, IndexContent>();
+  private static Map<String, Button> block = new LinkedHashMap<String, Button>();
   
   /**
    * Add a plant to the database.
    * @param plant Plant to add.
    * @return The plant that was added to the database.
    */
-  public static IndexContent addBlock(IndexContent b) {
-	block.put(b.getSerial(), b);
+  public static Button addButton(Button b) {
+	block.put(b.getTitle()+b.getNumber(), b);
     return b;
   }
   
@@ -29,7 +29,7 @@ public class IndexContentDB {
    * @param name Name of the plant to retrieve.
    * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
    */
-  public static IndexContent getBlock(String name) {
+  public static Button getButton(String name) {
     return block.get(name);
   }
 
@@ -37,7 +37,7 @@ public class IndexContentDB {
    * Get list of all plants in database.
    * @return A list of all plants in the database.
    */
-  public static List<IndexContent> getBlocks() {
-    return new ArrayList<IndexContent>(block.values());
+  public static List<Button> getButtons() {
+    return new ArrayList<Button>(block.values());
   }
 }

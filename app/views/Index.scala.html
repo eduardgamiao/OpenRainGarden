@@ -10,7 +10,7 @@
       <!-- START THE FEATURETTES -->
 	<div class="container">
 	  
-	<div class="row featurette ">
+	<!-- <div class="row featurette ">
         <div class="col-md-7 ">
           <h2 class="featurette-heading">What Harm Can A Little Rainwater Do?</h2><br>
           <p class="lead">When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth.</p>
@@ -27,23 +27,31 @@
         </div>
       </div>
       
-      <hr class="featurette-divider">
+      <hr class="featurette-divider">-->
       
       
       @for(block <- blocks) {
 	      <div class="row featurette ">
 	        <div class="col-md-7 ">
-	          <h2 class="featurette-heading">@block.getTitle()</h2><br>
-	          <p class="lead">@block.getContent()</p>    
+	          <h2 class="featurette-heading m">@block.getTitle()</h2><br>
+	          <p class="lead ">@block.getContent()</p>    
 	
 			  <p class="joinus text-center">
-			    <a href="signup.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>	
+			
+			  @for( button <- block.getButton()) {
+		          @if(button.getNumber().equals(block.getSerial())){
+		           <a href==""+button.getHref()><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@button.getTitle()</button></a>	
+		          }
+		          
+		      }
+			    <!--  <a href="signup.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>	
 				<a href="gallery.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>
-				<a href="map.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>
+				<a href="map.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a> --->
 			  </p>
 	        </div>
 	        <div class="col-md-5">
-	          <img class="featurette-image img-responsive"  alt="500x500" src="@routes.Assets.at("@block.getPicUrl()")">
+	          
+	          <img class="featurette-image img-responsive image-center"  alt="500x500" src="@routes.Assets.at("images/"+block.getPicUrl())"></img>
 	        </div>
 	      </div>
 	      

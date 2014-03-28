@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import models.Button;
+import models.ButtonDB;
 import models.IndexContent;
 import models.IndexContentDB;
 import models.Plant;
@@ -39,7 +41,7 @@ public class Global extends GlobalSettings {
   public void onStart(Application app) {
     // Populate plant database.
     populatePlantDB();
-    
+    populateIndexContentDB();
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
         
@@ -104,15 +106,32 @@ public class Global extends GlobalSettings {
     }
   }
   private static void populateIndexContentDB() {
-	  IndexContent i  = new IndexContent("1","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
-	  IndexContent i1 = new IndexContent("2","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
-	  IndexContent i2 = new IndexContent("3","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
-	  IndexContent i3 = new IndexContent("4","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "url","button");
 	  
-	  IndexContentDB.addPlant(i);
-	  IndexContentDB.addPlant(i1);
-	  IndexContentDB.addPlant(i2);
-	  IndexContentDB.addPlant(i3);
+	  
+	  ButtonDB.addButton(new Button("1", "register", "/signup"));
+	  ButtonDB.addButton(new Button("1", "View Gallery", "/gallery"));
+	  ButtonDB.addButton(new Button("1", "View Map", "/map"));
+	  
+	  ButtonDB.addButton(new Button("2", "Learn More", "/learnmore"));
+	  ButtonDB.addButton(new Button("2", "View Gallery", "/register"));
+	  
+	  ButtonDB.addButton(new Button("3", "Learn More", "/learnmore"));
+	  ButtonDB.addButton(new Button("3", "View Gallery", "/register"));
+	  
+	  ButtonDB.addButton(new Button("4", "Learn More", "/learnmore"));
+	  ButtonDB.addButton(new Button("4", "View Gallery", "/register"));
+	
+	  
+	  
+	  IndexContent i  = new IndexContent("1","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "alawai.png",ButtonDB.getButtons());
+	  IndexContent i1 = new IndexContent("2","Solution: Rain Garden" ,"A Rain Garden is a low-lying area populated with native plants. They reduce the amount of water diverted from roofs/driveways/parking lots into storm drains by absorbing and filtering the water.", "garden.png",ButtonDB.getButtons());
+	  IndexContent i2 = new IndexContent("3","Solution: Permeable Paver" ,"A permeable interlocking concrete pavement is comprised of a layer of permeable pavers separated by joints filled with small stones. The stones in the joints provide 100% surface permeability while the stone base effectively filters stormwater and reduces pollutants and debris that would otherwise be washed into streams and rivers.", "paver.png",ButtonDB.getButtons());
+	  IndexContent i3 = new IndexContent("4","Solution: Rain Barrel" ,"During the summer months it is estimated that nearly 40 percent of household water is used for lawn and garden maintenance. A rain barrel collects water and stores it for those times that you need it most --- during the dry summer months. Using rain barrels potentially helps homeowners lower water bills, while also improving the vitality of plants, flowers, trees, and lawns.", "barrel.png",ButtonDB.getButtons());
+	 
+	  IndexContentDB.addBlock(i);
+	  IndexContentDB.addBlock(i1);
+	  IndexContentDB.addBlock(i2);
+	  IndexContentDB.addBlock(i3);
 	  
   }
 }

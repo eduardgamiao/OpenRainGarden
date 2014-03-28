@@ -1,13 +1,15 @@
 package models;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IndexContent {
 	private String a;
 	private String b;
 	private String c;
 	private String d;
-	private String e;
+	private List<Button> e;
 	
-	public IndexContent(String a1, String b1, String c1, String d1, String e1){
+	public IndexContent(String a1, String b1, String c1, String d1, List<Button> e1){
 		a=a1;
 		b=b1;
 		c=c1;
@@ -26,7 +28,7 @@ public class IndexContent {
 	public String getPicUrl(){
 		return d;
 	}
-	public String getButton(){
+	public List<Button> getButton(){
 		return e;
 	}
 	
