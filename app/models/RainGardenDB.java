@@ -9,6 +9,7 @@ import views.formdata.RainGardenFormData;
  * Stores a list of contacts in a data structure.
  */
 public class RainGardenDB {
+  private static long currentId = 1;
 
   private static HashMap<Long, RainGarden> gardens = new HashMap<Long, RainGarden>();
 
@@ -22,7 +23,8 @@ public class RainGardenDB {
   public static RainGarden addRainGarden(RainGardenFormData formData, UserInfo userInfo) {
     RainGarden garden;
     if (formData.id == 0) {
-      long id = gardens.size() + 1;
+      long id = currentId;
+      currentId++;
       garden = new RainGarden(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 

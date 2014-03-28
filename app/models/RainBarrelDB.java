@@ -11,6 +11,7 @@ import views.formdata.RainBarrelFormData;
 public class RainBarrelDB {
 
   private static HashMap<Long, RainBarrel> barrels = new HashMap<Long, RainBarrel>();
+  private static long currentId = 1;
 
   /**
    * Add rain barrel.
@@ -22,7 +23,8 @@ public class RainBarrelDB {
   public static RainBarrel addRainBarrel(RainBarrelFormData formData, UserInfo userInfo) {
     RainBarrel barrel;
     if (formData.id == 0) {
-      long id = barrels.size() + 1;
+      long id = currentId;
+      currentId++;
       barrel = new RainBarrel(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.rainBarrelType, formData.capacity, formData.color, formData.material, 

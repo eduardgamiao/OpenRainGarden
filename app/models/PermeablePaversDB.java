@@ -12,6 +12,7 @@ import views.formdata.RainBarrelFormData;
 public class PermeablePaversDB {
 
   private static HashMap<Long, PermeablePavers> pavers = new HashMap<Long, PermeablePavers>();
+  private static long currentId = 1;
 
   /**
    * Add permeable paver.
@@ -23,7 +24,8 @@ public class PermeablePaversDB {
   public static PermeablePavers addPermeablePavers(PermeablePaversFormData formData, UserInfo userInfo) {
     PermeablePavers paver;
     if (formData.id == 0) {
-      long id = pavers.size() + 1;
+      long id = currentId;
+      currentId++;
       paver = new PermeablePavers(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.material, formData.previousMaterial, formData.size, formData.installer);
