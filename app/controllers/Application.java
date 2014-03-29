@@ -375,14 +375,6 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the Gallery page
-   * @return
-   */
-  public static Result gallery() {
-	  return ok(Gallery.render("Gallery"));
-  }
-  
-  /**
    * Validate a given form's upload file.
    * @param formData The form to check.
    * @param body Multipart form data that holds the uploaded file to check.
@@ -467,5 +459,13 @@ public class Application extends Controller {
       formData.errors().put("uploadFile", errors);
     }
     return formData;
+  }
+  
+  /**
+   * Returns the Gallery page
+   * @return
+   */
+  public static Result gallery() {
+	  return ok(Gallery.render("Gallery"));
   }
 }
