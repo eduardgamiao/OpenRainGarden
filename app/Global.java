@@ -5,21 +5,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.io.FileUtils;
-
 import models.Button;
 import models.ButtonDB;
 import models.IndexContent;
 import models.IndexContentDB;
+import models.PermeablePaversDB;
 import models.Plant;
 import models.PlantDB;
+import models.RainBarrelDB;
 import models.RainGardenDB;
 import models.Resource;
 import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
+import views.formdata.PermeablePaversFormData;
+import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 
 /**
@@ -50,9 +52,21 @@ public class Global extends GlobalSettings {
     plants.add("‘Ahu‘awa");
     plants.add("Kāwelu");
     plants.add("Mau‘u ‘aki ‘aki");
-    RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", "564 Though Lane", 
+    RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "25", "200", 
         "Water flows from roof into garden.", "0.75", "2"), UserInfoDB.getUser("johnsmith@gmail.com"));
+    
+    // Add rain barrel.
+    RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Garden", "Residential", "564 Ulahala St.", 
+        "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50", "Orange-Red",
+        "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed", "4+"), 
+        UserInfoDB.getUser("johnsmith@gmail.com"));
+    
+    // Add permeable paver.
+    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Rain Garden", "Residential", 
+        "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
+            + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", "250",
+        "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
     
     //Learn More Resource Database
     ResourceDB.addGardenResource(new Resource("Hui o Ko'olaupoko Rain Garden Program", "hokprogram.jpg", "http://www.huihawaii.org/rain-gardens.html"));
