@@ -36,6 +36,8 @@ import views.formdata.PlantTypes;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.formdata.SolutionAmountType;
+import views.formdata.LoginFormData;
+import views.formdata.SignUpFormData;
 import views.html.Index;
 import views.html.BrowseGardens;
 import views.html.Page1;
@@ -43,14 +45,13 @@ import views.html.RegisterRainGarden;
 import views.html.Login;
 import views.html.ViewGarden;
 import views.html.ViewBarrel;
-import views.formdata.LoginFormData;
 import views.html.SignUp;
-import views.formdata.SignUpFormData;
 import views.html.RegisterMenu;
 import views.html.RegisterRainBarrel;
 import views.html.LearnMore;
 import views.html.RegisterPermeablePavers;
 import views.html.ViewPaver;
+import views.html.Gallery;
 
 /**
  * Implements the controllers for this application.
@@ -380,6 +381,14 @@ public class Application extends Controller {
    */
   public static Result learnmore() {
       return ok(LearnMore.render(ResourceDB.getGardenList(), ResourceDB.getBarrelList(), ResourceDB.getPaverList()));
+  }
+  
+  /**
+   * Returns the Gallery page
+   * @return
+   */
+  public static Result gallery() {
+	  return ok(Gallery.render("Gallery"));
   }
   
   /**
