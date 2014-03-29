@@ -67,4 +67,12 @@ public class RainBarrelDB {
   public static RainBarrel getRainBarrel(long id) {
    return barrels.get(id);
   }
+  
+  /**
+   * Delete a rain barrel from database.
+   * @param id The ID of the rain barrel to delete.
+   */
+  public static void deleteRainBarrel(long id) {
+    barrels.remove(id);
+  }
 }

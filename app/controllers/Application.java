@@ -275,6 +275,22 @@ public class Application extends Controller {
   }
   
   /**
+   * Delete a barrel from application.
+   * @param id ID of barrel to delete.
+   * @return The index page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result deleteBarrel(Long id) {
+    RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    if (barrel != null) {
+      barrel.getOwner().deleteBarrel(barrel);
+      RainBarrelDB.deleteRainBarrel(id);
+    }
+    // Redirect to user page once implemented.
+    return redirect(routes.Application.index());
+  }
+  
+  /**
    * View paver page.
    * @param id ID of paver to view.
    * @return The paver view page of the permeable paver matching the given ID. 
@@ -285,6 +301,22 @@ public class Application extends Controller {
      return ok(ViewPaver.render(paver));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
+  }
+  
+  /**
+   * Delete a paver from application.
+   * @param id ID of paver to delete.
+   * @return The index page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result deletePaver(Long id) {
+    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    if (paver != null) {
+      paver.getOwner().deletePaver(paver);
+      PermeablePaversDB.deletePermeablePaver(paver.getID());
+    }
+    // Redirect to user page once implemented.
+    return redirect(routes.Application.index());
   }
   
   /**

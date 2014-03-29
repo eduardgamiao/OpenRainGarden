@@ -139,4 +139,20 @@ public class UserInfo extends Model {
   public void deleteGarden(RainGarden garden) {
     this.getGardens().remove(garden);
   }
+    
+  /**
+   * Delete a rain barrel from the user's list.
+   * @param barrel The rain barrel to delete.
+   */
+  public void deleteBarrel(RainBarrel barrel) {
+    this.getBarrels().remove(barrel);
+  }
+  
+  /**
+   * Delete a permeable paver from the user's list.
+   * @param paver The permeable paver to delete.
+   */
+  public void deletePaver(PermeablePavers paver) {
+    this.getPavers().remove(paver);
+  }
 }

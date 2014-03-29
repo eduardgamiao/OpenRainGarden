@@ -63,4 +63,12 @@ public class PermeablePaversDB {
   public static PermeablePavers getPermeablePavers(long id) {
    return pavers.get(id);
   }
+  
+  /**
+   * Delete a permeable paver.
+   * @param id ID of permeable paver.
+   */
+  public static void deletePermeablePaver(long id) {
+    pavers.remove(id);
+  }
 }
