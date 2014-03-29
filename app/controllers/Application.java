@@ -81,7 +81,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result registerRainGarden(Long id) {
-    RainGardenFormData data = (id == 0)
+    RainGardenFormData data = (RainGardenDB.getRainGarden(id) == null)
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
     return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
@@ -137,7 +137,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result registerRainBarrel(Long id) {
-    RainBarrelFormData data = (id == 0)
+    RainBarrelFormData data = (RainBarrelDB.getRainBarrel(id) == null)
         ? new RainBarrelFormData() : new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);    
     return ok(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), 
@@ -192,9 +192,13 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result registerPermeablePavers(Long id) {
-    PermeablePaversFormData data = (id == 0) 
+    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    PermeablePaversFormData data = (paver == null) 
         ? new PermeablePaversFormData() : new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
-    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data); 
+    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
+    if ((paver != null) && (paver.getOwner() != Secured.getUserInfo(ctx()))) {
+      return forbidden("You are not authorized to edit that entry!");
+    }
       return ok(RegisterPermeablePavers.render(formData, YesNoChoiceType.getChoiceList(), 
                 PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                 DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
