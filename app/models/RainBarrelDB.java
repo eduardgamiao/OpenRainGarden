@@ -75,4 +75,16 @@ public class RainBarrelDB {
   public static void deleteRainBarrel(long id) {
     barrels.remove(id);
   }
+  
+  /**
+   * Check if database has ID.
+   * @param id ID to check.
+   * @return True if the database has the ID, false otherwise.
+   */
+  public static boolean hasID(long id) {
+    if ((id == 0) || barrels.containsKey(id)) {
+      return true;
+    }
+    return false;
+  }
 }

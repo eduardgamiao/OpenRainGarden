@@ -71,4 +71,16 @@ public class PermeablePaversDB {
   public static void deletePermeablePaver(long id) {
     pavers.remove(id);
   }
+  
+  /**
+   * Check if database has ID.
+   * @param id ID to check.
+   * @return True if the database has the ID, false otherwise.
+   */
+  public static boolean hasID(long id) {
+    if ((id == 0) || pavers.containsKey(id)) {
+      return true;
+    }
+    return false;
+  }
 }

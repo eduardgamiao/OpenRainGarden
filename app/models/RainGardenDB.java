@@ -74,4 +74,15 @@ public class RainGardenDB {
     gardens.remove(id);
   }
 
+  /**
+   * Check if database has ID.
+   * @param id ID to check.
+   * @return True if the database has the ID, false otherwise.
+   */
+  public static boolean hasID(long id) {
+    if ((id == 0) || gardens.containsKey(id)) {
+      return true;
+    }
+    return false;
+  }
 }
