@@ -139,12 +139,14 @@ public class Application extends Controller {
   public static Result registerRainBarrel(Long id) {
     RainBarrelFormData data = (id == 0) 
         ? new RainBarrelFormData() : new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
-    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data); 
-    return ok(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), PropertyTypes.getTypes(), 
-              DateTypes.getMonthTypes(), DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
-              RainBarrelTypes.getRainBarrelTypes(), MaterialTypes.getMaterialTypes(),
-              WaterUsageTypes.getWaterUsageTypes(), CoverTypes.getCoverTypes(), 
-              InstallationTypes.getInstallationTypes(), SolutionAmountType.getTypes()));
+    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);    
+    return ok(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), 
+              PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
+              DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
+              RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), MaterialTypes.getMaterialTypes(data.material),
+              WaterUsageTypes.getWaterUsageTypes(data.waterUse), CoverTypes.getCoverTypes(data.cover), 
+              InstallationTypes.getInstallationTypes(data.installationType), 
+              SolutionAmountType.getTypes(data.numberOfRainBarrels)));
   }
   
   /**
