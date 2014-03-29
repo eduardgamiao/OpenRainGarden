@@ -39,7 +39,6 @@ import views.formdata.SolutionAmountType;
 import views.formdata.LoginFormData;
 import views.formdata.SignUpFormData;
 import views.html.Index;
-import views.html.BrowseGardens;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
 import views.html.Login;
@@ -286,14 +285,6 @@ public class Application extends Controller {
      return ok(ViewPaver.render(paver));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
-  }
-  
-  /**
-   * Brings up the rain garden profile page.
-   * @return The rain garden profile page.
-   */
-  public static Result browseGarden() {
-    return ok(BrowseGardens.render("Browse Rain Gardens"));
   }
   
   /**
