@@ -32,6 +32,7 @@ public class RainGardenDB {
       garden.setOwner(userInfo);
       garden.getOwner().getGardens().add(garden);
       gardens.put(id, garden);
+      CommentDB.initializeCommentSection(garden.getKey());
       return garden;
     }
     else {

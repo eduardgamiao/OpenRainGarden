@@ -83,6 +83,13 @@
               </ul>
             </div>
           </div>
+          @if(CommentDB.getComments(rainGarden.getKey()).isEmpty()) {
+            <span>The program has stopped responding.</span>
+          } else {
+            @for(comment <- CommentDB.getComments(rainGarden.getKey())) {
+              @comment.getPoster().getName() posted "@comment.getComment()" on @comment.getDatePosted()
+            }
+          }
         </div>
       </div>
    </div>

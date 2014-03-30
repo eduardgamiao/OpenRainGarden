@@ -127,7 +127,6 @@ public class Application extends Controller {
           File destination = new File("public/images/upload/rg" + garden.getID());
           source.renameTo(destination);
       }
-      CommentDB.initializeCommentSection("rg" + garden.getID());
       return redirect("/view/rain-garden/" + garden.getID());
      }     
     }

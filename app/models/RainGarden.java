@@ -25,6 +25,7 @@ public class RainGarden {
   private String infiltrationRate = "N/A";
   private String numberOfRainGardens = "N/A";
   private UserInfo owner;
+  private String key;
   
   /**
    * Constructor.
@@ -68,6 +69,7 @@ public class RainGarden {
     if (!numberOfRainGardens.isEmpty()) {
       this.numberOfRainGardens = numberOfRainGardens;
     }
+    this.key = "rg" + this.id;
   }
   /**
    * @return the id
@@ -316,4 +318,11 @@ public class RainGarden {
     return "placeholder.gif";
   }
   
+  /**
+   * Return key of rain garden.
+   * @return The key of the rain garden.
+   */
+  public String getKey() {
+    return this.key;
+  }
 }

@@ -8,18 +8,21 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import models.Button;
 import models.ButtonDB;
+import models.CommentDB;
 import models.IndexContent;
 import models.IndexContentDB;
 import models.PermeablePaversDB;
 import models.Plant;
 import models.PlantDB;
 import models.RainBarrelDB;
+import models.RainGarden;
 import models.RainGardenDB;
 import models.Resource;
 import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
+import views.formdata.CommentFormData;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
@@ -52,9 +55,12 @@ public class Global extends GlobalSettings {
     plants.add("‘Ahu‘awa");
     plants.add("Kāwelu");
     plants.add("Mau‘u ‘aki ‘aki");
-    RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", "564 Ulahala St.", 
+    RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", 
+        "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "25", "200", 
         "Water flows from roof into garden.", "0.75", "2"), UserInfoDB.getUser("johnsmith@gmail.com"));
+    CommentDB.addComment(new CommentFormData("This garden looks amazing!"), UserInfoDB.getUser("johnsmith@gmail.com"), 
+       garden.getKey());
     
     // Add rain barrel.
     RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Garden", "Residential", "564 Ulahala St.", 

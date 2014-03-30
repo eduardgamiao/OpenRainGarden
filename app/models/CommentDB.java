@@ -30,6 +30,15 @@ public class CommentDB {
   }
   
   /**
+   * Get a list of comments from the database that matches the given key.
+   * @param key The key of the rainwater runoff solution to get the comments of.
+   * @return A list of comments.
+   */
+  public static List<Comment> getComments(String key) {
+    return comments.get(key);
+  }
+  
+  /**
    * Initialize the comment section of a rainwater runoff solution with the given key.
    * @param key The key to store the comments.
    */
