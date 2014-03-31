@@ -9,3 +9,4 @@
 * [Use Cases](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Use-Cases)
 * [StakeholderRequirements](https://github.com/OpenRainGarden/OpenRainGarden/wiki/StakeholderRequirements)
 * [MockupEvaluation](https://github.com/OpenRainGarden/OpenRainGarden/wiki/MockupEvaluation)
+* [Installation](https://github.com/OpenRainGarden/OpenRainGarden/wiki/Installation)
