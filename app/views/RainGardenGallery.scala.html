@@ -1,0 +1,31 @@
+@(gardenList: List[RainGarden])
+
+@import helper._
+@import bootstrap3._
+
+@Main("Rain Garden Gallery") {
+	<div class="container">
+		<div class="well">
+			@for(garden <- gardenList) {
+				<div class="col-sm-6 col-md-4">
+					<div class="thumbnail">
+						@if(garden.hasPicture()) {
+							<img src="@routes.Assets.at("images/" + garden.getPictureName())">
+						} else {
+							<img src="#">
+						}
+						<div class="caption">
+							<h3>@garden.getTitle()</h3>
+							<ul>
+								<li>Property Type: @garden.getPropertyType()</li>
+								<li>Date Installed: @garden.getDateInstalled()</li>
+								<li>Size: @garden.getRainGardenSize()</li>
+								<li>Number of plants: @garden.getPlants().size()</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}

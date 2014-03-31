@@ -1,0 +1,32 @@
+@(paverList: List[PermeablePavers])
+
+@import helper._
+@import bootstrap3._
+
+@Main("Permable Paver Gallery") {
+	<div class="container">
+		<div class="well">
+			@for(paver <- paverList) {
+				<div class="col-sm-6 col-md-4">
+					<div class="thumbnail">
+						@if(paver.hasPicture()) {
+							<img src="@routes.Assets.at("images/" + paver.getPictureName())">
+						} else {
+							<img src="#">
+						}
+						<div class="caption">
+							<h3>@paver.getTitle()</h3>
+							<ul>
+								<li>Property Type: @paver.getPropertyType()</li>
+								<li>Date Installed: @paver.getDateInstalled()</li>
+								<li>Size: @paver.getSize()</li>
+								<li>Material: @paver.getMaterial()</li>
+								<li>Installer: @paver.getInstaller()</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}
