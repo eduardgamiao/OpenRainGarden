@@ -63,13 +63,13 @@ public class Global extends GlobalSettings {
        garden.getKey());
     
     // Add rain barrel.
-    RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Garden", "Residential", "564 Ulahala St.", 
+    RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Barrel", "Residential", "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50", "Orange-Red",
         "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed", "4+"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
     
     // Add permeable paver.
-    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Rain Garden", "Residential", 
+    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Permeable Paver", "Residential", 
         "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
             + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", "250",
         "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));

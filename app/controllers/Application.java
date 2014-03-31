@@ -277,8 +277,10 @@ public class Application extends Controller {
    */
   public static Result viewBarrel(Long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (barrel != null) {
-     return ok(ViewBarrel.render(barrel, CommentDB.getComments(barrel.getKey())));
+     return ok(ViewBarrel.render(barrel, CommentDB.getComments(barrel.getKey()), commentForm));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
@@ -306,8 +308,10 @@ public class Application extends Controller {
    */
   public static Result viewPaver(Long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (paver != null) {
-     return ok(ViewPaver.render(paver, CommentDB.getComments(paver.getKey())));
+     return ok(ViewPaver.render(paver, CommentDB.getComments(paver.getKey()), commentForm));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
@@ -513,25 +517,25 @@ public class Application extends Controller {
   /**
    * Post a comment.
    * @param id ID of the solution being commented on.
+   * @param uri Target of redirect.
    * @return The page that the user was commenting on.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postComment(Long id) {    
-    String redirectLocation = ctx().request().uri();
+  public static Result postComment(Long id, String uri) {
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
-      return redirect(redirectLocation);
+      return redirect(uri);
     }
     CommentFormData data = formData.get();
-    if (redirectLocation.contains("rain-garden")) {
+    if (uri.contains("rain-garden")) {
       CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
     }
-    else if (redirectLocation.contains("rain-barrel")) {
+    else if (uri.contains("rain-barrel")) {
       CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainBarrelDB.getRainBarrel(id).getKey());
     }    
-    else if (redirectLocation.contains("permeable-pavers")) {
+    else if (uri.contains("permeable-pavers")) {
       CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
     }
-    return redirect(redirectLocation);
+    return redirect(uri);
   }
 }

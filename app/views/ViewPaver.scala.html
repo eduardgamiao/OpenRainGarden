@@ -1,4 +1,7 @@
-@(permeablePaver: PermeablePavers, comments: List[Comment])
+@(permeablePaver: PermeablePavers, comments: List[Comment], commentFormData: Form[views.formdata.CommentFormData])
+
+@import helper._
+@import bootstrap3._
 
 @Main("View Permeable Paver") {
    <div class="container">
@@ -59,15 +62,15 @@
                   <b>Installer:</b> @permeablePaver.getInstaller()<br/>
               </div>
           </div>
-                            <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
+         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">
             <h4>Comments (@comments.size())</h4>          
           </div>
+              <div class="well" style="background-color:white;">
            @if(comments.isEmpty()) { 
               <div class="alert alert-info">This permeable paver has no comments.</div>           
             } else { 
               @for(comment <- comments) {
-              <div class="well" style="background-color:white;">
                <div class="media">
                   <div class="media-body">
                      <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
@@ -76,7 +79,14 @@
                </div>
               }
             }
-            </div>
+            @if(Secured.isLoggedIn(ctx())) {
+            <br/>
+              <!-- Comment Form -->
+              @form(routes.Application.postComment(permeablePaver.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
+                @comment(commentFormData("comment"), "Post A Comment")
+              }
+            }
+            </div>       
         </div>
         </div>
       </div>
