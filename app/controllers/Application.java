@@ -51,7 +51,9 @@ import views.html.RegisterRainBarrel;
 import views.html.LearnMore;
 import views.html.RegisterPermeablePavers;
 import views.html.ViewPaver;
-import views.html.Gallery;
+import views.html.RainGardenGallery;
+import views.html.RainBarrelGallery;
+import views.html.PermeablePaverGallery;
 
 /**
  * Implements the controllers for this application.
@@ -506,12 +508,17 @@ public class Application extends Controller {
     return formData;
   }
   
-  /**
-   * Returns the Gallery page
-   * @return
-   */
-  public static Result gallery() {
-	  return ok(Gallery.render("Gallery"));
+
+  public static Result gardengallery() {
+	  return ok(RainGardenGallery.render(RainGardenDB.getRainGardens()));
+  }
+  
+  public static Result barrelgallery() {
+	  return ok(RainBarrelGallery.render(RainBarrelDB.getRainBarrels()));
+  }
+  
+  public static Result pavergallery() {
+	  return ok(PermeablePaverGallery.render(PermeablePaversDB.getPermeablePavers()));
   }
   
   /**
