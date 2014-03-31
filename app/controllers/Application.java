@@ -55,6 +55,7 @@ import views.html.RainGardenGallery;
 import views.html.RainBarrelGallery;
 import views.html.PermeablePaverGallery;
 import views.html.MapPage;
+import views.html.Profile;
 
 /**
  * Implements the controllers for this application.
@@ -69,6 +70,14 @@ public class Application extends Controller {
   public static Result index() {
     return ok(Index.render(IndexContentDB.getBlocks()));
   }
+  /**
+   * Returns the user profile page. 
+   * @return The resulting user profile page. 
+   */
+  public static Result profile() {
+    return ok(Profile.render(UserInfoDB.getUser(Secured.getUser(ctx()))));
+  }
+  
   
   /**
    * Returns the registration navigation menu.
