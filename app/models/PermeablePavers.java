@@ -21,6 +21,7 @@ public class PermeablePavers {
   private String size;
   private String installer;
   private UserInfo owner;
+  private String key;
 
   /**
    * Constructor.
@@ -50,6 +51,7 @@ public class PermeablePavers {
     this.previousMaterial = previousMaterial;
     this.size = size;
     this.installer = installer;
+    this.key = "pp" + this.id;
   }
 
   /**
@@ -284,5 +286,12 @@ public class PermeablePavers {
     }
     return "placeholder.gif";
   }
-
+  
+  /**
+   * Return key of rain garden.
+   * @return The key of the rain garden.
+   */
+  public String getKey() {
+    return this.key;
+  }
 }

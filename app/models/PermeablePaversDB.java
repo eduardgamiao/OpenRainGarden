@@ -32,6 +32,7 @@ public class PermeablePaversDB {
       paver.setOwner(userInfo);
       userInfo.getPavers().add(paver);
       pavers.put(id, paver);
+      CommentDB.initializeCommentSection(paver.getKey());
       return paver;
     }
     else {

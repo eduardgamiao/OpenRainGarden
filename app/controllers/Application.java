@@ -235,7 +235,7 @@ public class Application extends Controller {
           File destination = new File("public/images/upload/pp" + paver.getID());
           source.renameTo(destination);
       }
-      return redirect("/view/permeable-pavers/" + paver.getID());
+      return redirect(routes.Application.viewPaver(paver.getID()));
      }     
     }
   
@@ -305,7 +305,7 @@ public class Application extends Controller {
   public static Result viewPaver(Long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
     if (paver != null) {
-     return ok(ViewPaver.render(paver));
+     return ok(ViewPaver.render(paver, CommentDB.getComments(paver.getKey())));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }

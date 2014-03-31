@@ -1,4 +1,4 @@
-@(permeablePaver: PermeablePavers)
+@(permeablePaver: PermeablePavers, comments: List[Comment])
 
 @Main("View Permeable Paver") {
    <div class="container">
@@ -28,7 +28,7 @@
           <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
             <ul class="list-group" style="text-align: center;">
               <li class="list-group-item">Owner: @permeablePaver.getOwner().getName()</li>
-              <li class="list-group-item">Type: Rain Barrel</li>
+              <li class="list-group-item">Type: Permeable Pavers</li>
               <li class="list-group-item">Property Type: @permeablePaver.getPropertyType()</li>
               <li class="list-group-item">Address: @if(permeablePaver.getHideAddress().equals("Yes")) {Hidden} else {@permeablePaver.getAddress()}</li>
               <li class="list-group-item">Date Added: @permeablePaver.getDateInstalled()</li>
@@ -41,7 +41,7 @@
             <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
               <ul class="list-group" style="text-align: center;">
               <li class="list-group-item">Owner: @permeablePaver.getOwner().getName()</li>
-              <li class="list-group-item">Type: Rain Barrel</li>
+              <li class="list-group-item">Type: Permeable Pavers</li>
               <li class="list-group-item">Property Type: @permeablePaver.getPropertyType()</li>
               <li class="list-group-item">Address: @if(permeablePaver.getHideAddress().equals("Yes")) {Hidden} else {@permeablePaver.getAddress()}</li>
               <li class="list-group-item">Date Added: @permeablePaver.getDateInstalled()</li>
@@ -53,14 +53,31 @@
               <h4>Additional Information</h4>
               </div>              
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                 <ul class="list-group additional-information" style="text-align: center;">
-                  <li class="list-group-item"><b>Material:</b> @permeablePaver.getMaterial()</li>
-                  <li class="list-group-item"><b>Previous Material:</b> @permeablePaver.getPreviousMaterial()</li>
-                  <li class="list-group-item"><b>Size:</b> @permeablePaver.getSize()</li>
-                  <li class="list-group-item"><b>Installer:</b> @permeablePaver.getInstaller()</li>
-                </ul>
+                  <b>Material:</b> @permeablePaver.getMaterial()<br/>
+                  <b>Previous Material:</b> @permeablePaver.getPreviousMaterial()<br/>
+                  <b>Size:</b> @permeablePaver.getSize()<br/>
+                  <b>Installer:</b> @permeablePaver.getInstaller()<br/>
               </div>
           </div>
+                            <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
+          <div class="page-header">
+            <h4>Comments (@comments.size())</h4>          
+          </div>
+           @if(comments.isEmpty()) { 
+              <div class="alert alert-info">This permeable paver has no comments.</div>           
+            } else { 
+              @for(comment <- comments) {
+              <div class="well" style="background-color:white;">
+               <div class="media">
+                  <div class="media-body">
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     @comment.getComment()
+                  </div>
+               </div>
+              }
+            }
+            </div>
+        </div>
         </div>
       </div>
    </div>
