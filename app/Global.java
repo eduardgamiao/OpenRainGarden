@@ -49,6 +49,7 @@ public class Global extends GlobalSettings {
     populateIndexContentDB();
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
+    UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw");
         
     // Add rain garden.
     List<String> plants = new ArrayList<String>();
@@ -91,14 +92,7 @@ public class Global extends GlobalSettings {
    * @param app A Play Framework application.
    */
   public void onStop(Application app) {
-    // Clean upload folder. Delete this code once backing database is added.
-    try {
-      FileUtils.cleanDirectory(new File("public/images/upload"));
-    }
-    catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+
   }
   
   /**

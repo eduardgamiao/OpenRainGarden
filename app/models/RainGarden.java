@@ -304,9 +304,9 @@ public class RainGarden {
    */
   public String getPictureName() throws IOException {
     if (hasPicture()) {
-      return "upload/rg" + this.id;
+      return "images/upload/rg" + this.id;
     }
-    return "placeholder.gif";
+    return "images/placeholder.gif";
   }
   
   /**

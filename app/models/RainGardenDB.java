@@ -41,7 +41,6 @@ public class RainGardenDB {
           formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
           formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
       garden.setOwner(userInfo);
-      garden.getOwner().getGardens().add(garden);
       gardens.put(garden.getID(), garden);
       return garden;
     }
