@@ -27,7 +27,9 @@ POST    /view/permeable-pavers/:id    controllers.Application.postComment(id: Lo
 GET     /delete/permeable-pavers/:id  controllers.Application.deletePaver(id: Long)
 GET     /logout                       controllers.Application.logout()
 GET     /learnmore                    controllers.Application.learnmore()
-GET		  /gallery                      controllers.Application.gallery()
+GET     /gallery/rain-garden          controllers.Application.gardegallery()
+GET     /gallery/rain-barrel          controllers.Application.barrelgallery()
+GET     /gallery/permeable-paver      controllers.Application.pavergallery()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
