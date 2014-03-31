@@ -1,4 +1,4 @@
-@(rainGarden: RainGarden, plantList: List[Plant])
+@(rainGarden: RainGarden, plantList: List[Plant], comments: List[Comment])
 
 @Main("View Rain Garden") {
    <div class="container">
@@ -83,14 +83,26 @@
               </ul>
             </div>
           </div>
-          @if(CommentDB.getComments(rainGarden.getKey()).isEmpty()) {
-            <span>The program has stopped responding.</span>
-          } else {
-            @for(comment <- CommentDB.getComments(rainGarden.getKey())) {
-              @comment.getPoster().getName() posted "@comment.getComment()" on @comment.getDatePosted()
+        <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
+          <div class="page-header">
+            <h4>Comments (@comments.size())</h4>          
+          </div>
+           @if(comments.isEmpty()) { 
+              <div class="alert alert-info">This rain garden has no comments.</div>           
+            } else { 
+              @for(comment <- comments) {
+              <div class="well" style="background-color:white;">
+               <div class="media">
+                  <div class="media-body">
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     @comment.getComment()
+                  </div>
+               </div>
+              }
             }
-          }
+            </div>
         </div>
+      </div>
       </div>
    </div>
    </div>

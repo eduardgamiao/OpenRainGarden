@@ -28,6 +28,7 @@ public class RainBarrel {
   private String installationType = "N/A";
   private String numberOfRainBarrels = "N/A";
   private UserInfo owner;
+  private String key;
     
   /**
    * Constructor.
@@ -94,6 +95,7 @@ public class RainBarrel {
     if (!numberOfRainBarrels.isEmpty()) {
       this.numberOfRainBarrels = numberOfRainBarrel;
     }
+    this.key = "rb" + this.id;
   }
   
   /**
@@ -403,5 +405,13 @@ public class RainBarrel {
       return "upload/rb" + this.id;
     }
     return "placeholder.gif";
+  }
+  
+  /**
+   * Return key of rain garden.
+   * @return The key of the rain garden.
+   */
+  public String getKey() {
+    return this.key;
   }
 }

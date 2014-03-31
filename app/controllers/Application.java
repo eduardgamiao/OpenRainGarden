@@ -127,7 +127,7 @@ public class Application extends Controller {
           File destination = new File("public/images/upload/rg" + garden.getID());
           source.renameTo(destination);
       }
-      return redirect("/view/rain-garden/" + garden.getID());
+      return redirect(routes.Application.viewGarden(garden.getID()));
      }     
     }
   
@@ -247,7 +247,7 @@ public class Application extends Controller {
   public static Result viewGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
     if (garden != null) {
-     return ok(ViewGarden.render(garden, PlantDB.getPlants()));
+     return ok(ViewGarden.render(garden, PlantDB.getPlants(), CommentDB.getComments(garden.getKey())));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }

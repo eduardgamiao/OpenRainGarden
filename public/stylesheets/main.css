@@ -138,6 +138,10 @@ z-index: -1000;
 .bigFont {
     font-size: 20px;
   }
+  
+.commentDate {
+	color: white;
+}
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 

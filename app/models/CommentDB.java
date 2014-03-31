@@ -24,7 +24,7 @@ public class CommentDB {
    * @param key Key to store comment under.
    */
   public static void addComment(CommentFormData formData, UserInfo userInfo, String key) {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
     Date date = new Date();
     comments.get(key).add(new Comment(formData.comment, userInfo, dateFormat.format(date)));
   }

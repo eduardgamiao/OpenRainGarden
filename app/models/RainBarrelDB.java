@@ -33,6 +33,7 @@ public class RainBarrelDB {
       barrel.setOwner(userInfo);
       userInfo.getBarrels().add(barrel);
       barrels.put(id, barrel);
+      CommentDB.initializeCommentSection(barrel.getKey());
       return barrel;
     }
     else {
