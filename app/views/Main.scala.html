@@ -18,6 +18,56 @@
           <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
           <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
         <![endif]-->
+        
+        @if(title.contains("Map") == true) {
+    		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsZjZuLpDatbiu7d_My1vMru0IFyoTcts&sensor=false"></script>
+    		
+    		<script type="text/javascript">
+			    var oahu = new google.maps.LatLng(21.4667, -157.9833);
+				var marker;
+				var map;
+				
+				<!-- Initializes Google Maps -->
+				function initialize() {
+					<!-- Set mapOptions -->
+					var mapOptions = {
+						center: oahu,
+						zoom: 11,
+						mapTypeId: google.maps.MapTypeId.HYBRID
+					};
+					<!-- Create Google Map -->
+					map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+					
+					<!-- Create string for info window -->
+					var infoString = '<div><a href="#">Garden 1</a></div><img src="./public/images/gardens/1.jpg" height="100px" width="100px"/>';
+					
+					<!-- Create info window -->
+					var infoWindow = new google.maps.InfoWindow({
+						content: infoString
+					});
+					
+					<!-- Create a marker -->
+					marker = new google.maps.Marker({
+						title: 'Test Marker',
+						map: map,
+						animation: google.maps.Animation.DROP,
+						position: oahu
+					});
+					
+					<!-- Add listeners to marker -->
+					<!-- google.maps.event.addListener(marker, 'click', toggleBounce); -->
+					google.maps.event.addListener(marker, 'click', function() {infoWindow.open(map,marker);});
+				}
+			
+				<!-- Initialize Google Maps on page load -->
+				google.maps.event.addDomListener(window, 'load', initialize);
+		    </script>
+		    <style type="text/css">
+		    	html {height: 100%}
+		    </style>
+    	}
+        
+        
     </head>
     <body>
     
