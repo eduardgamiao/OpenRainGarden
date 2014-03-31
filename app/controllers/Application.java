@@ -515,10 +515,23 @@ public class Application extends Controller {
    * @param id ID of the solution being commented on.
    * @return The page that the user was commenting on.
    */
-  public static Result postComment(Long id) {
+  @Security.Authenticated(Secured.class)
+  public static Result postComment(Long id) {    
+    String redirectLocation = ctx().request().uri();
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      return redirect(redirectLocation);
+    }
     CommentFormData data = formData.get();
-    System.out.println(data.comment);
-    return redirect(ctx().request().uri());
+    if (redirectLocation.contains("rain-garden")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
+    }
+    else if (redirectLocation.contains("rain-barrel")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainBarrelDB.getRainBarrel(id).getKey());
+    }    
+    else if (redirectLocation.contains("permeable-pavers")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
+    }
+    return redirect(redirectLocation);
   }
 }
