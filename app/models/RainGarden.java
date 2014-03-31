@@ -19,11 +19,11 @@ public class RainGarden {
   private String description;
   private String dateInstalled;
   private List<String> plants = new ArrayList<String>();
-  private String rainGardenSize = "N/A";
-  private String waterFlowSourceSize = "N/A";
-  private String waterFlowDescription = "N/A";
-  private String infiltrationRate = "N/A";
-  private String numberOfRainGardens = "N/A";
+  private String rainGardenSize;
+  private String waterFlowSourceSize;
+  private String waterFlowDescription;
+  private String infiltrationRate;
+  private String numberOfRainGardens;
   private UserInfo owner;
   private String key;
   
@@ -54,23 +54,14 @@ public class RainGarden {
     this.description = description;
     this.dateInstalled = dateInstalled;
     this.plants = plants;
-    if (!rainGardenSize.isEmpty()) {
-      this.rainGardenSize = rainGardenSize;
-    }
-    if (!waterFlowSourceSize.isEmpty()) {
-      this.waterFlowSourceSize = waterFlowSourceSize;
-    }
-    if (!waterFlowSourceSize.isEmpty()) {
-      this.waterFlowDescription = waterFlowDescription;
-    }
-    if (!infiltrationRate.isEmpty()) {
-      this.infiltrationRate = infiltrationRate;
-    }
-    if (!numberOfRainGardens.isEmpty()) {
-      this.numberOfRainGardens = numberOfRainGardens;
-    }
+    this.rainGardenSize = rainGardenSize;
+    this.waterFlowSourceSize = waterFlowSourceSize;
+    this.waterFlowDescription = waterFlowDescription;
+    this.infiltrationRate = infiltrationRate;
+    this.numberOfRainGardens = numberOfRainGardens;
     this.key = "rg" + this.id;
   }
+  
   /**
    * @return the id
    */

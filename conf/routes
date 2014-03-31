@@ -27,7 +27,7 @@ POST    /view/permeable-pavers/:id    controllers.Application.postComment(id: Lo
 GET     /delete/permeable-pavers/:id  controllers.Application.deletePaver(id: Long)
 GET     /logout                       controllers.Application.logout()
 GET     /learnmore                    controllers.Application.learnmore()
-GET     /gallery/rain-garden          controllers.Application.gardegallery()
+GET     /gallery/rain-garden          controllers.Application.gardengallery()
 GET     /gallery/rain-barrel          controllers.Application.barrelgallery()
 GET     /gallery/permeable-paver      controllers.Application.pavergallery()
 
