@@ -182,7 +182,7 @@ public class Application extends Controller {
           File destination = new File("public/images/upload/rb" + barrel.getID());
           source.renameTo(destination);
       }
-      return redirect("/view/rain-barrel/" + barrel.getID());
+      return redirect(routes.Application.viewBarrel(barrel.getID()));
      }     
     }
   
@@ -276,7 +276,7 @@ public class Application extends Controller {
   public static Result viewBarrel(Long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
     if (barrel != null) {
-     return ok(ViewBarrel.render(barrel));
+     return ok(ViewBarrel.render(barrel, CommentDB.getComments(barrel.getKey())));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }

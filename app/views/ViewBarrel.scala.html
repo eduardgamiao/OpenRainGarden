@@ -1,4 +1,4 @@
-@(rainBarrel: RainBarrel)
+@(rainBarrel: RainBarrel, comments: List[Comment])
 
 @Main("View Rain Barrel") {
    <div class="container">
@@ -55,19 +55,37 @@
               <h4>Additional Information</h4>
               </div>              
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                 <ul class="list-group" style="text-align: center;">
-                  <li class="list-group-item">Rain Barrel: Type @rainBarrel.getRainBarrelType()</li>
-                  <li class="list-group-item">Color: @rainBarrel.getColor()</li>
-                  <li class="list-group-item">Material Type: @rainBarrel.getMaterial()</li>
-                  <li class="list-group-item">Estimated Cost: @rainBarrel.getEstimatedCost()</li>
-                  <li class="list-group-item">Water Usage: @rainBarrel.getWaterUse()</li>                       
-                  <li class="list-group-item">Overflow Frequency: @rainBarrel.getOverflowFrequency</li>
-                  <li class="list-group-item">Rain Barrel Cover: @rainBarrel.getCover()</li>
-                  <li class="list-group-item">Place of Acquisition: @rainBarrel.getObtainedFrom()</li>
-                  <li class="list-group-item">Installation Method: @rainBarrel.getInstallationType()</li>
-                </ul>
+                  <b>Rain Barrel:</b> Type @rainBarrel.getRainBarrelType()<br/>
+                  <b>Color:</b> @rainBarrel.getColor()<br/>
+                  <b>Material Type:</b> @rainBarrel.getMaterial()<br/>
+                  <b>Estimated Cost:</b> @rainBarrel.getEstimatedCost()<br/>
+                  <b>Water Usage:</b> @rainBarrel.getWaterUse()<br/>                       
+                  <b>Overflow Frequency:</b> @rainBarrel.getOverflowFrequency<br/>
+                  <b>Rain Barrel Cover:</b> @rainBarrel.getCover()<br/>
+                  <b>Place of Acquisition:</b> @rainBarrel.getObtainedFrom()<br/>
+                  <b>Installation Method:</b> @rainBarrel.getInstallationType()<br/>
+
               </div>
           </div>
+                  <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
+          <div class="page-header">
+            <h4>Comments (@comments.size())</h4>          
+          </div>
+           @if(comments.isEmpty()) { 
+              <div class="alert alert-info">This rain barrel has no comments.</div>           
+            } else { 
+              @for(comment <- comments) {
+              <div class="well" style="background-color:white;">
+               <div class="media">
+                  <div class="media-body">
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     @comment.getComment()
+                  </div>
+               </div>
+              }
+            }
+            </div>
+        </div>
         </div>
       </div>
    </div>
