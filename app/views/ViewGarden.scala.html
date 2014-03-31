@@ -1,4 +1,9 @@
-@(rainGarden: RainGarden, plantList: List[Plant], comments: List[Comment])
+@(rainGarden: RainGarden, plantList: List[Plant], comments: List[Comment], 
+  commentFormData: Form[views.formdata.CommentFormData])
+  
+@import helper._ 
+@import bootstrap3._ 
+
 
 @Main("View Rain Garden") {
    <div class="container">
@@ -100,7 +105,20 @@
                </div>
               }
             }
-            </div>
+            <br/>
+                        <!-- Comment Form -->
+            @form(routes.Application.postComment(rainGarden.getID()), 'class -> "form-horizontal") {
+              <div class="form-group ">
+                  <div class="col-sm-12">
+                    <textarea class="form-control" rows="3" id="comment" name="comment" placeholder="Post A Comment" ></textarea>
+                    <span class="help-block"></span>
+                    <span class="help-block"></span>
+                    
+              <button id="submit" type="submit" class="btn btn default pull-right">Post Comment</button>
+                  </div>                  
+                </div>
+    }            
+            </div>       
         </div>
       </div>
       </div>

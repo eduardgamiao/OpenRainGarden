@@ -20,9 +20,9 @@ import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
-import play.mvc.Http.Request;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import views.formdata.CommentFormData;
 import views.formdata.CoverTypes;
 import views.formdata.DateTypes;
 import views.formdata.InstallationTypes;
@@ -246,8 +246,10 @@ public class Application extends Controller {
    */
   public static Result viewGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (garden != null) {
-     return ok(ViewGarden.render(garden, PlantDB.getPlants(), CommentDB.getComments(garden.getKey())));
+     return ok(ViewGarden.render(garden, PlantDB.getPlants(), CommentDB.getComments(garden.getKey()), commentForm));
     }
     return badRequest(Index.render(IndexContentDB.getBlocks()));
   }
@@ -506,5 +508,17 @@ public class Application extends Controller {
    */
   public static Result gallery() {
 	  return ok(Gallery.render("Gallery"));
+  }
+  
+  /**
+   * Post a comment.
+   * @param id ID of the solution being commented on.
+   * @return The page that the user was commenting on.
+   */
+  public static Result postComment(Long id) {
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    CommentFormData data = formData.get();
+    System.out.println(data.comment);
+    return redirect(ctx().request().uri());
   }
 }
