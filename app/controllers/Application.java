@@ -54,6 +54,7 @@ import views.html.ViewPaver;
 import views.html.RainGardenGallery;
 import views.html.RainBarrelGallery;
 import views.html.PermeablePaverGallery;
+import views.html.MapPage;
 
 /**
  * Implements the controllers for this application.
@@ -519,6 +520,10 @@ public class Application extends Controller {
   
   public static Result pavergallery() {
 	  return ok(PermeablePaverGallery.render(PermeablePaversDB.getPermeablePavers()));
+  }
+  
+  public static Result map() {
+	  return ok(MapPage.render("Map"));
   }
   
   /**
