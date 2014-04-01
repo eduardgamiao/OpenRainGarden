@@ -47,6 +47,7 @@ public class Global extends GlobalSettings {
     // Populate plant database.
     populatePlantDB();
     populateIndexContentDB();
+    
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
     UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw");
@@ -122,18 +123,17 @@ public class Global extends GlobalSettings {
   private static void populateIndexContentDB() {
 	  
 	  
-	  ButtonDB.addButton(new Button("1", "register", "/signup"));
-	  ButtonDB.addButton(new Button("1", "View Gallery", "/gallery"));
+	  ButtonDB.addButton(new Button("1", "Sign Up", "/signup"));
 	  ButtonDB.addButton(new Button("1", "View Map", "/map"));
 	  
-	  ButtonDB.addButton(new Button("2", "Learn More", "/learnmore"));
-	  ButtonDB.addButton(new Button("2", "View Gallery", "/register"));
+	  ButtonDB.addButton(new Button("2", "Learn More", "/learnmore#garden_resources"));
+	  ButtonDB.addButton(new Button("2", "View Gallery", "/gallery/rain-garden"));
 	  
-	  ButtonDB.addButton(new Button("3", "Learn More", "/learnmore"));
-	  ButtonDB.addButton(new Button("3", "View Gallery", "/register"));
+	  ButtonDB.addButton(new Button("4", "Learn More", "/learnmore#barrel_resources"));
+	  ButtonDB.addButton(new Button("4", "View Gallery", "/gallery/rain-barrel"));
 	  
-	  ButtonDB.addButton(new Button("4", "Learn More", "/learnmore"));
-	  ButtonDB.addButton(new Button("4", "View Gallery", "/register"));
+	  ButtonDB.addButton(new Button("3", "Learn More", "/learnmore#paver_resources"));
+	  ButtonDB.addButton(new Button("3", "View Gallery", "/gallery/permeable-paver"));
 	
 	  
 	  
