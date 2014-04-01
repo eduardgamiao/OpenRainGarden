@@ -110,11 +110,13 @@
         <ul class="nav navbar-nav">
           <li class="@("active".when(title == "Index"))"><a href="/">Home</a></li>
           
-          @if(Secured.isLoggedIn(ctx())) {
-          		<li class="@("active".when(title == "Rain Garden Registry Form"))"><a href="/register">Register</a></li>
-          } else {
-          		<li class="@("active".when(title == "Rain Garden Registry Form"))"><a href="/signup">Register</a></li>
-          }
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Register<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/register/rain-garden ">Rain Garden</a></li>
+                <li><a href="/register/rain-barrel">Rain Barrel</a></li>
+                <li><a href="/register/permeable-pavers">Permable Pavers</a></li>
+            </ul>
+        </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Gallery<b class="caret"></b></a>
 	            <ul class="dropdown-menu" role="menu">
 	              <li><a href="/gallery/rain-garden ">Rain Garden</a></li>
@@ -131,7 +133,6 @@
         	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@Secured.getUser(ctx())<b class="caret"></b></a>
 	            <ul class="dropdown-menu" role="menu">
 	              <li><a href="/profile">View Profile</a></li>
-	              <li><a href="edit-profile.html">Edit Profile</a></li>
 	            </ul>
 	        </li>
 				<li class="@("active".when(title == "Logout"))"><a href="@routes.Application.logout()">Logout</a></li>
