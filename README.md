@@ -14,4 +14,4 @@
 * 
 
 ### Deployment
-* [CloudBees Deployment](http://openraingarden.eduardgamiao.cloudbees.net)
+* [CloudBees Deployment](http://openraingarden.openraingarden.cloudbees.net/)
