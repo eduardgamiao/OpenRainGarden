@@ -22,6 +22,7 @@ public class PermeablePavers {
   private String installer;
   private UserInfo owner;
   private String key;
+  private byte [] image;
 
   /**
    * Constructor.
@@ -224,11 +225,29 @@ public class PermeablePavers {
   
   
   /**
-   * @return the hasPicture
-   * @throws IOException 
+   * @return the image
    */
-  public boolean hasPicture() throws IOException {
-    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/pp" + this.id));
+  public byte [] getImage() {
+    return image;
+  }
+
+  /**
+   * @param image the image to set
+   */
+  public void setImage(byte [] image) {
+    this.image = image;
+  }
+
+  /**
+   * @return the hasPicture
+   */
+  public boolean hasPicture() {
+    if (this.image == null) {
+      return false;
+    }
+    else {
+      return (this.image.length > 0);
+    }
   }
 
   /**

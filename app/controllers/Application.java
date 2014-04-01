@@ -223,9 +223,10 @@ public class Application extends Controller {
   /**
    * Returns the created/edited permeable pavers page.
    * @return The resulting permeable pavers page if information was valid, else the registration form.
+   * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postPermeablePaversRegister() {
+  public static Result postPermeablePaversRegister() throws IOException {
     Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).bindFromRequest();
     validatePaverUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
@@ -246,8 +247,7 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
           File source = picture.getFile();
-          File destination = new File("public/images/upload/pp" + paver.getID());
-          source.renameTo(destination);
+          paver.setImage(Files.toByteArray(source));
       }
       return redirect(routes.Application.viewPaver(paver.getID()));
      }     
@@ -617,13 +617,25 @@ public class Application extends Controller {
   }
   
   /**
-   * Retrieve a garden image.
-   * @param id The ID of the garden to retrieve the image from.
+   * Retrieve a paver image.
+   * @param id The ID of the paver to retrieve the image from.
    * @return The image matching the ID given.
    */
   public static Result retrieveBarrelImage(long id) {
     if (RainBarrelDB.hasID(id)) {
       return ok(RainBarrelDB.getRainBarrel(id).getImage()).as("image/jpeg");
+    }
+    return redirect("/");
+  }
+  
+  /**
+   * Retrieve a paver image.
+   * @param id The ID of the paver to retrieve the image from.
+   * @return The image matching the ID given.
+   */
+  public static Result retrievePaverImage(long id) {
+    if (PermeablePaversDB.hasID(id)) {
+      return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
     }
     return redirect("/");
   }
