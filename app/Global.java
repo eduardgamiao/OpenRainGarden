@@ -55,8 +55,8 @@ public class Global extends GlobalSettings {
     // Add rain garden.
     List<String> plants = new ArrayList<String>();
     plants.add("‘Ahu‘awa");
-    plants.add("Kāwelu");
-    plants.add("Mau‘u ‘aki ‘aki");
+    plants.add("‘Ākulikuli");
+    plants.add("‘Ilie‘e");
     RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", 
         "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "25", "200", 
@@ -100,26 +100,23 @@ public class Global extends GlobalSettings {
    * Populate plant database with plants from file.
    */
   private static void populatePlantDB() {
-    try {
-      BufferedReader br = new BufferedReader(new FileReader("public/csv/plant.txt"));
-      String line;
-      String [] current;
-      while ((line = br.readLine()) != null) {
-        current = line.split(", ");
-        if (current.length == EXPECTED_PLANT_FILE_LENGTH) {
-          PlantDB.addPlant(new Plant(current[0].trim(), current[1].trim(), current[2].trim(), 
-              current[THREE].trim(), current[FOUR].trim()));
-        }
-      }
-      br.close();
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
+    String plant1 = "‘Ahu‘awa, Mariscus javanicus, Basin, sedge, Wet & Dry Climate";
+    String plant2 = "‘Ākia, Wikstroemia uva-ursi, Slope/berm, low shrub, Wet & Dry Climate";
+    String plant3 = "‘Ākulikuli, Sessuvium portulacastrum, Inlet, ground cover, Wet & Dry Climate";
+    String plant4 = "Carex, Carex wahuensis, Basin, sedge, Wet & Dry Climate";
+    String plant5 = "‘Ilie‘e, Plumbago zeylanica, Slope/berm, low shrub, Wet & Dry Climate";
+    String [] plantArr1 = plant1.split(", ");
+    String [] plantArr2 = plant2.split(", ");
+    String [] plantArr3 = plant3.split(", ");
+    String [] plantArr4 = plant4.split(", ");
+    String [] plantArr5 = plant5.split(", ");
+    PlantDB.addPlant(new Plant(plantArr1[0], plantArr1[1], plantArr1[2], plantArr1[THREE], plantArr1[FOUR]));
+    PlantDB.addPlant(new Plant(plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
+    PlantDB.addPlant(new Plant(plantArr3[0], plantArr3[1], plantArr3[2], plantArr3[THREE], plantArr3[FOUR]));
+    PlantDB.addPlant(new Plant(plantArr4[0], plantArr4[1], plantArr4[2], plantArr4[THREE], plantArr4[FOUR]));
+    PlantDB.addPlant(new Plant(plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
   }
+  
   private static void populateIndexContentDB() {
 	  
 	  
