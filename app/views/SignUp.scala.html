@@ -13,11 +13,11 @@
 				</div>
 				<div class="panel-body" style="color: black;">
 					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
-						@text(signupForm("firstName"), "First Name", "First Name", "");
-						@text(signupForm("lastName"), "Last Name", "Last Name", "");
-						@email(signupForm("email"), "Email", "Email", "");
-						@telephone(signupForm("telephone"), "Telephone", "Telephone", "");
-						@password(signupForm("password"), "Password", "Password", "");
+						@text(signupForm("firstName"), "First Name", "First Name", "")
+						@text(signupForm("lastName"), "Last Name", "Last Name", "")
+						@email(signupForm("email"), "Email", "Email", "")
+						@telephone(signupForm("telephone"), "Telephone", "Telephone (Optional)", "")
+						@password(signupForm("password"), "Password", "Password", "")
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">

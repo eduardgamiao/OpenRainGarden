@@ -30,7 +30,7 @@ public class SignUpFormData {
 	 * @return A list of errors (empty list if form is valid)
 	 */
 	public List<ValidationError> validate() {
-		ArrayList<ValidationError> errors = new ArrayList<>();
+		ArrayList<ValidationError> errors = new ArrayList<ValidationError>();
 		
 		if (this.firstName == null || this.firstName.length() == 0) {
 			errors.add(new ValidationError("firstName", "Please enter your first name."));
@@ -41,9 +41,9 @@ public class SignUpFormData {
 		if (this.email == null || this.email.length() == 0) {
 			errors.add(new ValidationError("email", "Please enter your email address."));
 		}
-		if (this.telephone == null || this.telephone.length() == 0) {
-			errors.add(new ValidationError("telephone", "Please enter your telephone number."));
-		}
+		//if (this.telephone == null || this.telephone.length() == 0) {
+			//errors.add(new ValidationError("telephone", "Please enter your telephone number."));
+		//}
 		if (this.password == null || this.password.length() == 0) {
 			errors.add(new ValidationError("password", "Please enter your desired password."));
 		}	
