@@ -1,9 +1,11 @@
 package controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.google.common.io.Files;
 import models.CommentDB;
 import models.IndexContentDB;
 import models.PermeablePavers;
@@ -107,9 +109,10 @@ public class Application extends Controller {
   /**
    * Returns the created/edited rain garden page.
    * @return The resulting rain garden page if information was valid, else the registration form.
+   * @throws IOException 
    */
   @Security.Authenticated(Secured.class)
-  public static Result postRainGardenRegister() {
+  public static Result postRainGardenRegister() throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
@@ -136,8 +139,7 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       if (picture != null) {
           File source = picture.getFile();
-          File destination = new File("public/images/upload/rg" + garden.getID());
-          source.renameTo(destination);
+          garden.setImage(Files.toByteArray(source));
       }
       return redirect(routes.Application.viewGarden(garden.getID()));
      }     
@@ -558,5 +560,9 @@ public class Application extends Controller {
       CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
     }
     return redirect(uri);
+  }
+  
+  public static Result retrieveGardenImage(long id) {
+    return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
   }
 }

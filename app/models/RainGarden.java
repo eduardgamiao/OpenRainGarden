@@ -26,6 +26,7 @@ public class RainGarden {
   private String numberOfRainGardens;
   private UserInfo owner;
   private String key;
+  private byte [] image;
   
   /**
    * Constructor.
@@ -245,6 +246,20 @@ public class RainGarden {
     this.owner = owner;
   }
   
+  /**
+   * @return the image
+   */
+  public byte [] getImage() {
+    return image;
+  }
+
+  /**
+   * @param image the image to set
+   */
+  public void setImage(byte [] image) {
+    this.image = image;
+  }
+
   /**
    * @return the hasPicture
    * @throws IOException 
