@@ -9,11 +9,7 @@
 			@for(paver <- paverList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
-						@if(paver.hasPicture()) {
-							<img src="@routes.Assets.at("images/" + paver.getPictureName())">
-						} else {
-							<img src="#">
-						}
+						<img src="@routes.Assets.at("images/" + paver.getPictureName())">
 						<div class="caption">
 							<h3>@paver.getTitle()</h3>
 							<ul>

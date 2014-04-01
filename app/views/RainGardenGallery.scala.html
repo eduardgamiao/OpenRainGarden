@@ -9,11 +9,7 @@
 			@for(garden <- gardenList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
-						@if(garden.hasPicture()) {
-							<img src="@routes.Assets.at("images/" + garden.getPictureName())">
-						} else {
-							<img src="#">
-						}
+						<img src="@routes.Assets.at("images/" + garden.getPictureName())">
 						<div class="caption">
 							<h3>@garden.getTitle()</h3>
 							<ul>

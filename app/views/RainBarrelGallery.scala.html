@@ -9,11 +9,7 @@
 			@for(barrel <- barrelList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
-						@if(barrel.hasPicture()) {
-							<img src="@routes.Assets.at("images/" + barrel.getPictureName())">
-						} else {
-							<img src="#">
-						}
+						<img src="@routes.Assets.at("images/" + barrel.getPictureName())">
 						<div class="caption">
 							<h3>@barrel.getTitle()</h3>
 							<ul>
