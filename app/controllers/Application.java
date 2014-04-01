@@ -604,7 +604,15 @@ public class Application extends Controller {
     return redirect(uri);
   }
   
+  /**
+   * Retrieve a garden image.
+   * @param id The ID of the garden to retrieve the image from.
+   * @return The image matching the ID given.
+   */
   public static Result retrieveGardenImage(long id) {
-    return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
+    if (RainGardenDB.hasID(id)) {
+      return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
+    }
+    return redirect("/");
   }
 }
