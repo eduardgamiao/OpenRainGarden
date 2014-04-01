@@ -29,6 +29,7 @@ public class RainBarrel {
   private String numberOfRainBarrels;
   private UserInfo owner;
   private String key;
+  private byte [] image;
     
   /**
    * Constructor.
@@ -316,6 +317,20 @@ public class RainBarrel {
   }
   
   /**
+   * @return the image
+   */
+  public byte [] getImage() {
+    return image;
+  }
+
+  /**
+   * @param image the image to set
+   */
+  public void setImage(byte [] image) {
+    this.image = image;
+  }
+
+  /**
    * Get month installed.
    * @return The month the rain barrel was installed.
    */
@@ -353,10 +368,14 @@ public class RainBarrel {
 
   /**
    * @return the hasPicture
-   * @throws IOException Thrown if there is an error during file checking.
    */
-  public boolean hasPicture() throws IOException {
-    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/rb" + this.id));
+  public boolean hasPicture() {
+    if (this.image == null) {
+      return false;
+    }
+    else {
+      return (this.image.length > 0);
+    }
   }
 
   /**

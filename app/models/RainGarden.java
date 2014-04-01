@@ -263,9 +263,8 @@ public class RainGarden {
 
   /**
    * @return the hasPicture
-   * @throws IOException 
    */
-  public boolean hasPicture() throws IOException {
+  public boolean hasPicture() {
     if (this.image == null) {
       return false;
     }
