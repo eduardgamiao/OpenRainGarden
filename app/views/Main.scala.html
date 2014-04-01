@@ -24,7 +24,6 @@
     		
     		<script type="text/javascript">
 			    var oahu = new google.maps.LatLng(21.4667, -157.9833);
-				var marker;
 				var map;
 				
 				<!-- Initializes Google Maps -->
@@ -38,25 +37,50 @@
 					<!-- Create Google Map -->
 					map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 					
-					<!-- Create string for info window -->
-					var infoString = '<div><a href="#">Garden 1</a></div><img src="./public/images/gardens/1.jpg" height="100px" width="100px"/>';
+					var infoString1 = '<div class="thumbnail" id="infoContent">'+
+					'<img src="/assets/images/garden.png"/><div class="caption">'+
+					'<ul><li>Rain Garden</li>'+
+					'<li>Property Type: Residential</li>'+
+					'<li>Date Installed: 4/5/2014</li></ul>'+
+					'<div style="text-align:right">'+
+					'<a href="/view/rain-garden/1">View Full Details >></a></div></div></div>';
 					
-					<!-- Create info window -->
-					var infoWindow = new google.maps.InfoWindow({
-						content: infoString
+					var infoString2 = '<div class="thumbnail" id="infoContent">'+
+					'<img src="/assets/images/barrel.png"/><div class="caption">'+
+					'<ul><li>Rain Barrel</li>'+
+					'<li>Property Type: Residential</li>'+
+					'<li>Date Installed: 4/5/2014</li></ul>'+
+					'<div style="text-align:right">'+
+					'<a href="/view/rain-barrel/1">View Full Details >></a></div></div></div>';
+					
+					var infoString3 = '<div class="thumbnail" id="infoContent">'+
+					'<img src="/assets/images/paver.png"/><div class="caption">'+
+					'<ul><li>Permeable Paver</li>'+
+					'<li>Property Type: Residential</li>'+
+					'<li>Date Installed: 4/5/2014</li></ul>'+
+					'<div style="text-align:right">'+
+					'<a href="/view/permeable-paver/1">View Full Details >></a></div></div></div>';
+					
+					addMarker('Rain Garden', oahu, infoString1);
+					addMarker('Rain Barrel', new google.maps.LatLng(21.5, -157.87), infoString2);
+					addMarker('Permeable Paver', new google.maps.LatLng(21.4, -157.8), infoString3);
+					
+				}
+				
+				function addMarker(name, latlng, html) {
+					var info = new google.maps.InfoWindow({
+						content: html
 					});
 					
-					<!-- Create a marker -->
-					marker = new google.maps.Marker({
-						title: 'Test Marker',
+					var marker = new google.maps.Marker({
+						title: name,
 						map: map,
-						animation: google.maps.Animation.DROP,
-						position: oahu
+						position: latlng
 					});
 					
-					<!-- Add listeners to marker -->
-					<!-- google.maps.event.addListener(marker, 'click', toggleBounce); -->
-					google.maps.event.addListener(marker, 'click', function() {infoWindow.open(map,marker);});
+					google.maps.event.addListener(marker, 'click', function(){
+						info.open(map, marker);
+					});
 				}
 			
 				<!-- Initialize Google Maps on page load -->
@@ -64,6 +88,7 @@
 		    </script>
 		    <style type="text/css">
 		    	html {height: 100%}
+		    	#infoContent {width: 300px; height: 400px}
 		    </style>
     	}
         
