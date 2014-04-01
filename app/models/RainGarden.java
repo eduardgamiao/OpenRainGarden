@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
+import controllers.routes;
 
 /**
  * An object that represents a rain garden.
@@ -265,7 +266,12 @@ public class RainGarden {
    * @throws IOException 
    */
   public boolean hasPicture() throws IOException {
-    return FileUtils.directoryContains(new File("public/images/upload"), new File("public/images/upload/rg" + this.id));
+    if (this.image == null) {
+      return false;
+    }
+    else {
+      return (this.image.length > 0);
+    }
   }
 
   /**

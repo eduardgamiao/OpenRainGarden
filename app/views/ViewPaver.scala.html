@@ -82,7 +82,7 @@
             @if(Secured.isLoggedIn(ctx())) {
             <br/>
               <!-- Comment Form -->
-              @form(routes.Application.postComment(permeablePaver.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
+              @form(routes.Application.postPaverComment(permeablePaver.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
                 @comment(commentFormData("comment"), "Post A Comment")
               }
             }

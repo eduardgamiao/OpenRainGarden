@@ -544,7 +544,49 @@ public class Application extends Controller {
    * @return The page that the user was commenting on.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postComment(Long id, String uri) {
+  public static Result postGardenComment(Long id, String uri) {
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      return redirect(uri);
+    }
+    CommentFormData data = formData.get();
+    CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
+    return redirect(uri);
+  }
+  
+  /**
+   * Post a comment.
+   * @param id ID of the solution being commented on.
+   * @param uri Target of redirect.
+   * @return The page that the user was commenting on.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result postBarrelComment(Long id, String uri) {
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      return redirect(uri);
+    }
+    CommentFormData data = formData.get();
+    if (uri.contains("rain-garden")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
+    }
+    else if (uri.contains("rain-barrel")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainBarrelDB.getRainBarrel(id).getKey());
+    }    
+    else if (uri.contains("permeable-pavers")) {
+      CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
+    }
+    return redirect(uri);
+  }
+  
+  /**
+   * Post a comment.
+   * @param id ID of the solution being commented on.
+   * @param uri Target of redirect.
+   * @return The page that the user was commenting on.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result postPaverComment(Long id, String uri) {
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);

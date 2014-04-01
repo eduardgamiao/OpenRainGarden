@@ -19,7 +19,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@routes.Application.retrieveGardenImage(rainGarden.getID())" class="img-responsive center-block"
+              <img src="@if(rainGarden.hasPicture()) {@routes.Application.retrieveGardenImage(rainGarden.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block"
                 style="width: 100%; height: 400px;" />
             </div>
           </div>
@@ -108,7 +108,7 @@
             @if(Secured.isLoggedIn(ctx())) {
             <br/>
               <!-- Comment Form -->
-              @form(routes.Application.postComment(rainGarden.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
+              @form(routes.Application.postGardenComment(rainGarden.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
                 @comment(commentFormData("comment"), "Post A Comment")
               }
             }
