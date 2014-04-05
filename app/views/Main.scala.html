@@ -37,6 +37,13 @@
 					<!-- Create Google Map -->
 					map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 					
+					//var infoString;
+					//@for(garden <- RainGardenDB.getRainGardens()){
+						//infoString = '<p>'+ @garden.getImage() + '</p>'
+						
+						//infoString = createInfo('Rain Garden', '/assets/images/garden.png', 'Residential', '4/5/2014', '/view/rain-garden/1')
+					//}
+					
 					var infoString1 = '<div class="thumbnail" id="infoContent">'+
 					'<img src="/assets/images/garden.png"/><div class="caption">'+
 					'<ul><li>Rain Garden</li>'+
@@ -61,10 +68,49 @@
 					'<div style="text-align:right">'+
 					'<a href="/view/permeable-pavers/1">View Full Details >></a></div></div></div>';
 					
-					addMarker('Rain Garden', oahu, infoString1);
+					//addMarker('Rain Garden', oahu, infoString1);
+					//addMarker('Rain Garden', oahu, infoString);
+					//addMarker('Rain Garden', oahu, createInfo('Rain Garden', '/assets/images/garden.png', 'Residential', '4/5/14', '/view/rain-garden/1'));
+					
 					addMarker('Rain Barrel', new google.maps.LatLng(21.5, -157.87), infoString2);
 					addMarker('Permeable Paver', new google.maps.LatLng(21.4, -157.8), infoString3);
 					
+					var infoString;
+					@for(barrel <- RainBarrelDB.getRainBarrels()){						
+						@if(!barrel.hideAddress()){
+							var image;
+							@if(barrel.hasPicture()){
+								image = '@routes.Application.retrieveBarrelImage(barrel.getID())';
+							} else {
+								image = '@routes.Assets.at("images/placeholder.gif")';
+							}
+							infoString = createInfo('Rain Barrel', image, '@barrel.getPropertyType()', '@barrel.getDateInstalled()', '/view/rain-barrel/'+'@barrel.getID');
+							addMarker('Barrel', oahu, infoString);
+						}
+					}
+					
+				}
+				
+				function createInfo(type, image, property, date, url) {
+					var info = '<div class="thumbnail" id="infoContent">'+
+					'<img src="'+
+					image+
+					'"/><div class="caption">'+
+					'<ul><li>'+
+					type+
+					'</li>'+
+					'<li>Property Type: '+
+					property+
+					'</li>'+
+					'<li>Date Installed: '+
+					date+
+					'</li></ul>'+
+					'<div style="text-align:right">'+
+					'<a href="'+
+					url+
+					'">View Full Details >></a></div></div></div>';
+					
+					return info;
 				}
 				
 				function addMarker(name, latlng, html) {
