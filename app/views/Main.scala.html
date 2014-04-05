@@ -25,9 +25,11 @@
     		<script type="text/javascript">
 			    var oahu = new google.maps.LatLng(21.4667, -157.9833);
 				var map;
+				var geo;
 				
 				<!-- Initializes Google Maps -->
 				function initialize() {
+					geo = new google.maps.Geocoder();
 					<!-- Set mapOptions -->
 					var mapOptions = {
 						center: oahu,
@@ -37,55 +39,56 @@
 					<!-- Create Google Map -->
 					map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 					
-					//var infoString;
-					//@for(garden <- RainGardenDB.getRainGardens()){
-						//infoString = '<p>'+ @garden.getImage() + '</p>'
-						
-						//infoString = createInfo('Rain Garden', '/assets/images/garden.png', 'Residential', '4/5/2014', '/view/rain-garden/1')
-					//}
-					
-					var infoString1 = '<div class="thumbnail" id="infoContent">'+
-					'<img src="/assets/images/garden.png"/><div class="caption">'+
-					'<ul><li>Rain Garden</li>'+
-					'<li>Property Type: Residential</li>'+
-					'<li>Date Installed: 4/5/2014</li></ul>'+
-					'<div style="text-align:right">'+
-					'<a href="/view/rain-garden/1">View Full Details >></a></div></div></div>';
-					
-					var infoString2 = '<div class="thumbnail" id="infoContent">'+
-					'<img src="/assets/images/barrel.png"/><div class="caption">'+
-					'<ul><li>Rain Barrel</li>'+
-					'<li>Property Type: Residential</li>'+
-					'<li>Date Installed: 4/5/2014</li></ul>'+
-					'<div style="text-align:right">'+
-					'<a href="/view/rain-barrel/1">View Full Details >></a></div></div></div>';
-					
-					var infoString3 = '<div class="thumbnail" id="infoContent">'+
-					'<img src="/assets/images/paver.png"/><div class="caption">'+
-					'<ul><li>Permeable Paver</li>'+
-					'<li>Property Type: Residential</li>'+
-					'<li>Date Installed: 4/5/2014</li></ul>'+
-					'<div style="text-align:right">'+
-					'<a href="/view/permeable-pavers/1">View Full Details >></a></div></div></div>';
-					
-					//addMarker('Rain Garden', oahu, infoString1);
-					//addMarker('Rain Garden', oahu, infoString);
-					//addMarker('Rain Garden', oahu, createInfo('Rain Garden', '/assets/images/garden.png', 'Residential', '4/5/14', '/view/rain-garden/1'));
-					
-					addMarker('Rain Barrel', new google.maps.LatLng(21.5, -157.87), infoString2);
-					addMarker('Permeable Paver', new google.maps.LatLng(21.4, -157.8), infoString3);
-					
 					var infoString;
+	
+					@for(garden <- RainGardenDB.getRainGardens()){						
+						@if(!garden.hideAddress()){
+							geo.geocode( {'address': '@garden.getAddress()'}, function(results,status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									var image;
+									@if(garden.hasPicture()){
+										image = '@routes.Application.retrieveGardenImage(garden.getID())';
+									} else {
+										image = '@routes.Assets.at("images/placeholder.gif")';
+									}
+									infoString = createInfo('Rain Garden', image, '@garden.getPropertyType()', '@garden.getDateInstalled()', '/view/rain-garden/'+'@garden.getID');
+									addMarker('Garden', results[0].geometry.location, infoString);
+								}
+							});
+						}
+					}
+					
 					@for(barrel <- RainBarrelDB.getRainBarrels()){						
 						@if(!barrel.hideAddress()){
-							var image;
-							@if(barrel.hasPicture()){
-								image = '@routes.Application.retrieveBarrelImage(barrel.getID())';
-							} else {
-								image = '@routes.Assets.at("images/placeholder.gif")';
-							}
-							infoString = createInfo('Rain Barrel', image, '@barrel.getPropertyType()', '@barrel.getDateInstalled()', '/view/rain-barrel/'+'@barrel.getID');
-							addMarker('Barrel', oahu, infoString);
+							geo.geocode( {'address': '@barrel.getAddress()'}, function(results,status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									var image;
+									@if(barrel.hasPicture()){
+										image = '@routes.Application.retrieveBarrelImage(barrel.getID())';
+									} else {
+										image = '@routes.Assets.at("images/placeholder.gif")';
+									}
+									infoString = createInfo('Rain Barrel', image, '@barrel.getPropertyType()', '@barrel.getDateInstalled()', '/view/rain-barrel/'+'@barrel.getID');
+									addMarker('Barrel', results[0].geometry.location, infoString);
+								}
+							});
+						}
+					}
+					
+					@for(paver <- PermeablePaversDB.getPermeablePavers()){						
+						@if(!paver.hideAddress()){
+							geo.geocode( {'address': '@paver.getAddress()'}, function(results,status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									var image;
+									@if(paver.hasPicture()){
+										image = '@routes.Application.retrievePaverImage(paver.getID())';
+									} else {
+										image = '@routes.Assets.at("images/placeholder.gif")';
+									}
+									infoString = createInfo('Permeable Paver', image, '@paver.getPropertyType()', '@paver.getDateInstalled()', '/view/permeable-pavers/'+'@paver.getID');
+									addMarker('Paver', results[0].geometry.location, infoString);
+								}
+							});
 						}
 					}
 					
