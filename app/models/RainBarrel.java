@@ -137,6 +137,20 @@ public class RainBarrel {
   public void setHideAddress(String hideAddress) {
     this.hideAddress = hideAddress;
   }
+  
+  /**
+   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No"
+   * @return
+   */
+  public boolean hideAddress() {
+	  if (this.hideAddress.equals("Yes")) {
+		  return true;
+	  }
+	  else {
+		  return false;
+	  }
+  }
+  
   /**
    * @return the description
    */
