@@ -5,10 +5,8 @@
 
 @Main("Page1") {
    <div class="container">
-    <ul>
-      @for(garden <- RainGardenDB.getRainGardens()) {
-      <li><a href="/view/rain-garden/@garden.getID()">Rain Garden @garden.getID()</a></li>
-      }
-    </ul>
+<a href="#" class="example"  rel="popover" 
+    data-content="<img src=&quot;@routes.Assets.at("images/garden.png")&quot; width=&quot;250px&quot; height=&quot;250px&quot;/>" 
+    data-html="true" data-original-title="A Title"><img src="@routes.Assets.at("images/garden.png")" width="50px" height="50px"/></a>
    </div>
 }
