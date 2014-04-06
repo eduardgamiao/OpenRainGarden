@@ -124,4 +124,15 @@ public class Plant {
     return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase() + ".jpg";
   }
   
+  public String getPlantWellColor() {
+    if (this.climateType.equals("Dry Climate")) {
+      return "#DFF0D8;";
+    }
+    else if (this.climateType.equals("Wet Climate")) {
+      return "#D9EDF7;";
+    }
+    else {
+      return "white;";
+    }
+  }
 }
