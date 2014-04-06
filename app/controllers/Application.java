@@ -33,6 +33,7 @@ import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainBarrelTypes;
+import views.formdata.RainGardenSizeTypes;
 import views.formdata.WaterUsageTypes;
 import views.formdata.YesNoChoiceType;
 import views.formdata.PlantTypes;
@@ -102,7 +103,7 @@ public class Application extends Controller {
     return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
-              PlantTypes.getPlantMap(data.plants), SolutionAmountType.getTypes(data.numberOfRainGardens), 
+              PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
               Secured.getUserInfo(ctx())));
   }
   
@@ -129,7 +130,7 @@ public class Application extends Controller {
                         DateTypes.getDayTypes(dataMap.get("day")), 
                         DateTypes.getYearTypes(dataMap.get("year")),
                         PlantTypes.getPlantMap(plantList),
-                        SolutionAmountType.getTypes(dataMap.get("numberOfRainGardens")),
+                        RainGardenSizeTypes.getTypes(dataMap.get("rainGardenSize")),
                         Secured.getUserInfo(ctx())));   
     } 
     else {

@@ -114,7 +114,7 @@ public class RainGardenFormData {
     this.hideAddress = rainGarden.getHideAddress();
     this.description = rainGarden.getDescription();
     this.month = rainGarden.getMonthInstalled();
-    this.day = rainGarden.getMonthInstalled();
+    this.day = rainGarden.getDayInstalled();
     this.year = rainGarden.getYearInstalled();
     this.plants = rainGarden.getPlants();
     this.rainGardenSize = rainGarden.getRainGardenSize();
@@ -137,28 +137,15 @@ public class RainGardenFormData {
     if (this.address.length() == 0 || this.address == null) {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
-    if (this.month.equals("")) {
-      errors.add(new ValidationError("month", "Please select a month."));     
-    }    
-    if (this.day.equals("")) {
-      errors.add(new ValidationError("day", "Please select a day."));     
-    }    
-    if (this.year.equals("")) {
-      errors.add(new ValidationError("year", "Please select a year."));     
-    }
-    if (!(this.rainGardenSize.isEmpty()) && !(isValidInteger(this.rainGardenSize))) {
-      errors.add(new ValidationError("rainGardenSize", 
-          "Please enter a positive number for you rain garden's size."));       
-    }
-    if (!(this.waterFlowSourceSize.isEmpty()) && !(isValidInteger(this.waterFlowSourceSize))) {
-      errors.add(new ValidationError("waterFlowSourceSize", 
-          "Please enter a positive number for your water flow source size."));       
-    }
-    if (!(this.infiltrationRate.isEmpty()) && !(isValidDouble(this.infiltrationRate))) {
-      errors.add(new ValidationError("infiltrationRate", 
-          "Please enter a positive number for your rain garden's infiltration rate."));       
-    }
-    
+    //if (this.month.equals("")) {
+    //  errors.add(new ValidationError("month", "Please select a month."));     
+    //}    
+    //if (this.day.equals("")) {
+    //  errors.add(new ValidationError("day", "Please select a day."));     
+    //}    
+    //if (this.year.equals("")) {
+    //  errors.add(new ValidationError("year", "Please select a year."));     
+    //}    
     return errors.isEmpty() ? null : errors;
   }
  

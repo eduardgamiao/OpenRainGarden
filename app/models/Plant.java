@@ -116,8 +116,12 @@ public class Plant {
     this.climateType = climateType;
   }
   
+  /**
+   * Return the name of the plant without markings/accents. 
+   * @return The name of the plant without markings/accents.
+   */
   public String getPictureName() {
-    return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+    return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase() + ".jpg";
   }
   
 }
