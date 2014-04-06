@@ -13,7 +13,7 @@ import java.util.Map;
 public class PlantDB {
 
   private static Map<String, Plant> plants = new LinkedHashMap<String, Plant>();
-  
+  private static long currentID = 1;
   /**
    * Add a plant to the database.
    * @param plant Plant to add.
@@ -21,6 +21,8 @@ public class PlantDB {
    */
   public static Plant addPlant(Plant plant) {
     plants.put(plant.getName(), plant);
+    plant.setID(currentID);
+    currentID++;
     return plant;
   }
   

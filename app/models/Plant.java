@@ -1,5 +1,7 @@
 package models;
 
+import java.text.Normalizer;
+
 /**
  * Represents plants used in a rain garden.
  * @author eduardgamiao
@@ -10,8 +12,9 @@ public class Plant {
   private String name;
   private String scientificName;
   private String placement;
-  private String growth;
+  private String growth; 
   private String climateType;
+  private Long id;
 
   /**
    * Constructor.
@@ -27,6 +30,20 @@ public class Plant {
     this.placement = placement;
     this.growth = growth;
     this.climateType = climateType;
+  }
+
+  /**
+   * @return the id
+   */
+  public Long getID() {
+    return id;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  public void setID(Long id) {
+    this.id = id;
   }
 
   /**
@@ -99,5 +116,8 @@ public class Plant {
     this.climateType = climateType;
   }
   
+  public String getPictureName() {
+    return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+  }
   
 }
