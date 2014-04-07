@@ -24,7 +24,7 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Permeable Paver Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              @file(formData("uploadFile"), "Upload File")
+              @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
               <div class="page-header"><h3>Additional Information</h3></div> 
               @bootstrap3.select(formData("material"), "Material", "Please Select a Paver Material Type", materialType, false, "")
               @text(formData("previousMaterial"), "Previous Material", "Material of Previous Pavement", "")

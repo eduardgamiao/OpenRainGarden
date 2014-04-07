@@ -13,8 +13,8 @@
 				</div>
 				<div class="panel-body" style="color: black;">
 					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
-						@text(signupForm("firstName"), "First Name", user.getFirstName() , "")
-						@text(signupForm("lastName"), "Last Name", user.getLastName(), "")
+						@text(signupForm("firstName"), "First Name", "First Name", "")
+						@text(signupForm("lastName"), "Last Name", "Last Name", "")
 						@email(signupForm("email"), "Email", user.getEmail(), "")
 						@telephone(signupForm("telephone"), "Telephone", user.getTelephone(), "")
 						@password(signupForm("password"), "Password", user.getPassword(), "")

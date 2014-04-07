@@ -1,4 +1,4 @@
-@(field: Field, label:String)
+@(field: Field, label:String, help: String)
 
   <div class="form-group @if(field.hasErrors) {has-error}">
     <label class="col-sm-2 control-label">@label</label>
@@ -6,6 +6,7 @@
       <input type="file" 
              id="@field.id" 
              name="@field.name"/>
+      <span class="help-block">@help</span>
       <span class="help-block">@{field.error.map { error => error.message }}</span>         
     </div>
   </div>

@@ -110,7 +110,7 @@ public class Application extends Controller {
   public static Result registerRainGarden(Long id) {
     RainGardenFormData data = (RainGardenDB.getRainGarden(id) == null)
         ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
-    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);    
     return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
@@ -381,9 +381,12 @@ public class Application extends Controller {
  
   
   public static Result editProfile() {
-	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class);
-	  return ok(EditProfile.render(formData,   UserInfoDB.getUser(Secured.getUser(ctx()))     ));
+    SignUpFormData data = (!Secured.isLoggedIn(ctx())) 
+        ? new SignUpFormData() : new SignUpFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getEmail()));
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).fill(data);
+	  return ok(EditProfile.render(formData,   UserInfoDB.getUser(Secured.getUser(ctx()))));
   }
+  
   /**
    * Processes the sign up form.
    * @return

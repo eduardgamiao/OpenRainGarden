@@ -2,6 +2,7 @@ package views.formdata;
 
 import java.util.List;
 import java.util.ArrayList;
+import models.UserInfo;
 import play.data.validation.ValidationError;
 
 /**
@@ -24,6 +25,25 @@ public class SignUpFormData {
 	
 	/** Password of user.	 */
 	public String password;
+	
+	/**
+	 * Constructor.
+	 */
+	public SignUpFormData() {	  
+	  
+	}
+	
+	/**
+	 * Constructor.
+	 * @param userInfo The user.
+	 */
+	public SignUpFormData(UserInfo userInfo) {
+	  this.firstName = userInfo.getFirstName();
+	  this.lastName = userInfo.getLastName();
+	  this.email = userInfo.getEmail();
+	  this.telephone = userInfo.getTelephone();
+	  this.password = userInfo.getPassword();
+	}
 	
 	/**
 	 * Validation for Sign Up Form.

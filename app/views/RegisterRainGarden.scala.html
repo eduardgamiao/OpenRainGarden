@@ -12,7 +12,7 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>Register Rain Garden</h1></div>           
+             <div class="panel-title"><h1>@if((formData.get().id == 0)) {Register} else {Edit} Rain Garden</h1></div>           
           </div>
           <div class="panel-body">
           <div class="alert alert-info">Fields marked with * are required.</div>
@@ -25,15 +25,15 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Garden Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              @file(formData("uploadFile"), "Upload File")
+              @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
               <div class="page-header"><h3>Additional Information</h3></div>
               @bootstrap3.plants(formData("plants"), "Plants", plantMap, "")
               @bootstrap3.select(formData("rainGardenSize"), "Rain Garden Size", "Please Select the Size of the Rain Garden", gardenSizeTypes, false, "")
               @bootstrap3.select(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Please Select Size of Roof/Impervious Pavement that feeds Rain Garden", sourceSizeTypes, false, "")
-              @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description", "")
+              @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description. Example: Water flows from my room to the rain garden.", "")
               @bootstrap3.select(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil", infiltrationRateTypes, false, "")
               <hr/>
-              <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
+              <button id="submit" type="submit" class="btn btn default pull-right" style="color:white;">@if((formData.get().id == 0)) {Register} else {Edit}</button>
           </div>
         </div>
       </div>

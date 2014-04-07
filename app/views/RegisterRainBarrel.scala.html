@@ -25,7 +25,7 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Barrel Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              @file(formData("uploadFile"), "Upload File")
+              @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
               <div class="page-header"><h3>Additional Information</h3></div> 
               @bootstrap3.select(formData("rainBarrelType"), "Rain Barrel Type", "Please Select a Rain Barrel Type", barrelTypes, false, "")
               @text(formData("capacity"), "Capacity", "Capacity of Rain Barrel", "")

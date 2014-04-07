@@ -18,12 +18,18 @@
       <div class="panel-body">
         <div class="page-header">
           <h4>
-            My Entries
+            Rain Gardens
+          </h4>
+        </div>
+        Rain Gardens go here...
+         <div class="page-header">
+          <h4>
+            Rain Barrels
           </h4>
         </div>
         @for(raingarden <- user.getGardens()){
         <div class="row text-center">
-          <div class="col-md-12">
+          <div class="col-md-4">
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
@@ -40,7 +46,7 @@
 		}
 		@for(barrel <- user.getBarrels()){
         <div class="row text-center">
-          <div class="col-md-12">
+          <div class="col-md-4">
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
@@ -57,7 +63,7 @@
 		}
 		@for(paver <- user.getPavers()){
         <div class="row text-center">
-          <div class="col-md-12">
+          <div class="col-md-4">
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
