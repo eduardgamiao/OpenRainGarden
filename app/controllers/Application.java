@@ -108,9 +108,18 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result registerRainGarden(Long id) {
-    RainGardenFormData data = (RainGardenDB.getRainGarden(id) == null)
-        ? new RainGardenFormData() : new RainGardenFormData(RainGardenDB.getRainGarden(id));
-    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);    
+    RainGardenFormData data;
+    if (id == 0 || (RainGardenDB.getRainGarden(id) == null)) {
+      data = new RainGardenFormData();
+    }
+    else if (Secured.getUserInfo(ctx()) != RainGardenDB.getRainGarden(id).getOwner()) {
+      return redirect(routes.Application.registerRainGarden(0));
+    }
+    else {
+      data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
+    }
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+    
     return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
