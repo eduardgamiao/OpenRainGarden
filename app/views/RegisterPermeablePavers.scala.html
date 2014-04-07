@@ -13,12 +13,13 @@
           <div class="panel-heading">
              <div class="panel-title"><h1>Register Permeable Pavers</h1></div>           
           </div>
-          <div class="panel-body">
+          <div class="panel-body">          
+          <div class="alert alert-info">Fields marked with * are required.</div>
     @form(action = routes.Application.postPermeablePaversRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
               @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Permeable Paver", "") 
-              @bootstrap3.select(formData("propertyType"), "Property Type", "Please Select a Property Type", propertyTypes, false, "") 
-              @textwithstyle(formData("address"), "Permeable Paver Address", "Address of Permeable Paver", "", "top:0.8em;") 
+              @bootstrap3.select(formData("propertyType"), "Property Type *", "Please Select a Property Type", propertyTypes, false, "") 
+              @textwithstyle(formData("address"), "Permeable Paver Address *", "Address of Permeable Paver", "", "top:0.8em;") 
               @hideaddress(formData("hideAddress"), "Hide Address", choiceList, "")
               @bootstrap3.textarea(formData("description"), "5", "Description", "Permeable Paver Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 

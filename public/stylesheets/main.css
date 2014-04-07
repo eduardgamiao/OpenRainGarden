@@ -5,6 +5,10 @@ body {
 	
 }
 
+.form-required {
+	box-shadow: 0 0 8px blue;
+}
+
 .navbar-inverse {
   background-color: #3E60AD;
 }
