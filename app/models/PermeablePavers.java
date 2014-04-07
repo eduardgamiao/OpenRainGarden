@@ -314,9 +314,9 @@ public class PermeablePavers {
    */
   public String getPictureName() throws IOException {
     if (hasPicture()) {
-      return "upload/pp" + this.id;
+      return "images/upload/pp" + this.id;
     }
-    return "placeholder.gif";
+    return "images/placeholder.gif";
   }
   
   /**

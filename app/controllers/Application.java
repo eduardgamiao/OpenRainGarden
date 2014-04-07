@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import com.google.common.io.Files;
+
 import models.CommentDB;
+import models.HeaderFooterDB;
 import models.IndexContentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
@@ -61,6 +64,7 @@ import views.html.RainBarrelGallery;
 import views.html.PermeablePaverGallery;
 import views.html.MapPage;
 import views.html.Profile;
+import views.html.EditProfile;
 
 /**
  * Implements the controllers for this application.
@@ -73,7 +77,12 @@ public class Application extends Controller {
    * @return The resulting home page. 
    */
   public static Result index() {
-    return ok(Index.render(IndexContentDB.getBlocks()));
+    return ok(Index.render( IndexContentDB.getBlocks(), 
+				    		HeaderFooterDB.getHeader(),
+				    		HeaderFooterDB.getSubHeader(),
+				    		HeaderFooterDB.getFooter(),
+				    		HeaderFooterDB.getSubFooter()
+				    		));
   }
   /**
    * Returns the user profile page. 
@@ -271,7 +280,7 @@ public class Application extends Controller {
     if (garden != null) {
      return ok(ViewGarden.render(garden, PlantDB.getPlants(), CommentDB.getComments(garden.getKey()), commentForm));
     }
-    return badRequest(Index.render(IndexContentDB.getBlocks()));
+    return badRequest();
   }
   
   /**
@@ -302,7 +311,7 @@ public class Application extends Controller {
     if (barrel != null) {
      return ok(ViewBarrel.render(barrel, CommentDB.getComments(barrel.getKey()), commentForm));
     }
-    return badRequest(Index.render(IndexContentDB.getBlocks()));
+    return badRequest();
   }
   
   /**
@@ -333,7 +342,7 @@ public class Application extends Controller {
     if (paver != null) {
      return ok(ViewPaver.render(paver, CommentDB.getComments(paver.getKey()), commentForm));
     }
-    return badRequest(Index.render(IndexContentDB.getBlocks()));
+    return badRequest();
   }
   
   /**
@@ -369,7 +378,12 @@ public class Application extends Controller {
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class);
 	  return ok(SignUp.render(formData));
   }
+ 
   
+  public static Result editProfile() {
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class);
+	  return ok(EditProfile.render(formData,   UserInfoDB.getUser(Secured.getUser(ctx()))     ));
+  }
   /**
    * Processes the sign up form.
    * @return

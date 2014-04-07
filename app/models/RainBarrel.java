@@ -413,9 +413,9 @@ public class RainBarrel {
    */
   public String getPictureName() throws IOException {
     if (hasPicture()) {
-      return "upload/rb" + this.id;
+      return "images/upload/rb" + this.id;
     }
-    return "placeholder.gif";
+    return "images/placeholder.gif";
   }
   
   /**

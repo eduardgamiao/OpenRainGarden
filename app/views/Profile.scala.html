@@ -44,10 +44,10 @@
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="../public/images/pp-main.jpg" width="100" height="100" class="profile-item">
+                  <img src="@routes.Assets.at(barrel.getPictureName())" width="100" height="100" class="profile-item">
                 </div>
                 <div class="col-md-10">
-                  <a href="view-pavers.html"><h3>Rain Barrel</h3></a>
+                  <a href="view-pavers.html"><h3><a href="@routes.Application.viewGarden(barrel.getID())">Rain Barrel</a></h3></a>
                   <p>Data Added: @barrel.getDateInstalled()</p>
                 </div>
               </div>
@@ -61,10 +61,10 @@
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="../public/images/pp-main.jpg" width="100" height="100" class="profile-item">
+                  <img src="@routes.Assets.at(paver.getPictureName())" width="100" height="100" class="profile-item">
                 </div>
                 <div class="col-md-10">
-                  <a href="view-pavers.html"><h3>Permeable Paver</h3></a>
+                  <a href="view-pavers.html"><h3><a href="@routes.Application.viewGarden(paver.getID())">Permeable Paver</a></h3></a>
                   <p>Data Added: @paver.getDateInstalled()</p>
                 </div>
               </div>

@@ -40,7 +40,7 @@ navbar a {
 
 .featurette-heading{
 	font-size: 30px;
-	font-family: Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", serif;
+
 	font-weight: bold;
 }
 .btn {
@@ -74,7 +74,7 @@ filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='@img', sizingMet
 	height: 261px;
 	color: #555555;
 	padding: 100px 0;
-	font-family:font-family: "Open Sans",sans-serif;
+
 	margin-top: -30px;
 }
 .header{

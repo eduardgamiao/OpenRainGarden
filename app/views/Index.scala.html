@@ -1,35 +1,15 @@
-@(blocks: List[IndexContent])
+@(blocks: List[IndexContent], header: String , subHeader: String, footer:String, subfooter:String)
 
 @Main("Home") {
 
 
     <div class="press-banner">
-     <h1 class="text-center bigFont"><b>Hawaii Rainwater Runoff Solutions</b></br><p style="font-size:80%">Registry & Gallery</p></h1>
+     <h1 class="text-center bigFont"><b>@header</b></br><p style="font-size:80%">@subHeader</p></h1>
     </div>
 
       <!-- START THE FEATURETTES -->
 	<div class="container">
-	  
-	<!-- <div class="row featurette ">
-        <div class="col-md-7 ">
-          <h2 class="featurette-heading">What Harm Can A Little Rainwater Do?</h2><br>
-          <p class="lead">When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth.</p>
-          <p class="lead">Share your solutions with your community and inspire your neighbors to be green!</p>    
 
-		  <p class="joinus text-center">
-		    <a href="signup.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>Sign Up</button></a>	
-			<a href="gallery.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>View Gallery</button></a>
-			<a href="map.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>View Map</button></a>
-		  </p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive"  alt="500x500" src="@routes.Assets.at("images/alawai.png")">
-        </div>
-      </div>
-      
-      <hr class="featurette-divider">-->
-      
-      
       @for(block <- blocks) {
 	      <div class="row featurette ">
 	        <div class="col-md-7 ">
@@ -44,9 +24,6 @@
 		          }
 		          
 		      }
-			    <!--  <a href="signup.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>	
-				<a href="gallery.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a>
-				<a href="map.html"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@block.getButton()</button></a> --->
 			  </p>
 	        </div>
 	        <div class="col-md-5">
@@ -61,7 +38,17 @@
       
       
 	</div>
-
+	
+	
+	
+	
+	
+	<footer>
+				<p style="text-align: center">@footer</p>
+				<p style="text-align: center">@subfooter</p>
+               
+    </footer>
+	
 
 
 

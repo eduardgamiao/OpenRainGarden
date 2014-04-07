@@ -35,6 +35,7 @@ GET     /profile                      controllers.Application.profile()
 GET     /image/garden/:id             controllers.Application.retrieveGardenImage(id: Long)
 GET     /image/barrel/:id             controllers.Application.retrieveBarrelImage(id: Long)
 GET     /image/paver/:id              controllers.Application.retrievePaverImage(id: Long)
+GET     /editprofile                      controllers.Application.editProfile()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

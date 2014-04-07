@@ -5,10 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.io.FileUtils;
+
+
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
+import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
 import models.PermeablePaversDB;
@@ -122,7 +126,10 @@ public class Global extends GlobalSettings {
   }
   
   private static void populateIndexContentDB() {
-	  
+	  HeaderFooterDB.setHeader("Hawaii Rainwater Solutions: Sponsored by Hui o Koolaupoko"); 
+	  HeaderFooterDB.setSubHeader("Registry & Gallery");
+	  HeaderFooterDB.setFooter("Website sponsered by Hui o Ko'olaupoko and the Hawaii State Department of Health - 2014 Privacy");
+	  HeaderFooterDB.setSubFooter("This project has been jointly funded by the U.S. Environmental Protection Agency (EPA) under Section 319(h) of the Clean Water Act, and the Hawaii State Department of Health (HDOH), Clean Water Branch. Although the information in this document has been funded wholly or in part by a Federal Grant to the HDOH, it may not necessarily reflect the views of the EPA and the HDOH and no offical endorsement should be inferred.");
 	  
 	  ButtonDB.addButton(new Button("1", "Sign Up", "/signup"));
 	  ButtonDB.addButton(new Button("1", "View Map", "/map"));
@@ -149,4 +156,6 @@ public class Global extends GlobalSettings {
 	  IndexContentDB.addBlock(i3);
 	  
   }
+  
+ 
 }
