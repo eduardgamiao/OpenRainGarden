@@ -27,6 +27,7 @@ import play.mvc.Result;
 import views.formdata.CommentFormData;
 import views.formdata.CoverTypes;
 import views.formdata.DateTypes;
+import views.formdata.InfiltrationRateTypes;
 import views.formdata.InstallationTypes;
 import views.formdata.MaterialTypes;
 import views.formdata.PaverMaterialTypes;
@@ -105,7 +106,8 @@ public class Application extends Controller {
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
               PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
-              WaterSourceSizeTypes.getTypes(data.waterFlowSourceSize), Secured.getUserInfo(ctx())));
+              WaterSourceSizeTypes.getTypes(data.waterFlowSourceSize), 
+              InfiltrationRateTypes.getTypes(data.infiltrationRate), Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -133,6 +135,7 @@ public class Application extends Controller {
                         PlantTypes.getPlantMap(plantList),
                         RainGardenSizeTypes.getTypes(dataMap.get("rainGardenSize")),
                         WaterSourceSizeTypes.getTypes(dataMap.get("waterFlowSourceSize")),
+                        InfiltrationRateTypes.getTypes(dataMap.get("infiltrationRate")), 
                         Secured.getUserInfo(ctx())));   
     } 
     else {
@@ -163,7 +166,7 @@ public class Application extends Controller {
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
               RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), MaterialTypes.getMaterialTypes(data.material),
               WaterUsageTypes.getWaterUsageTypes(data.waterUse), CoverTypes.getCoverTypes(data.cover), 
-              InstallationTypes.getInstallationTypes(data.installationType), 
+              InstallationTypes.getInstallationTypes(data.installationType),
               SolutionAmountType.getTypes(data.numberOfRainBarrels)));
   }
   

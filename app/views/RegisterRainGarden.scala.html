@@ -1,7 +1,7 @@
 @(formData: Form[views.formdata.RainGardenFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   plantMap: Map[String, Boolean], gardenSizeTypes: Map[String, Boolean], sourceSizeTypes: Map[String, Boolean],
-  userInfo: UserInfo)
+  infiltrationRateTypes: Map[String, Boolean], userInfo: UserInfo)
 
 @import helper._ 
 @import bootstrap3._ 
@@ -31,7 +31,7 @@
               @bootstrap3.select(formData("rainGardenSize"), "Rain Garden Size", "Please Select the Size of the Rain Garden", gardenSizeTypes, false, "")
               @bootstrap3.select(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Please Select Size of Roof/Impervious Pavement that feeds Rain Garden", sourceSizeTypes, false, "")
               @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description", "")
-              @text(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil (in/hr)", "")
+              @bootstrap3.select(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil", infiltrationRateTypes, false, "")
               <hr/>
               <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
           </div>

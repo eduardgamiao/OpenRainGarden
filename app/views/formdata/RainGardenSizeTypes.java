@@ -9,8 +9,8 @@ import java.util.Map;
  *
  */
 public class RainGardenSizeTypes {
-  private static String [] types = {"Less than 10 Square Feet", "10 Square Feet", "20 Square Feet", "30 Square Feet", 
-    "30+ Square Feet"};
+  private static String [] types = {"Less than 100 Square Feet", "100 Square Feet", "200 Square Feet", 
+    "300 Square Feet", "400 Square Feet", "500 Square Feet", "500+ Square Feet"};
   
   /**
    * Return a mapping of the types of rain garden sizes.
