@@ -59,8 +59,9 @@ public class Global extends GlobalSettings {
     plants.add("‘Ilie‘e");
     RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", 
         "564 Ulahala St.", 
-        "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "25", "200", 
-        "Water flows from roof into garden.", "0.75", "2"), UserInfoDB.getUser("johnsmith@gmail.com"));
+        "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "30+ Square Feet", 
+        "1000 Square Feet", "Water flows from roof into garden.", "0.75", "2"), 
+        UserInfoDB.getUser("johnsmith@gmail.com"));
     CommentDB.addComment(new CommentFormData("This garden looks amazing!"), UserInfoDB.getUser("johnsmith@gmail.com"), 
        garden.getKey());
     

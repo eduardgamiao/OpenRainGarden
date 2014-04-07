@@ -1,6 +1,7 @@
 @(formData: Form[views.formdata.RainGardenFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
-  plantMap: Map[String, Boolean], gardenSizeTypes: Map[String, Boolean], userInfo: UserInfo)
+  plantMap: Map[String, Boolean], gardenSizeTypes: Map[String, Boolean], sourceSizeTypes: Map[String, Boolean],
+  userInfo: UserInfo)
 
 @import helper._ 
 @import bootstrap3._ 
@@ -28,7 +29,7 @@
               <div class="page-header"><h3>Additional Information</h3></div>
               @bootstrap3.plants(formData("plants"), "Plants", plantMap, "")
               @bootstrap3.select(formData("rainGardenSize"), "Rain Garden Size", "Please Select the Size of the Rain Garden", gardenSizeTypes, false, "")
-              @text(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Size of Roof/Impervious Pavement that feeds Rain Garden (sq. ft.)", "")
+              @bootstrap3.select(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Please Select Size of Roof/Impervious Pavement that feeds Rain Garden", sourceSizeTypes, false, "")
               @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description", "")
               @text(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil (in/hr)", "")
               <hr/>
