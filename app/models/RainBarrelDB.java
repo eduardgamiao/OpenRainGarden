@@ -37,12 +37,14 @@ public class RainBarrelDB {
       return barrel;
     }
     else {
+      byte [] picture = getRainBarrel(formData.id).getImage();
       barrel = new RainBarrel(formData.id, formData.title, formData.propertyType, formData.address, 
                               formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.rainBarrelType, formData.capacity, formData.color, formData.material, 
                               formData.estimatedCost, formData.waterUse, formData.overflowFrequency, formData.cover,
                               formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
+      barrel.setImage(picture);
       barrel.setOwner(userInfo);
       userInfo.getBarrels().add(barrel);
       barrels.put(barrel.getID(), barrel);

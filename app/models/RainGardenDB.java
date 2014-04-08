@@ -36,11 +36,13 @@ public class RainGardenDB {
       return garden;
     }
     else {
+      byte [] picture = RainGardenDB.getRainGarden(formData.id).getImage();
       garden = new RainGarden(formData.id, formData.title, formData.propertyType, formData.address, 
           formData.hideAddress,  formData.description, formData.month + "/" + formData.day + "/" + formData.year, 
           formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
           formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
       garden.setOwner(userInfo);
+      garden.setImage(picture);
       gardens.put(garden.getID(), garden);
       return garden;
     }

@@ -36,9 +36,11 @@ public class PermeablePaversDB {
       return paver;
     }
     else {
+      byte [] picture = getPermeablePavers(formData.id).getImage();
       paver = new PermeablePavers(formData.id, formData.title, formData.propertyType, formData.address, 
           formData.hideAddress,  formData.description, formData.month + "/" + formData.day + "/" + formData.year,
           formData.material, formData.previousMaterial, formData.size, formData.installer);
+      paver.setImage(picture);
       paver.setOwner(userInfo);
       userInfo.getPavers().add(paver);
       pavers.put(paver.getID(), paver);
