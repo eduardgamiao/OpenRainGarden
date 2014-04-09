@@ -46,7 +46,6 @@ public class RainBarrelDB {
                               formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
       barrel.setImage(picture);
       barrel.setOwner(userInfo);
-      userInfo.getBarrels().add(barrel);
       barrels.put(barrel.getID(), barrel);
       return barrel;
     }

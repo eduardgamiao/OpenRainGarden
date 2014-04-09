@@ -42,7 +42,6 @@ public class PermeablePaversDB {
           formData.material, formData.previousMaterial, formData.size, formData.installer);
       paver.setImage(picture);
       paver.setOwner(userInfo);
-      userInfo.getPavers().add(paver);
       pavers.put(paver.getID(), paver);
       return paver;
     }

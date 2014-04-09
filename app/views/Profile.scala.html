@@ -10,9 +10,9 @@
       <div class="panel-heading top-header" style="background-color: #3E60AD; color: white;">
         <h1 class="text-center">
       
-          @user.getFirstName() @user.getLastName()    
-          
-          <a href="edit-profile.html"><span class="glyphicon glyphicon-cog pull-right" style="top:0.25em;"></span></a>
+          @user.getFirstName() @user.getLastName()
+          <br>    
+          <small style="color:#FFF">@user.getEmail()</small>
         </h1>
       </div>
       <div class="panel-body">
@@ -33,10 +33,10 @@
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="@routes.Assets.at(raingarden.getPictureName())" width="100" height="100" class="profile-item">
+                  <img src="@routes.Application.retrieveGardenImage(raingarden.getID())" width="100" height="100" class="profile-item">
                 </div>
                 <div class="col-md-10">
-                  <a href="view-pavers.html"><h3><a href="@routes.Application.viewGarden(raingarden.getID())">Rain Garden</a></h3></a>
+                  <h3><a href="@routes.Application.viewGarden(raingarden.getID())">Rain Garden</a></h3></a>
                   <p>Data Added: @raingarden.getDateInstalled()</p>
                 </div>
               </div>
@@ -50,10 +50,10 @@
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="@routes.Assets.at(barrel.getPictureName())" width="100" height="100" class="profile-item">
+                  <img src="@routes.Application.retrieveBarrelImage(barrel.getID())" width="100" height="100" class="profile-item">
                 </div>
                 <div class="col-md-10">
-                  <a href="view-pavers.html"><h3><a href="@routes.Application.viewGarden(barrel.getID())">Rain Barrel</a></h3></a>
+                  <h3><a href="@routes.Application.viewBarrel(barrel.getID())">Rain Barrel</a></h3></a>
                   <p>Data Added: @barrel.getDateInstalled()</p>
                 </div>
               </div>
@@ -67,10 +67,10 @@
             <div class="panel panel-default">
               <div class="row">
                 <div class="col-md-2">
-                  <img src="@routes.Assets.at(paver.getPictureName())" width="100" height="100" class="profile-item">
+                  <img src="@routes.Application.retrievePaverImage(paver.getID())" width="100" height="100" class="profile-item">
                 </div>
                 <div class="col-md-10">
-                  <a href="view-pavers.html"><h3><a href="@routes.Application.viewGarden(paver.getID())">Permeable Paver</a></h3></a>
+                  <h3><a href="@routes.Application.viewPaver(paver.getID())">Permeable Paver</a></h3></a>
                   <p>Data Added: @paver.getDateInstalled()</p>
                 </div>
               </div>
