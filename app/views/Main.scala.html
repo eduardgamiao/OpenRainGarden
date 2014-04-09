@@ -21,11 +21,13 @@
         
         @if(title.contains("Map") == true) {
     		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsZjZuLpDatbiu7d_My1vMru0IFyoTcts&sensor=false"></script>
+    		<script type="text/javascript" src="@routes.Assets.at("javascripts/oms.min.js")"></script>
     		
     		<script type="text/javascript">
 			    var oahu = new google.maps.LatLng(21.4667, -157.9833);
 				var map;
 				var geo;
+				var oms;
 				
 				<!-- Initializes Google Maps -->
 				function initialize() {
@@ -38,6 +40,18 @@
 					};
 					<!-- Create Google Map -->
 					map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+					oms = new OverlappingMarkerSpiderfier(map);
+					
+					var info = new google.maps.InfoWindow();
+					
+					oms.addListener('click', function(marker, event) {
+						info.setContent(marker.desc);
+						info.open(map, marker);
+					});
+					
+					oms.addListener('spiderfy', function(markers) {
+						info.close();
+					});
 					
 					var infoString;
 	
@@ -116,20 +130,15 @@
 					return info;
 				}
 				
-				function addMarker(name, latlng, html) {
-					var info = new google.maps.InfoWindow({
-						content: html
-					});
-					
+				function addMarker(name, latlng, html) {					
 					var marker = new google.maps.Marker({
 						title: name,
 						map: map,
 						position: latlng
 					});
+					marker.desc = html;
 					
-					google.maps.event.addListener(marker, 'click', function(){
-						info.open(map, marker);
-					});
+					oms.addMarker(marker);
 				}
 			
 				<!-- Initialize Google Maps on page load -->
