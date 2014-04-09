@@ -5,8 +5,10 @@ body {
 	
 }
 
-.form-required {
-	box-shadow: 0 0 8px blue;
+.center-block {
+	display: block; 
+	margin-left: auto; 
+	margin-right: auto;
 }
 
 .navbar-inverse {

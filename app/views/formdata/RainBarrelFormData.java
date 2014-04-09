@@ -167,19 +167,6 @@ public class RainBarrelFormData {
     if (this.address.length() == 0 || this.address == null) {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
-    if (this.month.equals("")) {
-      errors.add(new ValidationError("month", "Please select a month."));     
-    }    
-    if (this.day.equals("")) {
-      errors.add(new ValidationError("day", "Please select a day."));     
-    }    
-    if (this.year.equals("")) {
-      errors.add(new ValidationError("year", "Please select a year."));     
-    }
-    if (!(this.capacity.isEmpty()) && !(isValidDouble(this.capacity))) {
-      errors.add(new ValidationError("capacity", 
-          "Please enter a positive number for the rain barrel's capacity."));       
-    }
     if (!(this.estimatedCost.isEmpty()) && !(isValidDouble(this.estimatedCost))) {
       errors.add(new ValidationError("estimatedCost", 
           "Please enter a positive number for the rain barrel's cost."));       

@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import com.google.common.io.Files;
-
 import models.CommentDB;
 import models.HeaderFooterDB;
 import models.IndexContentDB;
@@ -35,6 +33,7 @@ import views.formdata.InstallationTypes;
 import views.formdata.MaterialTypes;
 import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
+import views.formdata.RainBarrelCapacityTypes;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainBarrelTypes;
 import views.formdata.RainGardenSizeTypes;
@@ -185,7 +184,7 @@ public class Application extends Controller {
               RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), MaterialTypes.getMaterialTypes(data.material),
               WaterUsageTypes.getWaterUsageTypes(data.waterUse), CoverTypes.getCoverTypes(data.cover), 
               InstallationTypes.getInstallationTypes(data.installationType),
-              SolutionAmountType.getTypes(data.numberOfRainBarrels)));
+              RainBarrelCapacityTypes.getTypes(data.capacity)));
   }
   
   /**
@@ -209,7 +208,7 @@ public class Application extends Controller {
                         WaterUsageTypes.getWaterUsageTypes(dataMap.get("waterUse")),
                         CoverTypes.getCoverTypes(dataMap.get("cover")),
                         InstallationTypes.getInstallationTypes(dataMap.get("installationType")),
-                        SolutionAmountType.getTypes(dataMap.get("numberOfRainBarrels"))));   
+                        RainBarrelCapacityTypes.getTypes(dataMap.get("capacity"))));  
     } 
     else {
       RainBarrelFormData data = formData.get();

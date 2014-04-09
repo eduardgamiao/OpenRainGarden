@@ -17,8 +17,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@if(rainBarrel.hasPicture()) {@routes.Application.retrieveBarrelImage(rainBarrel.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block"
-                style="width: 100%; height: 400px;" />
+              <img src="@if(rainBarrel.hasPicture()) {@routes.Application.retrieveBarrelImage(rainBarrel.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block"/>
             </div>
           </div>
           <div class="row">
@@ -59,6 +58,7 @@
               </div>              
               <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <b>Rain Barrel:</b> Type @rainBarrel.getRainBarrelType()<br/>
+                  <b>Capacity:</b> @rainBarrel.getCapacity()<br/>
                   <b>Color:</b> @rainBarrel.getColor()<br/>
                   <b>Material Type:</b> @rainBarrel.getMaterial()<br/>
                   <b>Estimated Cost:</b> @rainBarrel.getEstimatedCost()<br/>

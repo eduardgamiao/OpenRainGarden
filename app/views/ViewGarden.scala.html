@@ -19,8 +19,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@if(rainGarden.hasPicture()) {@routes.Application.retrieveGardenImage(rainGarden.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block" 
-              style="display: block; margin-left: auto; margin-right: auto;"/>
+              <img src="@if(rainGarden.hasPicture()) {@routes.Application.retrieveGardenImage(rainGarden.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block"/>
             </div>
           </div>
           <div class="row">

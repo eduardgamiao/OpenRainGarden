@@ -71,7 +71,7 @@ public class Global extends GlobalSettings {
     
     // Add rain barrel.
     RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Barrel", "Residential", "564 Ulahala St.", 
-        "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50", "Orange-Red",
+        "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50 Gallons", "Orange-Red",
         "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed", "4+"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
     

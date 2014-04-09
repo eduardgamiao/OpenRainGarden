@@ -1,7 +1,7 @@
 @(formData: Form[views.formdata.RainBarrelFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   barrelTypes: Map[String, Boolean], materialTypes: Map[String, Boolean], usageTypes: Map[String, Boolean],
-  coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], amountTypes: Map[String, Boolean])
+  coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], capacityTypes: Map[String, Boolean])
 
 @import helper._ 
 @import bootstrap3._ 
@@ -12,7 +12,7 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>Register Rain Barrel</h1></div>           
+             <div class="panel-title"><h1>@if((formData.get().id == 0)) {Register} else {Edit} Rain Barrel</h1></div>           
           </div>
           <div class="panel-body">          
           <div class="alert alert-info">Fields marked with * are required.</div>
@@ -28,19 +28,17 @@
               @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
               <div class="page-header"><h3>Additional Information</h3></div> 
               @bootstrap3.select(formData("rainBarrelType"), "Rain Barrel Type", "Please Select a Rain Barrel Type", barrelTypes, false, "")
-              @text(formData("capacity"), "Capacity", "Capacity of Rain Barrel", "")
+              @bootstrap3.select(formData("capacity"), "Capacity", "Please Select the Capacity of the Rain Barrel", capacityTypes, false, "")
               @text(formData("color"), "Color", "Color of Rain Barrel", "")  
               @bootstrap3.select(formData("material"), "Material Type", "Please Select Material of Rain Barrel", materialTypes, false, "")
-              @text(formData("estimatedCost"), "Estimated Cost", "Estimated Cost of Rain Barrel", "")  
+              @numbertext(formData("estimatedCost"), "Estimated Cost", "Estimated Cost of Rain Barrel", "")  
               @bootstrap3.select(formData("waterUse"), "Water Usage", "Please Select Use of Water from Rain Barrel", usageTypes, false, "")
               @textwithstyle(formData("overflowFrequency"), "Overflow Frequency", "Frequency of Rain Barrel Overflow", "", "top:0.8em;")                
               @bootstrap3.select(formData("cover"), "Cover", "Please Select Cover for Rain Barrel", coverTypes, false, "")
               @textwithstyle(formData("obtainedFrom"), "Place of Acquisition", "Place Where Rain Barrel was Acquired","", "top:0.8em;")                
-              @bootstrap3.selectwithstyle(formData("installationType"), "Installation Method", "Please Select Method of Installation", installationTypes, false, "", "top:0.8em;")                
-              @bootstrap3.selectwithstyle(formData("numberOfRainBarrels"), "Number of Rain Barrel(s)", "Please Select Number of Rain Barrel(s)", amountTypes, false, "",  "top:0.8em;")   
-                                            
+              @bootstrap3.selectwithstyle(formData("installationType"), "Installation Method", "Please Select Method of Installation", installationTypes, false, "", "top:0.8em;")                                              
               <hr/>
-              <button id="submit" type="submit" class="btn btn default pull-right">Register</button>
+              <button id="submit" type="submit" class="btn btn default pull-right" style="color:white;">@if((formData.get().id == 0)) {Register} else {Edit}</button>
           </div>
         </div>
       </div>
