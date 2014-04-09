@@ -18,13 +18,15 @@ public class Plant {
 
   /**
    * Constructor.
+   * @param id ID of plant.
    * @param name Name of plant.
-   * @param scientificName Scienctific name of plant.
+   * @param scientificName Scientific name of plant.
    * @param placement Placement in rain garden.
    * @param growth Growth type.
    * @param climateType Plant climate type. 
    */
-  public Plant(String name, String scientificName, String placement, String growth, String climateType) {
+  public Plant(Long id, String name, String scientificName, String placement, String growth, String climateType) {
+    this.id = id;
     this.name = name;
     this.scientificName = scientificName;
     this.placement = placement;

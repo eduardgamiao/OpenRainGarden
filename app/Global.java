@@ -5,10 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.io.FileUtils;
-
-
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
@@ -28,6 +25,7 @@ import play.GlobalSettings;
 import models.UserInfoDB;
 import views.formdata.CommentFormData;
 import views.formdata.PermeablePaversFormData;
+import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 
@@ -117,12 +115,12 @@ public class Global extends GlobalSettings {
     String [] plantArr4 = plant4.split(", ");
     String [] plantArr5 = plant5.split(", ");
     String [] plantArr6 = plant6.split(", ");
-    PlantDB.addPlant(new Plant(plantArr1[0], plantArr1[1], plantArr1[2], plantArr1[THREE], plantArr1[FOUR]));
-    PlantDB.addPlant(new Plant(plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
-    PlantDB.addPlant(new Plant(plantArr3[0], plantArr3[1], plantArr3[2], plantArr3[THREE], plantArr3[FOUR]));
-    PlantDB.addPlant(new Plant(plantArr4[0], plantArr4[1], plantArr4[2], plantArr4[THREE], plantArr4[FOUR]));
-    PlantDB.addPlant(new Plant(plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
-    PlantDB.addPlant(new Plant(plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], plantArr1[THREE], plantArr1[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr3[0], plantArr3[1], plantArr3[2], plantArr3[THREE], plantArr3[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr4[0], plantArr4[1], plantArr4[2], plantArr4[THREE], plantArr4[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
+    PlantDB.addPlant(new PlantFormData(0, plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
   }
   
   private static void populateIndexContentDB() {
