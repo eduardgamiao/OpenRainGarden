@@ -5,7 +5,8 @@
 
 @Main("Rain Garden Gallery") {
 	<div class="container">
-		<div class="well" style="min-height:500px">
+		<div class="well">
+			<div class="row">
 			@for(garden <- gardenList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
@@ -16,13 +17,13 @@
 								<li>Property Type: @garden.getPropertyType()</li>
 								<li>Date Installed: @garden.getDateInstalled()</li>
 								<li>Size: @garden.getRainGardenSize()</li>
-								<li>Number of plants: @garden.getPlants().size()</li>
 							</ul>
 							<div style="text-align:right"><a href="/view/rain-garden/@garden.getID()">View Full Details >></a></div>
 						</div>
 					</div>
 				</div>
 			}
+			</div>
 		</div>
 	</div>
 }

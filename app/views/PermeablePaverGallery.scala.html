@@ -5,7 +5,8 @@
 
 @Main("Permable Paver Gallery") {
 	<div class="container">
-		<div class="well" style="min-height:500px">
+		<div class="well">
+			<div class="row">
 			@for(paver <- paverList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
@@ -15,7 +16,6 @@
 							<ul>
 								<li>Property Type: @paver.getPropertyType()</li>
 								<li>Date Installed: @paver.getDateInstalled()</li>
-								<li>Size: @paver.getSize()</li>
 								<li>Material: @paver.getMaterial()</li>
 								<li>Installer: @paver.getInstaller()</li>
 							</ul>
@@ -24,6 +24,7 @@
 					</div>
 				</div>
 			}
+			</div>
 		</div>
 	</div>
 }

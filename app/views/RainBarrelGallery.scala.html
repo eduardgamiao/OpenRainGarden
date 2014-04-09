@@ -5,7 +5,8 @@
 
 @Main("Rain Barrel Gallery") {
 	<div class="container">
-		<div class="well" style="min-height:500px">
+		<div class="well">
+			<div class="row">
 			@for(barrel <- barrelList) {
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
@@ -16,7 +17,6 @@
 								<li>Property Type: @barrel.getPropertyType()</li>
 								<li>Date Installed: @barrel.getDateInstalled()</li>
 								<li>Type: @barrel.getRainBarrelType()</li>
-								<li>Capacity: @barrel.getCapacity()</li>
 								<li>Material: @barrel.getMaterial()</li>
 							</ul>
 							<div style="text-align:right"><a href="/view/rain-barrel/@barrel.getID()">View Full Details >></a></div>
@@ -24,6 +24,7 @@
 					</div>
 				</div>
 			}
+			</div>
 		</div>
 	</div>
 }
