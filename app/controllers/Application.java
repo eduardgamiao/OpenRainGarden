@@ -432,7 +432,7 @@ public class Application extends Controller {
 		  //create new userinfo and add it to the "database"
 		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
 		  
-		  return redirect(routes.Application.editProfile());
+		  return redirect(routes.Application.profile());
 	  }
   }
   /**
