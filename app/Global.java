@@ -78,8 +78,8 @@ public class Global extends GlobalSettings {
     // Add permeable paver.
     PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Permeable Paver", "Residential", 
         "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
-            + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", "250",
-        "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
+            + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
+            "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
     
     //Learn More Resource Database
     ResourceDB.addGardenResource(new Resource("Hui o Ko'olaupoko Rain Garden Program", "hokprogram.jpg", "http://www.huihawaii.org/rain-gardens.html"));

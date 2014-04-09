@@ -126,19 +126,6 @@ public class PermeablePaversFormData {
     if (this.address.length() == 0 || this.address == null) {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
-    if (this.month.equals("")) {
-      errors.add(new ValidationError("month", "Please select a month."));     
-    }    
-    if (this.day.equals("")) {
-      errors.add(new ValidationError("day", "Please select a day."));     
-    }    
-    if (this.year.equals("")) {
-      errors.add(new ValidationError("year", "Please select a year."));     
-    }
-    if (!(this.size.isEmpty()) && !(isValidDouble(this.size))) {
-      errors.add(new ValidationError("size", 
-          "Please enter a positive number for the permeable pavers' size."));       
-    }
     
     return errors.isEmpty() ? null : errors;
   }

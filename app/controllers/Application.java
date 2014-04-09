@@ -33,6 +33,7 @@ import views.formdata.InstallationTypes;
 import views.formdata.MaterialTypes;
 import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
+import views.formdata.PermeablePaversSizeTypes;
 import views.formdata.RainBarrelCapacityTypes;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainBarrelTypes;
@@ -240,7 +241,9 @@ public class Application extends Controller {
       return ok(RegisterPermeablePavers.render(formData, YesNoChoiceType.getChoiceList(), 
                 PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                 DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
-                PaverMaterialTypes.getMaterialTypes(data.material), Secured.getUserInfo(ctx())));
+                PaverMaterialTypes.getMaterialTypes(data.material), 
+                PaverMaterialTypes.getMaterialTypes(data.previousMaterial), 
+                PermeablePaversSizeTypes.getTypes(data.size), Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -261,6 +264,8 @@ public class Application extends Controller {
                         DateTypes.getDayTypes(dataMap.get("day")), 
                         DateTypes.getYearTypes(dataMap.get("year")),
                         PaverMaterialTypes.getMaterialTypes(dataMap.get("material")),
+                        PaverMaterialTypes.getMaterialTypes(dataMap.get("previousMaterial")),
+                        PermeablePaversSizeTypes.getTypes(dataMap.get("size")),
                         Secured.getUserInfo(ctx())));   
     } 
     else {

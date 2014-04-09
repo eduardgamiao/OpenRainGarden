@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Implements types for rain garden sizes.
+ * Implements types for rain barrel capacities.
  * @author eduardgamiao
  *
  */
@@ -13,8 +13,8 @@ public class RainBarrelCapacityTypes {
     "70 Gallons", "More than 70 Gallons"};
   
   /**
-   * Return a mapping of the types of capacities..
-   * @return A mapping of capacities..
+   * Return a mapping of the types of capacities.
+   * @return A mapping of capacities.
    */
   public static Map<String, Boolean> getTypes() {
     Map<String, Boolean> capacityMap = new LinkedHashMap<String, Boolean>();
@@ -25,9 +25,9 @@ public class RainBarrelCapacityTypes {
   }
   
   /**
-   * Return a mapping of the types of capacities..
-   * @param type The type of capacities..
-   * @return A mapping of capacities..
+   * Return a mapping of the types of capacities.
+   * @param type The type of capacities.
+   * @return A mapping of capacities.
    */
   public static Map<String, Boolean> getTypes(String type) {
     Map<String, Boolean> capacityMap = RainBarrelCapacityTypes.getTypes();

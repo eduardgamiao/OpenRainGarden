@@ -28,7 +28,7 @@ public class PaverMaterialTypes {
    * @return A mapping of rain barrel material types.
    */
   public static Map<String, Boolean> getMaterialTypes(String type) {
-    Map<String, Boolean> materialTypeMap = MaterialTypes.getMaterialTypes();
+    Map<String, Boolean> materialTypeMap = PaverMaterialTypes.getMaterialTypes();
     if (isType(type)) {
       materialTypeMap.put(type, true);
     }
@@ -41,6 +41,6 @@ public class PaverMaterialTypes {
    * @return True if the type is valid, false otherwise. 
    */
   public static Boolean isType(String type) {
-    return MaterialTypes.getMaterialTypes().containsKey(type);
+    return PaverMaterialTypes.getMaterialTypes().containsKey(type);
   }
 }
