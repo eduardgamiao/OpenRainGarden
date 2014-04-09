@@ -15,19 +15,16 @@
 					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
 						@text(signupForm("firstName"), "First Name", "First Name", "")
 						@text(signupForm("lastName"), "Last Name", "Last Name", "")
-						@email(signupForm("email"), "Email", user.getEmail(), "")
-						@telephone(signupForm("telephone"), "Telephone", user.getTelephone(), "")
-						@password(signupForm("password"), "Password", user.getPassword(), "")
+						@email(signupForm("email"), "Email", "Email", "")
+						@telephone(signupForm("telephone"), "Telephone", "Telephone (Optional)", "")
+						@password(signupForm("password"), "Password", "Password", "")
 						
-						@text(signupForm("firstName"), "First Name", "First Name", user.getFirstName())
-						@text(signupForm("lastName"), "Last Name", "Last Name",user.getLastName())
-						@email(signupForm("email"), "Email", "Email", user.getEmail())
-						@telephone(signupForm("telephone"), "Telephone", "Telephone (Optional)",user.getTelephone())
-						@password(signupForm("password"), "Password", "Password", user.getPassword())
+						
+
 
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Submit Change</button>
+							<div class="text-center">
+								<button type="submit" style="color:#FFF" class="btn btn-default">Submit Change</button>
 							</div>
 						</div>
 					}
