@@ -16,6 +16,7 @@ import models.RainBarrel;
 import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
+import models.UserInfo;
 import models.UserInfoDB;
 import models.ResourceDB;
 import play.Logger;
@@ -89,8 +90,12 @@ public class Application extends Controller {
    * Returns the user profile page. 
    * @return The resulting user profile page. 
    */
-  public static Result profile() {
-    return ok(Profile.render(UserInfoDB.getUser(Secured.getUser(ctx()))));
+  public static Result profile(String email) {
+	UserInfo user = UserInfoDB.getUser(email);
+	if(user!=null){
+		return ok(Profile.render(user));
+	}
+    return redirect(routes.Application.index());
   }
   
   
@@ -433,7 +438,7 @@ public class Application extends Controller {
 		  //create new userinfo and add it to the "database"
 		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
 		  
-		  return redirect(routes.Application.profile());
+		  return redirect(routes.Application.profile(data.email));
 	  }
   }
   /**
