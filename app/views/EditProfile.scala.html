@@ -12,7 +12,7 @@
 					<h3 class="panel-title">Edit User Profile</h3>
 				</div>
 				<div class="panel-body" style="color: black;">
-					@form(routes.Application.postSignUp(), 'class -> "form-horizontal") {
+					@form(routes.Application.postEditProfile(), 'class -> "form-horizontal") {
 						@text(signupForm("firstName"), "First Name", "First Name", "")
 						@text(signupForm("lastName"), "Last Name", "Last Name", "")
 						@email(signupForm("email"), "Email", "Email", "")
@@ -24,7 +24,7 @@
 
 						<div class="form-group">
 							<div class="text-center">
-								<button type="submit" style="color:#FFF" class="btn btn-default">Submit Change</button>
+								<button type="submit" style="color:#FFF" class="btn btn-default pull-right">Submit Change</button>
 							</div>
 						</div>
 					}

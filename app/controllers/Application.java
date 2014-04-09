@@ -18,6 +18,7 @@ import models.RainGarden;
 import models.RainGardenDB;
 import models.UserInfoDB;
 import models.ResourceDB;
+import play.Logger;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -419,10 +420,10 @@ public class Application extends Controller {
    * @return
    */
   public static Result postEditProfile() {
-	  System.out.println("Post Sign Up");
+	  System.out.println("Post Edit");
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
 	  if (formData.hasErrors() == true) {
-		  System.out.println("Sign up Errors found.");
+		  System.out.println("Edit profile Errors found.");
 		  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
 	  }
 	  else {
