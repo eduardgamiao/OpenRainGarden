@@ -137,6 +137,12 @@ public class RainGardenFormData {
     if (this.address.length() == 0 || this.address == null) {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
+    if (!this.month.isEmpty() && (this.day.isEmpty())) {
+      errors.add(new ValidationError("day", "Missing day."));
+    }    
+    if (!this.month.isEmpty() && (this.year.isEmpty())) {
+      errors.add(new ValidationError("year", "Missing year."));
+    }
     
     return errors.isEmpty() ? null : errors;
   }
