@@ -177,7 +177,7 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result registerRainBarrel(Long id) {
     RainBarrelFormData data;
-    if (id == 0 || (RainGardenDB.getRainGarden(id) == null)) {
+    if (id == 0 || (RainBarrelDB.getRainBarrel(id) == null)) {
       data = new RainBarrelFormData();
     }
     else if (Secured.getUserInfo(ctx()) != RainBarrelDB.getRainBarrel(id).getOwner()) {
