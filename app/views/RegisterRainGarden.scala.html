@@ -1,25 +1,25 @@
-@(formData: Form[views.formdata.RainGardenFormData], id: Long, choiceList: List[String], propertyTypes: Map[String, Boolean], 
+@(formData: Form[views.formdata.RainGardenFormData], isNew: Boolean, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   plantMap: Map[String, Boolean], gardenSizeTypes: Map[String, Boolean], sourceSizeTypes: Map[String, Boolean],
   infiltrationRateTypes: Map[String, Boolean], userInfo: UserInfo)
 
 @import helper._ 
 @import bootstrap3._
-@registrationType(id: Long) = @{
-    if (id == 0) "Register" else "Edit"
+@registrationType(isNew: Boolean) = @{
+    if (isNew) "Register" else "Edit"
 } 
 
-@Main(registrationType(id)+ ": Rain Garden") {
+@Main(registrationType(isNew)+ ": Rain Garden") {
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>@registrationType(id): Rain Garden</h1></div>           
+             <div class="panel-title"><h1>@registrationType(isNew): Rain Garden</h1></div>           
           </div>
           <div class="panel-body">
           <div class="alert alert-info">Fields marked with * are required.</div>
-    @form(action = routes.Application.postRainGardenRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+    @form(action = routes.Application.postRainGardenRegister(isNew), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
               @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Rain Garden", "") 
               @bootstrap3.select(formData("propertyType"), "Property Type *", "Please Select a Property Type", propertyTypes, false, "") 
@@ -36,7 +36,7 @@
               @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description. Example: Water flows from my room to the rain garden.", "")
               @bootstrap3.select(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil", infiltrationRateTypes, false, "")
               <hr/>
-              <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType(id)</button>
+              <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType(isNew)</button>
           </div>
         </div>
       </div>

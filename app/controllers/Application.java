@@ -154,51 +154,40 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the created/edited rain garden page.
-   * @param id ID of rain garden.
-   * @return The resulting rain garden page.
+   * Register new rain garden.
+   * @return The rain garden registration form.
    */
   @Security.Authenticated(Secured.class)
-  public static Result registerRainGarden(Long id) {
-    RainGardenFormData data;
-    if (id == 0) {
-      data = new RainGardenFormData();
-    }
-    else if ((RainGardenDB.getRainGarden(id) == null)
-             || (Secured.getUserInfo(ctx()) != RainGardenDB.getRainGarden(id).getOwner())) {
-      return redirect(routes.Application.registerRainGarden(0));
-    }
-    else {
-      data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
-    }
-    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);   
-    return ok(RegisterRainGarden.render(formData, id, YesNoChoiceType.getChoiceList(), 
-              PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
-              DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
-              PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
-              WaterSourceSizeTypes.getTypes(data.waterFlowSourceSize), 
-              InfiltrationRateTypes.getTypes(data.infiltrationRate), Secured.getUserInfo(ctx())));
+  public static Result newRainGarden() {
+    RainGardenFormData data = new RainGardenFormData();
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+    return ok(RegisterRainGarden.render(formData, true, YesNoChoiceType.getChoiceList(), 
+        PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
+        DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
+        PlantTypes.getPlantMap(), RainGardenSizeTypes.getTypes(), 
+        WaterSourceSizeTypes.getTypes(), 
+        InfiltrationRateTypes.getTypes(), Secured.getUserInfo(ctx())));
   }
   
   /**
    * Returns the created/edited rain garden page.
+   * @param isNew Specifies if the entry being processed is new or not.
    * @return The resulting rain garden page if information was valid, else the registration form.
    * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postRainGardenRegister() throws IOException {
+  public static Result postRainGardenRegister(boolean isNew) throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
     validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
-      Long id = Long.decode(dataMap.get("id"));
       List<String> plantList = new ArrayList<String>();
       for (String key : dataMap.keySet()) {
         if (key.contains("plants")) {
           plantList.add(dataMap.get(key));
         }
       }          
-      return badRequest(RegisterRainGarden.render(formData, id, YesNoChoiceType.getChoiceList(), 
+      return badRequest(RegisterRainGarden.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
@@ -211,6 +200,7 @@ public class Application extends Controller {
     } 
     else {
       RainGardenFormData data = formData.get();
+      Logger.debug("" + data.id);
       RainGarden garden = RainGardenDB.addRainGarden(data, Secured.getUserInfo(ctx()));    
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
@@ -221,6 +211,28 @@ public class Application extends Controller {
       return redirect(routes.Application.viewGarden(garden.getID()));
      }     
     }
+  
+  /**
+   * Manage information for a rain garden.
+   * @param id The ID of the rain garden to manage.
+   * @return The rain garden edit form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result manageRainGarden(long id) {
+    if (RainGardenDB.hasID(id)) {
+      if (Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()) == RainGardenDB.getRainGarden(id).getOwner())) {
+        RainGardenFormData data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
+        Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+        return ok(RegisterRainGarden.render(formData, false, YesNoChoiceType.getChoiceList(), 
+                  PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
+                  DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
+                  PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
+                  WaterSourceSizeTypes.getTypes(data.waterFlowSourceSize), 
+                  InfiltrationRateTypes.getTypes(data.infiltrationRate), Secured.getUserInfo(ctx())));        
+      }
+    }
+    return redirect(routes.Application.index());
+  }
     
   /**
    * Returns the created/edited rain garden page.
