@@ -3,6 +3,15 @@
   
 @import helper._ 
 @import bootstrap3._ 
+@information() = {
+  <ul class="list-group" style="text-align: center;">
+    <li class="list-group-item">Owner: <a href="@routes.Application.profile(rainGarden.getOwner().getEmail())">@rainGarden.getOwner().getName()</a></li>
+    <li class="list-group-item">Type: Rain Garden</li>
+    <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
+    <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
+    <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
+  </ul>
+}
 
 
 @Main("View Rain Garden") {
@@ -30,28 +39,14 @@
             </div>
           </div>
           <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
-            <ul class="list-group" style="text-align: center;">
-              <li class="list-group-item">Owner: @rainGarden.getOwner().getName()</li>
-              <li class="list-group-item">Type: Rain Garden</li>
-              <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
-              <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
-              <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
-              <li class="list-group-item">Number of Garden(s): @rainGarden.getNumberOfRainGardens()</li>
-            </ul>
+            @information()
           </div>
           <div class="row" style="color: black; font-size: 14px; padding-left: 1em; padding-right: 1em;">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
               <p>@if(rainGarden.getDescription().equals("")) {No Description} else {@rainGarden.getDescription()}</p>
             </div>
             <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
-              <ul class="list-group" style="text-align: center;">
-              <li class="list-group-item">Owner: @rainGarden.getOwner().getName()</li>
-              <li class="list-group-item">Type: Rain Garden</li>
-              <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
-              <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
-              <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
-              <li class="list-group-item">Number of Garden(s): @rainGarden.getNumberOfRainGardens()</li>
-              </ul>
+                @information()
             </div>
           </div>
           <div class="row" style="color: black; font-size: 14px;  padding: 0 2em 0 2em;">

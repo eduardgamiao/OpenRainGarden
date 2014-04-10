@@ -73,6 +73,10 @@ public class RainGardenDB {
    * @param id ID of rain garden.
    */
   public static void deleteRainGarden(long id) {
+    RainGarden garden = RainGardenDB.getRainGarden(id);
+    if (garden != null) {
+      garden.getOwner().deleteGarden(garden);
+    }
     gardens.remove(id);
   }
 
