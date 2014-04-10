@@ -1,25 +1,25 @@
-@(formData: Form[views.formdata.RainBarrelFormData], id: Long, choiceList: List[String], propertyTypes: Map[String, Boolean], 
+@(formData: Form[views.formdata.RainBarrelFormData], isNew: Boolean, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   barrelTypes: Map[String, Boolean], materialTypes: Map[String, Boolean], usageTypes: Map[String, Boolean],
   coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], capacityTypes: Map[String, Boolean])
 
 @import helper._ 
 @import bootstrap3._ 
-@registrationType(id: Long) = @{
-    if (id == 0) "Register" else "Edit"
+@registrationType() = @{
+    if (isNew) "Register" else "Edit"
 }
 
-@Main(registrationType(id) +": Rain Barrel") {
+@Main(registrationType() +": Rain Barrel") {
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>@if(id == 0) {Register} else {Edit} Rain Barrel</h1></div>           
+             <div class="panel-title"><h1>@registrationType(): Rain Barrel</h1></div>           
           </div>
           <div class="panel-body">          
           <div class="alert alert-info">Fields marked with * are required.</div>
-    @form(action = routes.Application.postRainBarrelRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+    @form(action = routes.Application.postRainBarrelRegister(isNew), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
               @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Rain Barrel", "") 
               @bootstrap3.select(formData("propertyType"), "Property Type *", "Please Select a Property Type", propertyTypes, false, "") 
@@ -41,7 +41,7 @@
               @textwithstyle(formData("obtainedFrom"), "Place of Acquisition", "Place Where Rain Barrel was Acquired","", "top:0.8em;")                
               @bootstrap3.selectwithstyle(formData("installationType"), "Installation Method", "Please Select Method of Installation", installationTypes, false, "", "top:0.8em;")                                              
               <hr/>
-              <button id="submit" type="submit" class="btn btn-info pull-right">@if(id == 0) {Register} else {Edit}</button>
+              <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType</button>
           </div>
         </div>
       </div>

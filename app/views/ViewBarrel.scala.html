@@ -10,7 +10,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="/view/rain-garden/@rainBarrel.getID()">View</a></li>
            @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).getEmail().equals(rainBarrel.getOwner().getEmail()))) {
-            <li><a href="@routes.Application.registerRainBarrel(rainBarrel.getID())">Edit Information</a></li>
+            <li><a href="@routes.Application.manageRainBarrel(rainBarrel.getID())">Edit Information</a></li>
             <li><a href="#" onclick="javascript:OpenModal()">Delete Page</a></li>
           }
         </ul>

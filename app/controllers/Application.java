@@ -235,47 +235,37 @@ public class Application extends Controller {
   }
     
   /**
-   * Returns the created/edited rain garden page.
-   * @param id ID of rain garden.
-   * @return The resulting rain garden page.
+   * Register a new rain barrel.
+   * @return The resulting rain barrel page.
    */
   @Security.Authenticated(Secured.class)
-  public static Result registerRainBarrel(Long id) {
-    RainBarrelFormData data;
-    if (id == 0) {
-      data = new RainBarrelFormData();
-    }
-    else if ((RainBarrelDB.getRainBarrel(id) == null) 
-              || (Secured.getUserInfo(ctx()) != RainBarrelDB.getRainBarrel(id).getOwner())) {
-      return redirect(routes.Application.registerRainBarrel(0));
-    }
-    else {
-      data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
-    }
+  public static Result newRainBarrel() {
+    RainBarrelFormData data = new RainBarrelFormData();
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);    
-    return ok(RegisterRainBarrel.render(formData, id, YesNoChoiceType.getChoiceList(), 
-              PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
-              DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
-              RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), MaterialTypes.getMaterialTypes(data.material),
-              WaterUsageTypes.getWaterUsageTypes(data.waterUse), CoverTypes.getCoverTypes(data.cover), 
-              InstallationTypes.getInstallationTypes(data.installationType),
-              RainBarrelCapacityTypes.getTypes(data.capacity)));
+    return ok(RegisterRainBarrel.render(formData, true, YesNoChoiceType.getChoiceList(), 
+              PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
+              DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
+              RainBarrelTypes.getRainBarrelTypes(), MaterialTypes.getMaterialTypes(),
+              WaterUsageTypes.getWaterUsageTypes(), CoverTypes.getCoverTypes(), 
+              InstallationTypes.getInstallationTypes(),
+              RainBarrelCapacityTypes.getTypes()));
   }
   
   /**
    * Returns the created/edited rain garden page.
+   * @param isNew Specifies if the entry is a new rain barrel.
    * @return The resulting rain garden page if information was valid, else the registration form.
    * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postRainBarrelRegister() throws IOException {
+  public static Result postRainBarrelRegister(boolean isNew) throws IOException {
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).bindFromRequest();
     long id = 0;
     validateBarrelUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
       id = Long.decode(dataMap.get("id"));
-      return badRequest(RegisterRainBarrel.render(formData, id, YesNoChoiceType.getChoiceList(), 
+      return badRequest(RegisterRainBarrel.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
@@ -299,6 +289,29 @@ public class Application extends Controller {
       return redirect(routes.Application.viewBarrel(barrel.getID()));
      }     
     }
+  
+  /**
+   * Manage information for a rain barrel.
+   * @param id The ID of the rain barrel to manage.
+   * @return The rain barrel edit form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result manageRainBarrel(long id) {
+    if (RainBarrelDB.hasID(id)) {
+      if (Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()) == RainBarrelDB.getRainBarrel(id).getOwner())) {
+        RainBarrelFormData data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
+        Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
+        return ok(RegisterRainBarrel.render(formData, false, YesNoChoiceType.getChoiceList(), 
+                  PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
+                  DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
+                  RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), 
+                  MaterialTypes.getMaterialTypes(data.material), WaterUsageTypes.getWaterUsageTypes(data.waterUse), 
+                  CoverTypes.getCoverTypes(data.cover), InstallationTypes.getInstallationTypes(data.installationType),
+                  RainBarrelCapacityTypes.getTypes(data.capacity)));      
+      }
+    }
+    return redirect(routes.Application.index());
+  }
   
   /**
    * Returns the created/edited permeable pavers page.
