@@ -67,6 +67,7 @@ import views.html.PermeablePaverGallery;
 import views.html.MapPage;
 import views.html.Profile;
 import views.html.EditProfile;
+import views.html.ErrorReport;
 
 /**
  * Implements the controllers for this application.
@@ -78,6 +79,11 @@ public class Application extends Controller {
    * Returns the home page. 
    * @return The resulting home page. 
    */
+  public static Result errorReport(String s){
+	  	return ok(ErrorReport.render(s));
+	  
+  }
+  
   public static Result index() {
     return ok(Index.render( IndexContentDB.getBlocks(), 
 				    		HeaderFooterDB.getHeader(),
@@ -94,14 +100,9 @@ public class Application extends Controller {
 	
 	UserInfo user = UserInfoDB.getUser(email);
 	System.out.println("Opening Profile Page");
-	//System.out.println("Current User:"+ user.getEmail());
-	if(Secured.isLoggedIn(ctx())){
-		if(Secured.getUser(ctx()).equals(email)){
-			return ok(Profile.render(user));
-		}
-	}
-	System.out.println("User is not login");
-    return redirect(routes.Application.index());
+
+	return ok(Profile.render(user));
+
   }
   
   /**
@@ -113,7 +114,10 @@ public class Application extends Controller {
     SignUpFormData data = (!Secured.isLoggedIn(ctx())) 
         ? new SignUpFormData() : new SignUpFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getEmail()));
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).fill(data);
-	  return ok(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+	  if(Secured.isLoggedIn(ctx())){
+		  return ok(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+	  }
+	  return redirect(routes.Application.errorReport("No user logged in,open edit profile fails."));
   }
   /**
    * Processes the edited profile form.
@@ -121,20 +125,25 @@ public class Application extends Controller {
    */
   public static Result postEditProfile() {
 	  System.out.println("Post Edit");
-	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
-	  if (formData.hasErrors() == true) {
-		  System.out.println("Edit profile Errors found.");
-		  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+	  
+	  if(Secured.isLoggedIn(ctx())){
+		 
+		  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
+		  if (formData.hasErrors() == true) {
+			  System.out.println("Edit profile Errors found.");
+			  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+		  }
+		  else {
+			  SignUpFormData data = formData.get();
+			  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
+			  
+			  //create new userinfo and add it to the "database"
+			  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
+			  
+			  return redirect(routes.Application.profile(data.email));
+		  }
 	  }
-	  else {
-		  SignUpFormData data = formData.get();
-		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
-		  
-		  //create new userinfo and add it to the "database"
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
-		  
-		  return redirect(routes.Application.profile(data.email));
-	  }
+	  return redirect(routes.Application.errorReport("No user logged in, post edit profile fails."));
   }
   /**
    * Returns the registration navigation menu.
@@ -687,7 +696,7 @@ public class Application extends Controller {
     }
     return redirect(uri);
   }
-  
+
   /**
    * Retrieve a garden image.
    * @param id The ID of the garden to retrieve the image from.
@@ -719,8 +728,10 @@ public class Application extends Controller {
    */
   public static Result retrievePaverImage(long id) {
     if (PermeablePaversDB.hasID(id)) {
+      System.out.println("------------------------------------------------PermeablePaversDB.hasID");
       return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
     }
+   
     return redirect("/");
   }
 }
