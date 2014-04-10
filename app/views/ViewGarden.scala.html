@@ -70,7 +70,7 @@
                           <h4>Plants</h4>
                           @if(!(rainGarden.getPlants().isEmpty)) {    
                             @for(plant <- rainGarden.getPlants()) {
-                             <button type="button" class="btn btn-default example" data-container="body" data-toggle="popover"
+                             <button type="button" class="btn btn-info example" data-container="body" data-toggle="popover"
                               data-placement="top" title="@plant"
                               data-content="                
                               <p>Scientific Name: @PlantDB.getPlant(plant).getScientificName()</p>

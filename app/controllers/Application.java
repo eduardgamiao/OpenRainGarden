@@ -161,18 +161,18 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result registerRainGarden(Long id) {
     RainGardenFormData data;
-    if (id == 0 || (RainGardenDB.getRainGarden(id) == null)) {
+    if (id == 0) {
       data = new RainGardenFormData();
     }
-    else if (Secured.getUserInfo(ctx()) != RainGardenDB.getRainGarden(id).getOwner()) {
+    else if ((RainGardenDB.getRainGarden(id) == null)
+             || (Secured.getUserInfo(ctx()) != RainGardenDB.getRainGarden(id).getOwner())) {
       return redirect(routes.Application.registerRainGarden(0));
     }
     else {
       data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
     }
-    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
-    
-    return ok(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
+    Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);   
+    return ok(RegisterRainGarden.render(formData, id, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
               PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
@@ -191,13 +191,14 @@ public class Application extends Controller {
     validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
+      Long id = Long.decode(dataMap.get("id"));
       List<String> plantList = new ArrayList<String>();
       for (String key : dataMap.keySet()) {
         if (key.contains("plants")) {
           plantList.add(dataMap.get(key));
         }
       }          
-      return badRequest(RegisterRainGarden.render(formData, YesNoChoiceType.getChoiceList(), 
+      return badRequest(RegisterRainGarden.render(formData, id, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 
@@ -220,7 +221,7 @@ public class Application extends Controller {
       return redirect(routes.Application.viewGarden(garden.getID()));
      }     
     }
-  
+    
   /**
    * Returns the created/edited rain garden page.
    * @param id ID of rain garden.
@@ -229,17 +230,18 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result registerRainBarrel(Long id) {
     RainBarrelFormData data;
-    if (id == 0 || (RainBarrelDB.getRainBarrel(id) == null)) {
+    if (id == 0) {
       data = new RainBarrelFormData();
     }
-    else if (Secured.getUserInfo(ctx()) != RainBarrelDB.getRainBarrel(id).getOwner()) {
+    else if ((RainBarrelDB.getRainBarrel(id) == null) 
+              || (Secured.getUserInfo(ctx()) != RainBarrelDB.getRainBarrel(id).getOwner())) {
       return redirect(routes.Application.registerRainBarrel(0));
     }
     else {
       data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
     }
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);    
-    return ok(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), 
+    return ok(RegisterRainBarrel.render(formData, id, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
               DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
               RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), MaterialTypes.getMaterialTypes(data.material),
@@ -256,10 +258,12 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postRainBarrelRegister() throws IOException {
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).bindFromRequest();
+    long id = 0;
     validateBarrelUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
-      return badRequest(RegisterRainBarrel.render(formData, YesNoChoiceType.getChoiceList(), 
+      id = Long.decode(dataMap.get("id"));
+      return badRequest(RegisterRainBarrel.render(formData, id, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
                         DateTypes.getDayTypes(dataMap.get("day")), 

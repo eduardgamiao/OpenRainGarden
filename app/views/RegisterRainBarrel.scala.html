@@ -1,18 +1,21 @@
-@(formData: Form[views.formdata.RainBarrelFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
+@(formData: Form[views.formdata.RainBarrelFormData], id: Long, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   barrelTypes: Map[String, Boolean], materialTypes: Map[String, Boolean], usageTypes: Map[String, Boolean],
   coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], capacityTypes: Map[String, Boolean])
 
 @import helper._ 
 @import bootstrap3._ 
+@registrationType(id: Long) = @{
+    if (id == 0) "Register" else "Edit"
+}
 
-@Main("Register: Rain Barrel") {
+@Main(registrationType(id) +": Rain Barrel") {
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>@if((formData.get().id == 0)) {Register} else {Edit} Rain Barrel</h1></div>           
+             <div class="panel-title"><h1>@if(id == 0) {Register} else {Edit} Rain Barrel</h1></div>           
           </div>
           <div class="panel-body">          
           <div class="alert alert-info">Fields marked with * are required.</div>
@@ -38,7 +41,7 @@
               @textwithstyle(formData("obtainedFrom"), "Place of Acquisition", "Place Where Rain Barrel was Acquired","", "top:0.8em;")                
               @bootstrap3.selectwithstyle(formData("installationType"), "Installation Method", "Please Select Method of Installation", installationTypes, false, "", "top:0.8em;")                                              
               <hr/>
-              <button id="submit" type="submit" class="btn btn default pull-right" style="color:white;">@if((formData.get().id == 0)) {Register} else {Edit}</button>
+              <button id="submit" type="submit" class="btn btn-info pull-right">@if(id == 0) {Register} else {Edit}</button>
           </div>
         </div>
       </div>
