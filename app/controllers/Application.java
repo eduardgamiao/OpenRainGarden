@@ -719,10 +719,11 @@ public class Application extends Controller {
    * @return The image matching the ID given.
    */
   public static Result retrieveGardenImage(long id) {
-    if (RainGardenDB.hasID(id)) {
+    RainGarden garden = RainGardenDB.getRainGarden(id);
+    if (garden != null && garden.hasPicture()) {      
       return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
     }
-    return redirect("/");
+    return redirect("");
   }
   
   /**
@@ -731,10 +732,11 @@ public class Application extends Controller {
    * @return The image matching the ID given.
    */
   public static Result retrieveBarrelImage(long id) {
-    if (RainBarrelDB.hasID(id)) {
+    RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    if ((barrel != null) && barrel.hasPicture()) {
       return ok(RainBarrelDB.getRainBarrel(id).getImage()).as("image/jpeg");
     }
-    return redirect("/");
+    return redirect("");
   }
   
   /**
@@ -743,11 +745,12 @@ public class Application extends Controller {
    * @return The image matching the ID given.
    */
   public static Result retrievePaverImage(long id) {
-    if (PermeablePaversDB.hasID(id)) {
+    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    if ((paver != null) && paver.hasPicture()) {
       System.out.println("------------------------------------------------PermeablePaversDB.hasID");
       return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
     }
    
-    return redirect("/");
+    return redirect("");
   }
 }
