@@ -35,7 +35,7 @@ GET     /profile/:email               controllers.Application.profile(email:Stri
 GET     /image/garden/:id             controllers.Application.retrieveGardenImage(id: Long)
 GET     /image/barrel/:id             controllers.Application.retrieveBarrelImage(id: Long)
 GET     /image/paver/:id              controllers.Application.retrievePaverImage(id: Long)
-GET     /profile/edit                 controllers.Application.editProfile()
+GET     /profile                controllers.Application.editProfile()
 POST    /profile/edit                 controllers.Application.postEditProfile()
 
 # Map static resources from the /public folder to the /assets URL path

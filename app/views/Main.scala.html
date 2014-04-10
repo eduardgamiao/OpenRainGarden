@@ -190,8 +190,8 @@
         	@if(Secured.isLoggedIn(ctx())) {
         	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@Secured.getUser(ctx())<b class="caret"></b></a>
 	            <ul class="dropdown-menu" role="menu">
-	              <li><a href="/profile">View Profile</a></li>
-	              <li><a href="/profile/edit">Edit Profile</a></li>
+	              <li><a href="@routes.Application.profile(Secured.getUser(ctx()))">View Profile</a></li>
+	              <li><a href="@routes.Application.editProfile()">Edit Profile</a></li>
 	            </ul>
 	        </li>
 				<li class="@("active".when(title == "Logout"))"><a href="@routes.Application.logout()">Logout</a></li>

@@ -91,14 +91,51 @@ public class Application extends Controller {
    * @return The resulting user profile page. 
    */
   public static Result profile(String email) {
+	
 	UserInfo user = UserInfoDB.getUser(email);
-	if(user!=null){
-		return ok(Profile.render(user));
+	System.out.println("Opening Profile Page");
+	//System.out.println("Current User:"+ user.getEmail());
+	if(Secured.isLoggedIn(ctx())){
+		if(Secured.getUser(ctx()).equals(email)){
+			return ok(Profile.render(user));
+		}
 	}
+	System.out.println("User is not login");
     return redirect(routes.Application.index());
   }
   
-  
+  /**
+   * Returns the edit profile page.
+   * @return edit profile page
+   */
+  public static Result editProfile() {
+	System.out.println("Opening Edit Profile Page");
+    SignUpFormData data = (!Secured.isLoggedIn(ctx())) 
+        ? new SignUpFormData() : new SignUpFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getEmail()));
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).fill(data);
+	  return ok(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+  }
+  /**
+   * Processes the edited profile form.
+   * @return
+   */
+  public static Result postEditProfile() {
+	  System.out.println("Post Edit");
+	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
+	  if (formData.hasErrors() == true) {
+		  System.out.println("Edit profile Errors found.");
+		  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+	  }
+	  else {
+		  SignUpFormData data = formData.get();
+		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
+		  
+		  //create new userinfo and add it to the "database"
+		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
+		  
+		  return redirect(routes.Application.profile(data.email));
+	  }
+  }
   /**
    * Returns the registration navigation menu.
    * @return The registration navigation menu page.
@@ -410,37 +447,7 @@ public class Application extends Controller {
 	  return ok(SignUp.render(formData));
   }
  
-  /**
-   * Returns the edit profile page.
-   * @return edit profile page
-   */
-  public static Result editProfile() {
-    SignUpFormData data = (!Secured.isLoggedIn(ctx())) 
-        ? new SignUpFormData() : new SignUpFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getEmail()));
-	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).fill(data);
-	  return ok(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
-  }
-  /**
-   * Processes the edited profile form.
-   * @return
-   */
-  public static Result postEditProfile() {
-	  System.out.println("Post Edit");
-	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
-	  if (formData.hasErrors() == true) {
-		  System.out.println("Edit profile Errors found.");
-		  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
-	  }
-	  else {
-		  SignUpFormData data = formData.get();
-		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
-		  
-		  //create new userinfo and add it to the "database"
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
-		  
-		  return redirect(routes.Application.profile(data.email));
-	  }
-  }
+ 
   /**
    * Processes the sign up form.
    * @return
