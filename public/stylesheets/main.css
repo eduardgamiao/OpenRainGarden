@@ -5,11 +5,14 @@ body {
 	
 }
 
+.view-header {
+	height: 400px;
+}
+
 .center-block {
 	display: block; 
 	margin-left: auto; 
 	margin-right: auto;
-	height: 400px;
 }
 
 .navbar-inverse {

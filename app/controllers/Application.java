@@ -252,19 +252,17 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the created/edited rain garden page.
+   * Returns the created/edited rain barrel page.
    * @param isNew Specifies if the entry is a new rain barrel.
-   * @return The resulting rain garden page if information was valid, else the registration form.
+   * @return The resulting rain barrel page if information was valid, else the registration form.
    * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)
   public static Result postRainBarrelRegister(boolean isNew) throws IOException {
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).bindFromRequest();
-    long id = 0;
     validateBarrelUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
-      id = Long.decode(dataMap.get("id"));
       return badRequest(RegisterRainBarrel.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
