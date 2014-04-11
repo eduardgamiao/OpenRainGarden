@@ -171,6 +171,24 @@ public class RainBarrelFormData {
       errors.add(new ValidationError("estimatedCost", 
           "Please enter a positive number for the rain barrel's cost."));       
     }
+    if (!this.month.isEmpty() && (this.day.isEmpty())) {
+      errors.add(new ValidationError("day", "Day is missing."));
+    }    
+    if (!this.month.isEmpty() && (this.year.isEmpty())) {
+      errors.add(new ValidationError("year", "Year is missing."));
+    }
+    if (!this.day.isEmpty() && (this.month.isEmpty())) {
+      errors.add(new ValidationError("month", "Missing day."));
+    }    
+    if (!this.day.isEmpty() && (this.year.isEmpty())) {
+      errors.add(new ValidationError("year", "Year is missing."));
+    }
+    if (!this.year.isEmpty() && (this.day.isEmpty())) {
+      errors.add(new ValidationError("day", "Day is missing."));
+    }    
+    if (!this.year.isEmpty() && (this.month.isEmpty())) {
+      errors.add(new ValidationError("month", "Month is missing."));
+    }
     
     return errors.isEmpty() ? null : errors;
   }

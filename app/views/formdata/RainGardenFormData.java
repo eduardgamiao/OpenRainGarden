@@ -138,32 +138,24 @@ public class RainGardenFormData {
       errors.add(new ValidationError("address", "Please enter an address"));
     }
     if (!this.month.isEmpty() && (this.day.isEmpty())) {
-      errors.add(new ValidationError("day", "Missing day."));
+      errors.add(new ValidationError("day", "Day is missing."));
     }    
     if (!this.month.isEmpty() && (this.year.isEmpty())) {
-      errors.add(new ValidationError("year", "Missing year."));
+      errors.add(new ValidationError("year", "Year is missing."));
+    }
+    if (!this.day.isEmpty() && (this.month.isEmpty())) {
+      errors.add(new ValidationError("month", "Missing day."));
+    }    
+    if (!this.day.isEmpty() && (this.year.isEmpty())) {
+      errors.add(new ValidationError("year", "Year is missing."));
+    }
+    if (!this.year.isEmpty() && (this.day.isEmpty())) {
+      errors.add(new ValidationError("day", "Day is missing."));
+    }    
+    if (!this.year.isEmpty() && (this.month.isEmpty())) {
+      errors.add(new ValidationError("month", "Month is missing."));
     }
     
     return errors.isEmpty() ? null : errors;
   }
- 
-  /**
-   * Checks if an input is all numerical characters.
-   * @param input The input to check.
-   * @return True if the input is all numerical characters, false otherwise. 
-   */
-  private static boolean isValidInteger(String input) {
-      return input.matches(".*[0-9].*");
-  }
-  
-  
-  /**
-   * Checks if an input is all numerical characters.
-   * @param input The input to check.
-   * @return True if the input is all numerical characters, false otherwise. 
-   */
-  private static boolean isValidDouble(String input) {
-      return input.matches("[0-9]{1,13}(\\.[0-9]*)?");
-  }
-
 }
