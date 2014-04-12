@@ -44,6 +44,9 @@ GET	    /error						  controllers.Application.errorReport(err:String)
 GET     /adminpanel				      controllers.Application.adminPanel()
 GET     /adminpanel/editindexcontent  controllers.Application.editIndexContentFormData()
 POST    /adminpanel/editindexcontent  controllers.Application.postIndexContentFormData()
+GET     /register/plant               controllers.Application.newPlant()
+POST    /register/plant               controllers.Application.postPlantRegistration(isNew: Boolean)
+GET     /edit/plant:id                controllers.Application.managePlant(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

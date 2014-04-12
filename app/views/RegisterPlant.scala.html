@@ -1,0 +1,34 @@
+@(formData: Form[views.formdata.PlantFormData], isNew: Boolean)
+
+@import helper._ 
+@import bootstrap3._
+@registrationType() = @{
+
+}
+ 
+@Main("Register Plant") {
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+             <div class="panel-title"><h1>Register Plant</h1></div>           
+          </div>
+          <div class="panel-body">          
+          <div class="alert alert-info">Fields marked with * are required.</div>
+              @form(action = routes.Application.postPlantRegistration(isNew), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+                @hidden(formData("id"))
+                @text(formData("name"), "Name", "Name of Plant", "")
+                @text(formData("scientificName"), "Scientific Name", "Scientific Name of Plant", "")
+                @text(formData("placement"), "Placement", "Plant's Placement Within the Rain Garden", "")
+                @text(formData("growth"), "Growth", "Growth Type of the Plant", "")
+                @text(formData("climateType"), "Climate", "The Type of Climate of the Plant", "")                                                       
+              <hr/>
+              <button id="submit" type="submit" class="btn btn-info pull-right">Register</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+}

@@ -36,6 +36,7 @@ import views.formdata.MaterialTypes;
 import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.PermeablePaversSizeTypes;
+import views.formdata.PlantFormData;
 import views.formdata.RainBarrelCapacityTypes;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainBarrelTypes;
@@ -46,7 +47,6 @@ import views.formdata.YesNoChoiceType;
 import views.formdata.PlantTypes;
 import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
-import views.formdata.SolutionAmountType;
 import views.formdata.LoginFormData;
 import views.formdata.SignUpFormData;
 import views.formdata.IndexContentFormData;
@@ -71,6 +71,7 @@ import views.html.EditProfile;
 import views.html.ErrorReport;
 import views.html.AdminPanel;
 import views.html.EditIndexContent;
+import views.html.RegisterPlant;
 
 
 /**
@@ -849,8 +850,47 @@ public class Application extends Controller {
     if ((paver != null) && paver.hasPicture()) {
       System.out.println("------------------------------------------------PermeablePaversDB.hasID");
       return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
-    }
-   
+    }   
     return redirect("");
+  }
+  
+  /**
+   * Register new plant.
+   * @return The plant registration form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result newPlant() {
+    PlantFormData data = new PlantFormData();
+    Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
+    return ok(RegisterPlant.render(formData, true));
+  }
+  
+  /**
+   * Returns the created/edited permeable pavers page.
+   * @param isNew Specifies if the permeable pavers is new or not.
+   * @return The resulting permeable pavers page if information was valid, else the registration form.
+   * @throws IOException When there is an issue when copying the file to the byte array.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result postPlantRegistration(boolean isNew) throws IOException {
+    Form<PlantFormData> formData = Form.form(PlantFormData.class).bindFromRequest();
+    //validatePaverUpload(formData, request().body().asMultipartFormData());
+    if (formData.hasErrors()) {
+      //Map<String, String> dataMap = formData.data();
+      return badRequest(RegisterPlant.render(formData, isNew));   
+    } 
+    else {
+      return TODO;
+     }     
+    }
+  
+  /**
+   * Manage information for a permeable paver.
+   * @param id The ID of the permeable paver to manage.
+   * @return The rain barrel edit form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result managePlant(long id) {
+    return TODO;
   }
 }
