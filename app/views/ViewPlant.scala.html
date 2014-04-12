@@ -4,9 +4,32 @@
 @import bootstrap3._
 
 @Main("View Plants") {
-   <div class="container">
-    @for(plant <- PlantDB.getPlants()) {
-      <p>@plant.getName()</p>
-    }
-   </div>
+  <div class="container">
+    <div class="row">
+      <table class="table table-bordered table-condensed table-hover table-responsive">
+        <tr>
+            <th>Name</th>
+            <th>Scientific Name</th>
+            <th>Placement</th>
+            <th>Growth</th>
+            <th>Climate Type</th>
+          @if(userInfo != null && (userInfo.isAdmin())) {
+            <th></th>
+          }
+        </tr>
+        @for(plant <- PlantDB.getPlants()) {
+          <tr>
+              <td>@plant.getName()</td>
+              <td>@plant.getScientificName()</td>
+              <td>@plant.getPlacement()</td>
+              <td>@plant.getGrowth()</td>
+              <td>@plant.getClimateType()</td>            
+             @if(userInfo != null && (userInfo.isAdmin())) {
+              <td><a href="#"><button class="btn btn-sm btn-info">Edit</button></a> <a href="#"><button class="btn btn-sm btn-danger" style="background-color:red;">Delete</button></a></td>
+             }
+          </tr>
+        }
+      </table>
+    </div>
+  </div>
 }
