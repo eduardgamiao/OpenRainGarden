@@ -70,6 +70,8 @@ import views.html.Profile;
 import views.html.EditProfile;
 import views.html.ErrorReport;
 import views.html.AdminPanel;
+import views.html.EditIndexContent;
+
 
 /**
  * Implements the controllers for this application.
@@ -162,16 +164,36 @@ public class Application extends Controller {
 		  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
 		  if(Secured.isLoggedIn(ctx())){
 			  if(Secured.getUserInfo(ctx()).isAdmin()){
-				  return ok(AdminPanel.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+				  return ok(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+			  }
+		  }
+		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));
+	  }
+  
+ 
+   /**
+   * Open the admin control panel.
+   * @return
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result editIndexContentFormData() {
+		System.out.println("Opening admin control Page");
+	    IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
+	        ? new IndexContentFormData() : new IndexContentFormData();
+		  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
+		  if(Secured.isLoggedIn(ctx())){
+			  if(Secured.getUserInfo(ctx()).isAdmin()){
+				  return ok(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
 			  }
 		  }
 		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));
 	  }
   
   /**
-   * Processes the edited profile form.
+   * Processes the edited IndexContentFormData .
    * @return
    */
+  @Security.Authenticated(Secured.class)
   public static Result postIndexContentFormData() {
 	  System.out.println("Post Edit");
 	  
@@ -180,7 +202,7 @@ public class Application extends Controller {
 			  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).bindFromRequest();
 			  if (formData.hasErrors() == true) {
 				  System.out.println("Edit profile Errors found.");
-				  return badRequest(AdminPanel.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+				  return badRequest(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
 			  }
 			  else {
 				  IndexContentFormData data = formData.get();
