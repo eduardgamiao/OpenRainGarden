@@ -4,7 +4,7 @@
 @import bootstrap3._
 
 @Main("Admin control panel") {
-<div class="container">	
+<div class="container">
 	<!-- Home Page panel -->
 	<div class="panel panel-default">
 		<div class="panel-heading" style="background-color:#3E60AD; color: white">
@@ -22,7 +22,14 @@
 		</div>
 		<div class="panel-body">	
 			<div class="well">
-				<h4 style="color:black">Rain Garden Resources</h4>
+				<div class="row">
+					<div class="col-md-6" style="text-align:left">
+						<h4 style="color:black">Rain Garden Resources</h4>
+					</div>
+					<div class="col-md-6" style="text-align:right">
+						<a href="#"><button type="button"><span class="glyphicon glyphicon-plus"></span> Add Rain Garden Resource</button></a>
+					</div>
+				</div>
 				<div class="row">
 					@for(garden <- ResourceDB.getGardenList()) {
 						@edit_resource(garden)
@@ -31,7 +38,14 @@
 			</div>
 					
 			<div class="well">
-				<h4 style="color:black">Rain Barrel Resources</h4>
+				<div class="row">
+					<div class="col-md-6" style="text-align:left">
+						<h4 style="color:black">Rain Barrel Resources</h4>
+					</div>
+					<div class="col-md-6" style="text-align:right">
+						<a href="#"><button type="button"><span class="glyphicon glyphicon-plus"></span> Add Rain Barrel Resource</button></a>
+					</div>
+				</div>
 				<div class="row">
 					@for(barrel <- ResourceDB.getBarrelList()) {
 						@edit_resource(barrel)
@@ -40,7 +54,14 @@
 			</div>
 					
 			<div class="well">
-				<h4 style="color:black">Permeable Paver Resources</h4>
+				<div class="row">
+					<div class="col-md-6" style="text-align:left">
+						<h4 style="color:black">Permeable Paver Resources</h4>
+					</div>
+					<div class="col-md-6" style="text-align:right">
+						<a href="#"><button type="button"><span class="glyphicon glyphicon-plus"></span> Add Permeable Paver Resource</button></a>
+					</div>
+				</div>
 				<div class="row">
 					@for(paver <- ResourceDB.getPaverList()) {
 						@edit_resource(paver)
