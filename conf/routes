@@ -47,6 +47,7 @@ POST    /adminpanel/editindexcontent  controllers.Application.postIndexContentFo
 GET     /register/plant               controllers.Application.newPlant()
 POST    /register/plant               controllers.Application.postPlantRegistration(isNew: Boolean)
 GET     /edit/plant:id                controllers.Application.managePlant(id: Long)
+GET     /view/plants                  controllers.Application.viewPlants()
 
 
 # Map static resources from the /public folder to the /assets URL path

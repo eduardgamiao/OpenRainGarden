@@ -72,6 +72,7 @@ import views.html.ErrorReport;
 import views.html.AdminPanel;
 import views.html.EditIndexContent;
 import views.html.RegisterPlant;
+import views.html.ViewPlant;
 
 
 /**
@@ -892,5 +893,13 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result managePlant(long id) {
     return TODO;
+  }
+  
+  /**
+   * Shows all the plants registered in the plant database.
+   * @return A page showing all the plants in the database.
+   */
+  public static Result viewPlants() {
+    return ok(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }
 }

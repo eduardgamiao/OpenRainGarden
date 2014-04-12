@@ -1,0 +1,12 @@
+@(message: String, userInfo: UserInfo)
+
+@import helper._
+@import bootstrap3._
+
+@Main("View Plants") {
+   <div class="container">
+    @for(plant <- PlantDB.getPlants()) {
+      <p>@plant.getName()</p>
+    }
+   </div>
+}
