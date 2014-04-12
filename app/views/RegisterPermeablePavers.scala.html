@@ -1,22 +1,25 @@
-@(formData: Form[views.formdata.PermeablePaversFormData], choiceList: List[String], propertyTypes: Map[String, Boolean], 
+@(formData: Form[views.formdata.PermeablePaversFormData], isNew: Boolean, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   materialType: Map[String, Boolean], previousMaterialTypes: Map[String, Boolean], sizeTypes: Map[String, Boolean], 
   userInfo: UserInfo)
 
 @import helper._ 
-@import bootstrap3._ 
-
-@Main("Register: Permeable Pavers") {
+@import bootstrap3._
+@registrationType() = @{
+    if (isNew) "Register" else "Edit"
+}
+ 
+@Main(registrationType() + ": Permeable Pavers") {
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>Register Permeable Pavers</h1></div>           
+             <div class="panel-title"><h1>@registrationType() Permeable Pavers</h1></div>           
           </div>
           <div class="panel-body">          
           <div class="alert alert-info">Fields marked with * are required.</div>
-    @form(action = routes.Application.postPermeablePaversRegister(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+    @form(action = routes.Application.postPermeablePaversRegister(isNew), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
               @hidden(formData("id"))
               @text(formData("title"), "Title", "Title of Permeable Paver", "") 
               @bootstrap3.select(formData("propertyType"), "Property Type *", "Please Select a Property Type", propertyTypes, false, "") 
@@ -32,7 +35,7 @@
               @bootstrap3.select(formData("size"), "Size", "Please Select the Size of the Permeable Paver", sizeTypes, false, "")
               @text(formData("installer"), "Pavement Installer", "Person/Company that Installed Pavement", "")                                                        
               <hr/>
-              <button id="submit" type="submit" class="btn btn-info pull-right">Register</button>
+              <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType()</button>
           </div>
         </div>
       </div>

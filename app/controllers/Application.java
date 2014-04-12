@@ -311,7 +311,7 @@ public class Application extends Controller {
     
   /**
    * Register a new rain barrel.
-   * @return The resulting rain barrel page.
+   * @return The rain barrel registration form.
    */
   @Security.Authenticated(Secured.class)
   public static Result newRainBarrel() {
@@ -387,43 +387,34 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the created/edited permeable pavers page.
-   * @param id ID of permeable pavers.
-   * @return The resulting permeable paver page.
+   * Register a new permeable paver.
+   * @return The permeable paver registration form.
    */
   @Security.Authenticated(Secured.class)
-  public static Result registerPermeablePavers(Long id) {
-    PermeablePaversFormData data;
-    if (id == 0 || (PermeablePaversDB.getPermeablePavers(id) == null)) {
-      data = new PermeablePaversFormData();
-    }
-    else if (Secured.getUserInfo(ctx()) != PermeablePaversDB.getPermeablePavers(id).getOwner()) {
-      return redirect(routes.Application.registerPermeablePavers(0));
-    }
-    else {
-      data = new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
-    }
-    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
-    return ok(RegisterPermeablePavers.render(formData, YesNoChoiceType.getChoiceList(), 
-              PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
-              DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
-              PaverMaterialTypes.getMaterialTypes(data.material), 
-              PaverMaterialTypes.getMaterialTypes(data.previousMaterial), 
-              PermeablePaversSizeTypes.getTypes(data.size), Secured.getUserInfo(ctx())));
+  public static Result newPermeablePavers() {
+    PermeablePaversFormData data = new PermeablePaversFormData();
+    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);    
+    return ok(RegisterPermeablePavers.render(formData, true, YesNoChoiceType.getChoiceList(), 
+              PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
+              DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
+              PaverMaterialTypes.getMaterialTypes(), 
+              PaverMaterialTypes.getMaterialTypes(), 
+              PermeablePaversSizeTypes.getTypes(), Secured.getUserInfo(ctx())));
   }
   
   /**
    * Returns the created/edited permeable pavers page.
+   * @param isNew Specifies if the permeable pavers is new or not.
    * @return The resulting permeable pavers page if information was valid, else the registration form.
    * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postPermeablePaversRegister() throws IOException {
+  public static Result postPermeablePaversRegister(boolean isNew) throws IOException {
     Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).bindFromRequest();
     validatePaverUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
-      return badRequest(RegisterPermeablePavers.render(formData, 
+      return badRequest(RegisterPermeablePavers.render(formData, isNew,
                         YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -446,6 +437,29 @@ public class Application extends Controller {
       return redirect(routes.Application.viewPaver(paver.getID()));
      }     
     }
+  
+  /**
+   * Manage information for a permeable paver.
+   * @param id The ID of the permeable paver to manage.
+   * @return The rain barrel edit form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result managePermeablePavers(long id) {
+    if (PermeablePaversDB.hasID(id)) {
+      if (Secured.isLoggedIn(ctx()) 
+          && (Secured.getUserInfo(ctx()) == PermeablePaversDB.getPermeablePavers(id).getOwner())) {
+            PermeablePaversFormData data = new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
+            Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
+            return ok(RegisterPermeablePavers.render(formData, false, YesNoChoiceType.getChoiceList(), 
+                      PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
+                      DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
+                      PaverMaterialTypes.getMaterialTypes(data.material), 
+                      PaverMaterialTypes.getMaterialTypes(data.previousMaterial), 
+                      PermeablePaversSizeTypes.getTypes(data.size), Secured.getUserInfo(ctx())));     
+      }
+    }
+    return redirect(routes.Application.index());
+  }
   
   /**
    * View garden page.
