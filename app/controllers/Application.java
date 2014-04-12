@@ -158,8 +158,7 @@ public class Application extends Controller {
    * @return
    */
   public static Result adminPanel() {
-		System.out.println("Opening admin control Page");
-	    IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
+	    /*IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
 	        ? new IndexContentFormData() : new IndexContentFormData();
 		  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
 		  if(Secured.isLoggedIn(ctx())){
@@ -167,8 +166,9 @@ public class Application extends Controller {
 				  return ok(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
 			  }
 		  }
-		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));
-	  }
+		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));*/
+	  return ok(AdminPanel.render("admin"));
+  }
   
  
    /**
