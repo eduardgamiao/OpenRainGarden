@@ -25,6 +25,14 @@ public class UserInfo extends Model {
 		this.telephone = telephone;
 		this.password = password;		
 	}
+	public UserInfo(String firstName, String lastName, String email, String telephone, String password, Boolean isadmin) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.telephone = telephone;
+		this.password = password;	
+		this.admin = isadmin;
+	}
 	
 	public Long getId() {
 		return id;

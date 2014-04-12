@@ -40,7 +40,8 @@ GET     /image/paver/:id              controllers.Application.retrievePaverImage
 GET     /editingprofile               controllers.Application.editProfile()
 POST    /profile/edit                 controllers.Application.postEditProfile()
 GET	    /error						  controllers.Application.errorReport(err:String)
-
+GET     /adminpanel					  controllers.Application.adminPanel()
+POST    /adminpanel                   controllers.Application.postIndexContentFormData()
 
 
 # Map static resources from the /public folder to the /assets URL path

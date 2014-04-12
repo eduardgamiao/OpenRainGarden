@@ -22,6 +22,17 @@ public class UserInfoDB {
 	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		userDB.put(email, new UserInfo(firstName, lastName, email, telephone, password));
 	}
+	/**
+	 * Adds given user info to the userDB
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @param telephone
+	 * @param password
+	 */
+	public static void addAdmin(String firstName, String lastName, String email, String telephone, String password) {
+		userDB.put(email, new UserInfo(firstName, lastName, email, telephone, password, true));
+	}
 	
 	/**
 	 * Returns whether given email is in the userDB

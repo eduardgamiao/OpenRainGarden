@@ -53,6 +53,7 @@ public class Global extends GlobalSettings {
     //Add phoney users
     UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
     UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw");
+    UserInfoDB.addAdmin("Admin", "HOK", "admin@gmail.com", "1234567", "pw");
         
     // Add rain garden.
     List<String> plants = new ArrayList<String>();

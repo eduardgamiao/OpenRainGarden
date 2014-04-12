@@ -49,6 +49,7 @@ import views.formdata.RainGardenFormData;
 import views.formdata.SolutionAmountType;
 import views.formdata.LoginFormData;
 import views.formdata.SignUpFormData;
+import views.formdata.IndexContentFormData;
 import views.html.Index;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
@@ -68,6 +69,7 @@ import views.html.MapPage;
 import views.html.Profile;
 import views.html.EditProfile;
 import views.html.ErrorReport;
+import views.html.AdminPanel;
 
 /**
  * Implements the controllers for this application.
@@ -137,13 +139,64 @@ public class Application extends Controller {
 			  SignUpFormData data = formData.get();
 			  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 			  
-			  //create new userinfo and add it to the "database"
-			  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
+			  UserInfo user = Secured.getUserInfo(ctx());
+			  user.setFirstName(data.firstName);
+			  user.setLastName(data.lastName);
+			  user.setEmail(data.email);
+			  user.setTelephone(data.telephone);
+			  user.setPassword(data.password);
 			  
 			  return redirect(routes.Application.profile(data.email));
 		  }
 	  }
 	  return redirect(routes.Application.errorReport("No user logged in, post edit profile fails."));
+  }
+  /**
+   * Open the admin control panel.
+   * @return
+   */
+  public static Result adminPanel() {
+		System.out.println("Opening admin control Page");
+	    IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
+	        ? new IndexContentFormData() : new IndexContentFormData();
+		  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
+		  if(Secured.isLoggedIn(ctx())){
+			  if(Secured.getUserInfo(ctx()).isAdmin()){
+				  return ok(AdminPanel.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+			  }
+		  }
+		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));
+	  }
+  
+  /**
+   * Processes the edited profile form.
+   * @return
+   */
+  public static Result postIndexContentFormData() {
+	  System.out.println("Post Edit");
+	  
+	  if(Secured.isLoggedIn(ctx())){
+		  if(Secured.getUserInfo(ctx()).isAdmin()){
+			  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).bindFromRequest();
+			  if (formData.hasErrors() == true) {
+				  System.out.println("Edit profile Errors found.");
+				  return badRequest(AdminPanel.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
+			  }
+			  else {
+				  IndexContentFormData data = formData.get();
+				 // System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
+				  
+				  //create new userinfo and add it to the "database"
+				  HeaderFooterDB.setHeader(data.header);
+				  HeaderFooterDB.setSubHeader(data.subheader);
+				  HeaderFooterDB.setFooter(data.footer);
+				  HeaderFooterDB.setSubFooter(data.subfooter);
+				  
+				  return redirect(routes.Application.index());
+			  }
+		  }
+	  }
+	  return redirect(routes.Application.errorReport("No admin logged in, post index content form data fails."));
   }
   /**
    * Returns the registration navigation menu.
