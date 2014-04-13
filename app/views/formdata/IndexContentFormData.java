@@ -18,9 +18,9 @@ public class IndexContentFormData {
 	
 	public String subheader;
 	
-	public String footer;
+	//public String footer;
 	
-	public String subfooter;
+	//public String subfooter;
 	
 	
 	/**
@@ -32,6 +32,7 @@ public class IndexContentFormData {
 	  this.subheader = HeaderFooterDB.getSubHeader();
 	  this.footer    = HeaderFooterDB.getFooter();
 	  this.subfooter = HeaderFooterDB.getSubFooter();
+	  header
 	}
 	
 	/**

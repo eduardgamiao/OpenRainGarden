@@ -101,7 +101,7 @@ public class HeaderFooterDB {
   }
   
   /**
-   * Retrieve a header from the database.
+   * Retrieve a banner image from the database.
    * @ 2 represent the key of header.
    * @return string of the header to retrieve.
    */
@@ -109,6 +109,27 @@ public class HeaderFooterDB {
     return block.get(4);
   }
   
+  /**
+   * Add a header banner image to the database.
+   * @param header text to add.
+   * @return The header that was added to the database.
+   * @5 is the index number in linked list for the banner image.
+   */public static String setBannerImage(String b) {
+		if(block.containsValue(5)){
+			block.remove(5);
+		}
+		block.put(5, b);
+	    return b;
+	  }
+	  
+	  /**
+	   * Retrieve a header from the database.
+	   * @ 2 represent the key of header.
+	   * @return string of the header to retrieve.
+	   */
+	  public static String getBannerImage() {
+	    return block.get(5);
+	  }
 
 
 }

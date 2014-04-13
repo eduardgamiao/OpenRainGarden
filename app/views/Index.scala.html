@@ -1,9 +1,9 @@
-@(blocks: List[IndexContent], header: String , subHeader: String, footer:String, subfooter:String)
+@(blocks: List[IndexContent], header: String , subHeader: String, footer:String, subfooter:String, bannerImage:String)
 
 @Main("Home") {
 
 
-    <div class="press-banner">
+    <div class="press-banner" style="background-image: url(@routes.Assets.at("images/"+bannerImage.getBannerImage()))">
      <h1 class="text-center bigFont"><b>@header</b></br><p style="font-size:80%">@subHeader</p></h1>
     </div>
 

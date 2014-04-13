@@ -98,7 +98,8 @@ public class Application extends Controller {
 				    		HeaderFooterDB.getHeader(),
 				    		HeaderFooterDB.getSubHeader(),
 				    		HeaderFooterDB.getFooter(),
-				    		HeaderFooterDB.getSubFooter()
+				    		HeaderFooterDB.getSubFooter(),
+				    		HeaderFooterDB.getBannerImage()
 				    		));
   }
   /**

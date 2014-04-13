@@ -122,6 +122,7 @@ public class Global extends GlobalSettings {
 	  HeaderFooterDB.setSubHeader("Registry & Gallery");
 	  HeaderFooterDB.setFooter("Website sponsered by Hui o Ko'olaupoko and the Hawaii State Department of Health - 2014 Privacy");
 	  HeaderFooterDB.setSubFooter("This project has been jointly funded by the U.S. Environmental Protection Agency (EPA) under Section 319(h) of the Clean Water Act, and the Hawaii State Department of Health (HDOH), Clean Water Branch. Although the information in this document has been funded wholly or in part by a Federal Grant to the HDOH, it may not necessarily reflect the views of the EPA and the HDOH and no offical endorsement should be inferred.");
+	  HeaderFooterDB.setBannerImage("index_banner.jpg");
 	  
 	  ButtonDB.addButton(new Button("1", "Sign Up", "/signup"));
 	  ButtonDB.addButton(new Button("1", "View Map", "/map"));

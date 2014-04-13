@@ -9,20 +9,20 @@
 		<div class="col-sm-6 col-sm-offset-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Admin control panel</h3>
+					<h3 class="panel-title"></h3>
 				</div>
 				<div class="panel-body" style="color: black;">
 				
 					@form(routes.Application.postIndexContentFormData(), 'class -> "form-horizontal") {
 					 <div class="press-banner">
-						     <h1 class="text-center bigFont"><b>@text(signupForm("header"), "Header:", "Header", "")</b></br>
-						     <p">@text(signupForm("subheader"), "SubHeader:", "SubHeader", "")</p></h1>
+						     <h1 class="text-center bigFont"><b>@bootstrap3.textarea(signupForm("header"),"5", "Header:", "Header", "")</b></br>
+						     <h1 class="text-center"><p>@bootstrap3.textarea(signupForm("subheader"),"1", "SubHeader:", "SubHeader", "")</p></h1>
 					 </div>
 						
 					<footer>
-							<p style="text-align: center">@text(signupForm("footer"), "Footer:", "footer", "")</p>
-							<p style="text-align: center">@text(signupForm("subfooter"), "Subfooter:", "subfooter", "")</p>
-			               
+							<p style="text-align: center">@bootstrap3.textarea(signupForm("footer"),"5", "Footer:", "footer", "")</p>
+							<p style="text-align: center">@bootstrap3.textarea(signupForm("subfooter"),"1", "Subfooter:", "subfooter", "")</p>
+			                @file(signupForm("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
 			    	</footer>
 						
 						

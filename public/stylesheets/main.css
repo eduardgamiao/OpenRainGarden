@@ -68,7 +68,6 @@ navbar a {
   letter-spacing: -1px;
 }
 .press-banner {
-	background-image: url(../images/index_banner.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='@img', sizingMethod='scale');
