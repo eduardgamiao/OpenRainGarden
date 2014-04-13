@@ -6,7 +6,7 @@
 @Main("Admin control panel") {
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-10 col-sm-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title"></h3>
@@ -19,18 +19,9 @@
 						     <h1 class="text-center"><p>@bootstrap3.textarea(signupForm("subheader"),"1", "SubHeader:", "SubHeader", "")</p></h1>
 					 </div>
 						
-					<footer>
-							<p style="text-align: center">@bootstrap3.textarea(signupForm("footer"),"5", "Footer:", "footer", "")</p>
-							<p style="text-align: center">@bootstrap3.textarea(signupForm("subfooter"),"1", "Subfooter:", "subfooter", "")</p>
+					
 			                @file(signupForm("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
-			    	</footer>
-						
-						
-						
-						
-						
-
-
+			    	
 						<div class="form-group">
 							<div class="text-center">
 								<button type="submit" style="color:#FFF" class="btn btn-default pull-right">Submit Change</button>

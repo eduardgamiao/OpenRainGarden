@@ -7,13 +7,13 @@
 <div class="container">
 	<!-- Home page Header & Footer -->
 	<div class="panel panel-default">
-		<div class="panel-heading" style="background-color:#3E60AD; color: white">
+		<div class="panel-heading" style="background-color:#3E60AD;  color: white">
 			<h3 class="panel-title">Home Page Header & Footer</h3>
 		</div>
 		<div class="panel-body">
 			<div class="well">
 				<div style="text-align:left"><a href="#"><button type="button"><h4>Edit</h4></button></a></div>
-				<div class="press-banner">
+				<div class="press-banner" style="background-image: url(@routes.Assets.at("images/"+HeaderFooterDB.getBannerImage()))">
 					<h1 class="text-center bigFont"><b>@HeaderFooterDB.getHeader()</b></br><p style="font-size:80%">@HeaderFooterDB.getSubHeader()</p></h1>
 				</div>
 			</div>
