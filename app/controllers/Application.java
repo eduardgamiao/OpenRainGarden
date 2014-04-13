@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
 import models.CommentDB;
 import models.HeaderFooterDB;
@@ -23,9 +24,11 @@ import models.UserInfoDB;
 import models.ResourceDB;
 import play.Logger;
 import play.api.Play;
+import play.api.mvc.SimpleResult;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
+import play.mvc.Results;
 import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -861,6 +864,19 @@ public class Application extends Controller {
   }
   
   /**
+   * Retrieve a plant image.
+   * @param id The name of the plant to retrieve the image from.
+   * @return The image matching the plant name given.
+   */
+  public static Result retrievePlantImage(String plantName) {
+    Plant plant = PlantDB.getPlant(plantName);
+    if (plant != null && plant.hasPicture()) {      
+      return ok(plant.getImage()).as("image/jpeg");
+    }
+    return redirect("");
+  }
+  
+  /**
    * Register new plant.
    * @return The plant registration form.
    */
@@ -891,7 +907,7 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       Plant plant = PlantDB.addPlant(data);
       plant.setImage(Files.toByteArray(picture.getFile()));
-      return TODO;
+      return redirect(routes.Application.viewPlants());
      }     
     }
   
@@ -910,7 +926,7 @@ public class Application extends Controller {
       }
     }
     else if (!PlantDB.hasName(plantName)) {
-      return badRequest(ErrorReport.render("no plants input"));
+      return badRequest(ErrorReport.render("\"" + request().host() + request().uri() + "\" is not a valid URL."));
     }
     return badRequest(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }

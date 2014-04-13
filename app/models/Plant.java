@@ -132,6 +132,14 @@ public class Plant {
   public void setImage(byte [] image) {
     this.image = image;
   }
+  
+  /**
+   * Check if the plant has an image.
+   * @return True if the plant has an image, false otherwie.
+   */
+  public boolean hasPicture() {
+    return (this.image != null);
+  }
 
   /**
    * Return the name of the plant without markings/accents. 

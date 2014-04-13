@@ -13,7 +13,7 @@ import models.PlantDB;
  */
 public class PlantFormData {  
   /** ID of plant. */
-  public Long id;
+  public long id = 0;
   
   /** Name of plant. */
   public String name;
