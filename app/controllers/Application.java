@@ -219,6 +219,7 @@ public class Application extends Controller {
 				  HeaderFooterDB.setSubHeader(data.subheader);
 				  HeaderFooterDB.setFooter(data.footer);
 				  HeaderFooterDB.setSubFooter(data.subfooter);
+				  HeaderFooterDB.setSubFooter(data.bannerImageUrl);
 				  
 				  return redirect(routes.Application.index());
 			  }
@@ -909,8 +910,7 @@ public class Application extends Controller {
       }
     }
     else if (!PlantDB.hasName(plantName)) {
-      return badRequest(Index.render(IndexContentDB.getBlocks(), HeaderFooterDB.getHeader(), 
-                        HeaderFooterDB.getSubHeader(), HeaderFooterDB.getFooter(), HeaderFooterDB.getSubFooter()));
+      return badRequest(ErrorReport.render("no plants input"));
     }
     return badRequest(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }

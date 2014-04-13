@@ -18,9 +18,11 @@ public class IndexContentFormData {
 	
 	public String subheader;
 	
-	//public String footer;
+	public String footer;
 	
-	//public String subfooter;
+	public String subfooter;
+	
+	public String bannerImageUrl;
 	
 	
 	/**
@@ -32,7 +34,7 @@ public class IndexContentFormData {
 	  this.subheader = HeaderFooterDB.getSubHeader();
 	  this.footer    = HeaderFooterDB.getFooter();
 	  this.subfooter = HeaderFooterDB.getSubFooter();
-	  header
+	  this.bannerImageUrl = HeaderFooterDB.getBannerImage(); 
 	}
 	
 	/**
@@ -53,6 +55,9 @@ public class IndexContentFormData {
 		}
 		if (this.subfooter == null || this.subfooter.length() == 0) {
 			errors.add(new ValidationError("subfooter", "Please type in subfooter."));
+		}
+		if (this.bannerImageUrl == null || this.bannerImageUrl.length() == 0) {
+			errors.add(new ValidationError("bannerImageUrl", "Please choose your bannerImageUrl."));
 		}	
 		
 		return errors.isEmpty() ? null : errors;
