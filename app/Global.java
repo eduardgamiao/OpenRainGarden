@@ -126,17 +126,6 @@ public class Global extends GlobalSettings {
     **/
     Plant plant = PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], 
                                    plantArr1[THREE], plantArr1[FOUR]));
-    try {
-      URL imageURL = new URL("http://data.bishopmuseum.org/ethnobotanydb/plants/ahuawa.jpg");
-      BufferedImage originalImage = ImageIO.read(imageURL);
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      ImageIO.write(originalImage, "jpg", baos);
-      plant.setImage(baos.toByteArray());
-    }
-    catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
 
     //Persist - in this case to a file
     
