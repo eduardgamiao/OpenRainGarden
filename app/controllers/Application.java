@@ -902,7 +902,7 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result managePlant(String plantName) {
     if (PlantDB.hasName(plantName)) {
-      if (Secured.isLoggedIn(ctx()) && Secured.isAdmin(ctx())) {
+      if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
         Logger.info("Admin.");
         return TODO;
       }
