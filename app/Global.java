@@ -1,5 +1,13 @@
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import com.google.common.io.Files;
+import controllers.routes;
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
@@ -7,6 +15,7 @@ import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
 import models.PermeablePaversDB;
+import models.Plant;
 import models.PlantDB;
 import models.RainBarrelDB;
 import models.RainGarden;
@@ -15,6 +24,8 @@ import models.Resource;
 import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
+import play.api.Play;
 import models.UserInfoDB;
 import views.formdata.CommentFormData;
 import views.formdata.PermeablePaversFormData;
@@ -98,23 +109,44 @@ public class Global extends GlobalSettings {
    */
   private static void populatePlantDB() {
     String plant1 = "‘Ahu‘awa, Mariscus javanicus, Basin, sedge, Wet & Dry Climate";
+    /**
     String plant2 = "‘Ākia, Wikstroemia uva-ursi, Slope/berm, low shrub, Wet & Dry Climate";
     String plant3 = "‘Ākulikuli, Sessuvium portulacastrum, Inlet, ground cover, Wet & Dry Climate";
     String plant4 = "Carex, Carex wahuensis, Basin, sedge, Wet & Dry Climate";
     String plant5 = "‘Ilie‘e, Plumbago zeylanica, Slope/berm, low shrub, Wet & Dry Climate";
     String plant6 = "‘A‘ali‘i, Dodonaea viscosa, Accent, bush, Dry Climate";
+    **/
     String [] plantArr1 = plant1.split(", ");
+    /**
     String [] plantArr2 = plant2.split(", ");
     String [] plantArr3 = plant3.split(", ");
     String [] plantArr4 = plant4.split(", ");
     String [] plantArr5 = plant5.split(", ");
     String [] plantArr6 = plant6.split(", ");
-    PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], plantArr1[THREE], plantArr1[FOUR]));
+    **/
+    Plant plant = PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], 
+                                   plantArr1[THREE], plantArr1[FOUR]));
+    try {
+      URL imageURL = new URL("http://data.bishopmuseum.org/ethnobotanydb/plants/ahuawa.jpg");
+      BufferedImage originalImage = ImageIO.read(imageURL);
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ImageIO.write(originalImage, "jpg", baos);
+      plant.setImage(baos.toByteArray());
+    }
+    catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    //Persist - in this case to a file
+    
+    /**
     PlantDB.addPlant(new PlantFormData(0, plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr3[0], plantArr3[1], plantArr3[2], plantArr3[THREE], plantArr3[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr4[0], plantArr4[1], plantArr4[2], plantArr4[THREE], plantArr4[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
+    **/
   }
   
   private static void populateIndexContentDB() {
