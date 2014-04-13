@@ -8,13 +8,14 @@ import java.text.Normalizer;
  *
  */
 public class Plant {
-  
+
+  private Long id;
   private String name;
   private String scientificName;
   private String placement;
   private String growth; 
   private String climateType;
-  private Long id;
+  private byte [] image;
 
   /**
    * Constructor.
@@ -119,22 +120,24 @@ public class Plant {
   }
   
   /**
+   * @return the image
+   */
+  public byte [] getImage() {
+    return image;
+  }
+
+  /**
+   * @param image the image to set
+   */
+  public void setImage(byte [] image) {
+    this.image = image;
+  }
+
+  /**
    * Return the name of the plant without markings/accents. 
    * @return The name of the plant without markings/accents.
    */
   public String getPictureName() {
     return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase() + ".jpg";
-  }
-  
-  public String getPlantWellColor() {
-    if (this.climateType.equals("Dry Climate")) {
-      return "#DFF0D8;";
-    }
-    else if (this.climateType.equals("Wet Climate")) {
-      return "#D9EDF7;";
-    }
-    else {
-      return "white;";
-    }
   }
 }

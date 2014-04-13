@@ -65,4 +65,8 @@ public class Secured extends Security.Authenticator {
   public static UserInfo getUserInfo(Context ctx) {
     return (isLoggedIn(ctx) ? UserInfoDB.getUser(getUser(ctx)) : null);
   }
+  
+  public static boolean isAdmin(Context ctx) {
+    return getUserInfo(ctx).isAdmin();
+  }
 }

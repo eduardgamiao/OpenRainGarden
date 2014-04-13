@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import models.HeaderFooterDB;
 import models.IndexContentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
+import models.Plant;
 import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
@@ -20,6 +22,7 @@ import models.UserInfo;
 import models.UserInfoDB;
 import models.ResourceDB;
 import play.Logger;
+import play.api.Play;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -881,18 +884,34 @@ public class Application extends Controller {
       return badRequest(RegisterPlant.render(formData, isNew));   
     } 
     else {
+      PlantFormData data = formData.get();
+      MultipartFormData body = request().body().asMultipartFormData();
+      FilePart picture = body.getFile("uploadFile");
+      Plant plant = PlantDB.addPlant(data);
+      plant.setImage(Files.toByteArray(picture.getFile()));
       return TODO;
      }     
     }
   
   /**
-   * Manage information for a permeable paver.
-   * @param id The ID of the permeable paver to manage.
-   * @return The rain barrel edit form.
+   * Manage a plant's information.
+   * 
+   * @param plantName The name of the plant to manage.
+   * @return The plant edit form.
    */
   @Security.Authenticated(Secured.class)
-  public static Result managePlant(long id) {
-    return TODO;
+  public static Result managePlant(String plantName) {
+    if (PlantDB.hasName(plantName)) {
+      if (Secured.isLoggedIn(ctx()) && Secured.isAdmin(ctx())) {
+        Logger.info("Admin.");
+        return TODO;
+      }
+    }
+    else if (!PlantDB.hasName(plantName)) {
+      return badRequest(Index.render(IndexContentDB.getBlocks(), HeaderFooterDB.getHeader(), 
+                        HeaderFooterDB.getSubHeader(), HeaderFooterDB.getFooter(), HeaderFooterDB.getSubFooter()));
+    }
+    return badRequest(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }
   
   /**
