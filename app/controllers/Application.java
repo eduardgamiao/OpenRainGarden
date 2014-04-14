@@ -169,6 +169,7 @@ public class Application extends Controller {
    * Open the admin control panel.
    * @return
    */
+  @Security.Authenticated(Secured.class)
   public static Result adminPanel() {
 	    /*IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
 	        ? new IndexContentFormData() : new IndexContentFormData();
@@ -179,7 +180,12 @@ public class Application extends Controller {
 			  }
 		  }
 		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));*/
-	  return ok(AdminPanel.render("admin"));
+	  
+	  
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  return ok(AdminPanel.render("admin"));
+	  }
+	  return redirect(routes.Application.index());
   }
   
  
@@ -952,31 +958,39 @@ public class Application extends Controller {
    * @param header
    * @return
    */
+  @Security.Authenticated(Secured.class)
   public static Result editResource(String header) {
-	  Resource resource;
-	  if ((resource = ResourceDB.getGardenResource(header)) == null) {
-		  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
-			  resource = ResourceDB.getPaverResource(header);
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  Resource resource;
+		  if ((resource = ResourceDB.getGardenResource(header)) == null) {
+			  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
+				  resource = ResourceDB.getPaverResource(header);
+			  }
 		  }
+		  return ok(EditResource.render(resource));
 	  }
-	  return ok(EditResource.render(resource));
+	  return redirect(routes.Application.index());
   }
   
   /**
    * Returns the new resource page
    * @return
    */
+  @Security.Authenticated(Secured.class)
   public static Result newResource(String header) {
-	  List<Resource> list;
-	  if (header.equals("garden")) {
-		  list = ResourceDB.getGardenList();
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  List<Resource> list;
+		  if (header.equals("garden")) {
+			  list = ResourceDB.getGardenList();
+		  }
+		  else if (header.equals("barrel")) {
+			  list = ResourceDB.getBarrelList();
+		  }
+		  else {
+			  list = ResourceDB.getPaverList();
+		  }
+		  return ok(NewResource.render(list));
 	  }
-	  else if (header.equals("barrel")) {
-		  list = ResourceDB.getBarrelList();
-	  }
-	  else {
-		  list = ResourceDB.getPaverList();
-	  }
-	  return ok(NewResource.render(list));
+	  return redirect(routes.Application.index());
   }
 }
