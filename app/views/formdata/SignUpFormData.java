@@ -27,6 +27,11 @@ public class SignUpFormData {
 	public String password;
 	
 	/**
+	 * Repeat password
+	 */
+	public String repeatpw;
+	
+	/**
 	 * Constructor.
 	 */
 	public SignUpFormData() {	  
@@ -66,7 +71,11 @@ public class SignUpFormData {
 		//}
 		if (this.password == null || this.password.length() == 0) {
 			errors.add(new ValidationError("password", "Please enter your desired password."));
-		}	
+		}
+		if (this.password.equals(this.repeatpw) == false) {
+			errors.add(new ValidationError("password", "Passwords much match."));
+			errors.add(new ValidationError("repeatpw", "Passwords much match."));
+		}
 		
 		return errors.isEmpty() ? null : errors;
 	}
