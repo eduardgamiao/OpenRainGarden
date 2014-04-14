@@ -899,9 +899,9 @@ public class Application extends Controller {
   }
   
   /**
-   * Returns the created/edited permeable pavers page.
-   * @param isNew Specifies if the permeable pavers is new or not.
-   * @return The resulting permeable pavers page if information was valid, else the registration form.
+   * Handles form submission for plant registration/edit.
+   * @param isNew Specifies if the plant is new or not.
+   * @return The plant listing, else the registration form.
    * @throws IOException When there is an issue when copying the file to the byte array.
    */
   @Security.Authenticated(Secured.class)

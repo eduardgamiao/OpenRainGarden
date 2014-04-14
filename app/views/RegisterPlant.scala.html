@@ -7,9 +7,8 @@
   if (isNew) "Register" else "Edit"
 }
  
-@Main("Register Plant") {
+@Main(registrationType() + ": Plant") {
   <div class="container">
-
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
@@ -25,9 +24,10 @@
                 @bootstrap3.select(formData("placement"), "Placement *", "Select the Plant's Placement in a Rain Garden", placementTypes, false, "")
                 @bootstrap3.select(formData("growth"), "Growth *", "Please Select Growth Type of the Plant", growthTypes, false, "")
                 @bootstrap3.select(formData("climateType"), "Climate *", "Please Select the Climate Type of the Plant", climateTypes, false, "")
-                @upload(formData("uploadFile"), "Upload Picture", "")                                                     
-              <hr/>
-              <button id="submit" type="submit" class="btn btn-info pull-right">Register</button>
+                @upload(formData("uploadFile"), "Upload Picture", "")                                                   
+              <hr/>  
+              <strong>@formData("uploadFile")</strong>
+              <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType()</button>
           </div>
         </div>
       </div>
