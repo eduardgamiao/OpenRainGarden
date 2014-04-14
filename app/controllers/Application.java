@@ -21,6 +21,7 @@ import models.RainGarden;
 import models.RainGardenDB;
 import models.UserInfo;
 import models.UserInfoDB;
+import models.Resource;
 import models.ResourceDB;
 import play.Logger;
 import play.api.Play;
@@ -79,6 +80,8 @@ import views.html.AdminPanel;
 import views.html.EditIndexContent;
 import views.html.RegisterPlant;
 import views.html.ViewPlant;
+import views.html.EditResource;
+import views.html.NewResource;
 
 
 /**
@@ -942,5 +945,38 @@ public class Application extends Controller {
    */
   public static Result viewPlants() {
     return ok(ViewPlant.render("", Secured.getUserInfo(ctx())));
+  }
+  
+  /**
+   * Returns the edit form for the resource matching the given header
+   * @param header
+   * @return
+   */
+  public static Result editResource(String header) {
+	  Resource resource;
+	  if ((resource = ResourceDB.getGardenResource(header)) == null) {
+		  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
+			  resource = ResourceDB.getPaverResource(header);
+		  }
+	  }
+	  return ok(EditResource.render(resource));
+  }
+  
+  /**
+   * Returns the new resource page
+   * @return
+   */
+  public static Result newResource(String header) {
+	  List<Resource> list;
+	  if (header.equals("garden")) {
+		  list = ResourceDB.getGardenList();
+	  }
+	  else if (header.equals("barrel")) {
+		  list = ResourceDB.getBarrelList();
+	  }
+	  else {
+		  list = ResourceDB.getPaverList();
+	  }
+	  return ok(NewResource.render(list));
   }
 }
