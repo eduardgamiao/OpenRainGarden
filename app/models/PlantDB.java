@@ -1,5 +1,6 @@
 package models;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import views.formdata.PlantFormData;
  */
 public class PlantDB {
 
-  private static Map<String, Plant> plants = new LinkedHashMap<String, Plant>();
+  private static Map<Long, Plant> plants = new LinkedHashMap<Long, Plant>();
   private static long currentID = 1;
   private static List<String> plantScientificNames = new ArrayList<String>();
   
@@ -28,37 +29,30 @@ public class PlantDB {
       plant = new Plant(currentID, formData.name, formData.scientificName, formData.placement, formData.growth,
                         formData.climateType);
       currentID++;
-      plants.put(plant.getName(), plant);
+      plants.put(plant.getID(), plant);
       plantScientificNames.add(plant.getScientificName());
     }
     else {
       plant = new Plant(formData.id, formData.name, formData.scientificName, formData.placement, formData.growth,
           formData.climateType);
-      plants.put(plant.getName(), plant);
+      plants.put(plant.getID(), plant);
       plantScientificNames.add(plant.getScientificName());
     }
     return plant;
   }
-  
-  /**
-   * Add a plant to the database.
-   * @param plant Plant to add.
-   * @return The plant that was added to the database.
-   */
-  public static Plant addPlant(Plant plant) {    
-    plants.put(plant.getName(), plant);
-    plant.setID(currentID);
-    currentID++;
-    return plant;
-  }
-  
+ 
   /**
    * Retrieve a plant from the database.
    * @param name Name of the plant to retrieve.
    * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
    */
   public static Plant getPlant(String name) {
-    return plants.get(name);
+    for (Plant plant : plants.values()) {
+      if (plant.getName().equals(name)) {
+        return plant;
+      }
+    }
+    return null;
   }
 
   /**
@@ -75,7 +69,21 @@ public class PlantDB {
    * @return True if the name is used, false otherwise.
    */
   public static Boolean hasName(String name) {
-    return plants.containsKey(name);
+    for (Plant plant : plants.values()) {
+      if (simplifyName(plant.getName()).equals(simplifyName(name))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Simplify a string to alphanumeric characters only.
+   * @param plantName The plant name to simplify.
+   * @return The alphanumeric representation of the passed-in String.
+   */
+  private static String simplifyName(String plantName) {
+    return Normalizer.normalize(plantName, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase();
   }
   
   /**

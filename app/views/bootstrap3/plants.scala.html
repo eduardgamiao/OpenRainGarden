@@ -20,7 +20,7 @@
         <div class="col-md-6">
              <a class="example"  rel="popover" 
              data-content="@plantPopover(PlantDB.getPlant(checkboxName))" 
-             data-placement="top" data-html="true" data-original-title="@checkboxName"><img src="/assets/plants/@PlantDB.getPlant(checkboxName).getPictureName()")" width="50px" height="50px"/></a>
+             data-placement="top" data-html="true" data-original-title="@checkboxName"><img src="@routes.Application.retrievePlantImage(checkboxName)")" width="50px" height="50px"/></a>
              </div>
              </div>
        </div>

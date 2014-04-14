@@ -26,9 +26,9 @@
               <td>@plant.getPlacement()</td>
               <td>@plant.getGrowth()</td>
               <td>@plant.getClimateType()</td>            
-             @if(userInfo != null && (userInfo.isAdmin())) {
-              <td><a href="#"><button class="btn btn-sm btn-info">Edit</button></a> <a href="#"><button class="btn btn-sm btn-danger" style="background-color:red;">Delete</button></a></td>
-             }
+              @if(userInfo != null && (userInfo.isAdmin())) {
+              <td><a href="/edit/plant/@plant.getName()"><button class="btn btn-sm btn-info">Edit</button></a> <a href="#"><button class="btn btn-sm btn-danger" style="background-color:red;">Delete</button></a></td>
+              }
           </tr>
         }
       </table>

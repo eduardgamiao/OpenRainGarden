@@ -906,7 +906,9 @@ public class Application extends Controller {
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
       Plant plant = PlantDB.addPlant(data);
-      plant.setImage(Files.toByteArray(picture.getFile()));
+      if (picture != null) {
+        plant.setImage(Files.toByteArray(picture.getFile()));
+      }
       return redirect(routes.Application.viewPlants());
      }     
     }
@@ -922,7 +924,10 @@ public class Application extends Controller {
     if (PlantDB.hasName(plantName)) {
       if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
         Logger.info("Admin.");
-        return TODO;
+        PlantFormData data = new PlantFormData(PlantDB.getPlant(plantName));
+        data.isEditing = true;
+        Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
+        return ok(RegisterPlant.render(formData, false));
       }
     }
     else if (!PlantDB.hasName(plantName)) {

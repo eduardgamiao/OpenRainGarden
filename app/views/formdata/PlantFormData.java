@@ -30,6 +30,9 @@ public class PlantFormData {
   /** Climate type of plant. */
   public String climateType;
   
+  /** Specify if the plant is being edited or not. */
+  public boolean isEditing = false;
+  
   /**
    * Constructor.
    */
@@ -79,25 +82,12 @@ public class PlantFormData {
    if (this.name.isEmpty() || this.name == null) {
      errors.add(new ValidationError("name", "The plant's name is required."));
    }
-   if (PlantDB.hasName(this.name)) {
-     errors.add(new ValidationError("name", "The name \"" + this.name + "\" is already used. "
-                                    + "Please select another name."));
+   if ((this.id == 0) && PlantDB.hasName(this.name)) {
+     errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
+                                    + "Please select another name."));     
    }
    if (this.scientificName.isEmpty() || this.scientificName == null) {
      errors.add(new ValidationError("scientificName", "The plant's scientific name is required."));
-   }
-   if (PlantDB.hasScientificName(this.scientificName)) {
-     errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
-                                    + "\" is already used. Please select another name."));
-   }
-   if (this.placement.isEmpty() || this.placement == null) {
-     errors.add(new ValidationError("placement", "The plant's placement is required."));
-   }
-   if (this.growth.isEmpty() || this.growth == null) {
-     errors.add(new ValidationError("growth", "The plant's growth type is required."));
-   }
-   if (this.climateType.isEmpty() || this.climateType == null) {
-     errors.add(new ValidationError("climateType", "The plant's climate type is required."));
    }
    
    return errors.isEmpty() ? null : errors;
