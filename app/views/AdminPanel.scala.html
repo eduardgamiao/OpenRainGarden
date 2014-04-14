@@ -39,7 +39,7 @@
 			</div>
 			
 		</div>
-		<div class="panel-body">
+		<div class="panel-body" id="content_blocks">
 			@for(block <- IndexContentDB.getBlocks()) {
 			<div class="well">
 				<div class="row featurette">
@@ -62,11 +62,12 @@
 	       		<div style="text-align:left"><a href="#"><button type="button"><h4>Edit</h4></button></a></div>
 	       	</div>
       		}
+      		<div style="text-align:right"><a href="#content_blocks"><h4>Back to top</h4></a></div>
 		</div>
 	</div>
 			
 	<!-- Learn More panel -->
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="resources">
 		<div class="panel-heading" style="background-color:#3E60AD; color: white">
 			<h3 class="panel-title">Learn More Resources</h3>
 		</div>
@@ -117,7 +118,8 @@
 						@edit_resource(paver)
 					}
 				</div>
-			</div>	
+			</div>
+			<div style="text-align:right"><a href="#resources"><h4>Back to top</h4></a></div>	
 		</div>
 	</div>
 	
