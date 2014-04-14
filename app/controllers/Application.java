@@ -44,6 +44,7 @@ import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.PermeablePaversSizeTypes;
 import views.formdata.PlantFormData;
+import views.formdata.PlantFormDropdownTypes;
 import views.formdata.RainBarrelCapacityTypes;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainBarrelTypes;
@@ -893,7 +894,8 @@ public class Application extends Controller {
   public static Result newPlant() {
     PlantFormData data = new PlantFormData();
     Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
-    return ok(RegisterPlant.render(formData, true));
+    return ok(RegisterPlant.render(formData, true, PlantFormDropdownTypes.getPlacementTypes(), 
+                                   PlantFormDropdownTypes.getGrowthTypes(), PlantFormDropdownTypes.getClimateTypes()));
   }
   
   /**
@@ -908,7 +910,9 @@ public class Application extends Controller {
     //validatePaverUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       //Map<String, String> dataMap = formData.data();
-      return badRequest(RegisterPlant.render(formData, isNew));   
+      return badRequest(RegisterPlant.render(formData, isNew, PlantFormDropdownTypes.getPlacementTypes(), 
+                                              PlantFormDropdownTypes.getGrowthTypes(), 
+                                              PlantFormDropdownTypes.getClimateTypes()));   
     } 
     else {
       PlantFormData data = formData.get();
@@ -932,11 +936,12 @@ public class Application extends Controller {
   public static Result managePlant(String plantName) {
     if (PlantDB.hasName(plantName)) {
       if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
-        Logger.info("Admin.");
         PlantFormData data = new PlantFormData(PlantDB.getPlant(plantName));
-        data.isEditing = true;
         Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
-        return ok(RegisterPlant.render(formData, false));
+        Logger.debug(data.climateType);
+        return ok(RegisterPlant.render(formData, false, PlantFormDropdownTypes.getPlacementTypes(data.placement), 
+                                       PlantFormDropdownTypes.getGrowthTypes(data.growth), 
+                                       PlantFormDropdownTypes.getClimateTypes(data.climateType)));
       }
     }
     else if (!PlantDB.hasName(plantName)) {

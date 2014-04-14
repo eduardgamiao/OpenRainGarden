@@ -1,9 +1,10 @@
-@(formData: Form[views.formdata.PlantFormData], isNew: Boolean)
+@(formData: Form[views.formdata.PlantFormData], isNew: Boolean, placementTypes: Map[String, Boolean],
+  growthTypes: Map[String, Boolean], climateTypes: Map[String, Boolean])
 
 @import helper._ 
 @import bootstrap3._
 @registrationType() = @{
-
+  if (isNew) "Register" else "Edit"
 }
  
 @Main("Register Plant") {
@@ -13,7 +14,7 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
-             <div class="panel-title"><h1>Register Plant</h1></div>           
+             <div class="panel-title"><h1>@registrationType() Plant</h1></div>           
           </div>
           <div class="panel-body">          
           <div class="alert alert-info">Fields marked with * are required.</div>
@@ -21,9 +22,9 @@
                 @hidden(formData("id"))
                 @text(formData("name"), "Name *", "Name of Plant", "")
                 @text(formData("scientificName"), "Scientific Name *", "Scientific Name of Plant", "")
-                @text(formData("placement"), "Placement *", "Plant's Placement Within the Rain Garden", "")
-                @text(formData("growth"), "Growth *", "Growth Type of the Plant", "")
-                @text(formData("climateType"), "Climate *", "The Type of Climate of the Plant", "")
+                @bootstrap3.select(formData("placement"), "Placement *", "Select the Plant's Placement in a Rain Garden", placementTypes, false, "")
+                @bootstrap3.select(formData("growth"), "Growth *", "Please Select Growth Type of the Plant", growthTypes, false, "")
+                @bootstrap3.select(formData("climateType"), "Climate *", "Please Select the Climate Type of the Plant", climateTypes, false, "")
                 @upload(formData("uploadFile"), "Upload Picture", "")                                                     
               <hr/>
               <button id="submit" type="submit" class="btn btn-info pull-right">Register</button>

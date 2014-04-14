@@ -79,15 +79,20 @@ public class PlantFormData {
  public List<ValidationError> validate() {
    ArrayList<ValidationError> errors = new ArrayList<>();
    
+   
    if (this.name.isEmpty() || this.name == null) {
      errors.add(new ValidationError("name", "The plant's name is required."));
    }
    if ((this.id == 0) && PlantDB.hasName(this.name)) {
      errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
-                                    + "Please select another name."));     
+                                    + "Please select a unique name."));     
    }
    if (this.scientificName.isEmpty() || this.scientificName == null) {
      errors.add(new ValidationError("scientificName", "The plant's scientific name is required."));
+   }
+   if ((this.id == 0) && PlantDB.hasScientificName(this.scientificName)) {
+     errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
+                                    + "\" is already in use. Please select a unique scientific name."));
    }
    
    return errors.isEmpty() ? null : errors;

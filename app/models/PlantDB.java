@@ -89,9 +89,14 @@ public class PlantDB {
   /**
    * Check if a scientific name is used.
    * @param name The scientific name of the plant.
-   * @return True if the name is used, false otherwise.
+   * @return True if the scientific name is used, false otherwise.
    */
   public static Boolean hasScientificName(String name) {
-    return plantScientificNames.contains(name);
+    for (Plant plant : plants.values()) {
+      if (simplifyName(plant.getScientificName()).equals(simplifyName(name))) {
+        return true;
+      }
+    }
+    return false;
   }
 }

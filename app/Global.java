@@ -106,7 +106,7 @@ public class Global extends GlobalSettings {
    * Populate plant database with plants from file.
    */
   private static void populatePlantDB() {
-    String plant1 = "‘Ahu‘awa, Mariscus javanicus, Basin, sedge, Wet & Dry Climate";
+    String plant1 = "‘Ahu‘awa, Mariscus javanicus, Basin, Sedge, Wet & Dry Climate";
     /**
     String plant2 = "‘Ākia, Wikstroemia uva-ursi, Slope/berm, low shrub, Wet & Dry Climate";
     String plant3 = "‘Ākulikuli, Sessuvium portulacastrum, Inlet, ground cover, Wet & Dry Climate";
@@ -124,8 +124,6 @@ public class Global extends GlobalSettings {
     **/
     Plant plant = PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], 
                                    plantArr1[THREE], plantArr1[FOUR]));
-
-    //Persist - in this case to a file
     
     /**
     PlantDB.addPlant(new PlantFormData(0, plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
