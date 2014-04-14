@@ -33,8 +33,10 @@ public class PlantDB {
       plantScientificNames.add(plant.getScientificName());
     }
     else {
+      byte [] picture = PlantDB.getPlant(formData.name).getImage();
       plant = new Plant(formData.id, formData.name, formData.scientificName, formData.placement, formData.growth,
           formData.climateType);
+      plant.setImage(picture);
       plants.put(plant.getID(), plant);
       plantScientificNames.add(plant.getScientificName());
     }

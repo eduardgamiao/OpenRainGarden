@@ -911,7 +911,7 @@ public class Application extends Controller {
     validatePlantUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
-      String url = request().body().asMultipartFormData().getFile("uploadFile").getFile().getAbsolutePath();
+      String url = routes.Application.retrievePlantImage(dataMap.get("name")).toString();
       Logger.debug(url);
       return badRequest(RegisterPlant.render(formData, isNew, 
                                              PlantFormDropdownTypes.getPlacementTypes(dataMap.get("placement")), 
@@ -919,10 +919,10 @@ public class Application extends Controller {
                                              PlantFormDropdownTypes.getClimateTypes(dataMap.get("climateType")),
                                              url));   
     } 
-    else {
+    else {      
       PlantFormData data = formData.get();
       MultipartFormData body = request().body().asMultipartFormData();
-      FilePart picture = body.getFile("uploadFile");
+      FilePart picture = body.getFile("myimage");
       Plant plant = PlantDB.addPlant(data);
       if (picture != null) {
         plant.setImage(Files.toByteArray(picture.getFile()));
