@@ -895,7 +895,8 @@ public class Application extends Controller {
     PlantFormData data = new PlantFormData();
     Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
     return ok(RegisterPlant.render(formData, true, PlantFormDropdownTypes.getPlacementTypes(), 
-                                   PlantFormDropdownTypes.getGrowthTypes(), PlantFormDropdownTypes.getClimateTypes()));
+                                   PlantFormDropdownTypes.getGrowthTypes(), PlantFormDropdownTypes.getClimateTypes(),
+                                   ""));
   }
   
   /**
@@ -910,10 +911,13 @@ public class Application extends Controller {
     validatePlantUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
+      String url = request().body().asMultipartFormData().getFile("uploadFile").getFile().getAbsolutePath();
+      Logger.debug(url);
       return badRequest(RegisterPlant.render(formData, isNew, 
                                              PlantFormDropdownTypes.getPlacementTypes(dataMap.get("placement")), 
                                              PlantFormDropdownTypes.getGrowthTypes(dataMap.get("growth")), 
-                                             PlantFormDropdownTypes.getClimateTypes(dataMap.get("climateType"))));   
+                                             PlantFormDropdownTypes.getClimateTypes(dataMap.get("climateType")),
+                                             url));   
     } 
     else {
       PlantFormData data = formData.get();
@@ -942,7 +946,8 @@ public class Application extends Controller {
         Logger.debug(data.climateType);
         return ok(RegisterPlant.render(formData, false, PlantFormDropdownTypes.getPlacementTypes(data.placement), 
                                        PlantFormDropdownTypes.getGrowthTypes(data.growth), 
-                                       PlantFormDropdownTypes.getClimateTypes(data.climateType)));
+                                       PlantFormDropdownTypes.getClimateTypes(data.climateType),
+                                       routes.Application.retrievePlantImage(data.name).absoluteURL(request())));
       }
     }
     else if (!PlantDB.hasName(plantName)) {
