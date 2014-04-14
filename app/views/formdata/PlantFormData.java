@@ -30,8 +30,8 @@ public class PlantFormData {
   /** Climate type of plant. */
   public String climateType;
   
-  /** Specify if the plant is being edited or not. */
-  public boolean isEditing = false;
+  /** Specify if the form data has a picture. */
+  public boolean hasPicture = false;
   
   /**
    * Constructor.

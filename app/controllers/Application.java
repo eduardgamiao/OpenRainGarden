@@ -922,7 +922,7 @@ public class Application extends Controller {
     else {      
       PlantFormData data = formData.get();
       MultipartFormData body = request().body().asMultipartFormData();
-      FilePart picture = body.getFile("myimage");
+      FilePart picture = body.getFile("uploadFile");
       Plant plant = PlantDB.addPlant(data);
       if (picture != null) {
         plant.setImage(Files.toByteArray(picture.getFile()));
@@ -942,8 +942,8 @@ public class Application extends Controller {
     if (PlantDB.hasName(plantName)) {
       if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
         PlantFormData data = new PlantFormData(PlantDB.getPlant(plantName));
+        data.hasPicture = true;
         Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
-        Logger.debug(data.climateType);
         return ok(RegisterPlant.render(formData, false, PlantFormDropdownTypes.getPlacementTypes(data.placement), 
                                        PlantFormDropdownTypes.getGrowthTypes(data.growth), 
                                        PlantFormDropdownTypes.getClimateTypes(data.climateType),
