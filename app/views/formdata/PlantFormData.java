@@ -80,19 +80,28 @@ public class PlantFormData {
    ArrayList<ValidationError> errors = new ArrayList<>();
    
    
-   if (this.name.isEmpty() || this.name == null) {
+   if (this.name == null || this.name.isEmpty()) {
      errors.add(new ValidationError("name", "The plant's name is required."));
    }
    if ((this.id == 0) && PlantDB.hasName(this.name)) {
      errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
                                     + "Please select a unique name."));     
    }
-   if (this.scientificName.isEmpty() || this.scientificName == null) {
+   if (this.scientificName == null || this.scientificName.isEmpty()) {
      errors.add(new ValidationError("scientificName", "The plant's scientific name is required."));
    }
    if ((this.id == 0) && PlantDB.hasScientificName(this.scientificName)) {
      errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
                                     + "\" is already in use. Please select a unique scientific name."));
+   }
+   if (this.placement == null || this.placement.isEmpty()) {
+     errors.add(new ValidationError("placement", "The plant's placement is required."));     
+   }
+   if (this.growth == null || this.growth.isEmpty()) {
+     errors.add(new ValidationError("growth", "The plant's growth type is required."));     
+   }
+   if (this.climateType == null || this.climateType.isEmpty()) {
+     errors.add(new ValidationError("climateType", "The plant's climate type is required."));     
    }
    
    return errors.isEmpty() ? null : errors;

@@ -15,6 +15,10 @@ public class PlantFormDropdownTypes {
                                           "Tree", "Tall Fern", "Other"};
   private static String [] climateTypes = {"Wet & Dry Climate", "Dry Climate", "Wet Climate", "Other"};
   
+  /**
+   * Get types of plant placements.
+   * @return A mapping of plant placements.
+   */
   public static Map<String, Boolean> getPlacementTypes() {
     Map<String, Boolean> placementMap = new LinkedHashMap<String, Boolean>();
     for (String type : placementTypes) {
@@ -23,6 +27,11 @@ public class PlantFormDropdownTypes {
     return placementMap;
   }
   
+  /**
+   * Get types of plant placements.
+   * @param type A type of plant placement.
+   * @return A mapping of plant placements.
+   */
   public static Map<String, Boolean> getPlacementTypes(String type) {
     Map<String, Boolean> placementMap = PlantFormDropdownTypes.getPlacementTypes();
     if (isPlacementType(type)) {
@@ -31,10 +40,19 @@ public class PlantFormDropdownTypes {
     return placementMap;
   }
   
+  /**
+   * Check if a type is a plant placement type.
+   * @param type The type to check. 
+   * @return True if the type is a placement type. False otherwise. 
+   */
   public static Boolean isPlacementType(String type) {
     return PlantFormDropdownTypes.getPlacementTypes().containsKey(type);
   }
 
+  /**
+   * Get types of plant growth.
+   * @return A mapping of plant growth types.
+   */
   public static Map<String, Boolean> getGrowthTypes() {
     Map<String, Boolean> growthMap = new LinkedHashMap<String, Boolean>();
     for (String type : growthTypes) {
@@ -43,6 +61,11 @@ public class PlantFormDropdownTypes {
     return growthMap;
   }
   
+  /**
+   * Get types of plant growth.
+   * @param type A plant growth type.
+   * @return A mapping of plant growth types.
+   */
   public static Map<String, Boolean> getGrowthTypes(String type) {
     Map<String, Boolean> growthMap = PlantFormDropdownTypes.getGrowthTypes();
     if (isGrowthType(type)) {
@@ -51,10 +74,19 @@ public class PlantFormDropdownTypes {
     return growthMap;
   }
   
+  /**
+   * Check if a plant growth type is valid.
+   * @param type A plant growth type.
+   * @return True if the type is a plant growth type. False otherwise.
+   */
   public static Boolean isGrowthType(String type) {
     return PlantFormDropdownTypes.getGrowthTypes().containsKey(type);
   }
 
+  /**
+   * Get a mapping of plant climate types.
+   * @return A mapping of plant climate types.
+   */
   public static Map<String, Boolean> getClimateTypes() {
     Map<String, Boolean> climateMap = new LinkedHashMap<String, Boolean>();
     for (String type : climateTypes) {
@@ -63,6 +95,11 @@ public class PlantFormDropdownTypes {
     return climateMap;
   }
   
+  /**
+   * Get a mapping of plant climate types.
+   * @param type A plant climate type.
+   * @return A mapping of plant climate types.
+   */
   public static Map<String, Boolean> getClimateTypes(String type) {
     Map<String, Boolean> climateMap = PlantFormDropdownTypes.getClimateTypes();
     if (isClimateType(type)) {
@@ -71,6 +108,11 @@ public class PlantFormDropdownTypes {
     return climateMap;
   }
   
+  /**
+   * Check if a type is a plant climate type.
+   * @param type The type to check.
+   * @return True if the type is a plant climate type. False otherwise. 
+   */
   public static Boolean isClimateType(String type) {
     return PlantFormDropdownTypes.getClimateTypes().containsKey(type);
   }

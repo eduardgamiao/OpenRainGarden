@@ -907,12 +907,13 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postPlantRegistration(boolean isNew) throws IOException {
     Form<PlantFormData> formData = Form.form(PlantFormData.class).bindFromRequest();
-    //validatePaverUpload(formData, request().body().asMultipartFormData());
+    validatePlantUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
-      //Map<String, String> dataMap = formData.data();
-      return badRequest(RegisterPlant.render(formData, isNew, PlantFormDropdownTypes.getPlacementTypes(), 
-                                              PlantFormDropdownTypes.getGrowthTypes(), 
-                                              PlantFormDropdownTypes.getClimateTypes()));   
+      Map<String, String> dataMap = formData.data();
+      return badRequest(RegisterPlant.render(formData, isNew, 
+                                             PlantFormDropdownTypes.getPlacementTypes(dataMap.get("placement")), 
+                                             PlantFormDropdownTypes.getGrowthTypes(dataMap.get("growth")), 
+                                             PlantFormDropdownTypes.getClimateTypes(dataMap.get("climateType"))));   
     } 
     else {
       PlantFormData data = formData.get();
@@ -948,6 +949,34 @@ public class Application extends Controller {
       return badRequest(ErrorReport.render("\"" + request().host() + request().uri() + "\" is not a valid URL."));
     }
     return badRequest(ViewPlant.render("", Secured.getUserInfo(ctx())));
+  }
+  
+  /**
+   * Validate a given form's upload file.
+   * @param formData The form to check.
+   * @param body Multipart form data that holds the uploaded file to check.
+   * @return A form with validated upload data.
+   */
+  private static Form<PlantFormData> validatePlantUpload(Form<PlantFormData> formData, MultipartFormData body) {
+    List<ValidationError> errors = new ArrayList<ValidationError>();
+    if (formData.errors().get("uploadFile") != null) {
+      errors = formData.errors().get("uploadFile");
+    }
+    FilePart picture = body.getFile("uploadFile"); 
+    if (picture != null) {
+      if (!(picture.getContentType().contains("image"))) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is not an accepted "
+            + "file type. Please select a file with the extension .jpg/.jpeg or .png"));
+      }
+      if (picture.getFile().length() > MAX_FILE_SIZE) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is too large. "
+            + "Please select a file that is under 2.5 MB"));
+      }
+    }
+    if (!errors.isEmpty()) {
+      formData.errors().put("uploadFile", errors);
+    }
+    return formData;
   }
   
   /**
