@@ -1,3 +1,8 @@
 @(plant: Plant)
 
-<img src=&quot;@routes.Application.retrievePlantImage(plant.getName())&quot;>
+<img src=&quot;@routes.Application.retrievePlantImage(plant.getName())&quot; width=&quot;250px&quot; height=&quot;250px&quot;/>
+<p><strong>Plant Name: </strong> @plant.getName()</p>
+<p><strong>Scientific Name: </strong>@plant.getScientificName()</p>
+<p><strong>Placement Name: </strong>@plant.getPlacement()</p>
+<p><strong>Growth: </strong>@plant.getGrowth()</p>
+<p><strong>Climate Type: </strong>@plant.getClimateType()</p>

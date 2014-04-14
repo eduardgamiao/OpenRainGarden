@@ -5,6 +5,11 @@ body {
 	
 }
 
+.popover-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .view-header {
 	height: 400px;
 }

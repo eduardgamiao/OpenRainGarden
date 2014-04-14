@@ -67,12 +67,7 @@
                             @for(plant <- rainGarden.getPlants()) {
                              <button type="button" class="btn btn-info example" data-container="body" data-toggle="popover"
                               data-placement="top" title="@plant"
-                              data-content="                
-                              <p>Scientific Name: @PlantDB.getPlant(plant).getScientificName()</p>
-                              <p>Placement: @PlantDB.getPlant(plant).getPlacement()</p>
-                              <p>Growth: @PlantDB.getPlant(plant).getGrowth()</p>
-                              <p>Climate Type: @PlantDB.getPlant(plant).getClimateType()</p>
-                              <br />">@PlantDB.getPlant(plant).getName()
+                              data-content="@plantPopover(PlantDB.getPlant(plant))">@PlantDB.getPlant(plant).getName()
                               </button>
                             }
                           } else {

@@ -176,6 +176,10 @@
                 <li><a href="/register/rain-garden ">Rain Garden</a></li>
                 <li><a href="/register/rain-barrel">Rain Barrel</a></li>
                 <li><a href="/register/permeable-pavers">Permable Pavers</a></li>
+                @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).isAdmin)) {
+                <li role="presentation" class="divider"></li>
+                <li><a href="/register/plant">Plant</a></li>
+                }
             </ul>
         </li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Gallery<b class="caret"></b></a>
