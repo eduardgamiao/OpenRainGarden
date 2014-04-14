@@ -12,14 +12,17 @@
 		</div>
 		<div class="panel-body">
 			<div class="well">
-				<div style="text-align:left"><a href="#"><button type="button"><h4>Edit</h4></button></a></div>
-				<div class="press-banner" style="background-image: url(@routes.Assets.at("images/"+HeaderFooterDB.getBannerImage()))">
+				<div style="margin-left:20px; text-align:left"><a href="/adminpanel/editindexcontent"><button type="button"><h4>Edit</h4></button></a></div>
+				<div class="press-banner" style="margin-top:-50px; background-image: url(@routes.Assets.at("images/"+HeaderFooterDB.getBannerImage()))">
+				<div class="press-banner" style="margin-top:-100px;!important; background-image: url(@routes.Application.retrieveHomeBannerImage())">
+					
 					<h1 class="text-center bigFont"><b>@HeaderFooterDB.getHeader()</b></br><p style="font-size:80%">@HeaderFooterDB.getSubHeader()</p></h1>
 				</div>
+				
 			</div>
 			
 			<div class="well">
-				<div style="text-align:left"><a href="#"><button type="button"><h4>Edit</h4></button></a></div>
+				
 				<p style="text-align: center">@HeaderFooterDB.getFooter()</p>
 				<p style="text-align: center">@HeaderFooterDB.getSubFooter()</p>
 			</div>

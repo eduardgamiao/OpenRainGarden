@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class HeaderFooterDB {
 
-  private static Map<Integer, String> block = new LinkedHashMap<Integer, String>();
+  private static Map<Integer, Object> block = new LinkedHashMap<Integer, Object>();
   
   /**
    * Add a header to the database.
@@ -35,7 +35,7 @@ public class HeaderFooterDB {
    * @return string of the header to retrieve.
    */
   public static String getHeader() {
-    return block.get(1);
+    return (String)block.get(1);
   }
   
   /**
@@ -50,7 +50,7 @@ public class HeaderFooterDB {
 		block.remove(2);
 	}
 	block.put(2, b);
-    return b;
+    return (String)b;
   }
   
   /**
@@ -59,7 +59,7 @@ public class HeaderFooterDB {
    * @return string of the header to retrieve.
    */
   public static String getSubHeader() {
-    return block.get(2);
+    return (String)block.get(2);
   }
   
   
@@ -82,7 +82,7 @@ public class HeaderFooterDB {
    * @return string of the header to retrieve.
    */
   public static String getFooter() {
-    return block.get(3);
+    return (String)block.get(3);
   }
   
   /**
@@ -106,7 +106,7 @@ public class HeaderFooterDB {
    * @return string of the header to retrieve.
    */
   public static String getSubFooter() {
-    return block.get(4);
+    return (String)block.get(4);
   }
   
   /**
@@ -128,8 +128,22 @@ public class HeaderFooterDB {
 	   * @return string of the header to retrieve.
 	   */
 	  public static String getBannerImage() {
-	    return block.get(5);
+	    return (String)block.get(5);
 	  }
 
+	  public static byte[] getImage() {
+		byte[] b = (byte[]) block.get(6);
+		return b;
+	  }
 
+		  /**
+		   * @param image the image to set
+		   */
+	  public static void setImage(byte [] image) {
+		  if(block.containsValue(6)){
+				block.remove(6);
+			}
+			block.put(6, image);
+		  
+      }
 }

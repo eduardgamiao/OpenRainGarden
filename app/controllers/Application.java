@@ -213,7 +213,7 @@ public class Application extends Controller {
    * @return
    */
   @Security.Authenticated(Secured.class)
-  public static Result postIndexContentFormData() {
+  public static Result postIndexContentFormData() throws IOException {
 	  System.out.println("Post Edit");
 	  
 	  if(Secured.isLoggedIn(ctx())){
@@ -232,9 +232,16 @@ public class Application extends Controller {
 				  HeaderFooterDB.setSubHeader(data.subheader);
 				  HeaderFooterDB.setFooter(data.footer);
 				  HeaderFooterDB.setSubFooter(data.subfooter);
-				  HeaderFooterDB.setSubFooter(data.bannerImageUrl);
+				  HeaderFooterDB.setBannerImage(data.bannerImageUrl);
 				  
-				  return redirect(routes.Application.index());
+				  MultipartFormData body = request().body().asMultipartFormData();
+			      FilePart picture = body.getFile("uploadFile");
+			      if (picture != null) {
+			        HeaderFooterDB.setImage(Files.toByteArray(picture.getFile()));
+			      }
+				  
+				  
+				  return redirect(routes.Application.editIndexContentFormData());
 			  }
 		  }
 	  }
@@ -832,7 +839,17 @@ public class Application extends Controller {
     }
     return redirect(uri);
   }
+  /**
+   * Retrieve a garden image.
+   * @param id The ID of the garden to retrieve the image from.
+   * @return The image matching the ID given.
+   */
+  public static Result retrieveHomeBannerImage() {
 
+    
+      return ok(HeaderFooterDB.getImage()).as("image/jpeg");
+
+  }
   /**
    * Retrieve a garden image.
    * @param id The ID of the garden to retrieve the image from.
@@ -867,7 +884,7 @@ public class Application extends Controller {
   public static Result retrievePaverImage(long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
     if ((paver != null) && paver.hasPicture()) {
-      System.out.println("------------------------------------------------PermeablePaversDB.hasID");
+      System.out.println("PermeablePaversDB.hasID");
       return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
     }   
     return redirect("");

@@ -24,6 +24,8 @@ public class IndexContentFormData {
 	
 	public String bannerImageUrl;
 	
+
+	
 	
 	/**
 	 * Constructor.
