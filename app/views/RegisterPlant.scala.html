@@ -24,11 +24,7 @@
                   @bootstrap3.select(formData("placement"), "Placement *", "Select the Plant's Placement in a Rain Garden", placementTypes, false, "")
                   @bootstrap3.select(formData("growth"), "Growth *", "Please Select Growth Type of the Plant", growthTypes, false, "")
                   @bootstrap3.select(formData("climateType"), "Climate *", "Please Select the Climate Type of the Plant", climateTypes, false, "")
-                @if(isNew) {
-                  @upload(formData("uploadFile"), "Upload Picture", "")
-                } else {
-                  @uploadExists(formData("uploadFile"), "Change Picture", url, "")                
-                }                                                                  
+                  @upload(formData("uploadFile"), "Upload Picture", url, isNew, "")                                                               
               <hr/>
               <button id="submit" type="submit" class="btn btn-info pull-right">@registrationType()</button>
           </div>

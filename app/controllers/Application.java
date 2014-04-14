@@ -896,7 +896,7 @@ public class Application extends Controller {
     Form<PlantFormData> formData = Form.form(PlantFormData.class).fill(data);
     return ok(RegisterPlant.render(formData, true, PlantFormDropdownTypes.getPlacementTypes(), 
                                    PlantFormDropdownTypes.getGrowthTypes(), PlantFormDropdownTypes.getClimateTypes(),
-                                   ""));
+                                   "/assets/images/placeholder.gif"));
   }
   
   /**
