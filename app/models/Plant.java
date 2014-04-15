@@ -1,33 +1,40 @@
 package models;
 
 import java.text.Normalizer;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 /**
  * Represents plants used in a rain garden.
  * @author eduardgamiao
  *
  */
-public class Plant {
+@Entity
+public class Plant extends Model {
+  private static final long serialVersionUID = 1L;
 
+  @Id
   private Long id;
   private String name;
   private String scientificName;
   private String placement;
   private String growth; 
   private String climateType;
+  @Lob
   private byte [] image;
 
   /**
    * Constructor.
-   * @param id ID of plant.
    * @param name Name of plant.
    * @param scientificName Scientific name of plant.
    * @param placement Placement in rain garden.
    * @param growth Growth type.
    * @param climateType Plant climate type. 
    */
-  public Plant(Long id, String name, String scientificName, String placement, String growth, String climateType) {
-    this.id = id;
+  public Plant(String name, String scientificName, String placement, String growth, String climateType) {
     this.name = name;
     this.scientificName = scientificName;
     this.placement = placement;
@@ -147,5 +154,13 @@ public class Plant {
    */
   public String getPictureName() {
     return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase() + ".jpg";
+  }
+  
+  /**
+   * The EBean ORM finder method for database queries on ID.
+   * @return The finder method for plants.
+   */
+  public static Finder<Long, Plant> find() {
+    return new Finder<Long, Plant>(Long.class, Plant.class);
   }
 }

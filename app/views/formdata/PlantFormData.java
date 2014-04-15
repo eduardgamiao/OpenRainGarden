@@ -13,7 +13,7 @@ import models.PlantDB;
  */
 public class PlantFormData {  
   /** ID of plant. */
-  public long id = 0;
+  public long id = -1;
   
   /** Name of plant. */
   public String name;
@@ -42,16 +42,14 @@ public class PlantFormData {
 
   /**
    * Constructor.
-   * @param id ID of plant.
    * @param name Name of plant.
    * @param scientificName Scientific name of plant.
    * @param placement Placement in rain garden.
    * @param growth Growth type.
    * @param climateType Plant climate type. 
    */
-  public PlantFormData(long id, String name, String scientificName, String placement, String growth, 
+  public PlantFormData(String name, String scientificName, String placement, String growth, 
       String climateType) {
-    this.id = id;
     this.name = name;
     this.scientificName = scientificName;
     this.placement = placement;
@@ -83,14 +81,14 @@ public class PlantFormData {
    if (this.name == null || this.name.isEmpty()) {
      errors.add(new ValidationError("name", "The plant's name is required."));
    }
-   if ((this.id == 0) && PlantDB.hasName(this.name)) {
+   if ((this.id == -1) && PlantDB.hasName(this.name)) {
      errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
                                     + "Please select a unique name."));     
    }
    if (this.scientificName == null || this.scientificName.isEmpty()) {
      errors.add(new ValidationError("scientificName", "The plant's scientific name is required."));
    }
-   if ((this.id == 0) && PlantDB.hasScientificName(this.scientificName)) {
+   if ((this.id == -1) && PlantDB.hasScientificName(this.scientificName)) {
      errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
                                     + "\" is already in use. Please select a unique scientific name."));
    }

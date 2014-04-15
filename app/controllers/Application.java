@@ -944,6 +944,7 @@ public class Application extends Controller {
       if (picture != null) {
         plant.setImage(Files.toByteArray(picture.getFile()));
       }
+      plant.save();
       return redirect(routes.Application.viewPlants());
      }     
     }
@@ -1006,6 +1007,16 @@ public class Application extends Controller {
    * @return A page showing all the plants in the database.
    */
   public static Result viewPlants() {
+    return ok(ViewPlant.render("", Secured.getUserInfo(ctx())));
+  }
+  
+  /**
+   * Delete a plant from the system.
+   * @param name Name of the plant to delete.
+   * @return The view plant page.
+   */
+  public static Result deletePlant(String name) {
+    PlantDB.deletePlant(name);
     return ok(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }
   

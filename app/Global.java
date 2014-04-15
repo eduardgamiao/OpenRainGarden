@@ -122,8 +122,10 @@ public class Global extends GlobalSettings {
     String [] plantArr5 = plant5.split(", ");
     String [] plantArr6 = plant6.split(", ");
     **/
-    Plant plant = PlantDB.addPlant(new PlantFormData(0, plantArr1[0], plantArr1[1], plantArr1[2], 
+    if (Plant.find().all().isEmpty()) {
+    PlantDB.addPlant(new PlantFormData(plantArr1[0], plantArr1[1], plantArr1[2], 
                                    plantArr1[THREE], plantArr1[FOUR]));
+    }
     
     /**
     PlantDB.addPlant(new PlantFormData(0, plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));

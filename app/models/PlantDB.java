@@ -1,10 +1,7 @@
 package models;
 
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import views.formdata.PlantFormData;
 
 /**
@@ -13,32 +10,28 @@ import views.formdata.PlantFormData;
  *
  */
 public class PlantDB {
-
-  private static Map<Long, Plant> plants = new LinkedHashMap<Long, Plant>();
-  private static long currentID = 1;
-  private static List<String> plantScientificNames = new ArrayList<String>();
   
   /**
    * Add a plant to the database.
    * @param formData Form data from the plant form.
    * @return The plant that was added to the database.
    */
-  public static Plant addPlant(PlantFormData formData) {    
+  public static Plant addPlant(PlantFormData formData) {
+    boolean isNewPlant = (formData.id == -1);
     Plant plant;
-    if (formData.id == 0) {      
-      plant = new Plant(currentID, formData.name, formData.scientificName, formData.placement, formData.growth,
+    if (isNewPlant) {      
+      plant = new Plant(formData.name, formData.scientificName, formData.placement, formData.growth,
                         formData.climateType);
-      currentID++;
-      plants.put(plant.getID(), plant);
-      plantScientificNames.add(plant.getScientificName());
+      plant.save();
     }
     else {
-      byte [] picture = PlantDB.getPlant(formData.name).getImage();
-      plant = new Plant(formData.id, formData.name, formData.scientificName, formData.placement, formData.growth,
-          formData.climateType);
-      plant.setImage(picture);
-      plants.put(plant.getID(), plant);
-      plantScientificNames.add(plant.getScientificName());
+      plant = Plant.find().byId(formData.id);
+      plant.setName(formData.name);
+      plant.setScientificName(formData.scientificName);
+      plant.setPlacement(formData.placement);
+      plant.setGrowth(formData.growth);
+      plant.setClimateType(formData.climateType);
+      //plant.save();
     }
     return plant;
   }
@@ -49,12 +42,7 @@ public class PlantDB {
    * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
    */
   public static Plant getPlant(String name) {
-    for (Plant plant : plants.values()) {
-      if (plant.getName().equals(name)) {
-        return plant;
-      }
-    }
-    return null;
+    return Plant.find().where().eq("name", name).findUnique();
   }
 
   /**
@@ -62,7 +50,7 @@ public class PlantDB {
    * @return A list of all plants in the database.
    */
   public static List<Plant> getPlants() {
-    return new ArrayList<Plant>(plants.values());
+    return Plant.find().all();
   }
   
   /**
@@ -71,12 +59,7 @@ public class PlantDB {
    * @return True if the name is used, false otherwise.
    */
   public static Boolean hasName(String name) {
-    for (Plant plant : plants.values()) {
-      if (simplifyName(plant.getName()).equals(simplifyName(name))) {
-        return true;
-      }
-    }
-    return false;
+    return (Plant.find().where().eq("name", name).findUnique() != null);
   }
   
   /**
@@ -94,11 +77,24 @@ public class PlantDB {
    * @return True if the scientific name is used, false otherwise.
    */
   public static Boolean hasScientificName(String name) {
-    for (Plant plant : plants.values()) {
-      if (simplifyName(plant.getScientificName()).equals(simplifyName(name))) {
-        return true;
-      }
-    }
-    return false;
+    return (Plant.find().where().eq("scientificName", name).findUnique() != null);
+  }
+  
+  /**
+   * Delete a plant from the database.
+   * @param id The ID of the plant to delete.
+   */
+  public static void deletePlant(Long id) {
+    Plant plant = Plant.find().byId(id);
+    plant.delete();
+  }
+  
+  /**
+   * Delete a plant from the database.
+   * @param name The name of the plant to delete.
+   */
+  public static void deletePlant(String name) {
+    Plant plant = Plant.find().where().eq("name", name).findUnique();
+    plant.delete();
   }
 }
