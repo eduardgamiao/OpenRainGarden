@@ -1,13 +1,5 @@
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
-import com.google.common.io.Files;
-import controllers.routes;
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
@@ -24,8 +16,6 @@ import models.Resource;
 import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
-import play.Logger;
-import play.api.Play;
 import models.UserInfoDB;
 import views.formdata.CommentFormData;
 import views.formdata.PermeablePaversFormData;
@@ -55,9 +45,11 @@ public class Global extends GlobalSettings {
     populateIndexContentDB();
     
     //Add phoney users
-    UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw");
-    UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw");
-    UserInfoDB.addAdmin("Admin", "HOK", "admin@gmail.com", "1234567", "pw");
+    if (UserInfoDB.getUsers().isEmpty()) {
+      UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw", false);
+      UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw", false);
+      UserInfoDB.addUserInfo("Admin", "HOK", "admin@gmail.com", "1234567", "pw", true);
+    }
         
     // Add rain garden.
     List<String> plants = new ArrayList<String>();

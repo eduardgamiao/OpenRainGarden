@@ -616,7 +616,7 @@ public class Application extends Controller {
 		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 		  
 		  //create new userinfo and add it to the "database"
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password);
+		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false);
 		  
 		  return redirect(routes.Application.login());
 	  }

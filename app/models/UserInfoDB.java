@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,7 +10,6 @@ import java.util.Map;
  *
  */
 public class UserInfoDB {
-	private static Map<String, UserInfo> userDB = new HashMap<String, UserInfo>();
 	
 	/**
 	 * Adds given user info to the userDB
@@ -19,19 +19,10 @@ public class UserInfoDB {
 	 * @param telephone
 	 * @param password
 	 */
-	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password) {
-		userDB.put(email, new UserInfo(firstName, lastName, email, telephone, password));
-	}
-	/**
-	 * Adds given user info to the userDB
-	 * @param firstName
-	 * @param lastName
-	 * @param email
-	 * @param telephone
-	 * @param password
-	 */
-	public static void addAdmin(String firstName, String lastName, String email, String telephone, String password) {
-		userDB.put(email, new UserInfo(firstName, lastName, email, telephone, password, true));
+	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password,
+	    boolean isAdmin) {
+		UserInfo userInfo = new UserInfo(firstName, lastName, email, telephone, password, isAdmin);
+		userInfo.save();
 	}
 	
 	/**
@@ -40,7 +31,7 @@ public class UserInfoDB {
 	 * @return
 	 */
 	public static boolean isUser(String email) {
-		return userDB.containsKey(email);
+		return (UserInfo.find().where().eq("email", email) != null);
 	}
 	
 	/**
@@ -49,10 +40,15 @@ public class UserInfoDB {
 	 * @return
 	 */
 	public static UserInfo getUser(String email) {
-		if (email != null)
-			return userDB.get(email);
-		else
-			return null;
+		return UserInfo.find().where().eq("email", email).findUnique();
+	}
+	
+	/**
+	 * Return list of all users.
+	 * @return A list of all users.
+	 */
+	public static List<UserInfo> getUsers() {
+	  return UserInfo.find().all();
 	}
 	
 	/**

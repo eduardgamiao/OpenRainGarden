@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import play.Logger;
 import views.formdata.RainGardenFormData;
 
 /**
@@ -30,6 +31,7 @@ public class RainGardenDB {
                               formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
                               formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
       garden.setOwner(userInfo);
+      Logger.debug("DEBUG: " + (garden.getOwner().getGardens() == null));
       garden.getOwner().getGardens().add(garden);
       gardens.put(id, garden);
       CommentDB.initializeCommentSection(garden.getKey());

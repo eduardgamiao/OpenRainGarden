@@ -2,11 +2,17 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
+@Entity
 public class UserInfo extends Model {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -14,8 +20,15 @@ public class UserInfo extends Model {
 	private String telephone;
 	private String password;
 	private boolean admin = false;
+	
+	// Relationships.
+	@OneToMany (mappedBy = "owner")
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
+	
+  @OneToMany (mappedBy = "owner")
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
+  
+  @OneToMany (mappedBy = "owner")
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
@@ -162,5 +175,13 @@ public class UserInfo extends Model {
    */
   public void deletePaver(PermeablePavers paver) {
     this.getPavers().remove(paver);
+  }
+  
+  /**
+   * The EBean ORM finder method for database queries on ID.
+   * @return The finder method for user info.
+   */
+  public static Finder<Long, UserInfo> find() {
+    return new Finder<Long, UserInfo>(Long.class, UserInfo.class);
   }
 }

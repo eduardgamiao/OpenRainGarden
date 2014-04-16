@@ -2,18 +2,28 @@ package models;
 
 import java.io.File;
 import java.io.IOException;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import org.apache.commons.io.FileUtils;
+import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 /**
  * An object that represents a rain barrel.
  */
-public class RainBarrel {
-
+@Entity
+public class RainBarrel extends Model {
+  private static final long serialVersionUID = 1L;
+  
+  @Id
   private Long id;
   private String title;
   private String propertyType;
   private String address;
   private String hideAddress;
+  @Lob
   private String description;
   private String dateInstalled;
   private String rainBarrelType;
@@ -27,9 +37,12 @@ public class RainBarrel {
   private String obtainedFrom;
   private String installationType;
   private String numberOfRainBarrels;
-  private UserInfo owner;
-  private String key;
+  private String commentKey;
+  @Lob
   private byte [] image;
+  
+  @ManyToOne
+  private UserInfo owner;
     
   /**
    * Constructor.
@@ -74,7 +87,7 @@ public class RainBarrel {
     this.obtainedFrom = obtainedFrom;
     this.installationType = installationType;
     this.numberOfRainBarrels = numberOfRainBarrel;
-    this.key = "rb" + this.id;
+    this.commentKey = "rb" + this.id;
   }
   
   /**
@@ -423,6 +436,14 @@ public class RainBarrel {
    * @return The key of the rain garden.
    */
   public String getKey() {
-    return this.key;
+    return this.commentKey;
+  }
+  
+  /**
+   * The EBean ORM finder method for database queries on ID.
+   * @return The finder method for rain barrels.
+   */
+  public static Finder<Long, RainBarrel> find() {
+    return new Finder<Long, RainBarrel>(Long.class, RainBarrel.class);
   }
 }

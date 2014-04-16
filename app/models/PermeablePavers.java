@@ -2,27 +2,39 @@ package models;
 
 import java.io.File;
 import java.io.IOException;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import org.apache.commons.io.FileUtils;
+import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 /**
  * An object that represents a permeable pavers.
  */
-public class PermeablePavers {
-
-  private long id;
+@Entity
+public class PermeablePavers extends Model {
+  private static final long serialVersionUID = 1L;
+  
+  @Id
+  private Long id;
   private String title;
   private String propertyType;
   private String address;
   private String hideAddress;
+  @Lob
   private String description;
   private String dateInstalled;
   private String material;
   private String previousMaterial;
   private String size;
   private String installer;
-  private UserInfo owner;
-  private String key;
+  private String commentKey;
   private byte [] image;
+  
+  @ManyToOne
+  private UserInfo owner;
 
   /**
    * Constructor.
@@ -52,7 +64,7 @@ public class PermeablePavers {
     this.previousMaterial = previousMaterial;
     this.size = size;
     this.installer = installer;
-    this.key = "pp" + this.id;
+    this.commentKey = "pp" + this.id;
   }
 
   /**
@@ -324,6 +336,14 @@ public class PermeablePavers {
    * @return The key of the rain garden.
    */
   public String getKey() {
-    return this.key;
+    return this.commentKey;
+  }
+  
+  /**
+   * The EBean ORM finder method for database queries on ID.
+   * @return The finder method for rain gardens.
+   */
+  public static Finder<Long, PermeablePavers> find() {
+    return new Finder<Long, PermeablePavers>(Long.class, PermeablePavers.class);
   }
 }

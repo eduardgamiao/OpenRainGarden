@@ -4,30 +4,44 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import org.apache.commons.io.FileUtils;
+import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 import controllers.routes;
 
 /**
  * An object that represents a rain garden.
  */
-public class RainGarden {
-
+@Entity
+public class RainGarden extends Model {
+  private static final long serialVersionUID = 1L;
+  
+  @Id
   private Long id;
   private String title;
   private String propertyType;
   private String address;
   private String hideAddress;
+  @Lob
   private String description;
   private String dateInstalled;
-  private List<String> plants = new ArrayList<String>();
   private String rainGardenSize;
   private String waterFlowSourceSize;
+  @Lob
   private String waterFlowDescription;
   private String infiltrationRate;
   private String numberOfRainGardens;
-  private UserInfo owner;
-  private String key;
+  private String commentKey;
+  @Lob
   private byte [] image;
+  
+  @ManyToOne
+  private UserInfo owner;
+  private List<String> plants = new ArrayList<String>();
   
   /**
    * Constructor.
@@ -61,7 +75,7 @@ public class RainGarden {
     this.waterFlowDescription = waterFlowDescription;
     this.infiltrationRate = infiltrationRate;
     this.numberOfRainGardens = numberOfRainGardens;
-    this.key = "rg" + this.id;
+    this.commentKey = "rg" + this.id;
   }
   
   /**
@@ -348,6 +362,14 @@ public class RainGarden {
    * @return The key of the rain garden.
    */
   public String getKey() {
-    return this.key;
+    return this.commentKey;
+  }
+  
+  /**
+   * The EBean ORM finder method for database queries on ID.
+   * @return The finder method for rain gardens.
+   */
+  public static Finder<Long, RainGarden> find() {
+    return new Finder<Long, RainGarden>(Long.class, RainGarden.class);
   }
 }
