@@ -154,6 +154,14 @@ public class UserInfo extends Model {
   }
   
   /**
+   * Add a rain garden to user.
+   * @param garden The rain gardne to add.
+   */
+  public void addGarden(RainGarden garden) {
+    this.gardens.add(garden);
+  }
+  
+  /**
    * Delete a rain garden from the user's list.
    * @param garden The rain garden to delete.
    */

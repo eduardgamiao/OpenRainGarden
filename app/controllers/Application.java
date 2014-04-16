@@ -321,8 +321,9 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result manageRainGarden(long id) {
-    if (RainGardenDB.hasID(id)) {
-      if (Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()) == RainGardenDB.getRainGarden(id).getOwner())) {
+    if (RainGardenDB.hasID(id)) {      
+      if (Secured.isLoggedIn(ctx()) 
+          && (Secured.getUserInfo(ctx()).getId() == RainGardenDB.getRainGarden(id).getOwner().getId())) {
         RainGardenFormData data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
         Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
         return ok(RegisterRainGarden.render(formData, false, YesNoChoiceType.getChoiceList(), 

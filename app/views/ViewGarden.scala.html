@@ -79,10 +79,10 @@
           </div>
         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">
-            <h4>Comments (@comments.size())</h4>          
+            <h4>Comments (@if(comments != null) {comments.size} else {0})</h4>          
           </div>
               <div class="well" style="background-color:white;">
-           @if(comments.isEmpty()) { 
+           @if(comments == null || comments.isEmpty()) { 
               <div class="alert alert-info">This rain garden has no comments.</div>           
             } else { 
               @for(comment <- comments) {

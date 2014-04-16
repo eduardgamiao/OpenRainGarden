@@ -13,7 +13,7 @@ import models.RainGarden;
 public class RainGardenFormData {
   
   /** ID of rain garden. */
-  public long id = 0;
+  public long id = -1;
   
   /** Title of rain garden. */
   public String title;
@@ -53,9 +53,6 @@ public class RainGardenFormData {
   
   /** Infiltration rate. */
   public String infiltrationRate;
-  
-  /** Number of rain gardens. */
-  public String numberOfRainGardens;
  
   /**
    * Default constructor.
@@ -66,7 +63,6 @@ public class RainGardenFormData {
 
   /**
    * Constructor.
-   * @param id ID of garden.
    * @param title Title of garden.
    * @param propertyType Property type of garden.
    * @param address Address of garden.
@@ -82,10 +78,9 @@ public class RainGardenFormData {
    * @param infiltrationRate Infiltration rate.
    * @param numberOfRainGardens Number of rain gardens.
    */
-  public RainGardenFormData(long id, String title, String propertyType, String address, String hideAddress,
+  public RainGardenFormData(String title, String propertyType, String address, String hideAddress,
       String description, String month, String day, String year, List<String> plants, String rainGardenSize,
-      String waterFlowSource, String waterFlowDescription, String infiltrationRate, String numberOfRainGardens) {
-    this.id = id;
+      String waterFlowSource, String waterFlowDescription, String infiltrationRate) {
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;
@@ -99,7 +94,6 @@ public class RainGardenFormData {
     this.waterFlowSourceSize = waterFlowSource;
     this.waterFlowDescription = waterFlowDescription;
     this.infiltrationRate = infiltrationRate;
-    this.numberOfRainGardens = numberOfRainGardens;
   } 
   
   /**
@@ -121,7 +115,6 @@ public class RainGardenFormData {
     this.waterFlowSourceSize = rainGarden.getWaterFlowSourceSize();
     this.waterFlowDescription = rainGarden.getWaterFlowDescription();
     this.infiltrationRate = rainGarden.getInfiltrationRate();
-    this.numberOfRainGardens = rainGarden.getNumberOfRainGardens();
   }
   
   /**

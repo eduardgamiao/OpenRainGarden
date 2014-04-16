@@ -1,17 +1,15 @@
 package models;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import org.apache.commons.io.FileUtils;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
-import controllers.routes;
 
 /**
  * An object that represents a rain garden.
@@ -34,18 +32,17 @@ public class RainGarden extends Model {
   @Lob
   private String waterFlowDescription;
   private String infiltrationRate;
-  private String numberOfRainGardens;
-  private String commentKey;
+  private String commentKey = "rg" + this.id;
   @Lob
   private byte [] image;
   
   @ManyToOne
   private UserInfo owner;
-  private List<String> plants = new ArrayList<String>();
+  @ManyToMany (cascade = CascadeType.PERSIST)
+  private List<Plant> plants = new ArrayList<Plant>();
   
   /**
    * Constructor.
-   * @param id ID of rain garden.
    * @param title Title of rain garden
    * @param propertyType Property type of rain garden's address.
    * @param address Address of rain garden.
@@ -57,25 +54,21 @@ public class RainGarden extends Model {
    * @param waterFlowSourceSize Size of water flow source.
    * @param waterFlowDescription Description of water flow.
    * @param infiltrationRate Infiltration rate.
-   * @param numberOfRainGardens Number of rain gardens.
    */
-  public RainGarden(Long id, String title, String propertyType, String address, String hideAddress, String description,
+  public RainGarden(String title, String propertyType, String address, String hideAddress, String description,
       String dateInstalled, List<String> plants, String rainGardenSize, String waterFlowSourceSize,
-      String waterFlowDescription, String infiltrationRate, String numberOfRainGardens) {
-    this.id = id;
+      String waterFlowDescription, String infiltrationRate) {
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;
     this.hideAddress = hideAddress;
     this.description = description;
     this.dateInstalled = dateInstalled;
-    this.plants = plants;
+    this.plants = convertToPlantList(plants);
     this.rainGardenSize = rainGardenSize;
     this.waterFlowSourceSize = waterFlowSourceSize;
     this.waterFlowDescription = waterFlowDescription;
     this.infiltrationRate = infiltrationRate;
-    this.numberOfRainGardens = numberOfRainGardens;
-    this.commentKey = "rg" + this.id;
   }
   
   /**
@@ -140,16 +133,11 @@ public class RainGarden extends Model {
   }
   
   /**
-   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No"
-   * @return
+   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No".
+   * @return True if hideAddress is "Yes". False if hideAddress is "No".
    */
   public boolean hideAddress() {
-	  if (this.hideAddress.equals("Yes")) {
-		  return true;
-	  }
-	  else {
-		  return false;
-	  }
+	  return this.hideAddress.equals("Yes");
   }
   
   /**
@@ -181,14 +169,14 @@ public class RainGarden extends Model {
    * @return the plants
    */
   public List<String> getPlants() {
-    return plants;
+    return convertToPlantNameList(this.plants);
   }
 
   /**
    * @param plants the plants to set
    */
   public void setPlants(List<String> plants) {
-    this.plants = plants;
+    this.plants = convertToPlantList(plants);
   }
 
   /**
@@ -247,20 +235,6 @@ public class RainGarden extends Model {
     this.infiltrationRate = infiltrationRate;
   }
 
-  /**
-   * @return the numberOfRainGardens
-   */
-  public String getNumberOfRainGardens() {
-    return numberOfRainGardens;
-  }
-
-  /**
-   * @param numberOfRainGardens the numberOfRainGardens to set
-   */
-  public void setNumberOfRainGardens(String numberOfRainGardens) {
-    this.numberOfRainGardens = numberOfRainGardens;
-  }
-  
   /**
    * @return the owner.
    */
@@ -363,6 +337,32 @@ public class RainGarden extends Model {
    */
   public String getKey() {
     return this.commentKey;
+  }
+  
+  /**
+   * Convert a list of plant names to plants.
+   * @param plantNameList A list of plant names.
+   * @return A list of plants.
+   */
+  private List<Plant> convertToPlantList(List<String> plantNameList) {
+    List<Plant> plants = new ArrayList<Plant>();
+    for (String plantName : plantNameList) {
+      plants.add(Plant.find().where().eq("name", plantName).findUnique());
+    }
+    return plants;
+  }
+  
+  /**
+   * Convert a list of plants to a list of plant names.
+   * @param plantList A list of plants.
+   * @return A list of plant names.
+   */
+  private List<String> convertToPlantNameList(List<Plant> plantList) {
+    List<String> plants = new ArrayList<String>();
+    for (Plant plant : plantList) {
+      plants.add(plant.getName());
+    }
+    return plants;
   }
   
   /**

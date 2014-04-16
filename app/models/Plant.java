@@ -1,9 +1,13 @@
 package models;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
@@ -25,6 +29,10 @@ public class Plant extends Model {
   private String climateType;
   @Lob
   private byte [] image;
+  
+  // Relationships.
+  @ManyToMany (mappedBy = "plants", cascade = CascadeType.PERSIST)
+  List<RainGarden> gardens = new ArrayList<RainGarden>();
 
   /**
    * Constructor.

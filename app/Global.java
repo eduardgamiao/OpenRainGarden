@@ -6,9 +6,11 @@ import models.CommentDB;
 import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
+import models.PermeablePavers;
 import models.PermeablePaversDB;
 import models.Plant;
 import models.PlantDB;
+import models.RainBarrel;
 import models.RainBarrelDB;
 import models.RainGarden;
 import models.RainGardenDB;
@@ -52,27 +54,32 @@ public class Global extends GlobalSettings {
     }
         
     // Add rain garden.
+    if (RainGarden.find().all().isEmpty()) {
     List<String> plants = new ArrayList<String>();
     plants.add("‘Ahu‘awa");
-    RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData(0, "John's Rain Garden", "Residential", 
-        "564 Ulahala St.", 
-        "No", "My rain garden works and you should get one!", "4", "5", "2014", plants, "100 Square Feet", 
-        "1000 Square Feet", "Water flows from roof into garden.", "0.75 inches/hour", "2"), 
-        UserInfoDB.getUser("johnsmith@gmail.com"));
+    RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
+        "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
+        "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
+        "0.75 inches/hour"), UserInfoDB.getUser("johnsmith@gmail.com"));
     CommentDB.addComment(new CommentFormData("This garden looks amazing!"), UserInfoDB.getUser("johnsmith@gmail.com"), 
        garden.getKey());
+    }
     
     // Add rain barrel.
+    if (RainBarrel.find().all().isEmpty()) {
     RainBarrelDB.addRainBarrel(new RainBarrelFormData(0, "John's Rain Barrel", "Residential", "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50 Gallons", "Orange-Red",
         "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed", "4+"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
+    }
     
     // Add permeable paver.
+    if (PermeablePavers.find().all().isEmpty()) {
     PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Permeable Paver", "Residential", 
         "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
             + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
             "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
+    }
     
     //Learn More Resource Database
     ResourceDB.addGardenResource(new Resource("Hui o Ko'olaupoko Rain Garden Program", "hokprogram.jpg", "http://www.huihawaii.org/rain-gardens.html"));

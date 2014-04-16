@@ -10,9 +10,6 @@ import views.formdata.RainGardenFormData;
  * Stores a list of contacts in a data structure.
  */
 public class RainGardenDB {
-  private static long currentId = 1;
-
-  private static HashMap<Long, RainGarden> gardens = new HashMap<Long, RainGarden>();
 
   /**
    * Add rain garden.
@@ -23,29 +20,32 @@ public class RainGardenDB {
    */
   public static RainGarden addRainGarden(RainGardenFormData formData, UserInfo userInfo) {
     RainGarden garden;
-    if (formData.id == 0) {
-      long id = currentId;
-      currentId++;
-      garden = new RainGarden(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
+    if (formData.id == -1) {
+      garden = new RainGarden(formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
-                              formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
+                              formData.waterFlowDescription, formData.infiltrationRate);
       garden.setOwner(userInfo);
-      Logger.debug("DEBUG: " + (garden.getOwner().getGardens() == null));
       garden.getOwner().getGardens().add(garden);
-      gardens.put(id, garden);
-      CommentDB.initializeCommentSection(garden.getKey());
+      CommentDB.initializeCommentSection("rg" + garden.getID());
+      garden.save();
       return garden;
     }
     else {
-      byte [] picture = RainGardenDB.getRainGarden(formData.id).getImage();
-      garden = new RainGarden(formData.id, formData.title, formData.propertyType, formData.address, 
-          formData.hideAddress,  formData.description, formData.month + "/" + formData.day + "/" + formData.year, 
-          formData.plants, formData.rainGardenSize, formData.waterFlowSourceSize, 
-          formData.waterFlowDescription, formData.infiltrationRate, formData.numberOfRainGardens);
+      garden = RainGardenDB.getRainGarden(formData.id);
+      garden.setTitle(formData.title);
+      garden.setPropertyType(formData.propertyType);
+      garden.setAddress(formData.address);
+      garden.setHideAddress(formData.hideAddress);
+      garden.setDescription(formData.description);
+      garden.setDateInstalled(formData.month + "/" + formData.day + "/" + formData.year);
+      garden.setPlants(formData.plants);
+      garden.setRainGardenSize(formData.rainGardenSize);
+      garden.setWaterFlowSourceSize(formData.waterFlowSourceSize);
+      garden.setWaterFlowDescription(formData.waterFlowDescription);
+      garden.setInfiltrationRate(formData.infiltrationRate);
       garden.setOwner(userInfo);
-      garden.setImage(picture);
-      gardens.put(garden.getID(), garden);
+      garden.save();
       return garden;
     }
   }
@@ -56,7 +56,7 @@ public class RainGardenDB {
    * @return List of rain gardens.
    */
   public static List<RainGarden> getRainGardens() {
-    return new ArrayList<RainGarden>(gardens.values());
+    return RainGarden.find().all();
   }
 
   /**
@@ -66,7 +66,7 @@ public class RainGardenDB {
    * @return The rain garden with the matching ID.
    */
   public static RainGarden getRainGarden(long id) {
-   return gardens.get(id);
+   return RainGarden.find().byId(id);
   }
 
   /**
@@ -75,11 +75,7 @@ public class RainGardenDB {
    * @param id ID of rain garden.
    */
   public static void deleteRainGarden(long id) {
-    RainGarden garden = RainGardenDB.getRainGarden(id);
-    if (garden != null) {
-      garden.getOwner().deleteGarden(garden);
-    }
-    gardens.remove(id);
+    Logger.debug("TODO: Rain Garden Delete");
   }
 
   /**
@@ -88,9 +84,6 @@ public class RainGardenDB {
    * @return True if the database has the ID, false otherwise.
    */
   public static boolean hasID(long id) {
-    if ((id == 0) || gardens.containsKey(id)) {
-      return true;
-    }
-    return false;
+    return (getRainGarden(id) != null);
   }
 }
