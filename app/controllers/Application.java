@@ -892,7 +892,7 @@ public class Application extends Controller {
   
   /**
    * Retrieve a plant image.
-   * @param id The name of the plant to retrieve the image from.
+   * @param plantName The name of the plant to retrieve the image from.
    * @return The image matching the plant name given.
    */
   public static Result retrievePlantImage(String plantName) {
@@ -900,7 +900,7 @@ public class Application extends Controller {
     if (plant != null && plant.hasPicture()) {      
       return ok(plant.getImage()).as("image/jpeg");
     }
-    return redirect("");
+    return redirect(routes.Assets.at("images/placeholder.gif"));
   }
   
   /**
