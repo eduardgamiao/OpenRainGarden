@@ -2,6 +2,7 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
+import play.Logger;
 import play.data.validation.ValidationError;
 import models.Plant;
 import models.PlantDB;
@@ -85,12 +86,21 @@ public class PlantFormData {
      errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
                                     + "Please select a unique name."));     
    }
+   if ((this.id != -1) && PlantDB.hasName(this.name) && !(this.name.equals(PlantDB.getPlant(id).getName()))) {
+     errors.add(new ValidationError("name", "The plant name \"" + this.name + "\" is already in use. "
+         + "Please select a unique name."));    
+   }
    if (this.scientificName == null || this.scientificName.isEmpty()) {
      errors.add(new ValidationError("scientificName", "The plant's scientific name is required."));
    }
    if ((this.id == -1) && PlantDB.hasScientificName(this.scientificName)) {
      errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
                                     + "\" is already in use. Please select a unique scientific name."));
+   }
+   if ((this.id != -1) && PlantDB.hasScientificName(this.scientificName) 
+        && !(this.scientificName.equals(PlantDB.getPlant(id).getScientificName()))) {
+     errors.add(new ValidationError("scientificName", "The scientific name \"" + this.scientificName 
+         + "\" is already in use. Please select a unique scientific name."));
    }
    if (this.placement == null || this.placement.isEmpty()) {
      errors.add(new ValidationError("placement", "The plant's placement is required."));     

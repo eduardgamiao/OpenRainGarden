@@ -38,6 +38,15 @@ public class PlantDB {
  
   /**
    * Retrieve a plant from the database.
+   * @param id ID of the plant.
+   * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
+   */
+  public static Plant getPlant(Long id) {
+    return Plant.find().byId(id);
+  }
+  
+  /**
+   * Retrieve a plant from the database.
    * @param name Name of the plant to retrieve.
    * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
    */
