@@ -5,6 +5,10 @@ body {
 	
 }
 
+.comment-header a {
+	color: white;
+}
+
 .popover-content {
     max-height: 300px;
     overflow-y: auto;

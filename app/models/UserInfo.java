@@ -25,6 +25,9 @@ public class UserInfo extends Model {
 	@OneToMany (mappedBy = "owner")
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
 	
+  @OneToMany (mappedBy = "poster")
+  private List<GardenComment> gardenComments = new ArrayList<GardenComment>();
+	
   @OneToMany (mappedBy = "owner")
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
   

@@ -3,6 +3,8 @@ import java.util.List;
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
+import models.GardenComment;
+import models.GardenCommentDB;
 import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
@@ -20,6 +22,7 @@ import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
 import views.formdata.CommentFormData;
+import views.formdata.GardenCommentFormData;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
@@ -55,14 +58,20 @@ public class Global extends GlobalSettings {
         
     // Add rain garden.
     if (RainGarden.find().all().isEmpty()) {
-    List<String> plants = new ArrayList<String>();
-    plants.add("‘Ahu‘awa");
-    RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
+      List<String> plants = new ArrayList<String>();
+      plants.add("‘Ahu‘awa");
+      RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
         "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
         "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
         "0.75 inches/hour"), UserInfoDB.getUser("johnsmith@gmail.com"));
-    CommentDB.addComment(new CommentFormData("This garden looks amazing!"), UserInfoDB.getUser("johnsmith@gmail.com"), 
-       garden.getKey());
+    }
+    
+    RainGarden garden = RainGardenDB.getRainGarden(1);
+    
+    if (garden != null && GardenComment.find().all().isEmpty()) {
+      GardenCommentDB.addComment(new GardenCommentFormData("Wow, you garden looks nice!"), 
+          garden,
+          UserInfoDB.getUser("janesmith@gmail.com"));
     }
     
     // Add rain barrel.

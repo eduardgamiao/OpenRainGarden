@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
 import models.CommentDB;
+import models.GardenCommentDB;
 import models.HeaderFooterDB;
 import models.IndexContentDB;
 import models.PermeablePavers;
@@ -37,6 +38,7 @@ import play.mvc.Result;
 import views.formdata.CommentFormData;
 import views.formdata.CoverTypes;
 import views.formdata.DateTypes;
+import views.formdata.GardenCommentFormData;
 import views.formdata.InfiltrationRateTypes;
 import views.formdata.InstallationTypes;
 import views.formdata.MaterialTypes;
@@ -496,10 +498,10 @@ public class Application extends Controller {
    */
   public static Result viewGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
-    CommentFormData commentFormData = new CommentFormData();
-    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
+    GardenCommentFormData commentFormData = new GardenCommentFormData();
+    Form<GardenCommentFormData> commentForm = Form.form(GardenCommentFormData.class).fill(commentFormData);
     if (garden != null) {
-     return ok(ViewGarden.render(garden, PlantDB.getPlants(), CommentDB.getComments(garden.getKey()), commentForm));
+     return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
     }
     return badRequest();
   }
@@ -782,12 +784,12 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postGardenComment(Long id, String uri) {
-    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    Form<GardenCommentFormData> formData = Form.form(GardenCommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-    CommentFormData data = formData.get();
-    CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
+    GardenCommentFormData data = formData.get();
+    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -803,16 +805,7 @@ public class Application extends Controller {
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-    CommentFormData data = formData.get();
-    if (uri.contains("rain-garden")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
-    }
-    else if (uri.contains("rain-barrel")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainBarrelDB.getRainBarrel(id).getKey());
-    }    
-    else if (uri.contains("permeable-pavers")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
-    }
+
     return redirect(uri);
   }
   
@@ -825,19 +818,7 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postPaverComment(Long id, String uri) {
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
-    if (formData.hasErrors()) {
-      return redirect(uri);
-    }
-    CommentFormData data = formData.get();
-    if (uri.contains("rain-garden")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainGardenDB.getRainGarden(id).getKey());
-    }
-    else if (uri.contains("rain-barrel")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), RainBarrelDB.getRainBarrel(id).getKey());
-    }    
-    else if (uri.contains("permeable-pavers")) {
-      CommentDB.addComment(data, Secured.getUserInfo(ctx()), PermeablePaversDB.getPermeablePavers(id).getKey());
-    }
+
     return redirect(uri);
   }
   /**

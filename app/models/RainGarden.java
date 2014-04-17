@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import play.db.ebean.Model;
 
 /**
@@ -32,14 +33,17 @@ public class RainGarden extends Model {
   @Lob
   private String waterFlowDescription;
   private String infiltrationRate;
-  private String commentKey = "rg" + this.id;
   @Lob
   private byte [] image;
   
   @ManyToOne
   private UserInfo owner;
+  
   @ManyToMany (cascade = CascadeType.PERSIST)
   private List<Plant> plants = new ArrayList<Plant>();
+  
+  @OneToMany (mappedBy = "garden")
+  private List<GardenComment> comments = new ArrayList<GardenComment>();
   
   /**
    * Constructor.
@@ -320,6 +324,14 @@ public class RainGarden extends Model {
   }
   
   /**
+   * Return a list of garden comments.
+   * @return A list of comments about a rain garden.
+   */
+  public List<GardenComment> getComments() {
+    return comments;
+  }
+  
+  /**
    * Get the picture name tied to a rain garden.
    * @return The name of the picture tied to the rain garden.
    * @throws IOException 
@@ -329,14 +341,6 @@ public class RainGarden extends Model {
       return "images/upload/rg" + this.id;
     }
     return "images/placeholder.gif";
-  }
-  
-  /**
-   * Return key of rain garden.
-   * @return The key of the rain garden.
-   */
-  public String getKey() {
-    return this.commentKey;
   }
   
   /**

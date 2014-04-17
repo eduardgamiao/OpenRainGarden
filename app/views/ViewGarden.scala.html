@@ -1,5 +1,4 @@
-@(rainGarden: RainGarden, plantList: List[Plant], comments: List[Comment], 
-  commentFormData: Form[views.formdata.CommentFormData])
+@(rainGarden: RainGarden, plantList: List[Plant], commentFormData: Form[views.formdata.GardenCommentFormData])
   
 @import helper._ 
 @import bootstrap3._ 
@@ -79,16 +78,16 @@
           </div>
         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">
-            <h4>Comments (@if(comments != null) {comments.size} else {0})</h4>          
+            <h4>Comments (@rainGarden.getComments().size)</h4>          
           </div>
               <div class="well" style="background-color:white;">
-           @if(comments == null || comments.isEmpty()) { 
+           @if(rainGarden.getComments().isEmpty()) { 
               <div class="alert alert-info">This rain garden has no comments.</div>           
             } else { 
-              @for(comment <- comments) {
+              @for(comment <- rainGarden.getComments()) {
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getEmail())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
                      @comment.getComment()
                   </div>
                </div>
