@@ -31,7 +31,7 @@ public class UserInfoDB {
 	 * @return
 	 */
 	public static boolean isUser(String email) {
-		return (UserInfo.find().where().eq("email", email) != null);
+		return (UserInfo.find().where().eq("email", email).findUnique() != null);
 	}
 	
 	/**
