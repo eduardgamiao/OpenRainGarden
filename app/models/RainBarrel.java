@@ -1,14 +1,14 @@
 package models;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import org.apache.commons.io.FileUtils;
+import javax.persistence.OneToMany;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * An object that represents a rain barrel.
@@ -36,17 +36,16 @@ public class RainBarrel extends Model {
   private String cover;
   private String obtainedFrom;
   private String installationType;
-  private String numberOfRainBarrels;
-  private String commentKey;
   @Lob
   private byte [] image;
   
   @ManyToOne
   private UserInfo owner;
+  @OneToMany (mappedBy = "barrel")
+  private List<BarrelComment> comments = new ArrayList<BarrelComment>();
     
   /**
    * Constructor.
-   * @param id ID of rain barrel.
    * @param title Title of rain barrel.
    * @param propertyType Property type of rain barrel address.
    * @param address Address of rain barrel.
@@ -63,13 +62,11 @@ public class RainBarrel extends Model {
    * @param cover Cover type for barrel.
    * @param obtainedFrom Place rain barrel was obtained.
    * @param installationType Type of installation for rain barrel.
-   * @param numberOfRainBarrel Number of rain barrels on property. 
    */
-  public RainBarrel(Long id, String title, String propertyType, String address, String hideAddress, String description,
+  public RainBarrel(String title, String propertyType, String address, String hideAddress, String description,
       String dateInstalled, String rainBarrelType, String capacity, String color, String material,
       String estimatedCost, String waterUse, String overflowFrequency, String cover, String obtainedFrom,
-      String installationType, String numberOfRainBarrel) {
-    this.id = id;
+      String installationType) {
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;
@@ -86,8 +83,6 @@ public class RainBarrel extends Model {
     this.cover = cover;
     this.obtainedFrom = obtainedFrom;
     this.installationType = installationType;
-    this.numberOfRainBarrels = numberOfRainBarrel;
-    this.commentKey = "rb" + this.id;
   }
   
   /**
@@ -152,16 +147,11 @@ public class RainBarrel extends Model {
   }
   
   /**
-   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No"
-   * @return
+   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No".
+   * @return True if hideAddress is "Yes", false otherwise.
    */
   public boolean hideAddress() {
-	  if (this.hideAddress.equals("Yes")) {
-		  return true;
-	  }
-	  else {
-		  return false;
-	  }
+	  return this.hideAddress.equals("Yes");
   }
   
   /**
@@ -187,20 +177,6 @@ public class RainBarrel extends Model {
    */
   public void setDateInstalled(String dateInstalled) {
     this.dateInstalled = dateInstalled;
-  }
-
-  /**
-   * @return the numberOfRainGardens
-   */
-  public String getNumberOfRainBarrels() {
-    return numberOfRainBarrels;
-  }
-
-  /**
-   * @param numberOfRainBarrels the numberOfRainGardens to set
-   */
-  public void setNumberOfRainBarrels(String numberOfRainBarrels) {
-    this.numberOfRainBarrels = numberOfRainBarrels;
   }
 
   /**
@@ -429,14 +405,6 @@ public class RainBarrel extends Model {
       return "images/upload/rb" + this.id;
     }
     return "images/placeholder.gif";
-  }
-  
-  /**
-   * Return key of rain garden.
-   * @return The key of the rain garden.
-   */
-  public String getKey() {
-    return this.commentKey;
   }
   
   /**

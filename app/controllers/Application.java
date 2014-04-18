@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
+import models.BarrelCommentDB;
 import models.CommentDB;
 import models.GardenCommentDB;
 import models.HeaderFooterDB;
@@ -35,6 +36,7 @@ import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import views.formdata.BarrelCommentFormData;
 import views.formdata.CommentFormData;
 import views.formdata.CoverTypes;
 import views.formdata.DateTypes;
@@ -389,6 +391,7 @@ public class Application extends Controller {
           File source = picture.getFile();
           barrel.setImage(Files.toByteArray(source));
       }
+      barrel.save();
       return redirect(routes.Application.viewBarrel(barrel.getID()));
      }     
     }
@@ -401,7 +404,8 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result manageRainBarrel(long id) {
     if (RainBarrelDB.hasID(id)) {
-      if (Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()) == RainBarrelDB.getRainBarrel(id).getOwner())) {
+      if (Secured.isLoggedIn(ctx()) 
+          && (Secured.getUserInfo(ctx()).getId() == RainBarrelDB.getRainBarrel(id).getOwner().getId())) {
         RainBarrelFormData data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
         Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
         return ok(RegisterRainBarrel.render(formData, false, YesNoChoiceType.getChoiceList(), 
@@ -529,12 +533,12 @@ public class Application extends Controller {
    */
   public static Result viewBarrel(Long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
-    CommentFormData commentFormData = new CommentFormData();
-    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
+    BarrelCommentFormData commentFormData = new BarrelCommentFormData();
+    Form<BarrelCommentFormData> commentForm = Form.form(BarrelCommentFormData.class).fill(commentFormData);
     if (barrel != null) {
-     return ok(ViewBarrel.render(barrel, CommentDB.getComments(barrel.getKey()), commentForm));
+     return ok(ViewBarrel.render(barrel, BarrelCommentDB.getRainBarrelComments(id), commentForm));
     }
-    return badRequest();
+    return redirect(routes.Application.barrelgallery());
   }
   
   /**
@@ -789,7 +793,7 @@ public class Application extends Controller {
       return redirect(uri);
     }
     GardenCommentFormData data = formData.get();
-    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
+    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(data.id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -801,11 +805,12 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postBarrelComment(Long id, String uri) {
-    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    Form<BarrelCommentFormData> formData = Form.form(BarrelCommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-
+    BarrelCommentFormData data = formData.get();
+    BarrelCommentDB.addComment(data, RainBarrelDB.getRainBarrel(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   

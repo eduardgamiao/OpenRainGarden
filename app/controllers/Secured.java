@@ -2,6 +2,7 @@ package controllers;
 
 import models.UserInfo;
 import models.UserInfoDB;
+import play.Logger;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.Http.Context;
@@ -35,6 +36,7 @@ public class Secured extends Security.Authenticator {
    */
   @Override
   public Result onUnauthorized(Context context) {
+    Logger.info(context.request().uri());
     return redirect(routes.Application.login()); 
   }
   

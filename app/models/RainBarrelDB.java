@@ -3,16 +3,14 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import play.Logger;
 import views.formdata.RainBarrelFormData;
 
 /**
  * Stores a list of contacts in a data structure.
  */
 public class RainBarrelDB {
-
-  private static HashMap<Long, RainBarrel> barrels = new HashMap<Long, RainBarrel>();
-  private static long currentId = 1;
-
+  
   /**
    * Add rain barrel.
    * 
@@ -22,31 +20,39 @@ public class RainBarrelDB {
    */
   public static RainBarrel addRainBarrel(RainBarrelFormData formData, UserInfo userInfo) {
     RainBarrel barrel;
-    if (formData.id == 0) {
-      long id = currentId;
-      currentId++;
-      barrel = new RainBarrel(id, formData.title, formData.propertyType, formData.address, formData.hideAddress, 
+    if (formData.id == -1) {
+      barrel = new RainBarrel(formData.title, formData.propertyType, formData.address, formData.hideAddress, 
                               formData.description, formData.month + "/" + formData.day + "/" + formData.year,
                               formData.rainBarrelType, formData.capacity, formData.color, formData.material, 
                               formData.estimatedCost, formData.waterUse, formData.overflowFrequency, formData.cover,
-                              formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
+                              formData.obtainedFrom, formData.installationType);
       barrel.setOwner(userInfo);
       userInfo.getBarrels().add(barrel);
-      barrels.put(id, barrel);
-      CommentDB.initializeCommentSection(barrel.getKey());
+      userInfo.save();
+      barrel.save();
       return barrel;
     }
     else {
-      byte [] picture = getRainBarrel(formData.id).getImage();
-      barrel = new RainBarrel(formData.id, formData.title, formData.propertyType, formData.address, 
-                              formData.hideAddress, 
-                              formData.description, formData.month + "/" + formData.day + "/" + formData.year,
-                              formData.rainBarrelType, formData.capacity, formData.color, formData.material, 
-                              formData.estimatedCost, formData.waterUse, formData.overflowFrequency, formData.cover,
-                              formData.obtainedFrom, formData.installationType, formData.numberOfRainBarrels);
-      barrel.setImage(picture);
+      barrel = RainBarrelDB.getRainBarrel(formData.id);
+      barrel.setTitle(formData.title);
+      barrel.setPropertyType(formData.propertyType);
+      barrel.setAddress(formData.address);
+      barrel.setHideAddress(formData.hideAddress);
+      barrel.setDescription(formData.description);
+      barrel.setDateInstalled(formData.month + "/" + formData.day + "/" + formData.year);
+      barrel.setRainBarrelType(formData.rainBarrelType);
+      barrel.setCapacity(formData.capacity);
+      barrel.setColor(formData.color);
+      barrel.setMaterial(formData.material);
+      barrel.setEstimatedCost(formData.estimatedCost);
+      barrel.setWaterUse(formData.waterUse);
+      barrel.setOverflowFrequency(formData.overflowFrequency);
+      barrel.setCover(formData.cover);
+      barrel.setObtainedFrom(formData.obtainedFrom);
+      barrel.setInstallationType(formData.installationType);
       barrel.setOwner(userInfo);
-      barrels.put(barrel.getID(), barrel);
+      userInfo.save();
+      barrel.save();
       return barrel;
     }
   }
@@ -57,7 +63,7 @@ public class RainBarrelDB {
    * @return List of rain barrels.
    */
   public static List<RainBarrel> getRainBarrels() {
-    return new ArrayList<RainBarrel>(barrels.values());
+    return RainBarrel.find().all();
   }
 
   /**
@@ -67,7 +73,7 @@ public class RainBarrelDB {
    * @return The rain barrel with the matching ID.
    */
   public static RainBarrel getRainBarrel(long id) {
-   return barrels.get(id);
+   return RainBarrel.find().byId(id);
   }
   
   /**
@@ -75,7 +81,7 @@ public class RainBarrelDB {
    * @param id The ID of the rain barrel to delete.
    */
   public static void deleteRainBarrel(long id) {
-    barrels.remove(id);
+    
   }
   
   /**
@@ -84,9 +90,6 @@ public class RainBarrelDB {
    * @return True if the database has the ID, false otherwise.
    */
   public static boolean hasID(long id) {
-    if ((id == 0) || barrels.containsKey(id)) {
-      return true;
-    }
-    return false;
+    return (getRainBarrel(id) != null);
   }
 }

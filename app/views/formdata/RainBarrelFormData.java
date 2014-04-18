@@ -13,7 +13,7 @@ import models.RainBarrel;
 public class RainBarrelFormData {
 
   /** Id of rain barrel. */
-  public long id = 0;
+  public long id = -1;
   
   /** Title of rain barrel. */
   public String title;
@@ -68,10 +68,7 @@ public class RainBarrelFormData {
   
   /** Installation method of rain barrel. */
   public String installationType;
-  
-  /** Number of rain barrels on property. */
-  public String numberOfRainBarrels; 
-  
+
   /**
    * Constructor.
    */
@@ -80,7 +77,6 @@ public class RainBarrelFormData {
   }
 
   /**
-   * @param id ID of rain barrel.
    * @param title Title of rain barrel.
    * @param propertyType Property type of rain barrel address.
    * @param address Address of rain barrel.
@@ -99,13 +95,11 @@ public class RainBarrelFormData {
    * @param cover Cover type for barrel.
    * @param obtainedFrom Place rain barrel was obtained.
    * @param installationType Type of installation for rain barrel.
-   * @param numberOfRainBarrel Number of rain barrels on property. 
    */
-  public RainBarrelFormData(long id, String title, String propertyType, String address, String hideAddress,
+  public RainBarrelFormData(String title, String propertyType, String address, String hideAddress,
       String description, String month, String day, String year,  String rainBarrelType, String capacity, 
       String color, String material, String estimatedCost, String waterUse, String overflowFrequency, String cover, 
-      String obtainedFrom, String installationType, String numberOfRainBarrel) {
-    this.id = id;
+      String obtainedFrom, String installationType) {
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;
@@ -124,7 +118,6 @@ public class RainBarrelFormData {
     this.cover = cover;
     this.obtainedFrom = obtainedFrom;
     this.installationType = installationType;
-    this.numberOfRainBarrels = numberOfRainBarrel;
   }
   
   /**
@@ -151,7 +144,6 @@ public class RainBarrelFormData {
     this.cover = rainBarrel.getCover();
     this.obtainedFrom = rainBarrel.getObtainedFrom();
     this.installationType = rainBarrel.getInstallationType();
-    this.numberOfRainBarrels = rainBarrel.getNumberOfRainBarrels();
   }
   
   /**

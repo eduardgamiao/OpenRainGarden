@@ -30,6 +30,9 @@ public class UserInfo extends Model {
 	
   @OneToMany (mappedBy = "owner")
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
+
+  @OneToMany (mappedBy = "poster")
+  private List<BarrelComment> barrelComments = new ArrayList<BarrelComment>();
   
   @OneToMany (mappedBy = "owner")
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();

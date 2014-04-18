@@ -1,4 +1,5 @@
-@(rainBarrel: RainBarrel, comments: List[Comment], commentFormData: Form[views.formdata.CommentFormData])
+@(rainBarrel: RainBarrel, comments: List[BarrelComment], 
+  commentFormData: Form[views.formdata.BarrelCommentFormData])
 
 @import helper._ 
 @import bootstrap3._
@@ -9,7 +10,6 @@
   <li class="list-group-item">Property Type: @rainBarrel.getPropertyType()</li>
   <li class="list-group-item">Address: @if(rainBarrel.getHideAddress().equals("Yes")) {Hidden} else {@rainBarrel.getAddress()}</li>
   <li class="list-group-item">Date Added: @rainBarrel.getDateInstalled()</li>
-  <li class="list-group-item">Number of Barrel(s): @rainBarrel.getNumberOfRainBarrels()</li>
 </ul>
 }
 

@@ -3,6 +3,15 @@
 
 # --- !Ups
 
+create table barrel_comment (
+  id                        bigint auto_increment not null,
+  comment                   varchar(255),
+  date_posted               varchar(255),
+  poster_id                 bigint,
+  barrel_id                 bigint,
+  constraint pk_barrel_comment primary key (id))
+;
+
 create table garden_comment (
   id                        bigint auto_increment not null,
   comment                   varchar(255),
@@ -10,11 +19,6 @@ create table garden_comment (
   poster_id                 bigint,
   garden_id                 bigint,
   constraint pk_garden_comment primary key (id))
-;
-
-create table has_plant (
-  id                        bigint auto_increment not null,
-  constraint pk_has_plant primary key (id))
 ;
 
 create table permeable_pavers (
@@ -64,8 +68,6 @@ create table rain_barrel (
   cover                     varchar(255),
   obtained_from             varchar(255),
   installation_type         varchar(255),
-  number_of_rain_barrels    varchar(255),
-  comment_key               varchar(255),
   image                     longblob,
   owner_id                  bigint,
   constraint pk_rain_barrel primary key (id))
@@ -105,16 +107,20 @@ create table rain_garden_plant (
   plant_id                       bigint not null,
   constraint pk_rain_garden_plant primary key (rain_garden_id, plant_id))
 ;
-alter table garden_comment add constraint fk_garden_comment_poster_1 foreign key (poster_id) references user_info (id) on delete restrict on update restrict;
-create index ix_garden_comment_poster_1 on garden_comment (poster_id);
-alter table garden_comment add constraint fk_garden_comment_garden_2 foreign key (garden_id) references rain_garden (id) on delete restrict on update restrict;
-create index ix_garden_comment_garden_2 on garden_comment (garden_id);
-alter table permeable_pavers add constraint fk_permeable_pavers_owner_3 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
-create index ix_permeable_pavers_owner_3 on permeable_pavers (owner_id);
-alter table rain_barrel add constraint fk_rain_barrel_owner_4 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
-create index ix_rain_barrel_owner_4 on rain_barrel (owner_id);
-alter table rain_garden add constraint fk_rain_garden_owner_5 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
-create index ix_rain_garden_owner_5 on rain_garden (owner_id);
+alter table barrel_comment add constraint fk_barrel_comment_poster_1 foreign key (poster_id) references user_info (id) on delete restrict on update restrict;
+create index ix_barrel_comment_poster_1 on barrel_comment (poster_id);
+alter table barrel_comment add constraint fk_barrel_comment_barrel_2 foreign key (barrel_id) references rain_barrel (id) on delete restrict on update restrict;
+create index ix_barrel_comment_barrel_2 on barrel_comment (barrel_id);
+alter table garden_comment add constraint fk_garden_comment_poster_3 foreign key (poster_id) references user_info (id) on delete restrict on update restrict;
+create index ix_garden_comment_poster_3 on garden_comment (poster_id);
+alter table garden_comment add constraint fk_garden_comment_garden_4 foreign key (garden_id) references rain_garden (id) on delete restrict on update restrict;
+create index ix_garden_comment_garden_4 on garden_comment (garden_id);
+alter table permeable_pavers add constraint fk_permeable_pavers_owner_5 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
+create index ix_permeable_pavers_owner_5 on permeable_pavers (owner_id);
+alter table rain_barrel add constraint fk_rain_barrel_owner_6 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
+create index ix_rain_barrel_owner_6 on rain_barrel (owner_id);
+alter table rain_garden add constraint fk_rain_garden_owner_7 foreign key (owner_id) references user_info (id) on delete restrict on update restrict;
+create index ix_rain_garden_owner_7 on rain_garden (owner_id);
 
 
 
@@ -126,9 +132,9 @@ alter table rain_garden_plant add constraint fk_rain_garden_plant_plant_02 forei
 
 SET FOREIGN_KEY_CHECKS=0;
 
-drop table garden_comment;
+drop table barrel_comment;
 
-drop table has_plant;
+drop table garden_comment;
 
 drop table permeable_pavers;
 
