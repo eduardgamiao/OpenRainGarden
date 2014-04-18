@@ -1,8 +1,32 @@
-@(current: Resource)
+@(formData: Form[views.formdata.ResourceFormData])
 
 @import helper._
 @import bootstrap3._
 
 @Main("Edit Resource") {
-	<p>@current.getHeader()</p>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Edit Resource</h3>
+				</div>
+			</div>
+			<div class="panel-body" styel="color: black">
+				@form(routes.Application.postEditResource(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+					@hidden(formData("id"))
+					@text(formData("header"), "Header", "Header of the Resource", "")
+					@text(formData("url"), "URL", "URL of the Resource", "")
+					@file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image")
+					
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button id="submit" type="submit" class="btn btn-info pull-right">Submit</button>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
 }

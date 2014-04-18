@@ -58,6 +58,7 @@ import views.formdata.RainGardenFormData;
 import views.formdata.LoginFormData;
 import views.formdata.SignUpFormData;
 import views.formdata.IndexContentFormData;
+import views.formdata.ResourceFormData;
 import views.html.Index;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
@@ -1015,18 +1016,47 @@ public class Application extends Controller {
    * @return
    */
   @Security.Authenticated(Secured.class)
-  public static Result editResource(String header) {
+  public static Result editResource(Long id) {
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  Resource resource;
+		  ResourceFormData data = new ResourceFormData(ResourceDB.getResource(id));
+		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).fill(data);
+		  return ok(EditResource.render(formData));
+		  
+		  /*Resource resource;
 		  if ((resource = ResourceDB.getGardenResource(header)) == null) {
 			  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
 				  resource = ResourceDB.getPaverResource(header);
 			  }
 		  }
-		  return ok(EditResource.render(resource));
+		  return ok(EditResource.render(resource));*/
+		  //return ok(EditResource.render("Edit Resource"));
 	  }
 	  return redirect(routes.Application.index());
   }
+  
+  @Security.Authenticated(Secured.class)
+  public static Result postEditResource() throws IOException{
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
+		  //validate the file upload
+		  if (formData.hasErrors() == true) {
+			  System.out.println("Errors found in edit resource form");
+			  return badRequest(EditResource.render(formData));
+		  }
+		  else {
+			  System.out.println("Post Edit Resource");
+			  ResourceFormData data = formData.get();			  
+			  MultipartFormData body = request().body().asMultipartFormData();
+			  FilePart picture = body.getFile("uploadFile");
+			  Resource resource = ResourceDB.addGardenResource(data);
+			  if (picture != null) {
+				  resource.setImage(Files.toByteArray(picture.getFile()));
+			  }
+			  return redirect(routes.Application.adminPanel());
+		  }
+	  }
+	  return redirect(routes.Application.index());
+  }  
   
   /**
    * Returns the new resource page

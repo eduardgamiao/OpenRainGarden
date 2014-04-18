@@ -11,20 +11,24 @@ import play.data.validation.ValidationError;
  *
  */
 public class ResourceFormData {
+	public long id = 0;
 	public String header;
-	public String imageName;
 	public String url;
 	
 	public ResourceFormData() {
-		this.header = "";
-		this.imageName = "";
-		this.url = "";
+		
 	}
 	
-	public ResourceFormData(String header, String imageName, String url) {
+	public ResourceFormData(long id, String header, String url) {
+		this.id = id;
 		this.header = header;
-		this.imageName = imageName;
 		this.url = url;
+	}
+	
+	public ResourceFormData(Resource resource) {
+		this.id = resource.getID();
+		this.header = resource.getHeader();
+		this.url = resource.getUrl();
 	}
 	
 	public List<ValidationError> validate() {
@@ -32,6 +36,9 @@ public class ResourceFormData {
 		
 		if (this.header == null || this.header.length() == 0) {
 			errors.add(new ValidationError("header", "Please enter a header for the resource."));
+		}
+		if (this.url == null || this.url.length() == 0) {
+			errors.add(new ValidationError("url", "Please enter a URL for the resource."));
 		}
 		
 		return errors.isEmpty() ? null : errors;
