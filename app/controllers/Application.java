@@ -1021,15 +1021,6 @@ public class Application extends Controller {
 		  ResourceFormData data = new ResourceFormData(ResourceDB.getResource(id));
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).fill(data);
 		  return ok(EditResource.render(formData));
-		  
-		  /*Resource resource;
-		  if ((resource = ResourceDB.getGardenResource(header)) == null) {
-			  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
-				  resource = ResourceDB.getPaverResource(header);
-			  }
-		  }
-		  return ok(EditResource.render(resource));*/
-		  //return ok(EditResource.render("Edit Resource"));
 	  }
 	  return redirect(routes.Application.index());
   }
@@ -1038,7 +1029,7 @@ public class Application extends Controller {
   public static Result postEditResource() throws IOException{
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
-		  //validate the file upload
+		  //need to implement file upload validation
 		  if (formData.hasErrors() == true) {
 			  System.out.println("Errors found in edit resource form");
 			  return badRequest(EditResource.render(formData));
@@ -1051,12 +1042,23 @@ public class Application extends Controller {
 			  Resource resource = ResourceDB.addGardenResource(data);
 			  if (picture != null) {
 				  resource.setImage(Files.toByteArray(picture.getFile()));
+				  System.out.println("Setting picture");
 			  }
 			  return redirect(routes.Application.adminPanel());
 		  }
 	  }
 	  return redirect(routes.Application.index());
-  }  
+  }
+  
+  
+  public static Result retrieveResourceImage(long id) {
+	  Resource resource = ResourceDB.getResource(id);
+	  if (resource != null && resource.hasPicture()) {
+		  return ok(resource.getImage()).as("image/jpeg");
+	  }
+	  return redirect("");
+  }
+  
   
   /**
    * Returns the new resource page
