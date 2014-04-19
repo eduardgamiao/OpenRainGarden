@@ -1073,10 +1073,10 @@ public class Application extends Controller {
 				  resource = ResourceDB.addGardenResource(data);
 			  }
 			  else if (find.equals("barrel") == true) {
-				  //resource = ResourceDB.addBarrelResource(data);
+				  resource = ResourceDB.addBarrelResource(data);
 			  }
 			  else if (find.equals("paver") == true) {
-				  //resource = ResourceDB.addPaverResource(data);
+				  resource = ResourceDB.addPaverResource(data);
 			  }
 			  
 			  if (picture != null) {

@@ -81,7 +81,55 @@ public class ResourceDB {
 	}
 	
 	/**
-	 * Get a resource from the Rain Garden DB based on the given header
+	 * Adds a resource to barrelResources based on the given formData
+	 * @param formData
+	 * @return
+	 */
+	public static Resource addBarrelResource(ResourceFormData formData) {
+		Resource resource;
+		
+		if (formData.id == 0) {
+			long id = currentID;
+			currentID++;
+			resource = new Resource(id, formData.header, formData.url);
+			barrelResources.put(id, resource);
+			return resource;
+		}
+		else {
+			byte [] picture = ResourceDB.getBarrelResource(formData.id).getImage();
+			resource = new Resource(formData.id, formData.header, formData.url);
+			resource.setImage(picture);
+			barrelResources.put(formData.id, resource);
+			return resource;
+		}
+	}
+	
+	/**
+	 * Adds a resource to paverResources based on the given formData
+	 * @param formData
+	 * @return
+	 */
+	public static Resource addPaverResource(ResourceFormData formData) {
+		Resource resource;
+		
+		if (formData.id == 0) {
+			long id = currentID;
+			currentID++;
+			resource = new Resource(id, formData.header, formData.url);
+			paverResources.put(id, resource);
+			return resource;
+		}
+		else {
+			byte [] picture = ResourceDB.getPaverResource(formData.id).getImage();
+			resource = new Resource(formData.id, formData.header, formData.url);
+			resource.setImage(picture);
+			paverResources.put(formData.id, resource);
+			return resource;
+		}
+	}
+	
+	/**
+	 * Get a resource from the Rain Garden DB based on the given id
 	 * @param header
 	 * @return
 	 */
@@ -90,11 +138,45 @@ public class ResourceDB {
 	}
 	
 	/**
-	 * Removes a resource from the Rain Garden DB based on the given header
+	 * Get a resource from the Rain Barrel DB based on the given id
+	 * @param id
+	 * @return
+	 */
+	public static Resource getBarrelResource(long id) {
+		return barrelResources.get(id);
+	}
+	
+	/**
+	 * Get a resource from the Permeable Paver DB based on the given id
+	 * @param id
+	 * @return
+	 */
+	public static Resource getPaverResource(long id) {
+		return paverResources.get(id);
+	}
+	
+	/**
+	 * Removes a resource from the Rain Garden DB based on the given id
 	 * @param header
 	 */
 	public static void removeGardenResource(long id) {
 		gardenResources.remove(id);
+	}
+	
+	/**
+	 * Removes a resource from the Rain Barrel DB based on the given id
+	 * @param id
+	 */
+	public static void removeBarrelResource(long id) {
+		barrelResources.remove(id);
+	}
+	
+	/**
+	 * Removes a resource from the Permeable Pavers DB based on the given id
+	 * @param id
+	 */
+	public static void removePaverResource(long id) {
+		paverResources.remove(id);
 	}
 	
 	/**
@@ -106,63 +188,12 @@ public class ResourceDB {
 	}
 	
 	/**
-	 * Adds the given resource to the Rain Barrel Resources DB
-	 * @param resource
-	 */
-	/*public static void addBarrelResource(Resource resource) {
-		barrelResources.put(resource.getHeader(), resource);
-	}*/
-	
-	/**
-	 * Get a resource from the Rain Barrel DB based on the given header
-	 * @param header
-	 * @return
-	 */
-	/*public static Resource getBarrelResource(String header) {
-		return barrelResources.get(header);
-	}*/
-	
-	/**
-	 * Removes a resource from the Rain Barrel DB based on the given header
-	 * @param header
-	 */
-	/*public static void removeBarrelResource(String header) {
-		barrelResources.remove(header);
-	}*/
-	
-	/**
 	 * Returns a List of all Rain Barrel Resources in the database.
 	 * @return
 	 */
 	public static List<Resource> getBarrelList() {
 		return new ArrayList<Resource>(barrelResources.values());
 	}
-	
-	
-	/**
-	 * Adds the given resource to the Permeable Pavers DB
-	 * @param resource
-	 */
-	/*public static void addPaverResource(Resource resource) {
-		paverResources.put(resource.getHeader(), resource);
-	}*/
-	
-	/**
-	 * Get a resource from the Permeable Pavers DB based on the given header
-	 * @param header
-	 * @return
-	 */
-	/*public static Resource getPaverResource(String header) {
-		return paverResources.get(header);
-	}*/
-	
-	/**
-	 * Removes a resource from the Permeable Pavers DB based on the given header
-	 * @param header
-	 */
-	/*public static void removePaverResource(String header) {
-		paverResources.remove(header);
-	}*/
 	
 	/**
 	 * Returns a List of all Permeable Paver Resources in the database.
