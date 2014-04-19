@@ -84,7 +84,7 @@ public class Global extends GlobalSettings {
     
     // Add permeable paver.
     if (PermeablePavers.find().all().isEmpty()) {
-    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData(0, "John's Permeable Paver", "Residential", 
+    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData("John's Permeable Paver", "Residential", 
         "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
             + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
             "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));

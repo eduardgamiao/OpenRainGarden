@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
+import com.ning.http.client.Body;
 import models.BarrelCommentDB;
+import models.Comment;
 import models.CommentDB;
 import models.GardenCommentDB;
 import models.HeaderFooterDB;
@@ -468,6 +472,7 @@ public class Application extends Controller {
           File source = picture.getFile();
           paver.setImage(Files.toByteArray(source));
       }
+      paver.save();
       return redirect(routes.Application.viewPaver(paver.getID()));
      }     
     }
@@ -481,7 +486,7 @@ public class Application extends Controller {
   public static Result managePermeablePavers(long id) {
     if (PermeablePaversDB.hasID(id)) {
       if (Secured.isLoggedIn(ctx()) 
-          && (Secured.getUserInfo(ctx()) == PermeablePaversDB.getPermeablePavers(id).getOwner())) {
+          && (Secured.getUserInfo(ctx()).getId() == PermeablePaversDB.getPermeablePavers(id).getOwner().getId())) {
             PermeablePaversFormData data = new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
             Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
             return ok(RegisterPermeablePavers.render(formData, false, YesNoChoiceType.getChoiceList(), 
@@ -567,7 +572,7 @@ public class Application extends Controller {
     CommentFormData commentFormData = new CommentFormData();
     Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (paver != null) {
-     return ok(ViewPaver.render(paver, CommentDB.getComments(paver.getKey()), commentForm));
+     return ok(ViewPaver.render(paver, new ArrayList<Comment>(), commentForm));
     }
     return badRequest();
   }
@@ -916,7 +921,6 @@ public class Application extends Controller {
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
       String url = routes.Application.retrievePlantImage(dataMap.get("name")).toString();
-      Logger.debug(url);
       return badRequest(RegisterPlant.render(formData, isNew, 
                                              PlantFormDropdownTypes.getPlacementTypes(dataMap.get("placement")), 
                                              PlantFormDropdownTypes.getGrowthTypes(dataMap.get("growth")), 

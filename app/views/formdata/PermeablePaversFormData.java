@@ -13,7 +13,7 @@ import models.PermeablePavers;
 public class PermeablePaversFormData {
 
   /** ID of permeable paver. */
-  public long id = 0;
+  public long id = -1;
   
   /** Title of permeable paver. */
   public String title;
@@ -59,7 +59,6 @@ public class PermeablePaversFormData {
   }
   
   /**
-   * @param id ID of permeable paver.
    * @param title Title of permeable paver.
    * @param propertyType Type of property of paver's address.
    * @param address Address of permeable paver.
@@ -73,10 +72,9 @@ public class PermeablePaversFormData {
    * @param size Size of paver.
    * @param installer Installer if paver.
    */
-  public PermeablePaversFormData(long id, String title, String propertyType, String address, String hideAddress,
+  public PermeablePaversFormData(String title, String propertyType, String address, String hideAddress,
       String description, String month, String day, String year, String material, String previousMaterial, String size,
       String installer) {
-    this.id = id;
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;

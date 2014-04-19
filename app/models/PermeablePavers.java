@@ -1,14 +1,11 @@
 package models;
 
-import java.io.File;
 import java.io.IOException;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import org.apache.commons.io.FileUtils;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * An object that represents a permeable pavers.
@@ -31,6 +28,7 @@ public class PermeablePavers extends Model {
   private String size;
   private String installer;
   private String commentKey;
+  @Lob
   private byte [] image;
   
   @ManyToOne
@@ -38,7 +36,6 @@ public class PermeablePavers extends Model {
 
   /**
    * Constructor.
-   * @param id ID of permeable paver.
    * @param title Title of permeable paver.
    * @param propertyType Type of property of paver's address.
    * @param address Address of permeable paver.
@@ -50,10 +47,9 @@ public class PermeablePavers extends Model {
    * @param size Size of paver.
    * @param installer Installer if paver.
    */
-  public PermeablePavers(long id, String title, String propertyType, String address, String hideAddress,
+  public PermeablePavers(String title, String propertyType, String address, String hideAddress,
       String description, String dateInstalled, String material, String previousMaterial, String size,
       String installer) {
-    this.id = id;
     this.title = title;
     this.propertyType = propertyType;
     this.address = address;
@@ -138,16 +134,11 @@ public class PermeablePavers extends Model {
   }
   
   /**
-   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No"
-   * @return
+   * Returns true if hideAddress equals "Yes" and false if hideAddress equals "No".
+   * @return True if hideAddress is "Yes", otherwise False.
    */
   public boolean hideAddress() {
-	  if (this.hideAddress.equals("Yes")) {
-		  return true;
-	  }
-	  else {
-		  return false;
-	  }
+	  return this.hideAddress.equals("Yes");
   }
 
   /**

@@ -34,7 +34,7 @@ create table permeable_pavers (
   size                      varchar(255),
   installer                 varchar(255),
   comment_key               varchar(255),
-  image                     varbinary(255),
+  image                     longblob,
   owner_id                  bigint,
   constraint pk_permeable_pavers primary key (id))
 ;
