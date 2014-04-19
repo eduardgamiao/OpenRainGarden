@@ -1,4 +1,4 @@
-@(formData: Form[views.formdata.ResourceFormData])
+@(formData: Form[views.formdata.ResourceFormData], find: String)
 
 @import helper._
 @import bootstrap3._
@@ -13,11 +13,11 @@
 				</div>
 			</div>
 			<div class="panel-body" styel="color: black">
-				@form(routes.Application.postEditResource(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+				@form(routes.Application.postEditResource(find), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
 					@hidden(formData("id"))
 					@text(formData("header"), "Header", "Header of the Resource", "")
 					@text(formData("url"), "URL", "URL of the Resource", "")
-					@file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image")
+					@file(formData("uploadFile"), "Upload File", "")
 					
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">

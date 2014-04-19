@@ -39,6 +39,24 @@ public class ResourceDB {
 	}
 	
 	/**
+	 * Finds the list that the resource belongs to; returns either "garden" "barrel" or "paver" or ""
+	 * @param id
+	 * @return
+	 */
+	public static String findList(long id) {
+		if (gardenResources.containsKey(id) == true) {
+			return "garden";
+		}
+		else if (barrelResources.containsKey(id) == true) {
+			return "barrel";
+		}
+		else if (paverResources.containsKey(id) == true) {
+			return "paver";
+		}
+		return "";
+	}
+	
+	/**
 	 * Adds a resource to gardenResources based on the given formData
 	 * @param formData
 	 * @return

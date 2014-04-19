@@ -10,7 +10,6 @@ import java.io.IOException;
 public class Resource {
 	private Long id;
 	private String header;
-	private String imageName;
 	private String url;
 	private byte [] image;
 	
@@ -56,23 +55,6 @@ public class Resource {
 	 */
 	public void setHeader(String header) {
 		this.header = header;
-	}
-	
-	/**
-	 * Returns the name of the image displayed
-	 * @return
-	 */
-	public String getImageName() {
-		return this.imageName;
-	}
-	
-	/**
-	 * Sets the name of the image displayed to the given imageName
-	 * There is no validation of whether the given imageName exists in the image folder
-	 * @param imageName
-	 */
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
 	}
 	
 	/**

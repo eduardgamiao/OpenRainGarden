@@ -757,19 +757,34 @@ public class Application extends Controller {
     return formData;
   }
   
-
+  /**
+   * Returns the garden gallery page
+   * @return
+   */
   public static Result gardengallery() {
 	  return ok(RainGardenGallery.render(RainGardenDB.getRainGardens()));
   }
   
+  /**
+   * Returns the barrel gallery page
+   * @return
+   */
   public static Result barrelgallery() {
 	  return ok(RainBarrelGallery.render(RainBarrelDB.getRainBarrels()));
   }
   
+  /**
+   * Returns the paver gallery page
+   * @return
+   */
   public static Result pavergallery() {
 	  return ok(PermeablePaverGallery.render(PermeablePaversDB.getPermeablePavers()));
   }
   
+  /**
+   * Returnsthe map page
+   * @return
+   */
   public static Result map() {
 	  return ok(MapPage.render("Map"));
   }
@@ -1016,30 +1031,54 @@ public class Application extends Controller {
    * @return
    */
   @Security.Authenticated(Secured.class)
-  public static Result editResource(Long id) {
+  public static Result editResource(String find, Long id) {
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  ResourceFormData data = new ResourceFormData(ResourceDB.getResource(id));
+		  ResourceFormData data;
+		  if (id == 0) {
+			  data = new ResourceFormData();
+		  }
+		  else {
+			  data = new ResourceFormData(ResourceDB.getResource(id));
+		  }
+		  
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).fill(data);
-		  return ok(EditResource.render(formData));
+		  return ok(EditResource.render(formData, find));
 	  }
 	  return redirect(routes.Application.index());
   }
   
+  /**
+   * Processes the edit Resource form
+   * @param find
+   * @return
+   * @throws IOException
+   */
   @Security.Authenticated(Secured.class)
-  public static Result postEditResource() throws IOException{
+  public static Result postEditResource(String find) throws IOException{
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
 		  //need to implement file upload validation
 		  if (formData.hasErrors() == true) {
 			  System.out.println("Errors found in edit resource form");
-			  return badRequest(EditResource.render(formData));
+			  return badRequest(EditResource.render(formData, find));
 		  }
 		  else {
 			  System.out.println("Post Edit Resource");
 			  ResourceFormData data = formData.get();			  
 			  MultipartFormData body = request().body().asMultipartFormData();
 			  FilePart picture = body.getFile("uploadFile");
-			  Resource resource = ResourceDB.addGardenResource(data);
+			  
+			  Resource resource = null;
+			  if (find.equals("garden") ==  true) {
+				  resource = ResourceDB.addGardenResource(data);
+			  }
+			  else if (find.equals("barrel") == true) {
+				  //resource = ResourceDB.addBarrelResource(data);
+			  }
+			  else if (find.equals("paver") == true) {
+				  //resource = ResourceDB.addPaverResource(data);
+			  }
+			  
 			  if (picture != null) {
 				  resource.setImage(Files.toByteArray(picture.getFile()));
 				  System.out.println("Setting picture");
@@ -1050,7 +1089,11 @@ public class Application extends Controller {
 	  return redirect(routes.Application.index());
   }
   
-  
+  /**
+   * Retrieves the resource image based on the given id
+   * @param id
+   * @return
+   */
   public static Result retrieveResourceImage(long id) {
 	  Resource resource = ResourceDB.getResource(id);
 	  if (resource != null && resource.hasPicture()) {
@@ -1059,26 +1102,4 @@ public class Application extends Controller {
 	  return redirect("");
   }
   
-  
-  /**
-   * Returns the new resource page
-   * @return
-   */
-  @Security.Authenticated(Secured.class)
-  public static Result newResource(String header) {
-	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  List<Resource> list;
-		  if (header.equals("garden")) {
-			  list = ResourceDB.getGardenList();
-		  }
-		  else if (header.equals("barrel")) {
-			  list = ResourceDB.getBarrelList();
-		  }
-		  else {
-			  list = ResourceDB.getPaverList();
-		  }
-		  return ok(NewResource.render(list));
-	  }
-	  return redirect(routes.Application.index());
-  }
 }

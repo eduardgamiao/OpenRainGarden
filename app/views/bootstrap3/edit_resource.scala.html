@@ -1,4 +1,4 @@
-@(resource: Resource)
+@(resource: Resource, find: String)
 
 <div class="col-sm-6 col-md-4">
 	<div class="thumbnail">
@@ -7,7 +7,7 @@
 			<a href="@resource.getUrl()" target="_blank">
 				<h3 align="center">@resource.getHeader()</h3>
 			</a></br>
-			<div style="text-align:right"><a href="/adminpanel/editresource/@resource.getID()"><button type="button">Edit</button></a></div>
+			<div style="text-align:right"><a href="/adminpanel/editresource/@find/@resource.getID()"><button type="button">Edit</button></a></div>
 		</div>
 	</div>
 </div>

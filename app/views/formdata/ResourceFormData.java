@@ -16,7 +16,9 @@ public class ResourceFormData {
 	public String url;
 	
 	public ResourceFormData() {
-		
+		this.id = 0;
+		this.header = "";
+		this.url = "";
 	}
 	
 	public ResourceFormData(long id, String header, String url) {
