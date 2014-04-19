@@ -17,6 +17,7 @@ import models.CommentDB;
 import models.GardenCommentDB;
 import models.HeaderFooterDB;
 import models.IndexContentDB;
+import models.PaverCommentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
 import models.Plant;
@@ -48,6 +49,7 @@ import views.formdata.GardenCommentFormData;
 import views.formdata.InfiltrationRateTypes;
 import views.formdata.InstallationTypes;
 import views.formdata.MaterialTypes;
+import views.formdata.PaverCommentFormData;
 import views.formdata.PaverMaterialTypes;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.PermeablePaversSizeTypes;
@@ -569,10 +571,10 @@ public class Application extends Controller {
    */
   public static Result viewPaver(Long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
-    CommentFormData commentFormData = new CommentFormData();
-    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
+    PaverCommentFormData commentFormData = new PaverCommentFormData();
+    Form<PaverCommentFormData> commentForm = Form.form(PaverCommentFormData.class).fill(commentFormData);
     if (paver != null) {
-     return ok(ViewPaver.render(paver, new ArrayList<Comment>(), commentForm));
+     return ok(ViewPaver.render(paver, PaverCommentDB.getRainPaverComments(id), commentForm));
     }
     return badRequest();
   }
@@ -827,21 +829,19 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postPaverComment(Long id, String uri) {
-    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
-
+    Form<PaverCommentFormData> formData = Form.form(PaverCommentFormData.class).bindFromRequest();
+    if (formData.hasErrors()) {
+      return redirect(uri);
+    }
+    PaverCommentFormData data = formData.get();
+    PaverCommentDB.addComment(data, PermeablePaversDB.getPermeablePavers(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
-  /**
-   * Retrieve a garden image.
-   * @param id The ID of the garden to retrieve the image from.
-   * @return The image matching the ID given.
-   */
+  
   public static Result retrieveHomeBannerImage() {
-
-    
       return ok(HeaderFooterDB.getImage()).as("image/jpeg");
-
   }
+  
   /**
    * Retrieve a garden image.
    * @param id The ID of the garden to retrieve the image from.
