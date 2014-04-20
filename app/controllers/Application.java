@@ -272,12 +272,13 @@ public class Application extends Controller {
   public static Result newRainGarden() {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+    String url = routes.Application.retrieveGardenImage(data.id).url();
     return ok(RegisterRainGarden.render(formData, true, YesNoChoiceType.getChoiceList(), 
         PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
         DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
         PlantTypes.getPlantMap(), RainGardenSizeTypes.getTypes(), 
         WaterSourceSizeTypes.getTypes(), 
-        InfiltrationRateTypes.getTypes(), Secured.getUserInfo(ctx())));
+        InfiltrationRateTypes.getTypes(), url, Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -297,7 +298,9 @@ public class Application extends Controller {
         if (key.contains("plants")) {
           plantList.add(dataMap.get(key));
         }
-      }          
+      }
+      Long id = Long.parseLong(dataMap.get("id"));
+      String url = routes.Application.retrieveGardenImage(id).toString();
       return badRequest(RegisterRainGarden.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -306,7 +309,8 @@ public class Application extends Controller {
                         PlantTypes.getPlantMap(plantList),
                         RainGardenSizeTypes.getTypes(dataMap.get("rainGardenSize")),
                         WaterSourceSizeTypes.getTypes(dataMap.get("waterFlowSourceSize")),
-                        InfiltrationRateTypes.getTypes(dataMap.get("infiltrationRate")), 
+                        InfiltrationRateTypes.getTypes(dataMap.get("infiltrationRate")),
+                        url,
                         Secured.getUserInfo(ctx())));   
     } 
     else {
@@ -318,6 +322,7 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           garden.setImage(Files.toByteArray(source));
+          garden.save();
       }
       return redirect(routes.Application.viewGarden(garden.getID()));
      }     
@@ -335,12 +340,13 @@ public class Application extends Controller {
           && (Secured.getUserInfo(ctx()).getId() == RainGardenDB.getRainGarden(id).getOwner().getId())) {
         RainGardenFormData data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
         Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
+        String url = routes.Application.retrieveGardenImage(id).toString();
         return ok(RegisterRainGarden.render(formData, false, YesNoChoiceType.getChoiceList(), 
                   PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                   DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
                   PlantTypes.getPlantMap(data.plants), RainGardenSizeTypes.getTypes(data.rainGardenSize), 
                   WaterSourceSizeTypes.getTypes(data.waterFlowSourceSize), 
-                  InfiltrationRateTypes.getTypes(data.infiltrationRate), Secured.getUserInfo(ctx())));        
+                  InfiltrationRateTypes.getTypes(data.infiltrationRate), url, Secured.getUserInfo(ctx())));        
       }
     }
     return redirect(routes.Application.index());
@@ -851,7 +857,7 @@ public class Application extends Controller {
     if (garden != null && garden.hasPicture()) {      
       return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
     }
-    return redirect("");
+    return redirect(routes.Assets.at("images/placeholder.gif"));
   }
   
   /**
