@@ -39,10 +39,10 @@ public class RainGarden extends Model {
   @ManyToOne
   private UserInfo owner;
   
-  @ManyToMany (cascade = CascadeType.PERSIST)
+  @ManyToMany (cascade = CascadeType.ALL)
   private List<Plant> plants = new ArrayList<Plant>();
   
-  @OneToMany (mappedBy = "garden")
+  @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
   private List<GardenComment> comments = new ArrayList<GardenComment>();
   
   /**

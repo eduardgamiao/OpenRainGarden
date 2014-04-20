@@ -6,7 +6,11 @@
 @Main("View Plants") {
   <div class="container">
     <div class="row">
-      <a href="@routes.Application.newPlant()"><button class="btn btn-info">New Plant</button></a>
+    <div class="page-header">
+      <h1>
+        Plants @if(Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()){<a href="@routes.Application.newPlant()"><button class="btn btn-primary pull-right">New Plant</button></a>}
+      </h1>
+    </div>
       <table class="table table-bordered table-condensed table-hover table-responsive">
         <tr>
             <th></th>
@@ -28,11 +32,18 @@
               <td>@plant.getGrowth()</td>
               <td>@plant.getClimateType()</td>            
               @if(userInfo != null && (userInfo.isAdmin())) {
-              <td><a href="/edit/plant/@plant.getName()"><button class="btn btn-sm btn-info">Edit</button></a> <a href="#"><button class="btn btn-sm btn-danger" style="background-color:red;">Delete</button></a></td>
-              }
+              <td>
+                  <a href="@routes.Application.managePlant(plant.getName())"><button class="btn btn-primary">Edit</button></a>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#@plant.getName()">Delete</button>
+             </td>}
           </tr>
-        }
+        }        
       </table>
+      @if(Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+        @for(plant <- PlantDB.getPlants()) {          
+          @deletePlant(plant)
+        }
+      }
     </div>
   </div>
 }

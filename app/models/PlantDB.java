@@ -2,6 +2,12 @@ package models;
 
 import java.text.Normalizer;
 import java.util.List;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.RawSql;
+import com.avaje.ebean.RawSqlBuilder;
+import play.Logger;
+import play.db.ebean.Model.Finder;
+import scala.collection.parallel.ParIterableLike.Find;
 import views.formdata.PlantFormData;
 
 /**
@@ -94,16 +100,6 @@ public class PlantDB {
    * @param id The ID of the plant to delete.
    */
   public static void deletePlant(Long id) {
-    Plant plant = Plant.find().byId(id);
-    plant.delete();
-  }
-  
-  /**
-   * Delete a plant from the database.
-   * @param name The name of the plant to delete.
-   */
-  public static void deletePlant(String name) {
-    Plant plant = Plant.find().where().eq("name", name).findUnique();
-    plant.delete();
+    Plant.find().byId(id).delete();
   }
 }

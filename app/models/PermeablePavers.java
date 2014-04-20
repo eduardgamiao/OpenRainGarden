@@ -3,6 +3,7 @@ package models;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -37,7 +38,7 @@ public class PermeablePavers extends Model {
   @ManyToOne
   private UserInfo owner;
   
-  @OneToMany (mappedBy = "paver")
+  @OneToMany (mappedBy = "paver", cascade = CascadeType.PERSIST)
   private List<PaverComment> comments = new ArrayList<PaverComment>();
 
   /**

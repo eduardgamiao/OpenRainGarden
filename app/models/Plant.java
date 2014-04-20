@@ -31,7 +31,7 @@ public class Plant extends Model {
   private byte [] image;
   
   // Relationships.
-  @ManyToMany (mappedBy = "plants", cascade = CascadeType.PERSIST)
+  @ManyToMany (mappedBy = "plants", cascade = CascadeType.ALL)
   List<RainGarden> gardens = new ArrayList<RainGarden>();
 
   /**
@@ -162,6 +162,14 @@ public class Plant extends Model {
    */
   public String getPictureName() {
     return Normalizer.normalize(this.name, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase() + ".jpg";
+  }
+  
+  /**
+   * Return a list of gardens that contain a plant.
+   * @return A list of gardens that contain a plant.
+   */
+  public List<RainGarden> getGardens() {
+    return this.gardens;
   }
   
   /**

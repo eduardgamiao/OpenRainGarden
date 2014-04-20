@@ -3,6 +3,7 @@ package models;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -41,7 +42,7 @@ public class RainBarrel extends Model {
   
   @ManyToOne
   private UserInfo owner;
-  @OneToMany (mappedBy = "barrel")
+  @OneToMany (mappedBy = "barrel", cascade = CascadeType.PERSIST)
   private List<BarrelComment> comments = new ArrayList<BarrelComment>();
     
   /**

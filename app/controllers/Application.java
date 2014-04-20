@@ -105,9 +105,8 @@ public class Application extends Controller {
    * Returns the home page. 
    * @return The resulting home page. 
    */
-  public static Result errorReport(String s){
-	  	return ok(ErrorReport.render(s));
-	  
+  public static Result errorReport(String s){    
+	  	return ok(ErrorReport.render(s));	  
   }
   
   public static Result index() {
@@ -933,6 +932,7 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       Plant plant = PlantDB.addPlant(data);
       if (picture != null) {
+        Logger.debug("PLANT URL: " + picture.getFile().toURI().toURL());
         plant.setImage(Files.toByteArray(picture.getFile()));
       }
       plant.save();
@@ -1006,8 +1006,8 @@ public class Application extends Controller {
    * @param name Name of the plant to delete.
    * @return The view plant page.
    */
-  public static Result deletePlant(String name) {
-    PlantDB.deletePlant(name);
+  public static Result deletePlant(long id) {
+    PlantDB.deletePlant(id);
     return ok(ViewPlant.render("", Secured.getUserInfo(ctx())));
   }
   

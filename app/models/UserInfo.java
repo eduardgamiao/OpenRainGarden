@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -22,19 +23,19 @@ public class UserInfo extends Model {
 	private boolean admin = false;
 	
 	// Relationships.
-	@OneToMany (mappedBy = "owner")
+	@OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
 	
-  @OneToMany (mappedBy = "poster")
+  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
   private List<GardenComment> gardenComments = new ArrayList<GardenComment>();
 	
-  @OneToMany (mappedBy = "owner")
+  @OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
 
-  @OneToMany (mappedBy = "poster")
+  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
   private List<BarrelComment> barrelComments = new ArrayList<BarrelComment>();
   
-  @OneToMany (mappedBy = "owner")
+  @OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
