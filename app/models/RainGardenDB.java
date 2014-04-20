@@ -75,7 +75,7 @@ public class RainGardenDB {
    * @param id ID of rain garden.
    */
   public static void deleteRainGarden(long id) {
-    Logger.debug("TODO: Rain Garden Delete");
+    RainGarden.find().byId(id).delete();
   }
 
   /**
