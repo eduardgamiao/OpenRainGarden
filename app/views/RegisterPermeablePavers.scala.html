@@ -1,7 +1,7 @@
 @(formData: Form[views.formdata.PermeablePaversFormData], isNew: Boolean, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   materialType: Map[String, Boolean], previousMaterialTypes: Map[String, Boolean], sizeTypes: Map[String, Boolean], 
-  userInfo: UserInfo)
+  url: String, userInfo: UserInfo)
 
 @import helper._ 
 @import bootstrap3._
@@ -28,7 +28,7 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Permeable Paver Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
+              @upload(formData("uploadFile"), "Upload Picture", url, isNew, "")
               <div class="page-header"><h3>Additional Information</h3></div> 
               @bootstrap3.select(formData("material"), "Material", "Please Select the Paver Material Type", materialType, false, "")
               @bootstrap3.select(formData("previousMaterial"), "Previous Material", "Please Select Previous Material of Previous Pavement",  previousMaterialTypes, false, "")

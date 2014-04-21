@@ -17,6 +17,7 @@ import play.db.ebean.Model;
 @Entity
 public class PermeablePavers extends Model {
   private static final long serialVersionUID = 1L;
+  private static final long VALID_DATE_LENGTH = 8;
   
   @Id
   private Long id;
@@ -236,6 +237,9 @@ public class PermeablePavers extends Model {
    * @return the dateInstalled
    */
   public String getDateInstalled() {
+    if (this.dateInstalled.length() < VALID_DATE_LENGTH) {
+      return "N/A";
+    }
     return dateInstalled;
   }
 

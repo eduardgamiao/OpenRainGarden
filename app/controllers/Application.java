@@ -300,7 +300,7 @@ public class Application extends Controller {
         }
       }
       Long id = Long.parseLong(dataMap.get("id"));
-      String url = routes.Application.retrieveGardenImage(id).toString();
+      String url = routes.Application.retrieveGardenImage(id).url();
       return badRequest(RegisterRainGarden.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -340,7 +340,7 @@ public class Application extends Controller {
           && (Secured.getUserInfo(ctx()).getId() == RainGardenDB.getRainGarden(id).getOwner().getId())) {
         RainGardenFormData data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
         Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
-        String url = routes.Application.retrieveGardenImage(id).toString();
+        String url = routes.Application.retrieveGardenImage(id).url();
         return ok(RegisterRainGarden.render(formData, false, YesNoChoiceType.getChoiceList(), 
                   PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                   DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
@@ -359,14 +359,16 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result newRainBarrel() {
     RainBarrelFormData data = new RainBarrelFormData();
-    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);    
+    Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
+    String url = routes.Application.retrieveBarrelImage(data.id).url();
     return ok(RegisterRainBarrel.render(formData, true, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
               DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
               RainBarrelTypes.getRainBarrelTypes(), MaterialTypes.getMaterialTypes(),
               WaterUsageTypes.getWaterUsageTypes(), CoverTypes.getCoverTypes(), 
               InstallationTypes.getInstallationTypes(),
-              RainBarrelCapacityTypes.getTypes()));
+              RainBarrelCapacityTypes.getTypes(),
+              url));
   }
   
   /**
@@ -381,6 +383,8 @@ public class Application extends Controller {
     validateBarrelUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
+      Long id = Long.parseLong(dataMap.get("id"));
+      String url = routes.Application.retrieveBarrelImage(id).url();
       return badRequest(RegisterRainBarrel.render(formData, isNew, YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
                         DateTypes.getMonthTypes(dataMap.get("month")), 
@@ -391,7 +395,8 @@ public class Application extends Controller {
                         WaterUsageTypes.getWaterUsageTypes(dataMap.get("waterUse")),
                         CoverTypes.getCoverTypes(dataMap.get("cover")),
                         InstallationTypes.getInstallationTypes(dataMap.get("installationType")),
-                        RainBarrelCapacityTypes.getTypes(dataMap.get("capacity"))));  
+                        RainBarrelCapacityTypes.getTypes(dataMap.get("capacity")),
+                        url));  
     } 
     else {
       RainBarrelFormData data = formData.get();
@@ -401,8 +406,8 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           barrel.setImage(Files.toByteArray(source));
+          barrel.save();
       }
-      barrel.save();
       return redirect(routes.Application.viewBarrel(barrel.getID()));
      }     
     }
@@ -419,13 +424,15 @@ public class Application extends Controller {
           && (Secured.getUserInfo(ctx()).getId() == RainBarrelDB.getRainBarrel(id).getOwner().getId())) {
         RainBarrelFormData data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
         Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
+        String url = routes.Application.retrieveBarrelImage(id).url();
         return ok(RegisterRainBarrel.render(formData, false, YesNoChoiceType.getChoiceList(), 
                   PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                   DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
                   RainBarrelTypes.getRainBarrelTypes(data.rainBarrelType), 
                   MaterialTypes.getMaterialTypes(data.material), WaterUsageTypes.getWaterUsageTypes(data.waterUse), 
                   CoverTypes.getCoverTypes(data.cover), InstallationTypes.getInstallationTypes(data.installationType),
-                  RainBarrelCapacityTypes.getTypes(data.capacity)));      
+                  RainBarrelCapacityTypes.getTypes(data.capacity),
+                  url));      
       }
     }
     return redirect(routes.Application.index());
@@ -438,13 +445,14 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result newPermeablePavers() {
     PermeablePaversFormData data = new PermeablePaversFormData();
-    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);    
+    Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
+    String url = routes.Application.retrievePaverImage(data.id).url();
     return ok(RegisterPermeablePavers.render(formData, true, YesNoChoiceType.getChoiceList(), 
               PropertyTypes.getTypes(), DateTypes.getMonthTypes(), 
               DateTypes.getDayTypes(), DateTypes.getYearTypes(), 
               PaverMaterialTypes.getMaterialTypes(), 
               PaverMaterialTypes.getMaterialTypes(), 
-              PermeablePaversSizeTypes.getTypes(), Secured.getUserInfo(ctx())));
+              PermeablePaversSizeTypes.getTypes(), url, Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -459,6 +467,8 @@ public class Application extends Controller {
     validatePaverUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
+      Long id = Long.parseLong(dataMap.get("id"));
+      String url = routes.Application.retrievePaverImage(id).url();
       return badRequest(RegisterPermeablePavers.render(formData, isNew,
                         YesNoChoiceType.getChoiceList(), 
                         PropertyTypes.getTypes(dataMap.get("propertyType")), 
@@ -468,6 +478,7 @@ public class Application extends Controller {
                         PaverMaterialTypes.getMaterialTypes(dataMap.get("material")),
                         PaverMaterialTypes.getMaterialTypes(dataMap.get("previousMaterial")),
                         PermeablePaversSizeTypes.getTypes(dataMap.get("size")),
+                        url,
                         Secured.getUserInfo(ctx())));   
     } 
     else {
@@ -496,12 +507,13 @@ public class Application extends Controller {
           && (Secured.getUserInfo(ctx()).getId() == PermeablePaversDB.getPermeablePavers(id).getOwner().getId())) {
             PermeablePaversFormData data = new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
             Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
+            String url = routes.Application.retrievePaverImage(id).url();
             return ok(RegisterPermeablePavers.render(formData, false, YesNoChoiceType.getChoiceList(), 
                       PropertyTypes.getTypes(data.propertyType), DateTypes.getMonthTypes(data.month), 
                       DateTypes.getDayTypes(data.day), DateTypes.getYearTypes(data.year), 
                       PaverMaterialTypes.getMaterialTypes(data.material), 
                       PaverMaterialTypes.getMaterialTypes(data.previousMaterial), 
-                      PermeablePaversSizeTypes.getTypes(data.size), Secured.getUserInfo(ctx())));     
+                      PermeablePaversSizeTypes.getTypes(data.size), url, Secured.getUserInfo(ctx())));     
       }
     }
     return redirect(routes.Application.index());
@@ -870,7 +882,7 @@ public class Application extends Controller {
     if ((barrel != null) && barrel.hasPicture()) {
       return ok(RainBarrelDB.getRainBarrel(id).getImage()).as("image/jpeg");
     }
-    return redirect("");
+    return redirect(routes.Assets.at("images/placeholder.gif"));
   }
   
   /**
@@ -883,8 +895,8 @@ public class Application extends Controller {
     if ((paver != null) && paver.hasPicture()) {
       System.out.println("PermeablePaversDB.hasID");
       return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
-    }   
-    return redirect("");
+    }
+    return redirect(routes.Assets.at("images/placeholder.gif"));
   }
   
   /**

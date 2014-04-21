@@ -1,7 +1,8 @@
 @(formData: Form[views.formdata.RainBarrelFormData], isNew: Boolean, choiceList: List[String], propertyTypes: Map[String, Boolean], 
   monthTypes: Map[String, Boolean], dayTypes: Map[String, Boolean], yearTypes: Map[String, Boolean], 
   barrelTypes: Map[String, Boolean], materialTypes: Map[String, Boolean], usageTypes: Map[String, Boolean],
-  coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], capacityTypes: Map[String, Boolean])
+  coverTypes: Map[String, Boolean], installationTypes: Map[String, Boolean], capacityTypes: Map[String, Boolean],
+  url: String)
 
 @import helper._ 
 @import bootstrap3._ 
@@ -28,7 +29,7 @@
               @bootstrap3.textarea(formData("description"), "5", "Description", "Rain Barrel Description", "")
               @bootstrap3.dateadded(formData("month"), formData("day"),  formData("year"), 
                                     "Date Installed", monthTypes, dayTypes, yearTypes, false, "")
-              @file(formData("uploadFile"), "Upload File", "It is recommended that you upload a square image (i.e. height and width of image are equal).")
+              @upload(formData("uploadFile"), "Upload Picture", url, isNew, "")
               <div class="page-header"><h3>Additional Information</h3></div> 
               @bootstrap3.select(formData("rainBarrelType"), "Rain Barrel Type", "Please Select a Rain Barrel Type", barrelTypes, false, "")
               @bootstrap3.select(formData("capacity"), "Capacity", "Please Select the Capacity of the Rain Barrel", capacityTypes, false, "")

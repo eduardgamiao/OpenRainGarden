@@ -18,6 +18,7 @@ import play.db.ebean.Model;
 @Entity
 public class RainGarden extends Model {
   private static final long serialVersionUID = 1L;
+  private static final int VALID_DATE_LENGTH = 8;
   
   @Id
   private Long id;
@@ -156,12 +157,17 @@ public class RainGarden extends Model {
   public void setDescription(String description) {
     this.description = description;
   }
+  
   /**
    * @return the dateInstalled
    */
   public String getDateInstalled() {
+    if (this.dateInstalled.length() < VALID_DATE_LENGTH) {
+      return "N/A";
+    }
     return dateInstalled;
   }
+  
   /**
    * @param dateInstalled the dateInstalled to set
    */

@@ -81,7 +81,7 @@ public class RainBarrelDB {
    * @param id The ID of the rain barrel to delete.
    */
   public static void deleteRainBarrel(long id) {
-    
+    RainBarrel.find().byId(id).delete();
   }
   
   /**

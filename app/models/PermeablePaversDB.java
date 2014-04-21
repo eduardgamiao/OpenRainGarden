@@ -67,7 +67,7 @@ public class PermeablePaversDB {
    * @param id ID of permeable paver.
    */
   public static void deletePermeablePaver(long id) {
-
+    PermeablePavers.find().byId(id);
   }
   
   /**
