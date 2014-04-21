@@ -817,7 +817,7 @@ public class Application extends Controller {
       return redirect(uri);
     }
     GardenCommentFormData data = formData.get();
-    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(data.id), Secured.getUserInfo(ctx()));
+    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
