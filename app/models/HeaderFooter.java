@@ -15,12 +15,29 @@ public class HeaderFooter extends Model {
   @Id
   private Long id;
   private String header;
+  @Lob
   private String subHeader;
   private String footer;
+  @Lob
   private String subFooter;
   @Lob
   private byte [] headerImage;
   
+  
+  
+  /**
+   * @param header The header.
+   * @param subHeader The sub-header.
+   * @param footer The footer.
+   * @param subFooter The sub-footer.
+   */
+  public HeaderFooter(String header, String subHeader, String footer, String subFooter) {
+    this.header = header;
+    this.subHeader = subHeader;
+    this.footer = footer;
+    this.subFooter = subFooter;
+  }
+
   /**
    * @param header The header.
    * @param subHeader The sub header.

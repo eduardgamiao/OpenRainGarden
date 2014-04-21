@@ -21,6 +21,16 @@ create table garden_comment (
   constraint pk_garden_comment primary key (id))
 ;
 
+create table header_footer (
+  id                        bigint auto_increment not null,
+  header                    varchar(255),
+  sub_header                longtext,
+  footer                    varchar(255),
+  sub_footer                longtext,
+  header_image              longblob,
+  constraint pk_header_footer primary key (id))
+;
+
 create table paver_comment (
   id                        bigint auto_increment not null,
   comment                   varchar(255),
@@ -148,6 +158,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table barrel_comment;
 
 drop table garden_comment;
+
+drop table header_footer;
 
 drop table paver_comment;
 

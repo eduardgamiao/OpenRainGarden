@@ -5,6 +5,7 @@ import models.ButtonDB;
 import models.CommentDB;
 import models.GardenComment;
 import models.GardenCommentDB;
+import models.HeaderFooter;
 import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
@@ -23,6 +24,7 @@ import play.GlobalSettings;
 import models.UserInfoDB;
 import views.formdata.CommentFormData;
 import views.formdata.GardenCommentFormData;
+import views.formdata.HeaderFooterFormData;
 import views.formdata.PermeablePaversFormData;
 import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
@@ -145,11 +147,15 @@ public class Global extends GlobalSettings {
   }
   
   private static void populateIndexContentDB() {
-	  HeaderFooterDB.setHeader("Hawaii Rainwater Solutions: Sponsored by Hui o Koolaupoko"); 
-	  HeaderFooterDB.setSubHeader("Registry & Gallery");
-	  HeaderFooterDB.setFooter("Website sponsered by Hui o Ko'olaupoko and the Hawaii State Department of Health - 2014 Privacy");
-	  HeaderFooterDB.setSubFooter("This project has been jointly funded by the U.S. Environmental Protection Agency (EPA) under Section 319(h) of the Clean Water Act, and the Hawaii State Department of Health (HDOH), Clean Water Branch. Although the information in this document has been funded wholly or in part by a Federal Grant to the HDOH, it may not necessarily reflect the views of the EPA and the HDOH and no offical endorsement should be inferred.");
-	  HeaderFooterDB.setBannerImage("index_banner.jpg");
+    if (HeaderFooterDB.isEmpty()) {
+	  HeaderFooterDB.add(new HeaderFooterFormData("Hawaii Rainwater Solutions: Sponsored by Hui o Koolaupoko",  
+	      "Registry & Gallery", "Website sponsered by Hui o Ko'olaupoko and the Hawaii State Department of Health"
+	          + " - 2014 Privacy", "This project has been jointly funded by the U.S. Environmental Protection "
+	              + "Agency (EPA) under Section 319(h) of the Clean Water Act, and the Hawaii State Department of "
+	              + "Health (HDOH), Clean Water Branch. Although the information in this document has been funded "
+	              + "wholly or in part by a Federal Grant to the HDOH, it may not necessarily reflect the views of "
+	              + "the EPA and the HDOH and no offical endorsement should be inferred."));
+    }
 	  
 	  ButtonDB.addButton(new Button("1", "Sign Up", "/signup"));
 	  ButtonDB.addButton(new Button("1", "View Map", "/map"));

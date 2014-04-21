@@ -1,4 +1,4 @@
-@(indexContentFormData: Form[views.formdata.IndexContentFormData], user: UserInfo)
+@(indexContentFormData: Form[views.formdata.HeaderFooterFormData], user: UserInfo)
 
 @import helper._
 @import bootstrap3._
@@ -14,11 +14,11 @@
 
 					<div class="well">
 						
-						<div class="press-banner" style="margin-top:0px;!important; background-image: url(@routes.Assets.at("images/"+HeaderFooterDB.getBannerImage()))">
+						<div class="press-banner" style="margin-top:0px;!important; background-image: url(@routes.Assets.at("images/placeholder.gif")))">
 						<div class="press-banner" style="margin-top:-100px;!important; background-image: url(@routes.Application.retrieveHomeBannerImage())">
 						
 						
-							<h1 class="text-center bigFont"><b>@HeaderFooterDB.getHeader()</b></br><p style="font-size:80%">@HeaderFooterDB.getSubHeader()</p></h1>
+							<h1 class="text-center bigFont"><b>@HeaderFooterDB.getHeader(1)</b></br><p style="font-size:80%">@HeaderFooterDB.getSubHeader(1)</p></h1>
 						</div>
 					</div>
 					<div style="height:20px"></div>
@@ -32,8 +32,8 @@
 				    
 				    <div class="well">
 				
-						<p style="text-align: center">@HeaderFooterDB.getFooter()</p>
-						<p style="text-align: center">@HeaderFooterDB.getSubFooter()</p>
+						<p style="text-align: center">@HeaderFooterDB.getFooter(1)</p>
+						<p style="text-align: center">@HeaderFooterDB.getSubFooter(1)</p>
 					</div>
 						@bootstrap3.textarea(indexContentFormData("footer"),"5", "Footer:", "footer", "")
 						@bootstrap3.textarea(indexContentFormData("subfooter"),"5", "Subfooter:", "subfooter", "")

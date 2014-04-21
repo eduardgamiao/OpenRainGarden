@@ -67,7 +67,7 @@ import views.formdata.PropertyTypes;
 import views.formdata.RainGardenFormData;
 import views.formdata.LoginFormData;
 import views.formdata.SignUpFormData;
-import views.formdata.IndexContentFormData;
+import views.formdata.HeaderFooterFormData;
 import views.html.Index;
 import views.html.Page1;
 import views.html.RegisterRainGarden;
@@ -111,12 +111,10 @@ public class Application extends Controller {
   
   public static Result index() {
     return ok(Index.render( IndexContentDB.getBlocks(), 
-				    		HeaderFooterDB.getHeader(),
-				    		HeaderFooterDB.getSubHeader(),
-				    		HeaderFooterDB.getFooter(),
-				    		HeaderFooterDB.getSubFooter(),
-				    		HeaderFooterDB.getBannerImage()
-				    		));
+				    		HeaderFooterDB.getHeader(1),
+				    		HeaderFooterDB.getSubHeader(1),
+				    		HeaderFooterDB.getFooter(1),
+				    		HeaderFooterDB.getSubFooter(1)));
   }
   /**
    * Returns the user profile page. 
@@ -199,22 +197,17 @@ public class Application extends Controller {
   }
   
  
-   /**
-   * Open the admin control panel.
-   * @return
-   */
   @Security.Authenticated(Secured.class)
   public static Result editIndexContentFormData() {
-		System.out.println("Opening admin control Page");
-	    IndexContentFormData data = (!Secured.isLoggedIn(ctx())) 
-	        ? new IndexContentFormData() : new IndexContentFormData();
-		  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
-		  if(Secured.isLoggedIn(ctx())){
-			  if(Secured.getUserInfo(ctx()).isAdmin()){
-				  return ok(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
-			  }
-		  }
-		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));
+      if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+        HeaderFooterFormData data = (HeaderFooterDB.getHeaderFooter(1) == null) 
+            ? new HeaderFooterFormData() : new HeaderFooterFormData(HeaderFooterDB.getHeaderFooter(1));
+        Form<HeaderFooterFormData> formData = Form.form(HeaderFooterFormData.class).fill(data);
+        return TODO;             
+      }
+      else {
+        return badRequest(ErrorReport.render(""));
+      }
 	  }
   
   /**
@@ -227,26 +220,21 @@ public class Application extends Controller {
 	  
 	  if(Secured.isLoggedIn(ctx())){
 		  if(Secured.getUserInfo(ctx()).isAdmin()){
-			  Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).bindFromRequest();
+			  Form<HeaderFooterFormData> formData = Form.form(HeaderFooterFormData.class).bindFromRequest();
 			  if (formData.hasErrors() == true) {
 				  System.out.println("Edit profile Errors found.");
 				  return badRequest(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
 			  }
 			  else {
-				  IndexContentFormData data = formData.get();
+				  HeaderFooterFormData data = formData.get();
 				 // System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 				  
 				  //create new userinfo and add it to the "database"
-				  HeaderFooterDB.setHeader(data.header);
-				  HeaderFooterDB.setSubHeader(data.subheader);
-				  HeaderFooterDB.setFooter(data.footer);
-				  HeaderFooterDB.setSubFooter(data.subfooter);
-				  HeaderFooterDB.setBannerImage(data.bannerImageUrl);
-				  
+				  HeaderFooterDB.add(data);
 				  MultipartFormData body = request().body().asMultipartFormData();
 			      FilePart picture = body.getFile("uploadFile");
 			      if (picture != null) {
-			        HeaderFooterDB.setImage(Files.toByteArray(picture.getFile()));
+			        //HeaderFooterDB.setImage(Files.toByteArray(picture.getFile()));
 			      }
 				  
 				  
@@ -856,7 +844,7 @@ public class Application extends Controller {
   }
   
   public static Result retrieveHomeBannerImage() {
-      return ok(HeaderFooterDB.getImage()).as("image/jpeg");
+      return redirect("");
   }
   
   /**
