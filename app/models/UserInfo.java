@@ -21,6 +21,7 @@ public class UserInfo extends Model {
 	private String telephone;
 	private String password;
 	private boolean admin = false;
+	private boolean confirm = false;
 	
 	// Relationships.
 	@OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
@@ -52,6 +53,15 @@ public class UserInfo extends Model {
 		this.telephone = telephone;
 		this.password = password;	
 		this.admin = isadmin;
+	}
+	public UserInfo(String firstName, String lastName, String email, String telephone, String password, Boolean isadmin, Boolean isconfirm) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.telephone = telephone;
+		this.password = password;
+		this.admin = isadmin;
+		this.confirm = isconfirm;
 	}
 	
 	public Long getId() {
@@ -103,11 +113,19 @@ public class UserInfo extends Model {
 	}
 	
 	public boolean isAdmin() {
-		return admin;
+		return this.admin;
 	}
 	
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+	
+	public boolean isConfirmed() {
+		return this.confirm;
+	}
+	
+	public void setConfirm(boolean confirm) {
+		this.confirm = confirm;
 	}
 
   /**

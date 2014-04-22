@@ -8,28 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
 import com.ning.http.client.Body;
-import models.BarrelCommentDB;
-import models.Comment;
-import models.CommentDB;
-import models.GardenCommentDB;
-import models.HeaderFooterDB;
-import models.IndexContentDB;
-import models.PaverCommentDB;
-import models.PermeablePavers;
-import models.PermeablePaversDB;
-import models.Plant;
-import models.PlantDB;
-import models.RainBarrel;
-import models.RainBarrelDB;
-import models.RainGarden;
-import models.RainGardenDB;
-import models.UserInfo;
-import models.UserInfoDB;
-import models.Resource;
-import models.ResourceDB;
+import com.typesafe.plugin.*;
+
 import play.Logger;
 import play.api.Play;
 import play.api.mvc.SimpleResult;
@@ -41,60 +25,10 @@ import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import views.formdata.BarrelCommentFormData;
-import views.formdata.CommentFormData;
-import views.formdata.CoverTypes;
-import views.formdata.DateTypes;
-import views.formdata.GardenCommentFormData;
-import views.formdata.InfiltrationRateTypes;
-import views.formdata.InstallationTypes;
-import views.formdata.MaterialTypes;
-import views.formdata.PaverCommentFormData;
-import views.formdata.PaverMaterialTypes;
-import views.formdata.PermeablePaversFormData;
-import views.formdata.PermeablePaversSizeTypes;
-import views.formdata.PlantFormData;
-import views.formdata.PlantFormDropdownTypes;
-import views.formdata.RainBarrelCapacityTypes;
-import views.formdata.RainBarrelFormData;
-import views.formdata.RainBarrelTypes;
-import views.formdata.RainGardenSizeTypes;
-import views.formdata.WaterSourceSizeTypes;
-import views.formdata.WaterUsageTypes;
-import views.formdata.YesNoChoiceType;
-import views.formdata.PlantTypes;
-import views.formdata.PropertyTypes;
-import views.formdata.RainGardenFormData;
-import views.formdata.LoginFormData;
-import views.formdata.SignUpFormData;
-import views.formdata.HeaderFooterFormData;
-import views.html.Index;
-import views.html.Page1;
-import views.html.RegisterRainGarden;
-import views.html.Login;
-import views.html.ViewGarden;
-import views.html.ViewBarrel;
-import views.html.SignUp;
-import views.html.RegisterMenu;
-import views.html.RegisterRainBarrel;
-import views.html.LearnMore;
-import views.html.RegisterPermeablePavers;
-import views.html.ViewPaver;
-import views.html.RainGardenGallery;
-import views.html.RainBarrelGallery;
-import views.html.PermeablePaverGallery;
-import views.html.MapPage;
-import views.html.Profile;
-import views.html.EditProfile;
-import views.html.ErrorReport;
-import views.html.AdminPanel;
-import views.html.EditIndexContent;
-import views.html.RegisterPlant;
-import views.html.ViewPlant;
-import views.html.EditResource;
-import views.html.NewResource;
-import com.typesafe.plugin.*;
 
+import models.*;
+import views.formdata.*;
+import views.html.*;
 
 /**
  * Implements the controllers for this application.
@@ -642,11 +576,17 @@ public class Application extends Controller {
 		  mail.setFrom("openraingarden@gmail.com");
 		  mail.send("Please confirm your registration at our website by entering the following code: 123456");
 		  */
-		  //create new userinfo and add it to the "database"
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false);
 		  
-		  return redirect(routes.Application.login(routes.Application.index().url()));
+		  //create new userinfo and add it to the "database"
+		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
+		  
+		  //return redirect(routes.Application.login(routes.Application.index().url()));
+		  return ok(ThankYou.render("Thank You"));
 	  }
+  }
+  
+  public static Result thankYou() {
+	  return ok(ThankYou.render("Thank You"));
   }
   
   /**

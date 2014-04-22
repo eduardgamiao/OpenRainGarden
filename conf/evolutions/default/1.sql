@@ -117,6 +117,7 @@ create table user_info (
   telephone                 varchar(255),
   password                  varchar(255),
   admin                     tinyint(1) default 0,
+  confirm                   tinyint(1) default 0,
   constraint pk_user_info primary key (id))
 ;
 

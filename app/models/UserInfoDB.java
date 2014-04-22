@@ -25,6 +25,11 @@ public class UserInfoDB {
 		userInfo.save();
 	}
 	
+	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password, boolean isAdmin, boolean isConfirm) {
+		UserInfo userInfo = new UserInfo(firstName, lastName, email, telephone, password, isAdmin, isConfirm);
+		userInfo.save();
+	}
+	
 	/**
 	 * Returns whether given email is in the userDB
 	 * @param email
