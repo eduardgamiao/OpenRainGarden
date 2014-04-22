@@ -93,6 +93,7 @@ import views.html.RegisterPlant;
 import views.html.ViewPlant;
 import views.html.EditResource;
 import views.html.NewResource;
+import com.typesafe.plugin.*;
 
 
 /**
@@ -634,6 +635,13 @@ public class Application extends Controller {
 		  SignUpFormData data = formData.get();
 		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 		  
+		  //send email
+		  /*MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+		  mail.setSubject("Sign up Confirmation");
+		  mail.setRecipient(data.email);
+		  mail.setFrom("openraingarden@gmail.com");
+		  mail.send("Please confirm your registration at our website by entering the following code: 123456");
+		  */
 		  //create new userinfo and add it to the "database"
 		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false);
 		  

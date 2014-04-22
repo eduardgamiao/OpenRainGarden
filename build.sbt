@@ -6,6 +6,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
+  "com.typesafe" %% "play-plugins-mailer" % "2.2.0",
   "mysql" % "mysql-connector-java" % "5.1.21"
 )     
 
