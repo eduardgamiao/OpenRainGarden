@@ -13,6 +13,7 @@ import org.apache.http.protocol.HTTP;
 import com.google.common.io.Files;
 import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import play.Logger;
 import play.api.Play;
@@ -578,7 +579,8 @@ public class Application extends Controller {
 		  */
 		  
 		  //create new userinfo and add it to the "database"
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
+		  //UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
+		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, BCrypt.hashpw(data.password, BCrypt.gensalt()), false, false);
 		  
 		  //return redirect(routes.Application.login(routes.Application.index().url()));
 		  return redirect(routes.Application.thankYou());

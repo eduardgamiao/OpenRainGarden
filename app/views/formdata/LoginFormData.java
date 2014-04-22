@@ -6,6 +6,8 @@ import java.util.List;
 import play.data.validation.ValidationError;
 import models.UserInfoDB;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * Backing Class for Log in page form
  * @author Kyle
@@ -25,7 +27,7 @@ public class LoginFormData {
 			errors.add(new ValidationError("password", "Please enter your password."));
 		}
 		
-		if (this.email != null && UserInfoDB.isUser(this.email) == true) {
+		/*if (this.email != null && UserInfoDB.isUser(this.email) == true) {
 			if (this.password != null && UserInfoDB.isValid(this.email, this.password) == false) {
 				errors.add(new ValidationError("password", "Incorrect password."));
 			}
@@ -33,6 +35,11 @@ public class LoginFormData {
 		}
 		else {
 			errors.add(new ValidationError("email", "Entered email is not registered."));
+		}*/
+		
+		if (BCrypt.checkpw(this.password, UserInfoDB.getUser(this.email).getPassword()) == false) {
+			errors.add(new ValidationError("password", "Incorrect user information."));
+			errors.add(new ValidationError("email", "Incorrect user information"));
 		}
 		
 		return errors.isEmpty() ? null : errors;

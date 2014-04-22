@@ -30,6 +30,8 @@ import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * Implements a Global object for the Play Framework.
  * 
@@ -53,9 +55,9 @@ public class Global extends GlobalSettings {
     
     //Add phoney users
     if (UserInfoDB.getUsers().isEmpty()) {
-      UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", "pw", false);
-      UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", "pw", false);
-      UserInfoDB.addUserInfo("Admin", "HOK", "admin@gmail.com", "1234567", "pw", true);
+      UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
+      UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
+      UserInfoDB.addUserInfo("Admin", "HOK", "admin@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), true);
     }
         
     // Add rain garden.
