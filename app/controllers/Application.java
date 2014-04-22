@@ -581,10 +581,14 @@ public class Application extends Controller {
 		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
 		  
 		  //return redirect(routes.Application.login(routes.Application.index().url()));
-		  return ok(ThankYou.render("Thank You"));
+		  return redirect(routes.Application.thankYou());
 	  }
   }
   
+  /**
+   * Returns the Thank You page
+   * @return
+   */
   public static Result thankYou() {
 	  return ok(ThankYou.render("Thank You"));
   }
