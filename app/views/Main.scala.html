@@ -212,7 +212,7 @@
 				<li class="@("active".when(title == "Logout"))"><a href="@routes.Application.logout()">Logout</a></li>
 			} else {
 				<li class="@("active".when(title == "Sign Up"))"><a href="/signup">Signup</a></li>
-				<li class="@("active".when(title == "Login"))"><a href="/login">Login</a></li>
+				<li class="@("active".when(title == "Login"))"><a href="@routes.Application.login(ctx().request().uri())">Login</a></li>
 				
 			}             
             

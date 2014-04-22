@@ -637,7 +637,7 @@ public class Application extends Controller {
 		  //create new userinfo and add it to the "database"
 		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false);
 		  
-		  return redirect(routes.Application.login());
+		  return redirect(routes.Application.login(routes.Application.index().url()));
 	  }
   }
   
@@ -645,28 +645,28 @@ public class Application extends Controller {
    * Returns login page
    * @return Log in
    */
-  public static Result login() {
+  public static Result login(String target) {    
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class);
-	  return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData));
+	  return ok(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, target));
   }
   
   /**
    * Processes the log in form
    * @return
    */
-  public static Result postLogin() {
+  public static Result postLogin(String target) {
 	  System.out.println("Post Login");
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class).bindFromRequest();
 	  
 	  if (formData.hasErrors() == true) {
 		  System.out.println("Login errors found");
 		  flash("error", "Login credentials not valid.");
-		  return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData));
+		  return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, target));
 	  }
 	  else {
 		  session().clear();
 		  session("email", formData.get().email);
-		  return redirect(routes.Application.index());
+		  return redirect(target);
 	  }
   }
   
