@@ -86,7 +86,7 @@
 				</div>
 				<div class="row">
 					@for(garden <- ResourceDB.getGardenList()) {
-						@edit_resource(garden)
+						@edit_resource(garden, "garden")
 					}
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 				</div>
 				<div class="row">
 					@for(barrel <- ResourceDB.getBarrelList()) {
-						@edit_resource(barrel)
+						@edit_resource(barrel, "barrel")
 					}
 				</div>
 			</div>
@@ -118,7 +118,7 @@
 				</div>
 				<div class="row">
 					@for(paver <- ResourceDB.getPaverList()) {
-						@edit_resource(paver)
+						@edit_resource(paver, "paver")
 					}
 				</div>
 			</div>

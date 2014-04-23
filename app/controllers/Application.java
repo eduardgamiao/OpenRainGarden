@@ -1032,38 +1032,74 @@ public class Application extends Controller {
    * @return
    */
   @Security.Authenticated(Secured.class)
-  public static Result editResource(String header) {
+  public static Result editResource(String find, Long id) {
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  Resource resource;
-		  if ((resource = ResourceDB.getGardenResource(header)) == null) {
-			  if ((resource = ResourceDB.getBarrelResource(header)) == null) {
-				  resource = ResourceDB.getPaverResource(header);
-			  }
+		  ResourceFormData data;
+		  if (id == 0) {
+			  data = new ResourceFormData();
 		  }
-		  return ok(EditResource.render(resource));
+		  else {
+			  data = new ResourceFormData(ResourceDB.getResource(id));
+		  }
+		  
+		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).fill(data);
+		  return ok(EditResource.render(formData, find));
 	  }
 	  return redirect(routes.Application.index());
   }
   
   /**
-   * Returns the new resource page
+   * Processes the edit Resource form
+   * @param find
    * @return
+   * @throws IOException
    */
   @Security.Authenticated(Secured.class)
-  public static Result newResource(String header) {
+  public static Result postEditResource(String find) throws IOException{
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  List<Resource> list;
-		  if (header.equals("garden")) {
-			  list = ResourceDB.getGardenList();
-		  }
-		  else if (header.equals("barrel")) {
-			  list = ResourceDB.getBarrelList();
+		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
+		  //need to implement file upload validation
+		  if (formData.hasErrors() == true) {
+			  System.out.println("Errors found in edit resource form");
+			  return badRequest(EditResource.render(formData, find));
 		  }
 		  else {
-			  list = ResourceDB.getPaverList();
+			  System.out.println("Post Edit Resource");
+			  ResourceFormData data = formData.get();			  
+			  MultipartFormData body = request().body().asMultipartFormData();
+			  FilePart picture = body.getFile("uploadFile");
+			  
+			  Resource resource = null;
+			  if (find.equals("garden") ==  true) {
+				  resource = ResourceDB.addGardenResource(data);
+			  }
+			  else if (find.equals("barrel") == true) {
+				  resource = ResourceDB.addBarrelResource(data);
+			  }
+			  else if (find.equals("paver") == true) {
+				  resource = ResourceDB.addPaverResource(data);
+			  }
+			  
+			  if (picture != null) {
+				  resource.setImage(Files.toByteArray(picture.getFile()));
+				  System.out.println("Setting picture");
+			  }
+			  return redirect(routes.Application.adminPanel());
 		  }
-		  return ok(NewResource.render(list));
 	  }
 	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Retrieves the resource image based on the given id
+   * @param id
+   * @return
+   */
+  public static Result retrieveResourceImage(long id) {
+	  Resource resource = ResourceDB.getResource(id);
+	  if (resource != null && resource.hasPicture()) {
+		  return ok(resource.getImage()).as("image/jpeg");
+	  }
+	  return redirect("");
   }
 }

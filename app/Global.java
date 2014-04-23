@@ -29,6 +29,7 @@ import views.formdata.PermeablePaversFormData;
 import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
+import views.formdata.ResourceFormData;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -95,14 +96,14 @@ public class Global extends GlobalSettings {
     }
     
     //Learn More Resource Database
-    ResourceDB.addGardenResource(new Resource("Hui o Ko'olaupoko Rain Garden Program", "hokprogram.jpg", "http://www.huihawaii.org/rain-gardens.html"));
-    ResourceDB.addGardenResource(new Resource("Hawaii Rain Garden Manual", "raingardenmanual.jpg", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
-    ResourceDB.addGardenResource(new Resource("Native Plant Care Manual", "nativeplantmanual.jpg", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
+    ResourceDB.addGardenResource(new ResourceFormData(0, "Hui o Ko'olaupoko Rain Garden Program", "http://www.huihawaii.org/rain-gardens.html"));
+    ResourceDB.addGardenResource(new ResourceFormData(0, "Hawaii Rain Garden Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
+    ResourceDB.addGardenResource(new ResourceFormData(0, "Native Plant Care Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
     
-    ResourceDB.addBarrelResource(new Resource("Honolulu Board of Water Supply Rain Barrel Program", "watersupplyprogram.jpg", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
+    ResourceDB.addBarrelResource(new ResourceFormData(0, "Honolulu Board of Water Supply Rain Barrel Program", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
     
-    ResourceDB.addPaverResource(new Resource("AquaPave", "aquapave.jpg", "http://www.aquapave.com/index.htm"));
-    ResourceDB.addPaverResource(new Resource("Futura Stone of Hawaii", "futurastone.jpg", "http://futurastonehawaii.com/"));
+    ResourceDB.addPaverResource(new ResourceFormData(0, "AquaPave", "http://www.aquapave.com/index.htm"));
+    ResourceDB.addPaverResource(new ResourceFormData(0, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
   }
 
   /**

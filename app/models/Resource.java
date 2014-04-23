@@ -1,25 +1,44 @@
 package models;
 
+import java.io.IOException;
+
 /**
  * Represents a resource object in the Learn More Page
  * @author Kyle
  *
  */
 public class Resource {
+	private Long id;
 	private String header;
-	private String imageName;
 	private String url;
+	private byte [] image;
 	
 	/**
 	 * Constructor
+	 * @param id ID of the resource
 	 * @param header Title of the resource
-	 * @param imageName Name of the image file displayed
 	 * @param url URL of the resource
 	 */
-	public Resource(String header, String imageName, String url) {
+	public Resource(Long id, String header, String url) {
+		this.id = id;
 		this.header = header;
-		this.imageName = imageName;
 		this.url = url;
+	}
+	
+	/**
+	 * Returns the id of the resource
+	 * @return
+	 */
+	public Long getID() {
+		return this.id;
+	}
+	
+	/**
+	 * Sets the id to the given id
+	 * @param id
+	 */
+	public void setID(Long id) {
+		this.id = id;
 	}
 	
 	/**
@@ -39,23 +58,6 @@ public class Resource {
 	}
 	
 	/**
-	 * Returns the name of the image displayed
-	 * @return
-	 */
-	public String getImageName() {
-		return this.imageName;
-	}
-	
-	/**
-	 * Sets the name of the image displayed to the given imageName
-	 * There is no validation of whether the given imageName exists in the image folder
-	 * @param imageName
-	 */
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-	
-	/**
 	 * Returns the URL of the resource
 	 * @return
 	 */
@@ -70,5 +72,46 @@ public class Resource {
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	/**
+	 * Returns the image
+	 * @return
+	 */
+	public byte [] getImage() {
+		return image;
+	}
+	
+	/**
+	 * Sets the image to the given image
+	 * @param image
+	 */
+	public void setImage(byte [] image) {
+		this.image = image;
+	}
+	
+	/**
+	 * Returns true if there is an image, false otherwise
+	 * @return
+	 */
+	public boolean hasPicture() {
+		if (this.image == null) {
+			return false;
+		}
+		else {
+			return (this.image.length > 0);
+		}
+	}
+	
+	/**
+	 * Returns the image name, if it exists; otherwise returns the placeholder image
+	 * @return
+	 * @throws IOException
+	 */
+	public String getPictureName() throws IOException {
+		if (hasPicture() == true) {
+			return "images/upload/resource" + this.id;
+		}
+		return "images/placeholder.gif";
 	}
 }
