@@ -18,7 +18,7 @@ public class LoginFormData {
 	public String password;
 	
 	public List<ValidationError> validate() {
-		List<ValidationError> errors = new ArrayList<>();
+		List<ValidationError> errors = new ArrayList<ValidationError>();
 		
 		if (this.email == null || this.email.length() == 0) {
 			errors.add(new ValidationError("email", "Please enter your email address."));
@@ -37,9 +37,14 @@ public class LoginFormData {
 			errors.add(new ValidationError("email", "Entered email is not registered."));
 		}*/
 		
-		if (BCrypt.checkpw(this.password, UserInfoDB.getUser(this.email).getPassword()) == false) {
-			errors.add(new ValidationError("password", "Incorrect user information."));
-			errors.add(new ValidationError("email", "Incorrect user information"));
+		if (UserInfoDB.isUser(this.email) != true) {
+			errors.add(new ValidationError("email", "Incorrect user information."));
+		}
+		else {
+			if (BCrypt.checkpw(this.password, UserInfoDB.getUser(this.email).getPassword()) == false) {
+				errors.add(new ValidationError("password", "Incorrect user information."));
+				errors.add(new ValidationError("email", "Incorrect user information"));
+			}
 		}
 		
 		return errors.isEmpty() ? null : errors;
