@@ -86,6 +86,7 @@ public class Global extends GlobalSettings {
         "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
     barrel.setApproved(true);
+    barrel.save();
     }
     
     // Add permeable paver.
@@ -95,6 +96,7 @@ public class Global extends GlobalSettings {
             + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
             "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
     paver.setApproved(true);
+    paver.save();
     }
     
     //Learn More Resource Database

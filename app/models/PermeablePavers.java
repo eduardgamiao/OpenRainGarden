@@ -21,7 +21,7 @@ public class PermeablePavers extends Model {
   
   @Id
   private Long id;
-  private String title;
+  private String title = "Permeable Pavers";
   private String propertyType;
   private String address;
   private String hideAddress;

@@ -21,7 +21,7 @@ public class RainBarrel extends Model {
   
   @Id
   private Long id;
-  private String title;
+  private String title = "Rain Barrel";
   private String propertyType;
   private String address;
   private String hideAddress;
@@ -417,6 +417,13 @@ public class RainBarrel extends Model {
     this.owner = owner;
   } 
   
+  /**
+   * @return the comments
+   */
+  public List<BarrelComment> getComments() {
+    return comments;
+  }
+
   /**
    * Get the picture name tied to a rain barrel..
    * @return The name of the picture tied to the rain barrel.

@@ -22,7 +22,7 @@ public class RainGarden extends Model {
   
   @Id
   private Long id;
-  private String title;
+  private String title = "Rain Garden";
   private String propertyType;
   private String address;
   private String hideAddress;

@@ -506,7 +506,7 @@ public class Application extends Controller {
     BarrelCommentFormData commentFormData = new BarrelCommentFormData();
     Form<BarrelCommentFormData> commentForm = Form.form(BarrelCommentFormData.class).fill(commentFormData);
     if (barrel != null) {
-     return ok(ViewBarrel.render(barrel, BarrelCommentDB.getRainBarrelComments(id), commentForm));
+     return ok(ViewBarrel.render(barrel, commentForm));
     }
     return redirect(routes.Application.barrelgallery());
   }
