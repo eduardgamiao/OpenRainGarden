@@ -22,6 +22,7 @@ public class UserInfo extends Model {
 	private String password;
 	private boolean admin = false;
 	private boolean confirm = false;
+	private String confirmHash;
 	
 	// Relationships.
 	@OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
@@ -126,6 +127,14 @@ public class UserInfo extends Model {
 	
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
+	}
+	
+	public String getConfirmHash() {
+		return this.confirmHash;
+	}
+	
+	public void setConfirmHash(String confirmHash) {
+		this.confirmHash = confirmHash;
 	}
 
   /**

@@ -1,0 +1,28 @@
+@(isSuccess: Boolean)
+
+@Main("Email Confirm") {
+@if(isSuccess == true){
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">Email Confirmed</h2>
+			</div>
+			<div class="panel-body">
+				<p>Your email has been confirmed. Enjoy the site!</p>
+			</div>
+		</div>
+	</div>
+} else {
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">Email Not Confirmed</h2>
+			</div>
+			<div class="panel-body">
+				<p>Invalid email and/or confirmation key.</p>
+			</div>
+		</div>
+	</div>
+
+}
+}

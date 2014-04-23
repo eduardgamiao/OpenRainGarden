@@ -10,10 +10,7 @@
       <div class="panel-heading" style="background-color:#3E60AD; color: white;">
         <h1 class="text-center panel-title"> User Profile </h1>
         Name:  @user.getFirstName() @user.getLastName() 
-        <br>Email:  @user.getEmail()
-       
-        
-        
+        <br>Email:  @user.getEmail() @if(user.isConfirmed() == true){(Confirmed)} else {(Not Confirmed)}
       </div>
       
       <div class="panel-body">

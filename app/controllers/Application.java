@@ -576,8 +576,11 @@ public class Application extends Controller {
 		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 		  
 		  //create new userinfo and add it to the "database"
-		  //UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
 		  long id = UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, BCrypt.hashpw(data.password, BCrypt.gensalt()), false, false);
+		  
+		  //log in user
+		  session().clear();
+		  session("email", data.email);
 		  
 		  //return redirect(routes.Application.login(routes.Application.index().url()));
 		  return redirect(routes.Application.thankYou(id));
@@ -588,41 +591,63 @@ public class Application extends Controller {
    * Returns the Thank You page
    * @return
    */
+  @Security.Authenticated(Secured.class)
   public static Result thankYou(long id) {
-	  UserInfo user = UserInfoDB.getUser(id);
-	  String confirmHash = null;
-	  
-	  try {
-		  SecureRandom random = new SecureRandom();
-		  byte bytes[] = new byte[20];
-		  random.nextBytes(bytes);
-		  String message = bytes.toString();
+	  if (Secured.getUserInfo(ctx()).getId() == id) {
+		  UserInfo user = UserInfoDB.getUser(id);
 		  
-		  MessageDigest md = MessageDigest.getInstance("MD5");
-		  byte[] hash = md.digest(message.getBytes("UTF-8"));
-		  StringBuffer buffer = new StringBuffer();
-		  for (int i = 0; i < hash.length; i++){
-			  buffer.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+		  try {
+			  SecureRandom random = new SecureRandom();
+			  byte bytes[] = new byte[20];
+			  random.nextBytes(bytes);
+			  String message = bytes.toString();
+			  
+			  MessageDigest md = MessageDigest.getInstance("MD5");
+			  byte[] hash = md.digest(message.getBytes("UTF-8"));
+			  StringBuffer buffer = new StringBuffer();
+			  for (int i = 0; i < hash.length; i++){
+				  buffer.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+			  }
+			  user.setConfirmHash(buffer.toString());
+			  user.save();
 		  }
-		  //user.setConfirmHash(buffer.toString());
-		  confirmHash = buffer.toString();
+		  catch (UnsupportedEncodingException ex) {
+			  System.err.println(ex.getStackTrace());
+		  }
+		  catch (NoSuchAlgorithmException ex) {
+			  System.err.println(ex.getStackTrace());
+		  }
+		  
+		  //send email
+		  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+		  mail.setSubject("Sign up Email Confirmation");
+		  mail.setRecipient(user.getEmail());
+		  mail.setFrom("openraingarden@gmail.com");
+		  
+		  String url = routes.Application.index().absoluteURL(request()) + "confirm/" + id + "/" + user.getConfirmHash();
+		  System.out.println(url);
+		  
+		  mail.send("Please confirm your registration at our website by following the below link: " + url);
+		  
+		  return ok(ThankYou.render(id));
 	  }
-	  catch (UnsupportedEncodingException ex) {
-		  System.err.println(ex.getStackTrace());
+	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Returns the email confirmation page
+   * @param id
+   * @param hash
+   * @return
+   */
+  public static Result emailConfirm(long id, String hash) {
+	  UserInfo user = UserInfoDB.getUser(id);
+	  if (user != null && user.getConfirmHash() != null && user.getConfirmHash().equals(hash) == true) {
+		  user.setConfirm(true);
+		  user.save();
+		  return ok(EmailConfirm.render(true));
 	  }
-	  catch (NoSuchAlgorithmException ex) {
-		  System.err.println(ex.getStackTrace());
-	  }
-	  
-	  //send email
-	  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-	  mail.setSubject("Sign up Email Confirmation");
-	  mail.setRecipient(user.getEmail());
-	  mail.setFrom("openraingarden@gmail.com");
-	  //mail.send("Please confirm your registration at our website by following the below link: " + user.getConfirmHash());
-	  mail.send("Confimation hash: " + confirmHash);
-	  
-	  return ok(ThankYou.render("Thank You"));
+	  return ok(EmailConfirm.render(false));
   }
   
   /**

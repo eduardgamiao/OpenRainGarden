@@ -118,6 +118,7 @@ create table user_info (
   password                  varchar(255),
   admin                     tinyint(1) default 0,
   confirm                   tinyint(1) default 0,
+  confirm_hash              varchar(255),
   constraint pk_user_info primary key (id))
 ;
 
