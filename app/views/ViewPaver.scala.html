@@ -1,25 +1,23 @@
-@(permeablePaver: PermeablePavers, comments: List[PaverComment], 
-  commentFormData: Form[views.formdata.PaverCommentFormData])
-
-@import helper._
+@(permeablePaver: PermeablePavers, commentFormData: Form[views.formdata.PaverCommentFormData])
+  
+@import helper._ 
 @import bootstrap3._
-@information() = {
-<ul class="list-group" style="text-align: center;">
-  <li class="list-group-item">Owner: @permeablePaver.getOwner().getName()</li>
-  <li class="list-group-item">Type: Permeable Pavers</li>
-  <li class="list-group-item">Property Type: @permeablePaver.getPropertyType()</li>
-  <li class="list-group-item">Address: @if(permeablePaver.getHideAddress().equals("Yes")) {Hidden} else {@permeablePaver.getAddress()}</li>
-  <li class="list-group-item">Date Added: @permeablePaver.getDateInstalled()</li>
-</ul>
+@checkInput(input: String) = @{
+  if (input == null || input.isEmpty()) "N/A" else input
 }
 
-@Main("View Permeable Paver") {
+@Main("View Permeable Pavers") {
    <div class="container">
+    @if(!(permeablePaver.isApproved())) {
+      <div class="alert alert-info"><p><strong>This page is awaiting approval.</strong></p>
+        <p>Thank you for registering your permeable paver. This page is currently awaiting approval from a site administrator and will not be visible to the public. During this time, feel free to edit your permeable paver's information.</p>
+      </div>
+    }
        <div class="row">
       <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
          <ul class="nav nav-tabs">
           <li class="active"><a href="/view/rain-garden/@permeablePaver.getID()">View</a></li>
-           @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).getEmail().equals(permeablePaver.getOwner().getEmail()))) {
+          @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).getEmail().equals(permeablePaver.getOwner().getEmail()))) {
             <li><a href="@routes.Application.managePermeablePavers(permeablePaver.getID())">Edit Information</a></li>
             <li><a href="#" onclick="javascript:OpenModal()">Delete Page</a></li>
           }
@@ -27,56 +25,55 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@if(permeablePaver.hasPicture()) {@routes.Application.retrievePaverImage(permeablePaver.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block view-header"/>
+              <img src="@if(permeablePaver.hasPicture()) {@routes.Application.retrieveGardenImage(permeablePaver.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block view-header"/>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <h3
                 style="position: relative; bottom: 1.9em; background-color: rgba(0, 0, 0, 0.5); width: 100%; color: white;">
-                @if(!(permeablePaver.getTitle().equals(""))) {@permeablePaver.getTitle()} else {Permeable Paver}</h3>
+                @if(!(permeablePaver.getTitle().equals(""))) {@permeablePaver.getTitle()} else {Rain Garden}</h3>
             </div>
           </div>
-          <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
-            @information()
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; color:black; bottom: 1.9em;">
+            <p><b>Owner:</b> <a href="@routes.Application.profile(permeablePaver.getOwner().getEmail())">@permeablePaver.getOwner().getName()</a></p>
+            <p><b>Property Type:</b> @permeablePaver.getPropertyType()</p>
+            <p><b>Address:</b> @if(permeablePaver.getHideAddress().equals("Yes")) {Hidden} else {@permeablePaver.getAddress()}</p>
+            <p><b>Date Installed:</b> @permeablePaver.getDateInstalled()</p>
           </div>
-          <div class="row" style="color: black; font-size: 14px; padding-left: 1em; padding-right: 1em;">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+          <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+                        <div class="page-header"><h4>Description</h4></div>
               <p>@if(permeablePaver.getDescription().equals("")) {No Description} else {@permeablePaver.getDescription()}</p>
             </div>
-            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
-              @information()
-            </div>
           </div>
-          <div class="row" style="color: black; font-size: 14px;  padding: 0 2em 0 2em;">
-              <div class="page-header">
-              <h4>Additional Information</h4>
-              </div>              
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <b>Material:</b> @permeablePaver.getMaterial()<br/>
-                  <b>Previous Material:</b> @permeablePaver.getPreviousMaterial()<br/>
-                  <b>Size:</b> @permeablePaver.getSize()<br/>
-                  <b>Installer:</b> @permeablePaver.getInstaller()<br/>
+          <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">         
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+              <div class="page-header"><h4>Additional Information</h4></div>
+                  <p><b>Material:</b> @checkInput(permeablePaver.getMaterial())</p>
+                  <p><b>Previous Material:</b> @checkInput(permeablePaver.getPreviousMaterial())</p>
+                  <p><b>Size:</b> @checkInput(permeablePaver.getSize())</p>
+                  <p><b>Installer:</b> @checkInput(permeablePaver.getInstaller())</p>               
               </div>
-          </div>
-         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
+              </div>              
+        <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">
-            <h4>Comments (@comments.size())</h4>          
+            <h4>Comments (@permeablePaver.getComments().size)</h4>          
           </div>
               <div class="well" style="background-color:white;">
-           @if(comments.isEmpty()) { 
+           @if(permeablePaver.getComments().isEmpty()) { 
               <div class="alert alert-info">This permeable paver has no comments.</div>           
             } else { 
-              @for(comment <- comments) {
+              @for(comment <- permeablePaver.getComments()) {
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;">@comment.getPoster().getName() <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getEmail())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
                      @comment.getComment()
                   </div>
                </div>
               }
             }
-            @if(Secured.isLoggedIn(ctx())) {
+            @if(Secured.isLoggedIn(ctx()) && permeablePaver.isApproved()) {
             <br/>
               <!-- Comment Form -->
               @form(routes.Application.postPaverComment(permeablePaver.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            
@@ -85,8 +82,9 @@
             }
             </div>       
         </div>
-        </div>
       </div>
+      </div>
+   </div>
    </div>
    <div class=" modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -98,7 +96,7 @@
       <div class="modal-body">This action cannot be undone. Are you sure?</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/delete/permeable-pavers/@permeablePaver.getID()"><button type="button" class="btn btn-danger">Delete</button></a>
+        <a href="@routes.Application.deletePaver(permeablePaver.getID())"><button type="button" class="btn btn-danger">Delete</button></a>
       </div>
     </div>
   </div>

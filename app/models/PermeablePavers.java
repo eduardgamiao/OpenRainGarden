@@ -267,6 +267,13 @@ public class PermeablePavers extends Model {
   }
 
   /**
+   * @return the comments
+   */
+  public List<PaverComment> getComments() {
+    return comments;
+  }
+
+  /**
    * @return the isApproved
    */
   public boolean isApproved() {
@@ -354,6 +361,18 @@ public class PermeablePavers extends Model {
    */
   public String getKey() {
     return this.commentKey;
+  }
+  
+  /**
+   * Check if a user is the owner of a permeable pavers.
+   * @param userInfo The user to check.
+   * @return True if the user is the owner, false otherwise.
+   */
+  public boolean isOwner(UserInfo userInfo) {
+    if (userInfo == null) {
+      return false;
+    }
+    return (this.owner.getId() == userInfo.getId());
   }
   
   /**

@@ -205,7 +205,8 @@
 	              }
                 @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).isAdmin)) {
                 <li role="presentation" class="divider"></li>
-                <li><a href="/view/plant">Plant</a></li>
+                <li><a href="@routes.Application.viewSolutions()">Manage Solutions</a></li>
+                <li><a href="/view/plant">Manage Plants</a></li>
                 }
 	            </ul>
 	        </li>
