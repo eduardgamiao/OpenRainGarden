@@ -492,12 +492,13 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result deleteGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
+    UserInfo owner = garden.getOwner();
     if (garden != null) {
       garden.getOwner().deleteGarden(garden);
       RainGardenDB.deleteRainGarden(garden.getID());
     }
     // Redirect to user page once implemented.
-    return redirect(routes.Application.index());
+    return ok(Profile.render(owner));
   }
   
   /**
@@ -530,12 +531,13 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result deleteBarrel(Long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    UserInfo owner = barrel.getOwner();
     if (barrel != null) {
       barrel.getOwner().deleteBarrel(barrel);
       RainBarrelDB.deleteRainBarrel(id);
     }
     // Redirect to user page once implemented.
-    return redirect(routes.Application.index());
+    return ok(Profile.render(owner));
   }
   
   /**
@@ -563,17 +565,18 @@ public class Application extends Controller {
   /**
    * Delete a paver from application.
    * @param id ID of paver to delete.
-   * @return The index page.
+   * @return The owner's profile page.
    */
   @Security.Authenticated(Secured.class)
   public static Result deletePaver(Long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    UserInfo owner = paver.getOwner();
     if (paver != null) {
       paver.getOwner().deletePaver(paver);
       PermeablePaversDB.deletePermeablePaver(paver.getID());
     }
     // Redirect to user page once implemented.
-    return redirect(routes.Application.index());
+    return ok(Profile.render(owner));
   }
   
   /**
