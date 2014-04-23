@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
@@ -22,6 +23,7 @@ import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
 import models.UserInfoDB;
+import views.formdata.ButtonFormData;
 import views.formdata.CommentFormData;
 import views.formdata.GardenCommentFormData;
 import views.formdata.HeaderFooterFormData;
@@ -164,17 +166,17 @@ public class Global extends GlobalSettings {
 	              + "the EPA and the HDOH and no offical endorsement should be inferred."));
     }
 	  
-	  ButtonDB.addButton(new Button("1", "Sign Up", "/signup"));
-	  ButtonDB.addButton(new Button("1", "View Map", "/map"));
+	  ButtonDB.add(new ButtonFormData("1", "Sign Up", "/signup"));
+	  ButtonDB.add(new ButtonFormData("1", "View Map", "/map"));
 	  
-	  ButtonDB.addButton(new Button("2", "Learn More", "/learnmore#garden_resources"));
-	  ButtonDB.addButton(new Button("2", "View Gallery", "/gallery/rain-garden"));
+	  ButtonDB.add(new ButtonFormData("2", "Learn More", "/learnmore#garden_resources"));
+	  ButtonDB.add(new ButtonFormData("2", "View Gallery", "/gallery/rain-garden"));
 	  
-	  ButtonDB.addButton(new Button("4", "Learn More", "/learnmore#barrel_resources"));
-	  ButtonDB.addButton(new Button("4", "View Gallery", "/gallery/rain-barrel"));
+	  ButtonDB.add(new ButtonFormData("4", "Learn More", "/learnmore#barrel_resources"));
+	  ButtonDB.add(new ButtonFormData("4", "View Gallery", "/gallery/rain-barrel"));
 	  
-	  ButtonDB.addButton(new Button("3", "Learn More", "/learnmore#paver_resources"));
-	  ButtonDB.addButton(new Button("3", "View Gallery", "/gallery/permeable-paver"));
+	  ButtonDB.add(new ButtonFormData("3", "Learn More", "/learnmore#paver_resources"));
+	  ButtonDB.add(new ButtonFormData("3", "View Gallery", "/gallery/permeable-paver"));
 	
 	  
 	  

@@ -12,7 +12,11 @@ import views.formdata.HeaderFooterFormData;
  *
  */
 public class HeaderFooterDB {
-  
+  /**
+   * 
+   * @param formData
+   * @return
+   */
   public static HeaderFooter add(HeaderFooterFormData formData) {
     HeaderFooter headerFooter;
     
@@ -30,27 +34,50 @@ public class HeaderFooterDB {
     
     return headerFooter;
   }
-
+/**
+ * 
+ * @param id
+ * @return
+ */
   public static HeaderFooter getHeaderFooter(long id) {
     return HeaderFooter.find().byId(id);
   }
-  
+  /**
+   * 
+   * @param id
+   * @return
+   */
   public static String getHeader(long id) {
     return HeaderFooter.find().byId(id).getHeader();
   }
-  
+  /**
+   * 
+   * @param id
+   * @return
+   */
   public static String getFooter(long id) {
     return HeaderFooter.find().byId(id).getFooter();
   }
-  
+  /**
+   * 
+   * @param id
+   * @return
+   */
   public static String getSubHeader(long id) {
     return HeaderFooter.find().byId(id).getSubHeader();
   }
-  
+  /**
+   * 
+   * @param id
+   * @return
+   */
   public static String getSubFooter(long id) {
     return HeaderFooter.find().byId(id).getSubFooter();
   }
-  
+  /**
+   * 
+   * @return
+   */
   public static boolean isEmpty() {
     return HeaderFooter.find().all().isEmpty();
   }

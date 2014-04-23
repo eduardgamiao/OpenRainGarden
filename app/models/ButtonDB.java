@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import views.formdata.ButtonFormData;
+
 /**
  * A database of index page button.
  * @author vinson gao
@@ -12,32 +14,36 @@ import java.util.Map;
  */
 public class ButtonDB {
 
-  private static Map<String, Button> block = new LinkedHashMap<String, Button>();
-  
-  /**
-   * Add a plant to the database.
-   * @param plant Plant to add.
-   * @return The plant that was added to the database.
-   */
-  public static Button addButton(Button b) {
-	block.put(b.getTitle()+b.getNumber(), b);
-    return b;
+  public static Button add(ButtonFormData formData) {
+	  Button button;
+	    
+	    if (formData.id == -1) {
+	    	button = new Button(formData.blockNumber, formData.title, formData.href);
+	    }
+	    else {
+	    	button = ButtonDB.getButton(formData.id);
+	    	button.setNumber(formData.blockNumber);
+	    	button.setTitle(formData.title);
+	    	button.setHref(formData.href);
+	    	
+	    }
+	    button.save();
+	    
+	    return button;
   }
-  
-  /**
-   * Retrieve a plant from the database.
-   * @param name Name of the plant to retrieve.
-   * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
-   */
-  public static Button getButton(String name) {
-    return block.get(name);
+  public static Button getButton(long id) {
+	    return Button.find().byId(id);
   }
-
-  /**
-   * Get list of all plants in database.
-   * @return A list of all plants in the database.
-   */
+  public static String getHref(long id) {
+	    return Button.find().byId(id).getHref();
+  }
+  public static String getTitle(long id) {
+	    return Button.find().byId(id).getTitle();
+  }
+  public static String getBlockNumber(long id) {
+	    return Button.find().byId(id).getNumber();
+  }
   public static List<Button> getButtons() {
-    return new ArrayList<Button>(block.values());
+	    return Button.find().all();
   }
 }
