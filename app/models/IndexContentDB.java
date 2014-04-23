@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import views.formdata.HeaderFooterFormData;
+import views.formdata.IndexContentBlockFormData;
 
 /**
  * A database of plants.
@@ -14,36 +14,46 @@ import views.formdata.HeaderFooterFormData;
  */
 public class IndexContentDB {
 
-  private static Map<String, IndexContent> block = new LinkedHashMap<String, IndexContent>();
-  
-  /**
-   * Add a plant to the database.
-   * @param plant Plant to add.
-   * @return The plant that was added to the database.
-   */
-  public static IndexContent addBlock(IndexContent b) {
-	block.put(b.getSerial(), b);
-    return b;
-  }
-  
-  /**
-   * Retrieve a plant from the database.
-   * @param name Name of the plant to retrieve.
-   * @return A specified plant, if it exists, from the database. Null if the plant is not in the database.
-   */
-  public static IndexContent getBlock(String name) {
-    return block.get(name);
-  }
-
-  /**
-   * Get list of all plants in database.
-   * @return A list of all plants in the database.
-   */
-  public static List<IndexContent> getBlocks() {
-    return new ArrayList<IndexContent>(block.values());
-  }
-  
-  
+	  public static IndexContent addBlock(IndexContentBlockFormData formData) {
+		  IndexContent idexContent;
+		    
+		    if (formData.id == -1) {
+		    	idexContent = new IndexContent(formData.serial, formData.title, formData.content, formData.image);
+		    }
+		    else {
+		    	idexContent = IndexContentDB.getBlock(formData.id);
+		    	idexContent.setSerial(formData.serial);
+		    	idexContent.setTitle(formData.title);
+		    	idexContent.setContent(formData.content);
+		    	idexContent.setImage(formData.image);
+		    	
+		    }
+		    idexContent.save();
+		    
+		    return idexContent;
+	  }
+	  public static IndexContent getBlock(long id) {
+		  return IndexContent.find().byId(id);
+	  }
+	
+		public static String getContent(long id) {
+			    return IndexContent.find().byId(id).getContent();
+		}
+		public static String getTitle(long id) {
+			    return IndexContent.find().byId(id).getTitle();
+		}
+		public static String getBlockNumber(long id) {
+			    return IndexContent.find().byId(id).getSerial();
+		}
+		public static String getPicUrl(long id) {
+		    return IndexContent.find().byId(id).getPicUrl();
+		}
+		public static List<IndexContent> getBlocks() {
+			    return IndexContent.find().all();
+		}
+	  public static boolean isEmpty() {
+		  return IndexContent.find().all().isEmpty();
+	  }
 
 	
 }

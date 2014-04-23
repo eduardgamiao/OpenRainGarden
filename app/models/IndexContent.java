@@ -9,6 +9,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 
 @Entity
@@ -17,41 +18,68 @@ public class IndexContent extends Model {
 	  
 	@Id
 	private Long id;
-	private String a;
+	private String serial;
 	@Lob
-	private String b;
+	private String title;
 	@Lob
-	private String c;
+	private String content;
 	@Lob
-	private String d;
+	private String image;
 	
 	
 	
 	@OneToMany (mappedBy = "block", cascade = CascadeType.PERSIST)
-	private List<Button> e = new ArrayList<Button>();
+	private List<Button> buttons = new ArrayList<Button>();
 	
 	
-	public IndexContent(String a1, String b1, String c1, String d1, List<Button> e1){
-		a=a1;
-		b=b1;
-		c=c1;
-		d=d1;
-		e=e1;
+	public IndexContent(String a1, String b1, String c1, String d1){
+		this.serial=a1;
+		this.title=b1;
+		this.content=c1;
+		this.image=d1;
+
+	}
+	public void addButtons(){
+	
+	}
+	public Long getId() {
+	    return id;
+	}
+    public void setId(Long id) {
+	    this.id = id;
 	}
 	public String getSerial(){
-		return a;
+		return serial;
+	}
+	public void setSerial(String s){
+		this.serial=s;
 	}
 	public String getTitle(){
-		return b;
+		return title;
+	}
+	public void setTitle(String s){
+		this.title=s;
 	}
 	public String getContent(){
-		return c;
+		return content;
+	}
+	public void setContent(String s){
+		this.content=s;
 	}
 	public String getPicUrl(){
-		return d;
+		return image;
+	}
+	public void setImage(String s){
+		this.image=s;
 	}
 	public List<Button> getButton(){
-		return e;
+		return buttons;
 	}
-	
+	/**
+	   * The EBean ORM finder method for database queries on ID.
+	   * @return The finder method for header.
+	*/
+	public static Finder<Long, IndexContent> find() {
+	    return new Finder<Long, IndexContent>(Long.class, IndexContent.class);
+	}
 }

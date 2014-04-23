@@ -46,4 +46,7 @@ public class ButtonDB {
   public static List<Button> getButtons() {
 	    return Button.find().all();
   }
+  public static boolean isEmpty() {
+	  return Button.find().all().isEmpty();
+  }
 }
