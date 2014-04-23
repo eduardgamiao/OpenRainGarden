@@ -2,7 +2,9 @@ package views.formdata;
 
 import java.util.List;
 import java.util.ArrayList;
+
 import models.UserInfo;
+import models.UserInfoDB;
 import play.data.validation.ValidationError;
 
 /**
@@ -75,6 +77,9 @@ public class SignUpFormData {
 		if (this.password.equals(this.repeatpw) == false) {
 			errors.add(new ValidationError("password", "Passwords much match."));
 			errors.add(new ValidationError("repeatpw", "Passwords much match."));
+		}
+		if (UserInfoDB.isUser(this.email) == true) {
+			errors.add(new ValidationError("email", "Email is already registered."));
 		}
 		
 		return errors.isEmpty() ? null : errors;

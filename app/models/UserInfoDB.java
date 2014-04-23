@@ -19,15 +19,17 @@ public class UserInfoDB {
 	 * @param telephone
 	 * @param password
 	 */
-	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password,
+	public static long addUserInfo(String firstName, String lastName, String email, String telephone, String password,
 	    boolean isAdmin) {
 		UserInfo userInfo = new UserInfo(firstName, lastName, email, telephone, password, isAdmin);
 		userInfo.save();
+		return userInfo.getId();
 	}
 	
-	public static void addUserInfo(String firstName, String lastName, String email, String telephone, String password, boolean isAdmin, boolean isConfirm) {
+	public static long addUserInfo(String firstName, String lastName, String email, String telephone, String password, boolean isAdmin, boolean isConfirm) {
 		UserInfo userInfo = new UserInfo(firstName, lastName, email, telephone, password, isAdmin, isConfirm);
 		userInfo.save();
+		return userInfo.getId();
 	}
 	
 	/**
@@ -46,6 +48,10 @@ public class UserInfoDB {
 	 */
 	public static UserInfo getUser(String email) {
 		return UserInfo.find().where().eq("email", email).findUnique();
+	}
+	
+	public static UserInfo getUser(Long id) {
+		return UserInfo.find().where().eq("id", id).findUnique();
 	}
 	
 	/**

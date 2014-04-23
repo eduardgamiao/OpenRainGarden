@@ -8,11 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.http.protocol.HTTP;
+
 import com.google.common.io.Files;
 import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import play.Logger;
@@ -26,7 +32,6 @@ import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-
 import models.*;
 import views.formdata.*;
 import views.html.*;
@@ -570,20 +575,12 @@ public class Application extends Controller {
 		  SignUpFormData data = formData.get();
 		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 		  
-		  //send email
-		  /*MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-		  mail.setSubject("Sign up Confirmation");
-		  mail.setRecipient(data.email);
-		  mail.setFrom("openraingarden@gmail.com");
-		  mail.send("Please confirm your registration at our website by entering the following code: 123456");
-		  */
-		  
 		  //create new userinfo and add it to the "database"
 		  //UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, data.password, false, false);
-		  UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, BCrypt.hashpw(data.password, BCrypt.gensalt()), false, false);
+		  long id = UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, BCrypt.hashpw(data.password, BCrypt.gensalt()), false, false);
 		  
 		  //return redirect(routes.Application.login(routes.Application.index().url()));
-		  return redirect(routes.Application.thankYou());
+		  return redirect(routes.Application.thankYou(id));
 	  }
   }
   
@@ -591,7 +588,40 @@ public class Application extends Controller {
    * Returns the Thank You page
    * @return
    */
-  public static Result thankYou() {
+  public static Result thankYou(long id) {
+	  UserInfo user = UserInfoDB.getUser(id);
+	  String confirmHash = null;
+	  
+	  try {
+		  SecureRandom random = new SecureRandom();
+		  byte bytes[] = new byte[20];
+		  random.nextBytes(bytes);
+		  String message = bytes.toString();
+		  
+		  MessageDigest md = MessageDigest.getInstance("MD5");
+		  byte[] hash = md.digest(message.getBytes("UTF-8"));
+		  StringBuffer buffer = new StringBuffer();
+		  for (int i = 0; i < hash.length; i++){
+			  buffer.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+		  }
+		  //user.setConfirmHash(buffer.toString());
+		  confirmHash = buffer.toString();
+	  }
+	  catch (UnsupportedEncodingException ex) {
+		  System.err.println(ex.getStackTrace());
+	  }
+	  catch (NoSuchAlgorithmException ex) {
+		  System.err.println(ex.getStackTrace());
+	  }
+	  
+	  //send email
+	  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+	  mail.setSubject("Sign up Email Confirmation");
+	  mail.setRecipient(user.getEmail());
+	  mail.setFrom("openraingarden@gmail.com");
+	  //mail.send("Please confirm your registration at our website by following the below link: " + user.getConfirmHash());
+	  mail.send("Confimation hash: " + confirmHash);
+	  
 	  return ok(ThankYou.render("Thank You"));
   }
   

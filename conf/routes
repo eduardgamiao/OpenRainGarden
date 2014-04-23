@@ -19,7 +19,7 @@ GET     /login                        controllers.Application.login(target: Stri
 POST    /login                        controllers.Application.postLogin(target: String)
 GET     /signup                       controllers.Application.signup()
 POST    /signup                       controllers.Application.postSignUp()
-GET     /signup/thankyou              controllers.Application.thankYou()
+GET     /signup/thankyou              controllers.Application.thankYou(id: Long)
 GET     /view/rain-garden/:id         controllers.Application.viewGarden(id: Long)
 POST    /view/rain-garden/:id         controllers.Application.postGardenComment(id: Long, uri: String)
 GET     /delete/rain-garden/:id       controllers.Application.deleteGarden(id: Long)
