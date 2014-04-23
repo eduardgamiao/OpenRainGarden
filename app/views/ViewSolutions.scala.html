@@ -5,78 +5,63 @@
 
 @Main("Manage Solutions") {
    <div class="container">
-   <div class="page-header"><h2>Rain Garden</h2></div>
-   <table class="table table-bordered">
+   <table class="table table-bordered table-hover">
     <tr>
-      <th>ID</th>
+      <th>Type</th>
       <th>Title</th>
       <th>Property Type</th>
       <th>Address</th>
       <th>Hide Address</th>
       <th>Description</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
     @for(garden <- RainGardenDB.getRainGardens()) {
       <tr>
-        <td>@garden.getID()</td>
+        <td>Rain Garden</td>
         <td>@garden.getTitle()</td>
         <td>@garden.getPropertyType()</td>
         <td>@garden.getAddress()</td>
         <td>@garden.getHideAddress()</td>
         <td>@garden.getDescription()</td>
         <td>@if(!garden.isApproved()) {        
-        <a href="#"><span class="label label-warning">Awaiting Approval</span></a>       
+        <span class="label label-warning">Awaiting Approval</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
+        <td>@if(!garden.isApproved()) {
+          <a href="#"><button class="btn btn-success">Approve</button></a>
+        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
       </tr>
     }
-   </table>
-   <div class="page-header"><h2>Rain Barrel</h2></div>
-   <table class="table table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Property Type</th>
-      <th>Address</th>
-      <th>Hide Address</th>
-      <th>Description</th>
-      <th>Status</th>
-    </tr>
-    @for(garden <- RainBarrelDB.getRainBarrels()) {
+    @for(barrel <- RainBarrelDB.getRainBarrels()) {
       <tr>
-        <td>@garden.getID()</td>
-        <td>@garden.getTitle()</td>
-        <td>@garden.getPropertyType()</td>
-        <td>@garden.getAddress()</td>
-        <td>@garden.getHideAddress()</td>
-        <td>@garden.getDescription()</td>
-        <td>@if(!garden.isApproved()) {        
-        <a href="#"><span class="label label-warning">Awaiting Approval</span></a>       
+        <td>Rain Barrel</td>
+        <td>@barrel.getTitle()</td>
+        <td>@barrel.getPropertyType()</td>
+        <td>@barrel.getAddress()</td>
+        <td>@barrel.getHideAddress()</td>
+        <td>@barrel.getDescription()</td>
+        <td>@if(!barrel.isApproved()) {        
+        <span class="label label-warning">Awaiting Approval</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
-      </tr>
-    }
-   </table>   
-   <div class="page-header"><h2>Permeable Pavers</h2></div>
-   <table class="table table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Property Type</th>
-      <th>Address</th>
-      <th>Hide Address</th>
-      <th>Description</th>
-      <th>Status</th>
+        <td>@if(!barrel.isApproved()) {
+          <a href="#"><button class="btn btn-success">Approve</button></a>
+        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
     </tr>
+    }  
     @for(garden <- PermeablePaversDB.getPermeablePavers()) {
       <tr>
-        <td>@garden.getID()</td>
+        <td>Permeable Pavers</td>
         <td>@garden.getTitle()</td>
         <td>@garden.getPropertyType()</td>
         <td>@garden.getAddress()</td>
         <td>@garden.getHideAddress()</td>
         <td>@garden.getDescription()</td>
         <td>@if(!garden.isApproved()) {        
-        <a href="#"><span class="label label-warning">Awaiting Approval</span></a>       
+        <span class="label label-warning">Awaiting Approval</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
+        <td>@if(!garden.isApproved()) {
+          <a href="#"><button class="btn btn-success">Approve</button></a>
+        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
       </tr>
     }
    </table>   
