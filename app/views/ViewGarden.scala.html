@@ -3,18 +3,21 @@
 @import helper._ 
 @import bootstrap3._ 
 @information() = {
-  <ul class="list-group" style="text-align: center;">
-    <li class="list-group-item">Owner: <a href="@routes.Application.profile(rainGarden.getOwner().getEmail())">@rainGarden.getOwner().getName()</a></li>
-    <li class="list-group-item">Type: Rain Garden</li>
-    <li class="list-group-item">Property Type: @rainGarden.getPropertyType()</li>
-    <li class="list-group-item">Address: @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</li>
-    <li class="list-group-item">Date Added: @rainGarden.getDateInstalled()</li>
-  </ul>
+    <p><b>Owner:</b> <a href="@routes.Application.profile(rainGarden.getOwner().getEmail())">@rainGarden.getOwner().getName()</a></p>
+    <p><b>Type:</b> Rain Garden</p>
+    <p><b>Property Type:</b> @rainGarden.getPropertyType()</p>
+    <p><b>Address:</b> @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</p>
+    <p><b>Date Added:</b> @rainGarden.getDateInstalled()</p>
 }
 
 
 @Main("View Rain Garden") {
    <div class="container">
+    @if(!(rainGarden.isApproved())) {
+      <div class="alert alert-info"><p><strong>This page is awaiting approval.</strong></p>
+        <p>Thank you for registering your rain garden. This page is currently awaiting approval from a site administrator and will not be visible to the public. During this time, feel free to edit your rain garden's information.</p>
+      </div>
+    }
        <div class="row">
       <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
          <ul class="nav nav-tabs">

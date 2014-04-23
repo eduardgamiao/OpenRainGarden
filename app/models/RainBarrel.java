@@ -40,6 +40,7 @@ public class RainBarrel extends Model {
   private String installationType;
   @Lob
   private byte [] image;
+  private boolean isApproved = false;
   
   @ManyToOne
   private UserInfo owner;
@@ -338,6 +339,20 @@ public class RainBarrel extends Model {
    */
   public void setImage(byte [] image) {
     this.image = image;
+  }
+
+  /**
+   * @return the isApproved
+   */
+  public boolean isApproved() {
+    return isApproved;
+  }
+
+  /**
+   * @param isApproved the isApproved to set
+   */
+  public void setApproved(boolean isApproved) {
+    this.isApproved = isApproved;
   }
 
   /**

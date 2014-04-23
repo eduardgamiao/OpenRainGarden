@@ -54,6 +54,7 @@ create table permeable_pavers (
   installer                 varchar(255),
   comment_key               varchar(255),
   image                     longblob,
+  is_approved               tinyint(1) default 0,
   owner_id                  bigint,
   constraint pk_permeable_pavers primary key (id))
 ;
@@ -88,6 +89,7 @@ create table rain_barrel (
   obtained_from             varchar(255),
   installation_type         varchar(255),
   image                     longblob,
+  is_approved               tinyint(1) default 0,
   owner_id                  bigint,
   constraint pk_rain_barrel primary key (id))
 ;
@@ -105,6 +107,7 @@ create table rain_garden (
   water_flow_description    longtext,
   infiltration_rate         varchar(255),
   image                     longblob,
+  is_approved               tinyint(1) default 0,
   owner_id                  bigint,
   constraint pk_rain_garden primary key (id))
 ;

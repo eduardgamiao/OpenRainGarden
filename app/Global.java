@@ -65,34 +65,36 @@ public class Global extends GlobalSettings {
     if (RainGarden.find().all().isEmpty()) {
       List<String> plants = new ArrayList<String>();
       plants.add("‘Ahu‘awa");
-      RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
+      RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
         "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
         "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
         "0.75 inches/hour"), UserInfoDB.getUser("johnsmith@gmail.com"));
-    }
-    
-    RainGarden garden = RainGardenDB.getRainGarden(1);
-    
-    if (garden != null && GardenComment.find().all().isEmpty()) {
-      GardenCommentDB.addComment(new GardenCommentFormData("Wow, you garden looks nice!"), 
-          garden,
-          UserInfoDB.getUser("janesmith@gmail.com"));
+      
+      garden.setApproved(true);
+      
+      if (garden != null && GardenComment.find().all().isEmpty()) {
+        GardenCommentDB.addComment(new GardenCommentFormData("Wow, you garden looks nice!"), 
+            garden,
+            UserInfoDB.getUser("janesmith@gmail.com"));
+      }
     }
     
     // Add rain barrel.
     if (RainBarrel.find().all().isEmpty()) {
-    RainBarrelDB.addRainBarrel(new RainBarrelFormData("John's Rain Barrel", "Residential", "564 Ulahala St.", 
+    RainBarrel barrel = RainBarrelDB.addRainBarrel(new RainBarrelFormData("John's Rain Barrel", "Residential", "564 Ulahala St.", 
         "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50 Gallons", "Orange-Red",
         "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
+    barrel.setApproved(true);
     }
     
     // Add permeable paver.
     if (PermeablePavers.find().all().isEmpty()) {
-    PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData("John's Permeable Paver", "Residential", 
+    PermeablePavers paver = PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData("John's Permeable Paver", "Residential", 
         "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
             + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
             "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
+    paver.setApproved(true);
     }
     
     //Learn More Resource Database

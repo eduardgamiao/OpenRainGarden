@@ -458,9 +458,12 @@ public class Application extends Controller {
     GardenCommentFormData commentFormData = new GardenCommentFormData();
     Form<GardenCommentFormData> commentForm = Form.form(GardenCommentFormData.class).fill(commentFormData);
     if (garden != null) {
-     return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
+      if (garden.isApproved() || (Secured.getUserInfo(ctx()).getId() == garden.getOwner().getId()) 
+          || Secured.getUserInfo(ctx()).isAdmin()) {
+        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
+      }      
     }
-    return badRequest();
+    return redirect(routes.Application.gardengallery());
   }
   
   /**
