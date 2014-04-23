@@ -853,7 +853,11 @@ public class Application extends Controller {
   }
   
   public static Result retrieveHomeBannerImage() {
-      return redirect("");
+	  HeaderFooter headerfooter = HeaderFooterDB.getHeaderFooter(1);
+	    if (headerfooter != null && headerfooter.hasPicture()) {      
+	      return ok(HeaderFooterDB.getHeaderFooter(1).getHeaderImage()).as("image/jpeg");
+	    }
+	    return redirect(routes.Assets.at("images/index_banner.jpg"));
   }
   
   /**

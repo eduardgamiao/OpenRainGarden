@@ -13,8 +13,8 @@
 		<div class="panel-body">
 			<div class="well">
 				<div style="margin-left:20px; text-align:left"><a href="/adminpanel/editindexcontent"><button type="button"><h4>Edit</h4></button></a></div>
-				<div class="press-banner" style="margin-top:-50px; background-image: url(@routes.Assets.at("images/placeholder.gif"))">
-				<div class="press-banner" style="margin-top:-100px;!important; background-image: url(@routes.Assets.at("images/placeholder.gif"))">
+
+				<div class="press-banner" style="margin-top:-50px;!important; background-image: url(@routes.Application.retrieveHomeBannerImage())">
 					
 					<h1 class="text-center bigFont"><b>@HeaderFooterDB.getHeader(1)</b></br><p style="font-size:80%">@HeaderFooterDB.getSubHeader(1)</p></h1>
 				</div>

@@ -132,6 +132,17 @@ public class HeaderFooter extends Model {
   public void setSubFooter(String subFooter) {
     this.subFooter = subFooter;
   }
+  /**
+   * @return the hasPicture
+   */
+  public boolean hasPicture() {
+    if (this.headerImage == null) {
+      return false;
+    }
+    else {
+      return (this.headerImage.length > 0);
+    }
+  }
 
   /**
    * The EBean ORM finder method for database queries on ID.
