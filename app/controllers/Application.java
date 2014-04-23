@@ -144,7 +144,7 @@ public class Application extends Controller {
         HeaderFooterFormData data = (HeaderFooterDB.getHeaderFooter(1) == null) 
             ? new HeaderFooterFormData() : new HeaderFooterFormData(HeaderFooterDB.getHeaderFooter(1));
         Form<HeaderFooterFormData> formData = Form.form(HeaderFooterFormData.class).fill(data);
-        return TODO;             
+        return ok(EditIndexContent.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));         
       }
       else {
         return badRequest(ErrorReport.render(""));
@@ -169,15 +169,29 @@ public class Application extends Controller {
 			  else {
 				  HeaderFooterFormData data = formData.get();
 				 // System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
-				  
+				  HeaderFooter hf = HeaderFooterDB.getHeaderFooter(1);
 				  //create new userinfo and add it to the "database"
 				  HeaderFooterDB.add(data);
 				  MultipartFormData body = request().body().asMultipartFormData();
 			      FilePart picture = body.getFile("uploadFile");
 			      if (picture != null) {
-			        //HeaderFooterDB.setImage(Files.toByteArray(picture.getFile()));
+				    	System.out.print("debug: check hasPicture.");
+				    	hf.setHeaderImage(Files.toByteArray(picture.getFile()));
+				    	hf.save();
+				        System.out.print("debug: check saved Picture.");
 			      }
-				  
+			      /*else {
+			          RainBarrelFormData data = formData.get();
+			          RainBarrel barrel = RainBarrelDB.addRainBarrel(data, Secured.getUserInfo(ctx()));
+			          MultipartFormData body = request().body().asMultipartFormData();
+			          FilePart picture = body.getFile("uploadFile");
+			          if (picture != null) {
+			              File source = picture.getFile();
+			              barrel.setImage(Files.toByteArray(source));
+			              barrel.save();
+			          }
+			          return redirect(routes.Application.viewBarrel(barrel.getID()));
+			      }*/   
 				  
 				  return redirect(routes.Application.editIndexContentFormData());
 			  }

@@ -23,8 +23,8 @@ create table garden_comment (
 
 create table header_footer (
   id                        bigint auto_increment not null,
-  header                    varchar(255),
-  sub_header                longtext,
+  header                    longtext,
+  sub_header                varchar(255),
   footer                    varchar(255),
   sub_footer                longtext,
   header_image              longblob,

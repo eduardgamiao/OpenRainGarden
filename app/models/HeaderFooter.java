@@ -14,8 +14,8 @@ public class HeaderFooter extends Model {
   
   @Id
   private Long id;
-  private String header;
   @Lob
+  private String header;
   private String subHeader;
   private String footer;
   @Lob
