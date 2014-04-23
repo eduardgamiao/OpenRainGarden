@@ -2,14 +2,6 @@
   
 @import helper._ 
 @import bootstrap3._ 
-@information() = {
-    <p><b>Owner:</b> <a href="@routes.Application.profile(rainGarden.getOwner().getEmail())">@rainGarden.getOwner().getName()</a></p>
-    <p><b>Type:</b> Rain Garden</p>
-    <p><b>Property Type:</b> @rainGarden.getPropertyType()</p>
-    <p><b>Address:</b> @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</p>
-    <p><b>Date Added:</b> @rainGarden.getDateInstalled()</p>
-}
-
 
 @Main("View Rain Garden") {
    <div class="container">
@@ -40,31 +32,30 @@
                 @if(!(rainGarden.getTitle().equals(""))) {@rainGarden.getTitle()} else {Rain Garden}</h3>
             </div>
           </div>
-          <div class="hidden-lg hidden-md col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
-            @information()
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; color:black; bottom: 1.9em;">
+            <p><b>Owner:</b> <a href="@routes.Application.profile(rainGarden.getOwner().getEmail())">@rainGarden.getOwner().getName()</a></p>
+            <p><b>Property Type:</b> @rainGarden.getPropertyType()</p>
+            <p><b>Address:</b> @if(rainGarden.getHideAddress().equals("Yes")) {Hidden} else {@rainGarden.getAddress()}</p>
+            <p><b>Date Installed:</b> @rainGarden.getDateInstalled()</p>
           </div>
-          <div class="row" style="color: black; font-size: 14px; padding-left: 1em; padding-right: 1em;">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+          <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+                        <div class="page-header"><h4>Description</h4></div>
               <p>@if(rainGarden.getDescription().equals("")) {No Description} else {@rainGarden.getDescription()}</p>
             </div>
-            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs" style="position: relative; bottom: 1.9em;">
-                @information()
-            </div>
           </div>
-          <div class="row" style="color: black; font-size: 14px;  padding: 0 2em 0 2em;">
-              <div class="page-header">
-              <h4>Additional Information</h4>
-            </div>
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <b>Rain Garden Size:</b> @rainGarden.getRainGardenSize()<br />
-                <b>Size of Roof/Impervious Surface:</b> @rainGarden.getWaterFlowSourceSize()<br />
-                <b>Water Flow Description:</b> @rainGarden.getWaterFlowDescription()<br />
-                <b>Infiltration Rate:</b> @rainGarden.getInfiltrationRate()<br /><br/>                
+          <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">         
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+              <div class="page-header"><h4>Additional Information</h4></div>
+                <p><b>Rain Garden Size:</b> @rainGarden.getRainGardenSize()</p>
+                <p><b>Size of Roof/Impervious Surface:</b> @rainGarden.getWaterFlowSourceSize()</p>
+                <p><b>Water Flow Description:</b> @rainGarden.getWaterFlowDescription()</p>
+                <p><b>Infiltration Rate:</b> @rainGarden.getInfiltrationRate()</p>                
               </div>
-                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="background-color:white;">
-                          <ul class="list-group">
-                                                    <li class="list-group-item">  
-                          <h4>Plants</h4>
+              </div>              
+          <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">         
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
+              <div class="page-header"><h4>Plants</h4></div>
                           @if(!(rainGarden.getPlants().isEmpty)) {    
                             @for(plant <- rainGarden.getPlants()) {
                              <button type="button" class="btn btn-info example" data-container="body" data-toggle="popover"
@@ -74,11 +65,9 @@
                             }
                           } else {
                             <p>No plants</p>
-                          }                  
-              </li>
-              </ul>
-            </div>
-          </div>
+                          }                   
+              </div>
+              </div>
         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">
             <h4>Comments (@rainGarden.getComments().size)</h4>          
