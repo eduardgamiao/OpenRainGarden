@@ -19,11 +19,8 @@
 	
 			  <p class="joinus text-center">
 			
-			  @for( button <- block.getButton()) {
-		          @if(button.getNumber().equals(block.getSerial())){
-		           <a href="@button.getHref()"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@button.getTitle()</button></a>	
-		          }
-		          
+			  @for( button <- ButtonDB.getButtonsFromOneBlock(block.getSerial())) {
+		           <a href="@button.getHref()"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@button.getTitle()</button></a>			          
 		      }
 			  </p>
 	        </div>

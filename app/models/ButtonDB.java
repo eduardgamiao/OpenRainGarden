@@ -46,6 +46,18 @@ public class ButtonDB {
   public static List<Button> getButtons() {
 	    return Button.find().all();
   }
+  
+  public static List<Button> getButtonsFromOneBlock(String blocknum) {
+	    List<Button> mylist =  new ArrayList<Button>();
+	    List<Button> thelist =  new ArrayList<Button>();
+	    thelist= Button.find().all();
+	    for(Button button:thelist){
+	    	if(button.getNumber().equals(blocknum)){
+	    		mylist.add(button);
+	    	}
+	    }
+	    return mylist;
+  }
   public static boolean isEmpty() {
 	  return Button.find().all().isEmpty();
   }

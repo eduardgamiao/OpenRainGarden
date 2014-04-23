@@ -42,10 +42,10 @@ create table header_footer (
 
 create table index_content (
   id                        bigint auto_increment not null,
-  a                         varchar(255),
-  b                         longtext,
-  c                         longtext,
-  d                         longtext,
+  serial                    varchar(255),
+  title                     longtext,
+  content                   longtext,
+  image                     longtext,
   constraint pk_index_content primary key (id))
 ;
 
