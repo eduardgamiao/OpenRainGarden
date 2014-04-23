@@ -57,6 +57,9 @@ GET     /view/plant                   controllers.Application.viewPlants()
 GET     /image/plant/:name            controllers.Application.retrievePlantImage(name: String)
 GET     /delete/plant/:id             controllers.Application.deletePlant(id: Long)
 GET     /view/all                     controllers.Application.viewSolutions()
+GET     /switch/rain-garden/:id       controllers.Application.switchGardenStatus(id: Long)
+GET     /switch/rain-barrel/:id       controllers.Application.switchBarrelStatus(id: Long)
+GET     /switch/permeable-pavers/:id  controllers.Application.switchPaverStatus(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

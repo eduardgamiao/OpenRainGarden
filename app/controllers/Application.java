@@ -472,10 +472,14 @@ public class Application extends Controller {
     GardenCommentFormData commentFormData = new GardenCommentFormData();
     Form<GardenCommentFormData> commentForm = Form.form(GardenCommentFormData.class).fill(commentFormData);
     if (garden != null) {
-      if (garden.isApproved() || (Secured.getUserInfo(ctx()).getId() == garden.getOwner().getId()) 
-          || Secured.getUserInfo(ctx()).isAdmin()) {
+      if (garden.isApproved()) {
         return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
-      }      
+      }
+      else if (Secured.isLoggedIn(ctx()) 
+               && (garden.isOwner(Secured.getUserInfo(ctx())) || Secured.getUserInfo(ctx()).isAdmin())) {
+        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
+        
+      }
     }
     return redirect(routes.Application.gardengallery());
   }
@@ -506,7 +510,14 @@ public class Application extends Controller {
     BarrelCommentFormData commentFormData = new BarrelCommentFormData();
     Form<BarrelCommentFormData> commentForm = Form.form(BarrelCommentFormData.class).fill(commentFormData);
     if (barrel != null) {
-     return ok(ViewBarrel.render(barrel, commentForm));
+      if (barrel.isApproved()) {
+        return ok(ViewBarrel.render(barrel, commentForm));
+      }
+      else if (Secured.isLoggedIn(ctx()) 
+               && (barrel.isOwner(Secured.getUserInfo(ctx())) || Secured.getUserInfo(ctx()).isAdmin())) {
+        return ok(ViewBarrel.render(barrel, commentForm));
+        
+      }
     }
     return redirect(routes.Application.barrelgallery());
   }
@@ -537,9 +548,16 @@ public class Application extends Controller {
     PaverCommentFormData commentFormData = new PaverCommentFormData();
     Form<PaverCommentFormData> commentForm = Form.form(PaverCommentFormData.class).fill(commentFormData);
     if (paver != null) {
-     return ok(ViewPaver.render(paver, PaverCommentDB.getRainPaverComments(id), commentForm));
+      if (paver.isApproved()) {
+        return ok(ViewPaver.render(paver, commentForm));
+      }
+      else if (Secured.isLoggedIn(ctx()) 
+               && (paver.isOwner(Secured.getUserInfo(ctx())) || Secured.getUserInfo(ctx()).isAdmin())) {
+        return ok(ViewPaver.render(paver, commentForm));
+        
+      }
     }
-    return badRequest();
+    return redirect(routes.Application.pavergallery());
   }
   
   /**
@@ -1124,11 +1142,60 @@ public class Application extends Controller {
 	  return redirect("");
   }
   
+  /**
+   * Returns the solution approval page.
+   * @return The solution approval page.
+   */
   @Security.Authenticated(Secured.class)
   public static Result viewSolutions() {
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
       return ok(ViewSolutions.render());
     }
     return redirect(routes.Application.index());
+  }
+
+  /**
+   * Approves/Revokes the approval status of a rain garden.
+   * @param id The ID of the rain garden.
+   * @return The solution management page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result switchGardenStatus(Long id) {
+    RainGarden garden = RainGardenDB.getRainGarden(id);
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && garden != null) {
+      garden.setApproved(!garden.isApproved());
+      garden.save();
+    }
+    return redirect(routes.Application.viewSolutions());
+  }
+  
+  /**
+   * Approves/Revokes the approval status of a rain barrel.
+   * @param id The ID of the rain garden.
+   * @return The solution management page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result switchBarrelStatus(Long id) {
+    RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && barrel != null) {
+      barrel.setApproved(!barrel.isApproved());
+      barrel.save();
+    }
+    return redirect(routes.Application.viewSolutions());
+  }
+  
+  /**
+   * Approves/Revokes the approval status of a permeable pavers.
+   * @param id The ID of the rain garden.
+   * @return The solution management page.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result switchPaverStatus(Long id) {
+    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && paver != null) {
+      paver.setApproved(!paver.isApproved());
+      paver.save();
+    }
+    return redirect(routes.Application.viewSolutions());
   }
 }

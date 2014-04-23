@@ -25,11 +25,9 @@
         <td>@garden.getHideAddress()</td>
         <td>@garden.getDescription()</td>
         <td>@if(!garden.isApproved()) {        
-        <span class="label label-warning">Awaiting Approval</span>       
+        <span class="label label-warning">Not Approved</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
-        <td>@if(!garden.isApproved()) {
-          <a href="#"><button class="btn btn-success">Approve</button></a>
-        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
+        <td><a href="@routes.Application.switchGardenStatus(garden.getID())"> <button class="btn @if(garden.isApproved()) {btn-danger} else {btn-success}">@if(garden.isApproved()) {Revoke} else {Approve}</button></a></td>
       </tr>
     }
     @for(barrel <- RainBarrelDB.getRainBarrels()) {
@@ -41,27 +39,23 @@
         <td>@barrel.getHideAddress()</td>
         <td>@barrel.getDescription()</td>
         <td>@if(!barrel.isApproved()) {        
-        <span class="label label-warning">Awaiting Approval</span>       
+        <span class="label label-warning">Not Approved</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
-        <td>@if(!barrel.isApproved()) {
-          <a href="#"><button class="btn btn-success">Approve</button></a>
-        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
+        <td><a href="@routes.Application.switchBarrelStatus(barrel.getID())"> <button class="btn @if(barrel.isApproved()) {btn-danger} else {btn-success}">@if(barrel.isApproved()) {Revoke} else {Approve}</button></a></td>      
     </tr>
     }  
-    @for(garden <- PermeablePaversDB.getPermeablePavers()) {
+    @for(paver <- PermeablePaversDB.getPermeablePavers()) {
       <tr>
         <td>Permeable Pavers</td>
-        <td>@garden.getTitle()</td>
-        <td>@garden.getPropertyType()</td>
-        <td>@garden.getAddress()</td>
-        <td>@garden.getHideAddress()</td>
-        <td>@garden.getDescription()</td>
-        <td>@if(!garden.isApproved()) {        
-        <span class="label label-warning">Awaiting Approval</span>       
+        <td>@paver.getTitle()</td>
+        <td>@paver.getPropertyType()</td>
+        <td>@paver.getAddress()</td>
+        <td>@paver.getHideAddress()</td>
+        <td>@paver.getDescription()</td>
+        <td>@if(!paver.isApproved()) {        
+        <span class="label label-warning">Not Approved</span>       
         } else {<span class="label label-primary">Approved</span>}</td>
-        <td>@if(!garden.isApproved()) {
-          <a href="#"><button class="btn btn-success">Approve</button></a>
-        } else {<a href="#"><button class="btn btn-danger">Disapprove</button></a>}</td>
+        <td><a href="@routes.Application.switchPaverStatus(paver.getID())"> <button class="btn @if(paver.isApproved()) {btn-danger} else {btn-success}">@if(paver.isApproved()) {Revoke} else {Approve}</button></a></td>      
       </tr>
     }
    </table>   

@@ -437,6 +437,18 @@ public class RainBarrel extends Model {
   }
   
   /**
+   * Check if a user is the owner of a rain barrel.
+   * @param userInfo The user to check.
+   * @return True if the user is the owner, false otherwise.
+   */
+  public boolean isOwner(UserInfo userInfo) {
+    if (userInfo == null) {
+      return false;
+    }
+    return (this.owner.getId() == userInfo.getId());
+  }
+  
+  /**
    * The EBean ORM finder method for database queries on ID.
    * @return The finder method for rain barrels.
    */
