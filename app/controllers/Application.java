@@ -1123,4 +1123,12 @@ public class Application extends Controller {
 	  }
 	  return redirect("");
   }
+  
+  @Security.Authenticated(Secured.class)
+  public static Result viewSolutions() {
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+      return ok(ViewSolutions.render());
+    }
+    return redirect(routes.Application.index());
+  }
 }

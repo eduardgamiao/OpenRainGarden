@@ -56,7 +56,7 @@ GET     /edit/plant/:plantName        controllers.Application.managePlant(plantN
 GET     /view/plant                   controllers.Application.viewPlants()
 GET     /image/plant/:name            controllers.Application.retrievePlantImage(name: String)
 GET     /delete/plant/:id             controllers.Application.deletePlant(id: Long)
-
+GET     /view/all                     controllers.Application.viewSolutions()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
