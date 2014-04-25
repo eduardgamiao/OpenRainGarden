@@ -1,33 +1,21 @@
 package controllers;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;
-
-import org.apache.http.protocol.HTTP;
-
 import com.google.common.io.Files;
-import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
-
 import org.mindrot.jbcrypt.BCrypt;
-
 import play.Logger;
-import play.api.Play;
-import play.api.mvc.SimpleResult;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
-import play.mvc.Results;
 import play.mvc.Security;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -1200,5 +1188,13 @@ public class Application extends Controller {
       paver.save();
     }
     return redirect(routes.Application.viewSolutions());
+  }
+  
+  public static Result exportRainGardens() {
+    String out = "Name, Scientific_Name\n";
+    for (Plant plant : PlantDB.getPlants()) {
+      out += plant.getName() + ", " + plant.getScientificName() + "\n";
+    }
+    return ok(out).as("text/csv");
   }
 }

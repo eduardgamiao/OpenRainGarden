@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 import models.Button;
 import models.ButtonDB;
 import models.CommentDB;
@@ -22,6 +22,8 @@ import models.Resource;
 import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
+import play.libs.Yaml;
 import models.UserInfoDB;
 import views.formdata.ButtonFormData;
 import views.formdata.CommentFormData;
@@ -33,7 +35,6 @@ import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 import views.formdata.ResourceFormData;
-
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -154,6 +155,13 @@ public class Global extends GlobalSettings {
     PlantDB.addPlant(new PlantFormData(0, plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
     **/
+    @SuppressWarnings("unchecked")
+    Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
+    List<Object> objects = all.get("plants");
+    for (Object object : objects) {
+      Plant plant = (Plant) object.getClass().cast(object);
+      Logger.debug(plant.getName());
+    }
   }
   
   private static void populateIndexContentDB() {

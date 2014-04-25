@@ -1,0 +1,10 @@
+plants:
+
+- !!models.Plant
+        name: ‘Ahu‘awa!!!
+        scientificName: Mariscus javanicus
+        placement: Basin
+        growth: Sedge
+        climateType: Wet & Dry Climate
+                      
+  

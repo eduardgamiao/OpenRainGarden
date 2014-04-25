@@ -60,6 +60,7 @@ GET     /view/all                     controllers.Application.viewSolutions()
 GET     /switch/rain-garden/:id       controllers.Application.switchGardenStatus(id: Long)
 GET     /switch/rain-barrel/:id       controllers.Application.switchBarrelStatus(id: Long)
 GET     /switch/permeable-pavers/:id  controllers.Application.switchPaverStatus(id: Long)
+GET     /export/rain-garden           controllers.Application.exportRainGardens()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
