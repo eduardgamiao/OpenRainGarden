@@ -1120,6 +1120,7 @@ public class Application extends Controller {
 	  return redirect(routes.Application.index());
   }
   
+  
   /**
    * Retrieves the resource image based on the given id
    * @param id
@@ -1144,7 +1145,70 @@ public class Application extends Controller {
     }
     return redirect(routes.Application.index());
   }
-
+  /**
+   * Returns the edit form for the resource matching the given header
+   * @param header
+   * @return
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result editIndexBlock(String id) {
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  BlockFormData data;
+		  if (id.equals(0)) {
+			  data = new BlockFormData();
+		  }
+		  else {
+			  data = new BlockFormData(IndexContentDB.getBlock(id));
+		  }
+		  
+		  Form<BlockFormData> formData = Form.form(BlockFormData.class).fill(data);
+		  return ok(EditIndexBlock.render(formData));
+	  }
+	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Processes the edit Resource form
+   * @param find
+   * @return
+   * @throws IOException
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result postEditIndexBlock() throws IOException{
+	 /* if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
+		  //need to implement file upload validation
+		  if (formData.hasErrors() == true) {
+			  System.out.println("Errors found in edit resource form");
+			  return badRequest(EditResource.render(formData, find));
+		  }
+		  else {
+			  System.out.println("Post Edit Resource");
+			  ResourceFormData data = formData.get();			  
+			  MultipartFormData body = request().body().asMultipartFormData();
+			  FilePart picture = body.getFile("uploadFile");
+			  
+			  Resource resource = null;
+			  if (find.equals("garden") ==  true) {
+				  resource = ResourceDB.addGardenResource(data);
+			  }
+			  else if (find.equals("barrel") == true) {
+				  resource = ResourceDB.addBarrelResource(data);
+			  }
+			  else if (find.equals("paver") == true) {
+				  resource = ResourceDB.addPaverResource(data);
+			  }
+			  
+			  if (picture != null) {
+				  resource.setImage(Files.toByteArray(picture.getFile()));
+				  System.out.println("Setting picture");
+			  }
+			  return redirect(routes.Application.adminPanel());
+		  }
+	  }*/
+	  return redirect(routes.Application.index());
+  }
+  
   /**
    * Approves/Revokes the approval status of a rain garden.
    * @param id The ID of the rain garden.

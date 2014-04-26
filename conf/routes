@@ -49,6 +49,8 @@ POST    /adminpanel/editindexcontent  controllers.Application.postIndexContentFo
 GET 	/image/index                  controllers.Application.retrieveHomeBannerImage()
 GET     /adminpanel/editresource/:find/:id          controllers.Application.editResource(find: String, id: Long)
 POST    /adminpanel/postEditResource/:find          controllers.Application.postEditResource(find: String)
+GET     /adminpanel/editindexblock/:id          controllers.Application.editIndexBlock(id: String)
+POST    /adminpanel/postindexblock/             controllers.Application.postEditIndexBlock()
 GET     /image/resource/:id           controllers.Application.retrieveResourceImage(id: Long)
 GET     /register/plant               controllers.Application.newPlant()
 POST    /register/plant               controllers.Application.postPlantRegistration(isNew: Boolean)

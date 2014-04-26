@@ -35,6 +35,15 @@ public class IndexContentDB {
 	  public static IndexContent getBlock(long id) {
 		  return IndexContent.find().byId(id);
 	  }
+	  public static IndexContent getBlock(String serial) {
+		  List<IndexContent> i = IndexContent.find().all();
+		  for(IndexContent c: i){
+			  if(c.getSerial().equals(serial)){
+				  return IndexContent.find().byId(c.getId());
+			  }
+		  }
+		  return null;
+	  }
 	
 		public static String getContent(long id) {
 			    return IndexContent.find().byId(id).getContent();

@@ -1,0 +1,50 @@
+@(blockFormData: Form[views.formdata.BlockFormData])
+
+@import helper._
+@import bootstrap3._
+
+
+@Main("Admin control panel") {
+<div class="container">
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<div  class="alert alert-info"><h2></>Header Section</h2><h4>(Edit > Submit Change)</h4></div>
+
+					<div class="well">
+						
+					
+						<div class="press-banner" style="margin-top:0px;!important; background-image: url(@routes.Application.retrieveHomeBannerImage())">
+						
+						
+							<h1 class="text-center bigFont"><b>@blockFormData("header")</b></br><p style="font-size:80%">@blockFormData("content")</p></h1>
+						</div>
+					</div>
+					<div style="height:20px"></div>
+					@form(routes.Application.postIndexContentFormData(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data" ){
+						@bootstrap3.textarea(blockFormData("header"),"1", "Header:", "Header", "")
+						@bootstrap3.textarea(blockFormData("content"),"7", "SubHeader:", "SubHeader", "")
+						@file(blockFormData("uploadFile"), "Upload Image:", "Upload a 700x260 pixel image or rectangle size image")
+					<div style="height:100px"><button type="submit" style="color:#000" class="btn btn-default pull-right">Submit Change</button></div>		
+								
+				  
+					}
+					
+					
+				</div>
+				<div  class="text-center alert alert-info"><h4>Submit our change before you go back</h4></div>
+				<div style="height:0px"><button href="@(routes.Application.adminPanel())" style="color:#000" class="btn btn-default pull-right">GO BACK TO Admin Control Panel</button>		
+					</div>
+						
+				
+				
+			</div>
+			
+				
+		</div>
+		<div style="height:200px"></div>
+	</div>
+</div>
+}
