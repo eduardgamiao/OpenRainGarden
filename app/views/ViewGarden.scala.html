@@ -61,10 +61,12 @@
               <div class="page-header"><h4>Plants</h4></div>
                           @if(!(rainGarden.getPlants().isEmpty)) {    
                             @for(plant <- rainGarden.getPlants()) {
+                             <div class="col-md-2">
                              <button type="button" class="btn btn-info example" data-container="body" data-toggle="popover"
                               data-placement="top" title="@plant"
                               data-content="@plantPopover(PlantDB.getPlant(plant))">@PlantDB.getPlant(plant).getName()
                               </button>
+                              </div>
                             }
                           } else {
                             <p>No plants</p>
@@ -82,7 +84,7 @@
               @for(comment <- rainGarden.getComments()) {
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getEmail())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     <h4 class="media-heading" id="@comment.getId()" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getEmail())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
                      @comment.getComment()
                   </div>
                </div>

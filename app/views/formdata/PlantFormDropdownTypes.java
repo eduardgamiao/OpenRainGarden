@@ -1,6 +1,8 @@
 package views.formdata;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -106,6 +108,14 @@ public class PlantFormDropdownTypes {
       climateMap.put(type, true);
     }
     return climateMap;
+  }
+  
+  public static List<String> getClimateTypesAsList() {
+    List<String> climateTypes = new ArrayList<String>();
+    for (String current : PlantFormDropdownTypes.getClimateTypes().keySet()) {
+      climateTypes.add(current);
+    }
+    return climateTypes;
   }
   
   /**

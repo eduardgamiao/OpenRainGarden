@@ -69,7 +69,9 @@ public class Global extends GlobalSettings {
     // Add rain garden.
     if (RainGarden.find().all().isEmpty()) {
       List<String> plants = new ArrayList<String>();
-      plants.add("'Ahu'awa");
+      for (Plant plant : PlantDB.getPlants()) {
+        plants.add(plant.getName());
+      }
       RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
         "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
         "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
