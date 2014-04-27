@@ -103,15 +103,18 @@ public class Global extends GlobalSettings {
     paver.save();
     }
     
-    //Learn More Resource Database
-    ResourceDB.addGardenResource(new ResourceFormData(0, "Hui o Ko'olaupoko Rain Garden Program", "http://www.huihawaii.org/rain-gardens.html"));
-    ResourceDB.addGardenResource(new ResourceFormData(0, "Hawaii Rain Garden Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
-    ResourceDB.addGardenResource(new ResourceFormData(0, "Native Plant Care Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
+    if (Resource.find().all().isEmpty()) {
+    	//Learn More Resource Database
+        ResourceDB.addGardenResource(new ResourceFormData(-1, "Hui o Ko'olaupoko Rain Garden Program", "http://www.huihawaii.org/rain-gardens.html"));
+        ResourceDB.addGardenResource(new ResourceFormData(-1, "Hawaii Rain Garden Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
+        ResourceDB.addGardenResource(new ResourceFormData(-1, "Native Plant Care Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
+        
+        ResourceDB.addBarrelResource(new ResourceFormData(-1, "Honolulu Board of Water Supply Rain Barrel Program", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
+        
+        ResourceDB.addPaverResource(new ResourceFormData(-1, "AquaPave", "http://www.aquapave.com/index.htm"));
+        ResourceDB.addPaverResource(new ResourceFormData(-1, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
+    }
     
-    ResourceDB.addBarrelResource(new ResourceFormData(0, "Honolulu Board of Water Supply Rain Barrel Program", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
-    
-    ResourceDB.addPaverResource(new ResourceFormData(0, "AquaPave", "http://www.aquapave.com/index.htm"));
-    ResourceDB.addPaverResource(new ResourceFormData(0, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
   }
 
   /**

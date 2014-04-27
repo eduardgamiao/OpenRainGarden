@@ -11,12 +11,12 @@ import play.data.validation.ValidationError;
  *
  */
 public class ResourceFormData {
-	public long id = 0;
+	public long id = -1;
 	public String header;
 	public String url;
 	
 	public ResourceFormData() {
-		this.id = 0;
+		this.id = -1;
 		this.header = "";
 		this.url = "";
 	}

@@ -720,7 +720,7 @@ public class Application extends Controller {
    * @return
    */
   public static Result learnmore() {
-      return ok(LearnMore.render(ResourceDB.getGardenList(), ResourceDB.getBarrelList(), ResourceDB.getPaverList()));
+      return ok(LearnMore.render(ResourceDB.getGardenResources(), ResourceDB.getBarrelResources(), ResourceDB.getPaverResources()));
   }
   
   /**
@@ -1065,7 +1065,8 @@ public class Application extends Controller {
   public static Result editResource(String find, Long id) {
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
 		  ResourceFormData data;
-		  if (id == 0) {
+		  System.out.println("ID = " + id);
+		  if (id == -1) {
 			  data = new ResourceFormData();
 		  }
 		  else {
@@ -1119,7 +1120,6 @@ public class Application extends Controller {
 	  }
 	  return redirect(routes.Application.index());
   }
-  
   
   /**
    * Retrieves the resource image based on the given id

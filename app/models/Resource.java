@@ -1,28 +1,36 @@
 package models;
 
 import java.io.IOException;
+import play.db.ebean.Model;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Represents a resource object in the Learn More Page
  * @author Kyle
  *
  */
-public class Resource {
+@Entity
+public class Resource extends Model {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private Long id;
 	private String header;
 	private String url;
+	private String type;
 	private byte [] image;
 	
 	/**
 	 * Constructor
-	 * @param id ID of the resource
-	 * @param header Title of the resource
+	 * @param header Header of the resource
 	 * @param url URL of the resource
+	 * @param type Type of the resource ('garden', 'barrel', or 'paver')
 	 */
-	public Resource(Long id, String header, String url) {
-		this.id = id;
+	public Resource(String header, String url, String type) {
 		this.header = header;
 		this.url = url;
+		this.type = type;
 	}
 	
 	/**
@@ -75,6 +83,30 @@ public class Resource {
 	}
 	
 	/**
+	 * Sets the type of the resource to either "garden", "barrel", or "paver"
+	 * @param type
+	 */
+	public void setType(String type) {
+		if (type.equals("garden") == true) {
+			this.type = type;
+		}
+		else if (type.equals("barrel") == true) {
+			this.type = type;
+		}
+		else if (type.equals("paver") == true) {
+			this.type = type;
+		}
+	}
+	
+	/**
+	 * Returns the type of the resource ("garden", "barrel", or "paver")
+	 * @return
+	 */
+	public String getType(){
+		return this.type;
+	}
+	
+	/**
 	 * Returns the image
 	 * @return
 	 */
@@ -113,5 +145,13 @@ public class Resource {
 			return "images/upload/resource" + this.id;
 		}
 		return "images/placeholder.gif";
+	}
+	
+	/**
+	 * The EBean ORM finder method for database queries on the ID field
+	 * @return the finder method for resource
+	 */
+	public static Finder<Long, Resource> find() {
+		return new Finder<Long, Resource>(Long.class, Resource.class);
 	}
 }

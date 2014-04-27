@@ -130,6 +130,15 @@ create table rain_garden (
   constraint pk_rain_garden primary key (id))
 ;
 
+create table resource (
+  id                        bigint auto_increment not null,
+  header                    varchar(255),
+  url                       varchar(255),
+  type                      varchar(255),
+  image                     varbinary(255),
+  constraint pk_resource primary key (id))
+;
+
 create table user_info (
   id                        bigint auto_increment not null,
   first_name                varchar(255),
@@ -201,6 +210,8 @@ drop table rain_garden_plant;
 drop table rain_barrel;
 
 drop table rain_garden;
+
+drop table resource;
 
 drop table user_info;
 
