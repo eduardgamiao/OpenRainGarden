@@ -135,7 +135,7 @@ create table resource (
   header                    varchar(255),
   url                       varchar(255),
   type                      varchar(255),
-  image                     varbinary(255),
+  image                     longblob,
   constraint pk_resource primary key (id))
 ;
 

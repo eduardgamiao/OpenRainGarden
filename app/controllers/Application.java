@@ -1089,7 +1089,7 @@ public class Application extends Controller {
   public static Result postEditResource(String find) throws IOException{
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
-		  //need to implement file upload validation
+		  validateResourceUpload(formData, request().body().asMultipartFormData());
 		  if (formData.hasErrors() == true) {
 			  System.out.println("Errors found in edit resource form");
 			  return badRequest(EditResource.render(formData, find));
@@ -1112,8 +1112,9 @@ public class Application extends Controller {
 			  }
 			  
 			  if (picture != null) {
+				  System.out.println("Setting resource picture");
 				  resource.setImage(Files.toByteArray(picture.getFile()));
-				  System.out.println("Setting picture");
+				  resource.save();
 			  }
 			  return redirect(routes.Application.adminPanel());
 		  }
@@ -1132,6 +1133,30 @@ public class Application extends Controller {
 		  return ok(resource.getImage()).as("image/jpeg");
 	  }
 	  return redirect("");
+  }
+  
+  /**
+   * Validates the picture upload for the resource form
+   * @param formData
+   * @param body
+   */
+  private static void validateResourceUpload(Form<ResourceFormData> formData, MultipartFormData body) {
+	  List <ValidationError> errors = new ArrayList<ValidationError>();
+	  if (formData.errors().get("uploadFile") != null) {
+		  errors = formData.errors().get("uploadFile");
+	  }
+	  FilePart picture = body.getFile("uploadFile");
+	  if (picture != null) {
+		  if (picture.getContentType().contains("image") == false) {
+			  errors.add(new ValidationError("uploadFile", "The file: " + picture.getFilename() + " is not an accepted file type. Please select a .jpg, .jpeg, or .png file."));
+		  }
+		  if (picture.getFile().length() > MAX_FILE_SIZE) {
+			  errors.add(new ValidationError("uploadFile", "The file " + picture.getFilename() + "if too large. Please select a file that is under 2.5 MB"));
+		  }
+	  }
+	  if (errors.isEmpty() == false) {
+		  formData.errors().put("uploadFile", errors);
+	  }
   }
   
   /**

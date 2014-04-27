@@ -4,6 +4,7 @@ import java.io.IOException;
 import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
  * Represents a resource object in the Learn More Page
@@ -19,6 +20,7 @@ public class Resource extends Model {
 	private String header;
 	private String url;
 	private String type;
+	@Lob
 	private byte [] image;
 	
 	/**
