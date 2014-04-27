@@ -239,12 +239,6 @@ public class UserInfo extends Model {
   }
   
   /**
-   * @return the confirm
-   */
-  public boolean isConfirm() {
-    return confirm;
-  }
-  /**
    * @return the gardenComments
    */
   public List<GardenComment> getGardenComments() {

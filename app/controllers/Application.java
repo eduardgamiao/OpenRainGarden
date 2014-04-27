@@ -201,6 +201,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result newRainGarden() {
+	  if(Secured.getUserInfo(ctx()).isConfirmed() == true) {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
     String url = routes.Application.retrieveGardenImage(data.id).url();
@@ -210,6 +211,8 @@ public class Application extends Controller {
         PlantTypes.getPlantMap(), RainGardenSizeTypes.getTypes(), 
         WaterSourceSizeTypes.getTypes(), 
         InfiltrationRateTypes.getTypes(), url, Secured.getUserInfo(ctx())));
+	  }
+	  return redirect(routes.Application.index());
   }
   
   /**
@@ -289,6 +292,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result newRainBarrel() {
+	  if (Secured.getUserInfo(ctx()).isConfirmed() == true) {
     RainBarrelFormData data = new RainBarrelFormData();
     Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
     String url = routes.Application.retrieveBarrelImage(data.id).url();
@@ -300,6 +304,8 @@ public class Application extends Controller {
               InstallationTypes.getInstallationTypes(),
               RainBarrelCapacityTypes.getTypes(),
               url));
+	  }
+	  return redirect(routes.Application.index());
   }
   
   /**
@@ -375,6 +381,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result newPermeablePavers() {
+	  if (Secured.getUserInfo(ctx()).isConfirmed() == true) {
     PermeablePaversFormData data = new PermeablePaversFormData();
     Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
     String url = routes.Application.retrievePaverImage(data.id).url();
@@ -384,6 +391,8 @@ public class Application extends Controller {
               PaverMaterialTypes.getMaterialTypes(), 
               PaverMaterialTypes.getMaterialTypes(), 
               PermeablePaversSizeTypes.getTypes(), url, Secured.getUserInfo(ctx())));
+	  }
+	  return redirect(routes.Application.index());
   }
   
   /**

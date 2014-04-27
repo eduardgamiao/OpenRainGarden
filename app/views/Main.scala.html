@@ -59,7 +59,7 @@
 					var infoString;
 	
 					@for(garden <- RainGardenDB.getRainGardens()){						
-						@if(!garden.hideAddress()){
+						@if(garden.hideAddress() == false && garden.isApproved() == true){
 							geo.geocode( {'address': '@garden.getAddress()'}, function(results,status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									var image;
@@ -76,7 +76,7 @@
 					}
 					
 					@for(barrel <- RainBarrelDB.getRainBarrels()){						
-						@if(!barrel.hideAddress()){
+						@if(barrel.hideAddress() == false && barrel.isApproved() == true){
 							geo.geocode( {'address': '@barrel.getAddress()'}, function(results,status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									var image;
@@ -93,7 +93,7 @@
 					}
 					
 					@for(paver <- PermeablePaversDB.getPermeablePavers()){						
-						@if(!paver.hideAddress()){
+						@if(paver.hideAddress() ==  false && paver.isApproved() == true){
 							geo.geocode( {'address': '@paver.getAddress()'}, function(results,status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									var image;
