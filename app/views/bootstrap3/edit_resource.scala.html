@@ -1,7 +1,7 @@
 @(resource: Resource, find: String)
 
 <div class="col-sm-6 col-md-4">
-	<div class="thumbnail">
+	<div class="thumbnail" style="height:320px; widget:320px">
 		<img src="@if(resource.hasPicture()) {@routes.Application.retrieveResourceImage(resource.getID())} else {@routes.Assets.at("images/placeholder.gif")}">
 		<div class="caption">
 			<a href="@resource.getUrl()" target="_blank">
