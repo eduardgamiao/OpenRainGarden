@@ -53,14 +53,14 @@ public class Plant extends Model {
   /**
    * @return the id
    */
-  public Long getID() {
+  public Long getId() {
     return id;
   }
 
   /**
    * @param id the id to set
    */
-  public void setID(Long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

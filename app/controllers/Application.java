@@ -1278,12 +1278,4 @@ public class Application extends Controller {
     }
     return redirect(routes.Application.viewSolutions());
   }
-  
-  public static Result exportRainGardens() {
-    String out = "Name, Scientific_Name\n";
-    for (Plant plant : PlantDB.getPlants()) {
-      out += plant.getName() + ", " + plant.getScientificName() + "\n";
-    }
-    return ok(out).as("text/csv");
-  }
 }

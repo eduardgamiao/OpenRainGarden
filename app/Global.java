@@ -36,6 +36,7 @@ import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 import views.formdata.ResourceFormData;
 import org.mindrot.jbcrypt.BCrypt;
+import com.avaje.ebean.Ebean;
 
 /**
  * Implements a Global object for the Play Framework.
@@ -68,7 +69,7 @@ public class Global extends GlobalSettings {
     // Add rain garden.
     if (RainGarden.find().all().isEmpty()) {
       List<String> plants = new ArrayList<String>();
-      plants.add("‘Ahu‘awa");
+      plants.add("'Ahu'awa");
       RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
         "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
         "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
@@ -147,8 +148,9 @@ public class Global extends GlobalSettings {
     String [] plantArr6 = plant6.split(", ");
     **/
     if (Plant.find().all().isEmpty()) {
-    PlantDB.addPlant(new PlantFormData(plantArr1[0], plantArr1[1], plantArr1[2], 
-                                   plantArr1[THREE], plantArr1[FOUR]));
+      @SuppressWarnings("unchecked")
+      Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
+      Ebean.save(all.get("plants"));
     }
     
     /**
@@ -158,13 +160,6 @@ public class Global extends GlobalSettings {
     PlantDB.addPlant(new PlantFormData(0, plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
     PlantDB.addPlant(new PlantFormData(0, plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
     **/
-    @SuppressWarnings("unchecked")
-    Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
-    List<Object> objects = all.get("plants");
-    for (Object object : objects) {
-      Plant plant = (Plant) object.getClass().cast(object);
-      Logger.debug(plant.getName());
-    }
   }
   
   private static void populateIndexContentDB() {

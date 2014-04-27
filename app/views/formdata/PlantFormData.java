@@ -63,7 +63,7 @@ public class PlantFormData {
   * @param plant The plant.
   */
  public PlantFormData(Plant plant) {
-   this.id = plant.getID();
+   this.id = plant.getId();
    this.name = plant.getName();
    this.scientificName = plant.getScientificName();
    this.placement = plant.getPlacement();
