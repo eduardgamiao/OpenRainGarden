@@ -591,15 +591,15 @@ public class Application extends Controller {
    * @return
    */
   public static Result postSignUp() {
-	  System.out.println("Post Sign Up");
+	  //System.out.println("Post Sign Up");
 	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
 	  if (formData.hasErrors() == true) {
-		  System.out.println("Sign up Errors found.");
+		  //System.out.println("Sign up Errors found.");
 		  return badRequest(SignUp.render(formData));
 	  }
 	  else {
 		  SignUpFormData data = formData.get();
-		  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
+		  //System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
 		  
 		  //create new userinfo and add it to the "database"
 		  long id = UserInfoDB.addUserInfo(data.firstName, data.lastName, data.email, data.telephone, BCrypt.hashpw(data.password, BCrypt.gensalt()), false, false);
@@ -651,7 +651,7 @@ public class Application extends Controller {
 		  mail.setFrom("openraingarden@gmail.com");
 		  
 		  String url = routes.Application.index().absoluteURL(request()) + "confirm/" + id + "/" + user.getConfirmHash();
-		  System.out.println(url);
+		  //System.out.println(url);
 		  
 		  mail.send("Please confirm your registration at our website by following the below link: " + url);
 		  
@@ -690,11 +690,11 @@ public class Application extends Controller {
    * @return
    */
   public static Result postLogin(String target) {
-	  System.out.println("Post Login");
+	  //System.out.println("Post Login");
 	  Form<LoginFormData> formData = Form.form(LoginFormData.class).bindFromRequest();
 	  
 	  if (formData.hasErrors() == true) {
-		  System.out.println("Login errors found");
+		  //System.out.println("Login errors found");
 		  flash("error", "Login credentials not valid.");
 		  return badRequest(Login.render("Login", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), formData, target));
 	  }
@@ -1067,7 +1067,7 @@ public class Application extends Controller {
   public static Result editResource(String find, Long id) {
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
 		  ResourceFormData data;
-		  System.out.println("ID = " + id);
+		  //System.out.println("ID = " + id);
 		  if (id == -1) {
 			  data = new ResourceFormData();
 		  }
@@ -1093,11 +1093,11 @@ public class Application extends Controller {
 		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
 		  validateResourceUpload(formData, request().body().asMultipartFormData());
 		  if (formData.hasErrors() == true) {
-			  System.out.println("Errors found in edit resource form");
+			  //System.out.println("Errors found in edit resource form");
 			  return badRequest(EditResource.render(formData, find));
 		  }
 		  else {
-			  System.out.println("Post Edit Resource");
+			  //System.out.println("Post Edit Resource");
 			  ResourceFormData data = formData.get();			  
 			  MultipartFormData body = request().body().asMultipartFormData();
 			  FilePart picture = body.getFile("uploadFile");
@@ -1114,12 +1114,26 @@ public class Application extends Controller {
 			  }
 			  
 			  if (picture != null) {
-				  System.out.println("Setting resource picture");
+				  //System.out.println("Setting resource picture");
 				  resource.setImage(Files.toByteArray(picture.getFile()));
 				  resource.save();
 			  }
 			  return redirect(routes.Application.adminPanel());
 		  }
+	  }
+	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Deletes the resource with the given id, if admin
+   * @param id
+   * @return adminPanel if admin or index otherwise
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result deleteResource(long id) {
+	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
+		  ResourceDB.deleteResource(id);
+		  return redirect(routes.Application.adminPanel());
 	  }
 	  return redirect(routes.Application.index());
   }
