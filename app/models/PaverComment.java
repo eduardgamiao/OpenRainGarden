@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Class that represents a comment on a permeable paver.
@@ -25,16 +24,10 @@ public class PaverComment extends Model {
   
   /**
    * @param comment Message of comment.
-   * @param poster Poster of comment.
-   * @param paver The permeable paver being commented on.
    * @param datePosted Date comment was posted.
    */
-  public PaverComment(String comment, UserInfo poster, PermeablePavers paver, String datePosted) {
+  public PaverComment(String comment, String datePosted) {
     this.comment = comment;
-    this.poster = poster;
-    poster.save();
-    this.paver = paver;
-    paver.save();
     this.datePosted = datePosted;
   }
   

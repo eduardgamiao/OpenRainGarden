@@ -5,18 +5,17 @@
 
 @Main("Page1") {
    <div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          View Current Image
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse">
-      <div class="panel-body">
-        <img src="@routes.Assets.at("images/garden.png")" class="img-responsive center-block"/>
-      </div>
-    </div>
-  </div></div>
+    @for(comment <- userInfo.getGardenComments()) {
+      <p>@comment.getComment()</p>
+      <a href="@routes.Application.viewGarden(comment.getGarden().getID())">Link</a>
+    }
+    @for(comment <- userInfo.getBarrelComments()) {
+      <p>@comment.getComment()</p>
+      <a href="@routes.Application.viewBarrel(comment.getBarrel().getID())">Link</a>
+    }
+    @for(comment <- userInfo.getPaverComments()) {
+      <p>@comment.getComment()</p>
+      <a href="@routes.Application.viewPaver(comment.getPaver().getID())">Link</a>
+    }    
+   </div>
 }

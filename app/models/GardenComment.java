@@ -26,16 +26,10 @@ public class GardenComment extends Model {
   
   /**
    * @param comment Message of comment.
-   * @param poster Poster of comment.
-   * @param garden The rain garden being commented on.
    * @param datePosted Date comment was posted.
    */
-  public GardenComment(String comment, UserInfo poster, RainGarden garden, String datePosted) {
+  public GardenComment(String comment, String datePosted) {
     this.comment = comment;
-    this.poster = poster;
-    poster.save();
-    this.garden = garden;
-    garden.save();
     this.datePosted = datePosted;
   }
   /**

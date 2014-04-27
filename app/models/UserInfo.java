@@ -39,6 +39,9 @@ public class UserInfo extends Model {
   
   @OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
+  
+  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
+  private List<PaverComment> paverComments = new ArrayList<PaverComment>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;
@@ -202,7 +205,15 @@ public class UserInfo extends Model {
   public void deleteGarden(RainGarden garden) {
     this.getGardens().remove(garden);
   }
-    
+  
+  /**
+   * Add a rain barrel to this user.
+   * @param barrel The rain barrel to add.
+   */
+  public void addBarrel(RainBarrel barrel) {
+    this.barrels.add(barrel);
+  }
+  
   /**
    * Delete a rain barrel from the user's list.
    * @param barrel The rain barrel to delete.
@@ -212,12 +223,95 @@ public class UserInfo extends Model {
   }
   
   /**
+   * Add a permeable paver to the user.
+   * @param paver The permeable paver to add.
+   */
+  public void addPaver(PermeablePavers paver) {
+    this.pavers.add(paver);
+  }
+  
+  /**
    * Delete a permeable paver from the user's list.
    * @param paver The permeable paver to delete.
    */
   public void deletePaver(PermeablePavers paver) {
     this.getPavers().remove(paver);
   }
+  
+  /**
+   * @return the confirm
+   */
+  public boolean isConfirm() {
+    return confirm;
+  }
+  /**
+   * @return the gardenComments
+   */
+  public List<GardenComment> getGardenComments() {
+    return gardenComments;
+  }
+  
+  /**
+   * Add a garden comment.
+   * @param comment The comment to add.
+   */
+  public void addGardenComment(GardenComment comment) {
+    this.gardenComments.add(comment);
+  }
+  
+  /**
+   * Delete a garden comment.
+   * @param comment The comment to delete.
+   */
+  public void deleteGardenComment(GardenComment comment) {
+    this.gardenComments.remove(comment);
+  }  
+  
+  /**
+   * @return the barrelComments
+   */
+  public List<BarrelComment> getBarrelComments() {
+    return barrelComments;
+  }
+  
+  /**
+   * Add a barrel comment.
+   * @param comment The comment to add.
+   */
+  public void addBarrelComment(BarrelComment comment) {
+    this.barrelComments.add(comment);
+  }
+  
+  /**
+   * Delete a barrel comment.
+   * @param comment The comment to delete.
+   */
+  public void deleteGardenComment(BarrelComment comment) {
+    this.barrelComments.remove(comment);
+  }  
+  
+  /**
+   * @return the paverComments
+   */
+  public List<PaverComment> getPaverComments() {
+    return paverComments;
+  }
+  
+  /**
+   * Add a paver comment.
+   * @param comment The comment to add.
+   */
+  public void addPaverComment(PaverComment comment) {
+    this.paverComments.add(comment);
+  }
+  
+  /**
+   * Delete a paver comment.
+   * @param comment The comment to delete.
+   */
+  public void deletePaverComment(PaverComment comment) {
+    this.paverComments.remove(comment);
+  }  
   
   /**
    * The EBean ORM finder method for database queries on ID.

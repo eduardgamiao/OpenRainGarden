@@ -27,7 +27,11 @@ public class BarrelCommentDB {
     if (formData.id == -1) {
       DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
       Date date = new Date();
-      comment = new BarrelComment(formData.comment, userInfo, barrel, dateFormat.format(date));
+      comment = new BarrelComment(formData.comment, dateFormat.format(date));
+      comment.setBarrel(barrel);
+      barrel.save();
+      comment.setPoster(userInfo);
+      userInfo.save();
       comment.save();
     }
     else {

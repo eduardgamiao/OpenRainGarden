@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import views.formdata.PaverCommentFormData;
-import views.formdata.PaverCommentFormData;
 
 /**
  * Handles all acessor methods for paver comments.
@@ -28,7 +27,11 @@ public class PaverCommentDB {
     if (formData.id == -1) {
       DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
       Date date = new Date();
-      comment = new PaverComment(formData.comment, userInfo, paver, dateFormat.format(date));
+      comment = new PaverComment(formData.comment, dateFormat.format(date));
+      comment.setPaver(paver);
+      paver.save();
+      comment.setPoster(userInfo);
+      userInfo.save();
       comment.save();
     }
     else {

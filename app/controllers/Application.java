@@ -840,7 +840,9 @@ public class Application extends Controller {
       return redirect(uri);
     }
     GardenCommentFormData data = formData.get();
+    Logger.debug("BEFORE: " + RainGardenDB.getRainGarden(id).getComments().size());
     GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
+    Logger.debug("AFTER: " + RainGardenDB.getRainGarden(id).getComments().size());
     return redirect(uri);
   }
   

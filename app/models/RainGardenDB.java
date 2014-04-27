@@ -27,7 +27,6 @@ public class RainGardenDB {
                               formData.waterFlowDescription, formData.infiltrationRate);
       garden.setOwner(userInfo);
       garden.getOwner().getGardens().add(garden);
-      CommentDB.initializeCommentSection("rg" + garden.getID());
       garden.save();
       return garden;
     }

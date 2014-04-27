@@ -1,6 +1,5 @@
 package models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -353,15 +352,11 @@ public class RainGarden extends Model {
   }
   
   /**
-   * Get the picture name tied to a rain garden.
-   * @return The name of the picture tied to the rain garden.
-   * @throws IOException 
+   * Add comment to rain garden.
+   * @param comment The comment to add.
    */
-  public String getPictureName() throws IOException {
-    if (hasPicture()) {
-      return "images/upload/rg" + this.id;
-    }
-    return "images/placeholder.gif";
+  public void addComment(GardenComment comment) {
+    this.comments.add(comment);
   }
   
   /**

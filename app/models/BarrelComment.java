@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Class that represents a comment on a rain barrel.
@@ -25,16 +24,10 @@ public class BarrelComment extends Model {
   
   /**
    * @param comment Message of comment.
-   * @param poster Poster of comment.
-   * @param barrel The rain barrel being commented on.
    * @param datePosted Date comment was posted.
    */
-  public BarrelComment(String comment, UserInfo poster, RainBarrel barrel, String datePosted) {
+  public BarrelComment(String comment, String datePosted) {
     this.comment = comment;
-    this.poster = poster;
-    poster.save();
-    this.barrel = barrel;
-    barrel.save();
     this.datePosted = datePosted;
   }
   /**
@@ -82,7 +75,7 @@ public class BarrelComment extends Model {
   /**
    * @param barrel the barrel to set
    */
-  public void setGarden(RainBarrel barrel) {
+  public void setBarrel(RainBarrel barrel) {
     this.barrel = barrel;
   }
   /**

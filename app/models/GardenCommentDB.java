@@ -26,8 +26,12 @@ public class GardenCommentDB {
     if (formData.id == -1) {
       DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
       Date date = new Date();
-      comment = new GardenComment(formData.comment, userInfo, garden, dateFormat.format(date));
+      comment = new GardenComment(formData.comment, dateFormat.format(date));
+      comment.setGarden(garden);
+      comment.setPoster(userInfo);
       comment.save();
+      garden.save();
+      userInfo.save();
     }
     else {
       DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
