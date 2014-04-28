@@ -398,6 +398,17 @@ public class RainGarden extends Model {
   }
   
   /**
+   * Return the information of the garden in CSV (comma-separated value) format.
+   * @return The information of a garden in formatted as a CSV.
+   */
+  public String formatToCSV() {
+    return "\"" + this.title + "\", " + "\"" + this.propertyType + "\", " + "\"" + this.address + "\", " + "\"" 
+           + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.rainGardenSize + "\", "
+           + "\"" + this.waterFlowSourceSize + "\", " + "\"" + this.waterFlowDescription + "\", " 
+           + "\"" + this.infiltrationRate + "\", " + "\"" + this.getNameOfOwner() + "\"\n";
+  }
+  
+  /**
    * The EBean ORM finder method for database queries on ID.
    * @return The finder method for rain gardens.
    */

@@ -1,5 +1,7 @@
 package controllers;
 
+import models.RainGarden;
+import models.RainGardenDB;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.formdata.PlantFormDropdownTypes;
@@ -27,7 +29,8 @@ public class Export extends Controller {
     };
     
     // Serves this stream with 200 OK
-    return ok(chunks).as("text/csv");
+    response().setContentType("text/csv");
+    return ok(chunks);
   }
 
   /**
@@ -35,7 +38,11 @@ public class Export extends Controller {
    * @param out The stream being written to.
    */
   public static void rainGardenOutChannel(Chunks.Out<String> out) {
-    out.write("TODO");
+    out.write("Title,Property_Type,Address,Description,Date_Installed,Rain_Garden_Size,Waterflow_Source_Size,"
+        + "Waterflow_Description,Infiltration_Rate,Owner_Name\n");
+    for (RainGarden garden : RainGardenDB.getRainGardens()) {
+      out.write(garden.formatToCSV());
+    }
     out.close();
   }
 
