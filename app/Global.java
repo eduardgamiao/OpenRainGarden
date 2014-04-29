@@ -80,7 +80,7 @@ public class Global extends GlobalSettings {
       garden.setApproved(true);
       
       if (garden != null && GardenComment.find().all().isEmpty()) {
-        GardenCommentDB.addComment(new GardenCommentFormData("Wow, you garden looks nice!"), 
+        CommentDB.addComment(new CommentFormData("Wow, you garden looks nice!"), 
             garden,
             UserInfoDB.getUser("janesmith@gmail.com"));
       }

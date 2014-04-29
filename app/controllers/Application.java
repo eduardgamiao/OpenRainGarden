@@ -460,16 +460,15 @@ public class Application extends Controller {
    */
   public static Result viewGarden(Long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
-    GardenCommentFormData commentFormData = new GardenCommentFormData();
-    Form<GardenCommentFormData> commentForm = Form.form(GardenCommentFormData.class).fill(commentFormData);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (garden != null) {
       if (garden.isApproved()) {
         return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
       }
       else if (Secured.isLoggedIn(ctx()) 
                && (garden.isOwner(Secured.getUserInfo(ctx())) || Secured.getUserInfo(ctx()).isAdmin())) {
-        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
-        
+        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));        
       }
     }
     return redirect(routes.Application.gardengallery());
@@ -838,14 +837,12 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postGardenComment(Long id, String uri) {
-    Form<GardenCommentFormData> formData = Form.form(GardenCommentFormData.class).bindFromRequest();
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-    GardenCommentFormData data = formData.get();
-    Logger.debug("BEFORE: " + RainGardenDB.getRainGarden(id).getComments().size());
-    GardenCommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
-    Logger.debug("AFTER: " + RainGardenDB.getRainGarden(id).getComments().size());
+    CommentFormData data = formData.get();
+    CommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   

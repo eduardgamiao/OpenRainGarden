@@ -44,8 +44,12 @@ public class RainBarrel extends Model {
   
   @ManyToOne
   private UserInfo owner;
+  
   @OneToMany (mappedBy = "barrel", cascade = CascadeType.PERSIST)
-  private List<BarrelComment> comments = new ArrayList<BarrelComment>();
+  private List<BarrelComment> comments = new ArrayList<BarrelComment>();  
+
+  @OneToMany (mappedBy = "barrel", cascade = CascadeType.PERSIST)
+  private List<Comment> commentList = new ArrayList<Comment>();
     
   /**
    * Constructor.

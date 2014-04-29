@@ -12,6 +12,9 @@ import models.Comment;
  * 
  */
 public class CommentFormData {
+  
+  /** The ID of the comment. */
+  public long id = -1;
 
   /** The comment. */
   public String comment;

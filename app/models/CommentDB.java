@@ -1,11 +1,5 @@
 package models;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import views.formdata.CommentFormData;
 
 /**
@@ -14,35 +8,36 @@ import views.formdata.CommentFormData;
  *
  */
 public class CommentDB {
-  
-  private static HashMap<String, List<Comment>> comments = new HashMap<String, List<Comment>>();
 
   /**
-   * Add comment to database.
-   * @param formData Comment form data.
-   * @param userInfo User posting the comment.
-   * @param key Key to store comment under.
+   * Add a comment to the database.
+   * @param data The form data holding the comment.
+   * @param garden The garden being commented on.
+   * @param userInfo The poster of the comment.
+   * @return The newly created/edited comment.
    */
-  public static void addComment(CommentFormData formData, UserInfo userInfo, String key) {
-    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-    Date date = new Date();
-    comments.get(key).add(new Comment(formData.comment, userInfo, dateFormat.format(date)));
+  public static Comment addComment(CommentFormData data, RainGarden garden, UserInfo userInfo) {
+    Comment comment;
+    if (data.id == -1) {
+      comment = new Comment(data.comment, garden, userInfo);
+      comment.save();
+    }
+    else {
+      comment = CommentDB.getComment(data.id);
+      if (comment != null) {
+        comment.setComment(data.comment);
+        comment.save();
+      }
+    }   
+    return comment;
   }
   
   /**
-   * Get a list of comments from the database that matches the given key.
-   * @param key The key of the rainwater runoff solution to get the comments of.
-   * @return A list of comments.
+   * Retrieve a comment from the database.
+   * @param id The ID of the comment.
+   * @return The comment matching the ID.
    */
-  public static List<Comment> getComments(String key) {
-    return comments.get(key);
-  }
-  
-  /**
-   * Initialize the comment section of a rainwater runoff solution with the given key.
-   * @param key The key to store the comments.
-   */
-  public static void initializeCommentSection(String key) {
-    comments.put(key, new ArrayList<Comment>());
+  public static Comment getComment(Long id) {
+    return Comment.find().byId(id);
   }
 }

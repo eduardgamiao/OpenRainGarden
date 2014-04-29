@@ -41,7 +41,10 @@ public class UserInfo extends Model {
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
   
   @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
-  private List<PaverComment> paverComments = new ArrayList<PaverComment>();
+  private List<PaverComment> paverComments = new ArrayList<PaverComment>();  
+
+  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
+  private List<PaverComment> comments = new ArrayList<PaverComment>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;

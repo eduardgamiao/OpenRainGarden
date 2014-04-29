@@ -46,6 +46,9 @@ public class RainGarden extends Model {
   @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
   private List<GardenComment> comments = new ArrayList<GardenComment>();
   
+  @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
+  private List<Comment> commentList = new ArrayList<Comment>();
+  
   /**
    * Constructor.
    * @param title Title of rain garden
@@ -347,16 +350,16 @@ public class RainGarden extends Model {
    * Return a list of garden comments.
    * @return A list of comments about a rain garden.
    */
-  public List<GardenComment> getComments() {
-    return comments;
+  public List<Comment> getComments() {
+    return commentList;
   }
   
   /**
    * Add comment to rain garden.
    * @param comment The comment to add.
    */
-  public void addComment(GardenComment comment) {
-    this.comments.add(comment);
+  public void addComment(Comment comment) {
+    this.commentList.add(comment);
   }
   
   /**
