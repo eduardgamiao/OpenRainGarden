@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 import models.Button;
 import models.ButtonDB;
+import models.Comment;
 import models.CommentDB;
 import models.GardenComment;
 import models.GardenCommentDB;
@@ -79,7 +80,7 @@ public class Global extends GlobalSettings {
       
       garden.setApproved(true);
       
-      if (garden != null && GardenComment.find().all().isEmpty()) {
+      if (garden != null && Comment.find().all().isEmpty()) {
         CommentDB.addComment(new CommentFormData("Wow, you garden looks nice!"), 
             garden,
             UserInfoDB.getUser("janesmith@gmail.com"));
