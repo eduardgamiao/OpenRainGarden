@@ -382,4 +382,15 @@ public class PermeablePavers extends Model {
   public static Finder<Long, PermeablePavers> find() {
     return new Finder<Long, PermeablePavers>(Long.class, PermeablePavers.class);
   }
+
+  /**
+   * Format permable paver information in CSV format.
+   * @return The permeable paver's information in CSV format.
+   */
+  public String formatToCSV() {
+    return "\"" + this.title + "\", " + "\"" + this.propertyType + "\", " + "\"" + this.address + "\", " + "\"" 
+           + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.material + "\", " 
+           + this.previousMaterial + "\", " + this.size + "\", " + this.installer + "\", " 
+           + this.owner.getEmail() + "\n";
+  }
 }

@@ -405,7 +405,7 @@ public class RainGarden extends Model {
     return "\"" + this.title + "\", " + "\"" + this.propertyType + "\", " + "\"" + this.address + "\", " + "\"" 
            + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.rainGardenSize + "\", "
            + "\"" + this.waterFlowSourceSize + "\", " + "\"" + this.waterFlowDescription + "\", " 
-           + "\"" + this.infiltrationRate + "\", " + "\"" + this.getNameOfOwner() + "\"\n";
+           + "\"" + this.infiltrationRate + "\", " + "\"" + this.getOwner().getEmail() + "\n";
   }
   
   /**

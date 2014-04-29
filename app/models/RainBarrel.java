@@ -455,4 +455,17 @@ public class RainBarrel extends Model {
   public static Finder<Long, RainBarrel> find() {
     return new Finder<Long, RainBarrel>(Long.class, RainBarrel.class);
   }
+
+  /**
+   * Format barrel information to CSV format.
+   * @return The barrel information in CSV format.
+   */
+  public String formatToCSV() {
+    return "\"" + this.title + "\", " + "\"" + this.propertyType + "\", " + "\"" + this.address + "\", " + "\"" 
+           + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.rainBarrelType + "\", "
+           + "\"" + this.capacity + "\", " + "\"" + this.color + "\", " + "\"" + this.material + "\", " 
+           + "\"" + this.estimatedCost + "\", " + "\"" + this.waterUse + "\", " 
+           + "\"" + this.overflowFrequency + "\", " + "\"" + this.cover + "\", " + "\"" + this.obtainedFrom + "\", "
+           + "\"" + this.installationType + "\", " + this.getOwner().getEmail() + "\n";
+  }
 }
