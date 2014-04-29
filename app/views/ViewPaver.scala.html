@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; color:black; bottom: 1.9em;">
-            <p><b>Owner:</b> <a href="@routes.Application.profile(permeablePaver.getOwner().getEmail())">@permeablePaver.getOwner().getName()</a></p>
+            <p><b>Owner:</b> <a href="@routes.Application.profile(permeablePaver.getOwner().getId())">@permeablePaver.getOwner().getName()</a></p>
             <p><b>Property Type:</b> @permeablePaver.getPropertyType()</p>
             <p><b>Address:</b> @if(permeablePaver.getHideAddress().equals("Yes")) {Hidden} else {@permeablePaver.getAddress()}</p>
             <p><b>Date Installed:</b> @permeablePaver.getDateInstalled()</p>
@@ -67,7 +67,7 @@
               @for(comment <- permeablePaver.getComments()) {
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getEmail())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
+                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getId())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
                      @comment.getComment()
                   </div>
                </div>

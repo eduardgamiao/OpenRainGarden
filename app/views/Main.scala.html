@@ -200,7 +200,7 @@
 	           	 @if(Secured.getUserInfo(ctx()).isAdmin()) {
 	              	<li><a href="@routes.Application.adminPanel()">Admin Control Panel</a></li>	
 	              } else {
-	              	<li><a href="@routes.Application.profile(Secured.getUser(ctx()))">View Profile</a></li>
+	              	<li><a href="@routes.Application.profile(Secured.getUserInfo(ctx()).getId())">View Profile</a></li>
 	              	<li><a href="@routes.Application.editProfile()">Edit Profile</a></li>
 	              }
                 @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).isAdmin)) {

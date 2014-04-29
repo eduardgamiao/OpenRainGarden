@@ -49,58 +49,52 @@ public class Application extends Controller {
    * Returns the user profile page. 
    * @return The resulting user profile page. 
    */
-  public static Result profile(String email) {
-	
-	UserInfo user = UserInfoDB.getUser(email);
-	System.out.println("Opening Profile Page");
-
-	return ok(Profile.render(user));
-
+  public static Result profile(long id) {
+	  UserInfo user = UserInfoDB.getUser(id);
+	  return ok(Profile.render(user));
   }
   
   /**
    * Returns the edit profile page.
    * @return edit profile page
    */
+  @Security.Authenticated(Secured.class)
   public static Result editProfile() {
-	System.out.println("Opening Edit Profile Page");
-    SignUpFormData data = (!Secured.isLoggedIn(ctx())) 
-        ? new SignUpFormData() : new SignUpFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getEmail()));
-	  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).fill(data);
-	  if(Secured.isLoggedIn(ctx())){
-		  return ok(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
-	  }
-	  return redirect(routes.Application.errorReport("No user logged in,open edit profile fails."));
+	EditProfileFormData data = new EditProfileFormData(UserInfoDB.getUser(Secured.getUserInfo(ctx()).getId()));
+	Form<EditProfileFormData> formData = Form.form(EditProfileFormData.class).fill(data);
+	return ok(EditProfile.render(formData));
   }
+  
   /**
    * Processes the edited profile form.
    * @return
    */
-  public static Result postEditProfile() {
-	  System.out.println("Post Edit");
-	  
-	  if(Secured.isLoggedIn(ctx())){
-		 
-		  Form<SignUpFormData> formData = Form.form(SignUpFormData.class).bindFromRequest();
-		  if (formData.hasErrors() == true) {
-			  System.out.println("Edit profile Errors found.");
-			  return badRequest(EditProfile.render(formData,  UserInfoDB.getUser(Secured.getUser(ctx()))));
-		  }
-		  else {
-			  SignUpFormData data = formData.get();
-			  System.out.println(data.firstName + " " + data.lastName + " " + data.email + " " + data.telephone + " " + data.password);
-			  
-			  UserInfo user = Secured.getUserInfo(ctx());
-			  user.setFirstName(data.firstName);
-			  user.setLastName(data.lastName);
-			  user.setEmail(data.email);
-			  user.setTelephone(data.telephone);
-			  user.setPassword(data.password);
-			  
-			  return redirect(routes.Application.profile(data.email));
-		  }
+  @Security.Authenticated(Secured.class)
+  public static Result postEditProfile() {	  
+	  Form<EditProfileFormData> formData = Form.form(EditProfileFormData.class).bindFromRequest();
+	  if (formData.hasErrors() == true) {
+		  return badRequest(EditProfile.render(formData));
 	  }
-	  return redirect(routes.Application.errorReport("No user logged in, post edit profile fails."));
+	  else {
+		  EditProfileFormData data = formData.get();
+		
+		  UserInfo user = Secured.getUserInfo(ctx());
+		  user.setFirstName(data.firstName);
+		  user.setLastName(data.lastName);
+		  user.setTelephone(data.telephone);
+		  
+		  if (data.change_email == true) {
+			  //user.setEmail(data.email);
+			  //user.setConfirm(false);
+		  }
+		  if (data.change_pw == true) {
+			  user.setPassword(BCrypt.hashpw(data.new_password, BCrypt.gensalt()));
+		  }
+		  
+		  user.save();
+		  
+		  return redirect(routes.Application.profile(user.getId()));
+	  }
   }
   /**
    * Open the admin control panel.
