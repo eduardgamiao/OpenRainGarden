@@ -1,13 +1,14 @@
 @(id: Long)
 
-@Main("Thank You for Registering") {
+@Main("Thank You") {
 	<div class="container">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h2 class="panel-title">Thank you for registering.</h2>
 			</div>
 			<div class="panel-body">
-				<p>A confirmation email has been sent to your email address with a confirmation link. If the email does not arrive in a few minutes please <a href="@routes.Application.thankYou(id)">click here</a> to re-send the confirmation email.</p>
+				<p>In order to use the full site, your email address must first be verified.</p>
+				<p>Please check your email for a confirmation email. If you do not receive an email in a few minutes, please <a href="@routes.Application.emailConfirmSend()">click here</a>.</p>
 				<p>Thank You</p>
 			</div>
 		</div>

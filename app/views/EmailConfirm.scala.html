@@ -1,6 +1,6 @@
 @(isSuccess: Boolean)
 
-@Main("Email Confirm") {
+@Main("Email Confirmation") {
 @if(isSuccess == true){
 	<div class="container">
 		<div class="panel panel-default">
@@ -19,7 +19,7 @@
 				<h2 class="panel-title">Email Not Confirmed</h2>
 			</div>
 			<div class="panel-body">
-				<p>Invalid email and/or confirmation key.</p>
+				<p>Invalid email and/or confirmation key. Please <a href="@routes.Application.emailConfirmSend()">click here</a> to re-send the confirmation email.</p>
 			</div>
 		</div>
 	</div>

@@ -21,10 +21,10 @@ public class EditProfileFormData {
 	public String telephone;
 	
 	/** New email address of the user */
-	public String email;
+	//public String email;
 	
 	/** Flag for whether a new email address was entered */
-	public boolean change_email;
+	//public boolean change_email;
 	
 	/** New password of the user */
 	public String new_password;
@@ -46,7 +46,7 @@ public class EditProfileFormData {
 	public EditProfileFormData(UserInfo userInfo) {
 		this.firstName = userInfo.getFirstName();
 		this.lastName = userInfo.getLastName();
-		this.change_email = false;
+		//this.change_email = false;
 		this.telephone = userInfo.getTelephone();
 		this.change_pw = false;
 	}
@@ -65,9 +65,9 @@ public class EditProfileFormData {
 			errors.add(new ValidationError("lastName", "Please enter your last name."));
 		}
 		
-		if (this.email != null && this.email.length() != 0) {
-			change_email = true;
-		}
+		//if (this.email != null && this.email.length() != 0) {
+		//	change_email = true;
+		//}
 		
 		boolean pw = false;
 		if (this.new_password != null && this.new_password.length() != 0) {

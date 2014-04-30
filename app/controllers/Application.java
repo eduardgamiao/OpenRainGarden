@@ -82,10 +82,10 @@ public class Application extends Controller {
 		  user.setLastName(data.lastName);
 		  user.setTelephone(data.telephone);
 		  
-		  if (data.change_email == true) {
-			  //user.setEmail(data.email);
-			  //user.setConfirm(false);
-		  }
+		  /*if (data.change_email == true) {
+			  user.setEmail(data.email);
+			  user.setConfirm(false);
+		  }*/
 		  if (data.change_pw == true) {
 			  user.setPassword(BCrypt.hashpw(data.new_password, BCrypt.gensalt()));
 		  }
@@ -614,50 +614,74 @@ public class Application extends Controller {
   }
   
   /**
+   * Sends a confirmation email to the user with the given id
+   * @param id
+   */
+  public static void sendConfirmationEmail(long id) {
+	  UserInfo user = UserInfoDB.getUser(id);
+	  
+	  try {
+		  SecureRandom random = new SecureRandom();
+		  byte bytes[] = new byte[20];
+		  random.nextBytes(bytes);
+		  String message = bytes.toString();
+		  
+		  MessageDigest md = MessageDigest.getInstance("MD5");
+		  byte[] hash = md.digest(message.getBytes("UTF-8"));
+		  StringBuffer buffer = new StringBuffer();
+		  for (int i = 0; i < hash.length; i++){
+			  buffer.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+		  }
+		  user.setConfirmHash(buffer.toString());
+		  user.save();
+	  }
+	  catch (UnsupportedEncodingException ex) {
+		  System.err.println(ex.getStackTrace());
+	  }
+	  catch (NoSuchAlgorithmException ex) {
+		  System.err.println(ex.getStackTrace());
+	  }
+	  
+	  //send email
+	  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+	  mail.setSubject("Sign up Email Confirmation");
+	  mail.setRecipient(user.getEmail());
+	  mail.setFrom("openraingarden@gmail.com");
+	  
+	  String url = routes.Application.index().absoluteURL(request()) + "confirm/" + id + "/" + user.getConfirmHash();
+	  //System.out.println(url);
+	  
+	  mail.send("Please confirm your registration at our website by following the below link: " + url + " \nPlease ignore this email if you did not register at " + routes.Application.index().absoluteURL(request()));
+  }
+  
+  /**
    * Returns the Thank You page
    * @return
    */
   @Security.Authenticated(Secured.class)
   public static Result thankYou(long id) {
 	  if (Secured.getUserInfo(ctx()).getId() == id) {
-		  UserInfo user = UserInfoDB.getUser(id);
-		  
-		  try {
-			  SecureRandom random = new SecureRandom();
-			  byte bytes[] = new byte[20];
-			  random.nextBytes(bytes);
-			  String message = bytes.toString();
-			  
-			  MessageDigest md = MessageDigest.getInstance("MD5");
-			  byte[] hash = md.digest(message.getBytes("UTF-8"));
-			  StringBuffer buffer = new StringBuffer();
-			  for (int i = 0; i < hash.length; i++){
-				  buffer.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
-			  }
-			  user.setConfirmHash(buffer.toString());
-			  user.save();
-		  }
-		  catch (UnsupportedEncodingException ex) {
-			  System.err.println(ex.getStackTrace());
-		  }
-		  catch (NoSuchAlgorithmException ex) {
-			  System.err.println(ex.getStackTrace());
-		  }
-		  
-		  //send email
-		  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-		  mail.setSubject("Sign up Email Confirmation");
-		  mail.setRecipient(user.getEmail());
-		  mail.setFrom("openraingarden@gmail.com");
-		  
-		  String url = routes.Application.index().absoluteURL(request()) + "confirm/" + id + "/" + user.getConfirmHash();
-		  //System.out.println(url);
-		  
-		  mail.send("Please confirm your registration at our website by following the below link: " + url);
-		  
+		  sendConfirmationEmail(id);
 		  return ok(ThankYou.render(id));
 	  }
 	  return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Returns the send email confirmation 
+   * @return
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result emailConfirmSend() {
+	  UserInfo user = Secured.getUserInfo(ctx());
+	  
+	  if (user.isConfirmed() == false) {
+		  sendConfirmationEmail(user.getId());
+		  return ok(SendEmailConfirm.render());
+	  }
+	  else {
+		  return ok(EmailConfirm.render(true));
+	  }
   }
   
   /**
