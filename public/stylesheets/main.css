@@ -5,6 +5,14 @@ body {
 	
 }
 
+.plant-panel {
+	padding:1px;
+}
+
+.plant-panel:hover {
+	border-color:black;
+}
+
 .inactive-comment {
   background-color: rgba(0, 0, 0, 0.5); 
   color: white; 
