@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Class that represents a comment on a rainwater runoff solution.
@@ -19,6 +18,7 @@ public class Comment extends Model {
   private String comment;
   private Date datePosted;
   private String type;
+  private boolean isActive = true;
   
   @ManyToOne
   private UserInfo poster;
@@ -92,7 +92,7 @@ public class Comment extends Model {
    * @return the comment
    */
   public String getComment() {
-    return comment;
+      return comment;
   }
   /**
    * @param comment the comment to set
@@ -181,6 +181,20 @@ public class Comment extends Model {
     this.paver = paver;
   }
   
+  /**
+   * @return the isActive
+   */
+  public boolean isActive() {
+    return isActive;
+  }
+
+  /**
+   * @param isActive the isActive to set
+   */
+  public void setActive(boolean isActive) {
+    this.isActive = isActive;
+  }
+
   /**
    * The EBean ORM finder method for database queries on ID.
    * @return The finder method for comments.

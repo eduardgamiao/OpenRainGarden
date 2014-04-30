@@ -26,6 +26,7 @@ create table comment (
   comment                   varchar(255),
   date_posted               datetime,
   type                      varchar(255),
+  is_active                 tinyint(1) default 0,
   poster_id                 bigint,
   garden_id                 bigint,
   barrel_id                 bigint,

@@ -5,6 +5,18 @@ body {
 	
 }
 
+.inactive-comment {
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: white; 
+  padding: 5px;
+}
+
+.comment-heading {
+	background-color: #3E60AD; 
+	color: white; 
+	padding: 5px;
+}
+
 .comment-header a {
 	color: white;
 }

@@ -3,7 +3,6 @@ package views.formdata;
 import java.util.ArrayList;
 import java.util.List;
 import play.data.validation.ValidationError;
-import models.Comment;
 
 /**
  * Handles form submission for posting a comment.
@@ -33,16 +32,7 @@ public class CommentFormData {
   public CommentFormData(String comment) {
     this.comment = comment;
   }
-
-  /**
-   * Constructor.
-   * 
-   * @param comment An existing comment object.
-   */
-  public CommentFormData(Comment comment) {
-    this.comment = comment.getComment();
-  }
-
+  
   /**
    * Validates form.
    * @return A list of errors if they exist, otherwise null.

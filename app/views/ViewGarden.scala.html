@@ -1,4 +1,4 @@
-@(rainGarden: RainGarden, plantList: List[Plant], commentFormData: Form[views.formdata.CommentFormData])
+@(rainGarden: RainGarden, commentFormData: Form[views.formdata.CommentFormData])
   
 @import helper._ 
 @import bootstrap3._
@@ -84,8 +84,17 @@
               @for(comment <- rainGarden.getComments()) {
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" id="@comment.getId()" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getId())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
-                     @comment.getComment()
+                     <h4 class="media-heading @if(comment.isActive) {comment-heading} else {inactive-comment}" id="@comment.getId()">
+                      <a href="@routes.Application.profile(comment.getPoster().getId())" style="color:white">@comment.getPoster().getName()</a> 
+                      <small class="commentDate">(@comment.getDatePosted())</small>
+                      @if(Secured.isLoggedIn(ctx()) && ((comment.getPoster().getId() == Secured.getUserInfo(ctx()).getId) || (Secured.getUserInfo(ctx()).isAdmin()))) {
+                      <span class="pull-right">
+                        @if(comment.isActive()) {<a href="@routes.Application.deleteComment(comment.getId(), request().uri())"><button class="btn btn-danger btn-xs">Delete</button></a>
+                        }
+                      </span>
+                      } 
+                     </h4>                     
+                     @if(comment.isActive) {@comment.getComment()} else {<span class="label label-danger">This message has been deleted.</span>}
                   </div>
                </div>
               }

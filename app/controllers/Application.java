@@ -218,6 +218,7 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postRainGardenRegister(boolean isNew) throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
+    Logger.debug(formData.data().keySet().toString());
     validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
@@ -464,11 +465,11 @@ public class Application extends Controller {
     Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (garden != null) {
       if (garden.isApproved()) {
-        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));
+        return ok(ViewGarden.render(garden, commentForm));
       }
       else if (Secured.isLoggedIn(ctx()) 
                && (garden.isOwner(Secured.getUserInfo(ctx())) || Secured.getUserInfo(ctx()).isAdmin())) {
-        return ok(ViewGarden.render(garden, PlantDB.getPlants(), commentForm));        
+        return ok(ViewGarden.render(garden, commentForm));        
       }
     }
     return redirect(routes.Application.gardengallery());
@@ -831,18 +832,19 @@ public class Application extends Controller {
   
   /**
    * Post a comment.
-   * @param id ID of the solution being commented on.
    * @param uri Target of redirect.
    * @return The page that the user was commenting on.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postGardenComment(Long id, String uri) {
+  public static Result postGardenComment(Long gardenID, String uri) {
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
+    Logger.debug("Comment POST: " + formData.data().keySet().toString());
     if (formData.hasErrors()) {
       return redirect(uri);
     }
     CommentFormData data = formData.get();
-    CommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
+    Logger.debug("" + data.id);
+    CommentDB.addComment(data, RainGardenDB.getRainGarden(gardenID), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -855,6 +857,7 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postBarrelComment(Long id, String uri) {
     Form<BarrelCommentFormData> formData = Form.form(BarrelCommentFormData.class).bindFromRequest();
+    Logger.debug(formData.data().keySet().toString());
     if (formData.hasErrors()) {
       return redirect(uri);
     }
@@ -1293,5 +1296,19 @@ public class Application extends Controller {
       paver.save();
     }
     return redirect(routes.Application.viewSolutions());
+  }
+  
+  /**
+   * Delete a comment.
+   * @param id The ID of the comment to delete.
+   * @param url The URL to redirect to.
+   * @return The page the comment was on.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result deleteComment(Long id, String url) {
+    Comment comment = CommentDB.getComment(id);    
+    comment.setActive(false);
+    comment.save();    
+    return redirect(url);
   }
 }
