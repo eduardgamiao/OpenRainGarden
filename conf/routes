@@ -17,6 +17,8 @@ POST    /register/permeable-pavers    controllers.Application.postPermeablePaver
 GET     /edit/permeable-pavers/:id    controllers.Application.managePermeablePavers(id: Long)
 GET     /login                        controllers.Application.login(target: String)
 POST    /login                        controllers.Application.postLogin(target: String)
+GET     /login/passwordRecovery       controllers.Application.passwordRecovery()
+POST    /login/passwordRecovery       controllers.Application.postPasswordRecovery()
 GET     /signup                       controllers.Application.signup()
 POST    /signup                       controllers.Application.postSignUp()
 GET     /signup/thankyou/:id          controllers.Application.thankYou(id: Long)
