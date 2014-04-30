@@ -251,8 +251,11 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           garden.setImage(Files.toByteArray(source));
-          garden.save();
       }
+      garden.save();
+      
+      sendAdminNotificationEmail(routes.Application.viewGarden(garden.getID()).absoluteURL(request()));
+      
       return redirect(routes.Application.viewGarden(garden.getID()));
      }     
     }
@@ -338,8 +341,11 @@ public class Application extends Controller {
       if (picture != null) {
           File source = picture.getFile();
           barrel.setImage(Files.toByteArray(source));
-          barrel.save();
       }
+      barrel.save();
+      
+      sendAdminNotificationEmail(routes.Application.viewBarrel(barrel.getID()).absoluteURL(request()));
+      
       return redirect(routes.Application.viewBarrel(barrel.getID()));
      }     
     }
@@ -426,6 +432,9 @@ public class Application extends Controller {
           paver.setImage(Files.toByteArray(source));
       }
       paver.save();
+      
+      sendAdminNotificationEmail(routes.Application.viewPaver(paver.getID()).absoluteURL(request()));
+      
       return redirect(routes.Application.viewPaver(paver.getID()));
      }     
     }
@@ -620,7 +629,7 @@ public class Application extends Controller {
    * Sends a confirmation email to the user with the given id
    * @param id
    */
-  public static void sendConfirmationEmail(long id) {
+  private static void sendConfirmationEmail(long id) {
 	  UserInfo user = UserInfoDB.getUser(id);
 	  
 	  try {
@@ -1334,5 +1343,29 @@ public class Application extends Controller {
       comment.save();
     }    
     return redirect(url);
+  }
+  
+  /**
+   * Sends the admin accounts an email notifying that a new solution was registered
+   * @param url The url of the new registered solution
+   */
+  private static void sendAdminNotificationEmail(String url) {
+	  List<UserInfo> admins = UserInfoDB.getAdmins();
+	  
+	  UserInfo current;
+	  for (int i = 0; i < admins.size(); i++) {
+		  current = admins.get(i);
+		  if (current.isConfirmed() == false) {
+			  continue;
+		  }
+		  
+		  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+		  mail.setSubject("New Registered Solution Notification");
+		  mail.setRecipient(current.getEmail());
+		  mail.setFrom("openraingarden@gmail.com");
+		  
+		  String message = "A new solution has been registered!\n" + "Please view the solution and verify that it is legit:\n" + url;
+		  mail.send(message);
+	  }
   }
 }

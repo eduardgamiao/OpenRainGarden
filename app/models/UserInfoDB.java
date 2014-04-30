@@ -63,6 +63,14 @@ public class UserInfoDB {
 	}
 	
 	/**
+	 * Returns a list of all admin accounts
+	 * @return A list of all admin accounts
+	 */
+	public static List<UserInfo> getAdmins() {
+		return UserInfo.find().where().eq("admin", true).findList();
+	}
+	
+	/**
 	 * Returns whether the given email and password pair are valid
 	 * @param email
 	 * @param password
