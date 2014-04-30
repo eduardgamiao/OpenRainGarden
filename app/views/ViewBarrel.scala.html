@@ -78,8 +78,7 @@
                       <small class="commentDate">(@comment.getDatePosted())</small>
                       @if(Secured.isLoggedIn(ctx()) && ((comment.getPoster().getId() == Secured.getUserInfo(ctx()).getId) || (Secured.getUserInfo(ctx()).isAdmin()))) {
                       <span class="pull-right">
-                        @if(comment.isActive()) {<a href="@routes.Application.deleteComment(comment.getId(), request().uri())"><button class="btn btn-danger btn-xs">Delete</button></a>
-                        }
+                        @if(comment.isActive()) {<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#comment-@comment.getId()">Delete</button>}
                       </span>
                       } 
                      </h4>                     
@@ -116,4 +115,8 @@
     </div>
   </div>
 </div>
+<!-- Comment Delete Dialog -->
+@for(comment <- rainBarrel.getComments()) {
+  @deleteComment(comment)
+}
 }

@@ -1322,14 +1322,17 @@ public class Application extends Controller {
   /**
    * Delete a comment.
    * @param id The ID of the comment to delete.
-   * @param url The URL to redirect to.
    * @return The page the comment was on.
    */
   @Security.Authenticated(Secured.class)
-  public static Result deleteComment(Long id, String url) {
-    Comment comment = CommentDB.getComment(id);    
-    comment.setActive(false);
-    comment.save();    
+  public static Result deleteComment(Long id) {
+    String url = "/";
+    Comment comment = CommentDB.getComment(id);
+    if (comment != null) {
+      url = comment.getCommentURL();
+      comment.setActive(false);
+      comment.save();
+    }    
     return redirect(url);
   }
 }
