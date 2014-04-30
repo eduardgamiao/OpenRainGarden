@@ -12,7 +12,6 @@ import java.io.UnsupportedEncodingException;
 import com.google.common.io.Files;
 import com.typesafe.plugin.*;
 import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -218,7 +217,6 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result postRainGardenRegister(boolean isNew) throws IOException {
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).bindFromRequest();
-    Logger.debug(formData.data().keySet().toString());
     validateGardenUpload(formData, request().body().asMultipartFormData());
     if (formData.hasErrors()) {
       Map<String, String> dataMap = formData.data();
@@ -244,7 +242,6 @@ public class Application extends Controller {
     } 
     else {
       RainGardenFormData data = formData.get();
-      Logger.debug("" + data.id);
       RainGarden garden = RainGardenDB.addRainGarden(data, Secured.getUserInfo(ctx()));    
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
@@ -499,8 +496,8 @@ public class Application extends Controller {
    */
   public static Result viewBarrel(Long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
-    BarrelCommentFormData commentFormData = new BarrelCommentFormData();
-    Form<BarrelCommentFormData> commentForm = Form.form(BarrelCommentFormData.class).fill(commentFormData);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (barrel != null) {
       if (barrel.isApproved()) {
         return ok(ViewBarrel.render(barrel, commentForm));
@@ -538,8 +535,8 @@ public class Application extends Controller {
    */
   public static Result viewPaver(Long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
-    PaverCommentFormData commentFormData = new PaverCommentFormData();
-    Form<PaverCommentFormData> commentForm = Form.form(PaverCommentFormData.class).fill(commentFormData);
+    CommentFormData commentFormData = new CommentFormData();
+    Form<CommentFormData> commentForm = Form.form(CommentFormData.class).fill(commentFormData);
     if (paver != null) {
       if (paver.isApproved()) {
         return ok(ViewPaver.render(paver, commentForm));
@@ -832,19 +829,18 @@ public class Application extends Controller {
   
   /**
    * Post a comment.
+   * @param id ID of the garden being commented on. 
    * @param uri Target of redirect.
    * @return The page that the user was commenting on.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postGardenComment(Long gardenID, String uri) {
+  public static Result postGardenComment(Long id, String uri) {
     Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
-    Logger.debug("Comment POST: " + formData.data().keySet().toString());
     if (formData.hasErrors()) {
       return redirect(uri);
     }
     CommentFormData data = formData.get();
-    Logger.debug("" + data.id);
-    CommentDB.addComment(data, RainGardenDB.getRainGarden(gardenID), Secured.getUserInfo(ctx()));
+    CommentDB.addComment(data, RainGardenDB.getRainGarden(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -856,13 +852,12 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postBarrelComment(Long id, String uri) {
-    Form<BarrelCommentFormData> formData = Form.form(BarrelCommentFormData.class).bindFromRequest();
-    Logger.debug(formData.data().keySet().toString());
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-    BarrelCommentFormData data = formData.get();
-    BarrelCommentDB.addComment(data, RainBarrelDB.getRainBarrel(id), Secured.getUserInfo(ctx()));
+    CommentFormData data = formData.get();
+    CommentDB.addComment(data, RainBarrelDB.getRainBarrel(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -874,12 +869,12 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result postPaverComment(Long id, String uri) {
-    Form<PaverCommentFormData> formData = Form.form(PaverCommentFormData.class).bindFromRequest();
+    Form<CommentFormData> formData = Form.form(CommentFormData.class).bindFromRequest();
     if (formData.hasErrors()) {
       return redirect(uri);
     }
-    PaverCommentFormData data = formData.get();
-    PaverCommentDB.addComment(data, PermeablePaversDB.getPermeablePavers(id), Secured.getUserInfo(ctx()));
+    CommentFormData data = formData.get();
+    CommentDB.addComment(data, PermeablePaversDB.getPermeablePavers(id), Secured.getUserInfo(ctx()));
     return redirect(uri);
   }
   
@@ -982,7 +977,6 @@ public class Application extends Controller {
       FilePart picture = body.getFile("uploadFile");
       Plant plant = PlantDB.addPlant(data);
       if (picture != null) {
-        Logger.debug("PLANT URL: " + picture.getFile().toURI().toURL());
         plant.setImage(Files.toByteArray(picture.getFile()));
       }
       plant.save();

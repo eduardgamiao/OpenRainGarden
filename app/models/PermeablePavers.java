@@ -272,8 +272,8 @@ public class PermeablePavers extends Model {
   /**
    * @return the comments
    */
-  public List<PaverComment> getComments() {
-    return comments;
+  public List<Comment> getComments() {
+    return commentList;
   }
 
   /**

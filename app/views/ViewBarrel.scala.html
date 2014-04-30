@@ -1,4 +1,4 @@
-@(rainBarrel: RainBarrel, commentFormData: Form[views.formdata.BarrelCommentFormData])
+@(rainBarrel: RainBarrel, commentFormData: Form[views.formdata.CommentFormData])
   
 @import helper._ 
 @import bootstrap3._
@@ -70,11 +70,20 @@
            @if(rainBarrel.getComments().isEmpty()) { 
               <div class="alert alert-info">This rain barrel has no comments.</div>           
             } else { 
-              @for(comment <- rainBarrel.getComments()) {
+              @for(comment <- rainBarrel.getComments()) {               
                <div class="media">
                   <div class="media-body">
-                     <h4 class="media-heading" style="background-color:#3E60AD; color:white; padding:5px;"><a href="@routes.Application.profile(comment.getPoster().getId())" style="color:white">@comment.getPoster().getName()</a> <small class="commentDate">(@comment.getDatePosted())</small></h4>
-                     @comment.getComment()
+                     <h4 class="media-heading @if(comment.isActive) {comment-heading} else {inactive-comment}" id="@comment.getId()">
+                      <a href="@routes.Application.profile(comment.getPoster().getId())" style="color:white">@comment.getPoster().getName()</a> 
+                      <small class="commentDate">(@comment.getDatePosted())</small>
+                      @if(Secured.isLoggedIn(ctx()) && ((comment.getPoster().getId() == Secured.getUserInfo(ctx()).getId) || (Secured.getUserInfo(ctx()).isAdmin()))) {
+                      <span class="pull-right">
+                        @if(comment.isActive()) {<a href="@routes.Application.deleteComment(comment.getId(), request().uri())"><button class="btn btn-danger btn-xs">Delete</button></a>
+                        }
+                      </span>
+                      } 
+                     </h4>                     
+                     @if(comment.isActive) {@comment.getComment()} else {<span class="label label-danger">This message has been deleted.</span>}
                   </div>
                </div>
               }

@@ -424,8 +424,8 @@ public class RainBarrel extends Model {
   /**
    * @return the comments
    */
-  public List<BarrelComment> getComments() {
-    return comments;
+  public List<Comment> getComments() {
+    return commentList;
   }
 
   /**
