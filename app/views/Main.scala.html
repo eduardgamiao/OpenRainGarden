@@ -197,14 +197,13 @@
         	@if(Secured.isLoggedIn(ctx())) {
         	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">@Secured.getUser(ctx())<b class="caret"></b></a>
 	            <ul class="dropdown-menu" role="menu">
-	           	 @if(Secured.getUserInfo(ctx()).isAdmin()) {
-	              	<li><a href="@routes.Application.adminPanel()">Admin Control Panel</a></li>	
-	              } else {
+	           	 @if(Secured.isLoggedIn(ctx())) {	
 	              	<li><a href="@routes.Application.profile(Secured.getUserInfo(ctx()).getId())">View Profile</a></li>
 	              	<li><a href="@routes.Application.editProfile()">Edit Profile</a></li>
 	              }
                 @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).isAdmin)) {
                 <li role="presentation" class="divider"></li>
+                <li><a href="@routes.Application.adminPanel()">Admin Control Panel</a></li>
                 <li><a href="@routes.Application.viewSolutions()">Manage Solutions</a></li>
                 <li><a href="/view/plant">Manage Plants</a></li>
                 }

@@ -115,9 +115,8 @@ public class Application extends Controller {
 		  }
 		  return redirect(routes.Application.errorReport("No admin logged in,open admin control panel fails."));*/
 	  
-	  
 	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  return ok(AdminPanel.render("admin"));
+		  return ok(AdminPanel.render());
 	  }
 	  return redirect(routes.Application.index());
   }
