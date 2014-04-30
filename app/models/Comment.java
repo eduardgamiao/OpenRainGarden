@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import controllers.routes;
 import play.db.ebean.Model;
 
 /**
@@ -193,6 +194,23 @@ public class Comment extends Model {
    */
   public void setActive(boolean isActive) {
     this.isActive = isActive;
+  }
+  
+  /**
+   * Return the URL to the solution of tied to the comment.
+   * @return The URL to a solution that the comment was made on.
+   */
+  public String getCommentURL() {
+    if (this.type.equals("rg")) {
+      return routes.Application.viewGarden(this.garden.getID()).url();
+    }
+    else if (this.type.equals("rb")) {
+      return routes.Application.viewBarrel(this.barrel.getID()).url();
+    }
+    else if (this.type.equals("pp")) {
+      return routes.Application.viewPaver(this.paver.getID()).url();
+    }
+    return "/";
   }
 
   /**

@@ -59,19 +59,7 @@
           <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">         
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
               <div class="page-header"><h4>Plants</h4></div>
-                          @if(!(rainGarden.getPlants().isEmpty)) {    
-                            @for(plant <- rainGarden.getPlants()) {
-                             <div class="col-md-2">
-                             <button type="button" class="btn btn-info example" data-container="body" data-toggle="popover"
-                              data-placement="top" title="@plant"
-                              data-content="@plantPopover(PlantDB.getPlant(plant))">@PlantDB.getPlant(plant).getName()
-                              </button>
-                              </div>
-                            }
-                          } else {
-                            <p>No plants</p>
-                          }                   
-              </div>
+          </div>
               </div>
         <div class="row" style="color: black; font-size: 14px; padding: 0 2em 0 2em;">
           <div class="page-header">

@@ -388,6 +388,10 @@ public class RainGarden extends Model {
     return plants;
   }
   
+  public List<Plant> getPlantsAsList() {
+    return this.plants;
+  }
+  
   /**
    * Check if a user is the owner of a rain garden.
    * @param userInfo The user to check.

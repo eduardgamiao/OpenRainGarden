@@ -28,23 +28,14 @@ public class UserInfo extends Model {
 	@OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
 	private List<RainGarden> gardens = new ArrayList<RainGarden>();
 	
-  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
-  private List<GardenComment> gardenComments = new ArrayList<GardenComment>();
-	
   @OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
 	private List<RainBarrel> barrels = new ArrayList<RainBarrel>();
-
-  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
-  private List<BarrelComment> barrelComments = new ArrayList<BarrelComment>();
   
   @OneToMany (mappedBy = "owner", cascade = CascadeType.PERSIST)
   private List<PermeablePavers> pavers = new ArrayList<PermeablePavers>();
-  
-  @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
-  private List<PaverComment> paverComments = new ArrayList<PaverComment>();  
 
   @OneToMany (mappedBy = "poster", cascade = CascadeType.PERSIST)
-  private List<PaverComment> comments = new ArrayList<PaverComment>();
+  private List<Comment> comments = new ArrayList<Comment>();
 
 	public UserInfo(String firstName, String lastName, String email, String telephone, String password) {
 		this.firstName = firstName;
@@ -239,76 +230,14 @@ public class UserInfo extends Model {
    */
   public void deletePaver(PermeablePavers paver) {
     this.getPavers().remove(paver);
+  } 
+  
+  /**
+   * @return the comments
+   */
+  public List<Comment> getComments() {
+    return comments;
   }
-  
-  /**
-   * @return the gardenComments
-   */
-  public List<GardenComment> getGardenComments() {
-    return gardenComments;
-  }
-  
-  /**
-   * Add a garden comment.
-   * @param comment The comment to add.
-   */
-  public void addGardenComment(GardenComment comment) {
-    this.gardenComments.add(comment);
-  }
-  
-  /**
-   * Delete a garden comment.
-   * @param comment The comment to delete.
-   */
-  public void deleteGardenComment(GardenComment comment) {
-    this.gardenComments.remove(comment);
-  }  
-  
-  /**
-   * @return the barrelComments
-   */
-  public List<BarrelComment> getBarrelComments() {
-    return barrelComments;
-  }
-  
-  /**
-   * Add a barrel comment.
-   * @param comment The comment to add.
-   */
-  public void addBarrelComment(BarrelComment comment) {
-    this.barrelComments.add(comment);
-  }
-  
-  /**
-   * Delete a barrel comment.
-   * @param comment The comment to delete.
-   */
-  public void deleteGardenComment(BarrelComment comment) {
-    this.barrelComments.remove(comment);
-  }  
-  
-  /**
-   * @return the paverComments
-   */
-  public List<PaverComment> getPaverComments() {
-    return paverComments;
-  }
-  
-  /**
-   * Add a paver comment.
-   * @param comment The comment to add.
-   */
-  public void addPaverComment(PaverComment comment) {
-    this.paverComments.add(comment);
-  }
-  
-  /**
-   * Delete a paver comment.
-   * @param comment The comment to delete.
-   */
-  public void deletePaverComment(PaverComment comment) {
-    this.paverComments.remove(comment);
-  }  
   
   /**
    * The EBean ORM finder method for database queries on ID.
