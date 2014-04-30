@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import com.google.common.io.Files;
 import com.typesafe.plugin.*;
 import org.mindrot.jbcrypt.BCrypt;
@@ -1366,6 +1367,51 @@ public class Application extends Controller {
 		  
 		  String message = "A new solution has been registered!\n" + "Please view the solution and verify that it is legit:\n" + url;
 		  mail.send(message);
+	  }
+  }
+  
+  /**
+   * Returns the password recovery page
+   * @return
+   */
+  public static Result passwordRecovery() {
+	  Form<PasswordRecoveryFormData> formData = Form.form(PasswordRecoveryFormData.class);
+	  return ok(PasswordRecovery.render(formData));
+  }
+  
+  /**
+   * Processes the password recovery form
+   * @return
+   */
+  public static Result postPasswordRecovery() {
+	  Form<PasswordRecoveryFormData> formData = Form.form(PasswordRecoveryFormData.class).bindFromRequest();
+	  
+	  if (formData.hasErrors() == true) {
+		  return badRequest(PasswordRecovery.render(formData));
+	  }
+	  else {
+		  PasswordRecoveryFormData data = formData.get();
+		  
+		  //create new random password
+		  SecureRandom random = new SecureRandom();
+		  String new_pw = new BigInteger(130, random).toString(32);
+		  System.out.println("new_pw = " + new_pw);
+		  
+		  //set the user's password to the new random password
+		  UserInfo user = UserInfoDB.getUser(data.email);		  
+		  user.setPassword(BCrypt.hashpw(new_pw, BCrypt.gensalt()));
+		  user.save();
+		  
+		  //send email to user containing his new password w/ link to login
+		  MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+		  mail.setSubject("Password Recovery");
+		  mail.setRecipient(data.email);
+		  mail.setFrom("openraingarden@gmail.com");
+		  
+		  String message = "Your password has been reset to:\n" + new_pw;
+		  mail.send(message);
+				  
+		  return redirect(routes.Application.login("/"));
 	  }
   }
 }

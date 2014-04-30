@@ -14,9 +14,16 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  */
 public class LoginFormData {
+	/** Email of the user */
 	public String email;
+	
+	/** Password of the user */
 	public String password;
 	
+	/**
+	 * Form Validation
+	 * @return
+	 */
 	public List<ValidationError> validate() {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
 		
