@@ -82,10 +82,14 @@ public class Application extends Controller {
 		  user.setLastName(data.lastName);
 		  user.setTelephone(data.telephone);
 		  
-		  /*if (data.change_email == true) {
+		  if (data.change_email == true) {
+			  session().clear();
+			  
 			  user.setEmail(data.email);
 			  user.setConfirm(false);
-		  }*/
+			  
+			  session("email", data.email);
+		  }
 		  if (data.change_pw == true) {
 			  user.setPassword(BCrypt.hashpw(data.new_password, BCrypt.gensalt()));
 		  }
