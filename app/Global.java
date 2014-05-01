@@ -64,7 +64,11 @@ public class Global extends GlobalSettings {
     if (UserInfoDB.getUsers().isEmpty()) {
       UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
       UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
-      UserInfoDB.addUserInfo("Admin", "HOK", "admin@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), true);
+      String admin_email = System.getenv("MAIL_USERNAME");
+      String admin_pw = System.getenv("MAIL_PASSWORD");
+      if (admin_email != null && admin_pw != null) {
+    	  UserInfoDB.addUserInfo("Admin", "HOK", admin_email, "1234567", BCrypt.hashpw(admin_pw, BCrypt.gensalt()), true);
+      }
     }
         
     // Add rain garden.
