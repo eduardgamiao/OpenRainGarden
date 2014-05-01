@@ -11,6 +11,8 @@
     @if(!(rainBarrel.isApproved())) {
       <div class="alert alert-info"><p><strong>This page is awaiting approval.</strong></p>
         <p>Thank you for registering your rain barrel. This page is currently awaiting approval from a site administrator and will not be visible to the public. During this time, feel free to edit your rain barrel's information.</p>
+        @if(Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {<br/><a href="@routes.Application.switchBarrelStatus(rainBarrel.getID(), request().uri())"><button class="btn btn-success">Approve Rain Barrel</button></a>}
+     
       </div>
     }
        <div class="row">

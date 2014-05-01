@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import com.google.common.io.Files;
 import com.typesafe.plugin.*;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -1287,46 +1288,50 @@ public class Application extends Controller {
   /**
    * Approves/Revokes the approval status of a rain garden.
    * @param id The ID of the rain garden.
-   * @return The solution management page.
+   * @param url The URL to redirect to.
+   * @return The page specifed in the URL.
    */
   @Security.Authenticated(Secured.class)
-  public static Result switchGardenStatus(Long id) {
+  public static Result switchGardenStatus(Long id, String url) {
+    Logger.debug(request().uri());
     RainGarden garden = RainGardenDB.getRainGarden(id);
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && garden != null) {
       garden.setApproved(!garden.isApproved());
       garden.save();
     }
-    return redirect(routes.Application.viewSolutions());
+    return redirect(url);
   }
   
   /**
    * Approves/Revokes the approval status of a rain barrel.
-   * @param id The ID of the rain garden.
+   * @param id The ID of the rain garden. 
+   * @param url The URL to redirect to.
    * @return The solution management page.
    */
   @Security.Authenticated(Secured.class)
-  public static Result switchBarrelStatus(Long id) {
+  public static Result switchBarrelStatus(Long id, String url) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && barrel != null) {
       barrel.setApproved(!barrel.isApproved());
       barrel.save();
     }
-    return redirect(routes.Application.viewSolutions());
+    return redirect(url);
   }
   
   /**
    * Approves/Revokes the approval status of a permeable pavers.
    * @param id The ID of the rain garden.
+   * @param url The URL to redirect to.
    * @return The solution management page.
    */
   @Security.Authenticated(Secured.class)
-  public static Result switchPaverStatus(Long id) {
+  public static Result switchPaverStatus(Long id, String url) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && paver != null) {
       paver.setApproved(!paver.isApproved());
       paver.save();
     }
-    return redirect(routes.Application.viewSolutions());
+    return redirect(url);
   }
   
   /**

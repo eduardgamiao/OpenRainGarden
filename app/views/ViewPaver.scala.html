@@ -11,6 +11,8 @@
     @if(!(permeablePaver.isApproved())) {
       <div class="alert alert-info"><p><strong>This page is awaiting approval.</strong></p>
         <p>Thank you for registering your permeable paver. This page is currently awaiting approval from a site administrator and will not be visible to the public. During this time, feel free to edit your permeable paver's information.</p>
+        @if(Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {<br/><a href="@routes.Application.switchPaverStatus(permeablePaver.getID(), request().uri())"><button class="btn btn-success">Approve Permeable Paver</button></a>}
+     
       </div>
     }
        <div class="row">
