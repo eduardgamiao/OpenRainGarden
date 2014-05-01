@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import models.Button;
 import models.ButtonDB;
 import models.Comment;
@@ -24,6 +25,7 @@ import models.ResourceDB;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.Play;
 import play.libs.Yaml;
 import models.UserInfoDB;
 import views.formdata.ButtonFormData;
@@ -36,7 +38,9 @@ import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 import views.formdata.ResourceFormData;
+
 import org.mindrot.jbcrypt.BCrypt;
+
 import com.avaje.ebean.Ebean;
 
 /**
@@ -64,9 +68,12 @@ public class Global extends GlobalSettings {
     if (UserInfoDB.getUsers().isEmpty()) {
       UserInfoDB.addUserInfo("John", "Smith", "johnsmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
       UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
-      String admin_email = System.getenv("MAIL_USERNAME");
-      String admin_pw = System.getenv("MAIL_PASSWORD");
+      //String admin_email = System.getenv("MAIL_USERNAME");
+      //String admin_pw = System.getenv("MAIL_PASSWORD");
+      String admin_email = Play.application().configuration().getString("MAIL_USERNAME");
+      String admin_pw = Play.application().configuration().getString("MAIL_PASSWORD");
       if (admin_email != null && admin_pw != null) {
+    	  System.out.println("Creating admin account");
     	  UserInfoDB.addUserInfo("Admin", "HOK", admin_email, "1234567", BCrypt.hashpw(admin_pw, BCrypt.gensalt()), true, true);
       }
     }
