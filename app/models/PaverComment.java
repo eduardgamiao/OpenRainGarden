@@ -8,7 +8,6 @@ import play.db.ebean.Model;
 /**
  * Class that represents a comment on a permeable paver.
  */
-@Entity
 public class PaverComment extends Model {
   private static final long serialVersionUID = 1L;
   

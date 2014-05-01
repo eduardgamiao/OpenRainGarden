@@ -10,7 +10,6 @@ import play.db.ebean.Model.Finder;
 /**
  * Class that represents a comment on a rain garden.
  */
-@Entity
 public class GardenComment extends Model {
   private static final long serialVersionUID = 1L;
   

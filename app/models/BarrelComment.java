@@ -8,7 +8,6 @@ import play.db.ebean.Model;
 /**
  * Class that represents a comment on a rain barrel.
  */
-@Entity
 public class BarrelComment extends Model {
   private static final long serialVersionUID = 1L;
   

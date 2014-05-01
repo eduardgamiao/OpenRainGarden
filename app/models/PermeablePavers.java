@@ -41,9 +41,6 @@ public class PermeablePavers extends Model {
   private UserInfo owner;
   
   @OneToMany (mappedBy = "paver", cascade = CascadeType.PERSIST)
-  private List<PaverComment> comments = new ArrayList<PaverComment>();
-  
-  @OneToMany (mappedBy = "paver", cascade = CascadeType.PERSIST)
   private List<Comment> commentList = new ArrayList<Comment>();
 
   /**

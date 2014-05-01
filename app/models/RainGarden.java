@@ -44,9 +44,6 @@ public class RainGarden extends Model {
   private List<Plant> plants = new ArrayList<Plant>();
   
   @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
-  private List<GardenComment> comments = new ArrayList<GardenComment>();
-  
-  @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
   private List<Comment> commentList = new ArrayList<Comment>();
   
   /**
