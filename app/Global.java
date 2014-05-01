@@ -67,7 +67,7 @@ public class Global extends GlobalSettings {
       String admin_email = System.getenv("MAIL_USERNAME");
       String admin_pw = System.getenv("MAIL_PASSWORD");
       if (admin_email != null && admin_pw != null) {
-    	  UserInfoDB.addUserInfo("Admin", "HOK", admin_email, "1234567", BCrypt.hashpw(admin_pw, BCrypt.gensalt()), true);
+    	  UserInfoDB.addUserInfo("Admin", "HOK", admin_email, "1234567", BCrypt.hashpw(admin_pw, BCrypt.gensalt()), true, true);
       }
     }
         
