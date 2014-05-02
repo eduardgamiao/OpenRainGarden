@@ -971,8 +971,13 @@ public class Application extends Controller {
    */
   public static Result retrievePlantImage(String plantName) {
     Plant plant = PlantDB.getPlant(plantName);
-    if (plant != null && plant.hasPicture()) {      
-      return ok(plant.getImage()).as("image/jpeg");
+    if (plant != null) {
+      if (plant.hasPicture()) {
+        return ok(plant.getImage()).as("image/jpeg");
+      }
+      else if (plant.isInitialPlant()) {
+        return redirect(routes.Assets.at("plants/" + plant.getPictureName()));
+      }
     }
     return redirect(routes.Assets.at("images/placeholder.gif"));
   }

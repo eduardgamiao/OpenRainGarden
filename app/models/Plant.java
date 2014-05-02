@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 /**
  * Represents plants used in a rain garden.
@@ -27,6 +26,7 @@ public class Plant extends Model {
   private String placement;
   private String growth; 
   private String climateType;
+  private boolean isInitialPlant = false;
   @Lob
   private byte [] image;
   
@@ -49,7 +49,7 @@ public class Plant extends Model {
     this.growth = growth;
     this.climateType = climateType;
   }
-
+  
   /**
    * @return the id
    */
@@ -148,6 +148,20 @@ public class Plant extends Model {
     this.image = image;
   }
   
+  /**
+   * @return the isInitialPlant
+   */
+  public boolean isInitialPlant() {
+    return isInitialPlant;
+  }
+
+  /**
+   * @param isInitialPlant the isInitialPlant to set
+   */
+  public void setIsInitialPlant(boolean isInitialPlant) {
+    this.isInitialPlant = isInitialPlant;
+  }
+
   /**
    * Check if the plant has an image.
    * @return True if the plant has an image, false otherwie.

@@ -70,6 +70,7 @@ create table plant (
   placement                 varchar(255),
   growth                    varchar(255),
   climate_type              varchar(255),
+  is_initial_plant          tinyint(1) default 0,
   image                     longblob,
   constraint pk_plant primary key (id))
 ;

@@ -70,8 +70,9 @@ public class Global extends GlobalSettings {
       UserInfoDB.addUserInfo("Jane", "Smith", "janesmith@gmail.com", "1234567", BCrypt.hashpw("pw", BCrypt.gensalt()), false);
       //String admin_email = System.getenv("MAIL_USERNAME");
       //String admin_pw = System.getenv("MAIL_PASSWORD");
-      String admin_email = Play.application().configuration().getString("MAIL_USERNAME");
-      String admin_pw = Play.application().configuration().getString("MAIL_PASSWORD");
+      String admin_email = Play.application().configuration().getString("admin_email");
+      String admin_pw = Play.application().configuration().getString("admin_pw");
+      Logger.debug(admin_email + " " + admin_pw);
       if (admin_email != null && admin_pw != null) {
     	  System.out.println("Creating admin account");
     	  UserInfoDB.addUserInfo("Admin", "HOK", admin_email, "1234567", BCrypt.hashpw(admin_pw, BCrypt.gensalt()), true, true);
