@@ -36,6 +36,7 @@ public class RainGarden extends Model {
   @Lob
   private byte [] image;
   private boolean isApproved = false;
+  private String externalImageURL;
   
   @ManyToOne
   private UserInfo owner;
@@ -285,6 +286,20 @@ public class RainGarden extends Model {
    */
   public void setApproved(boolean isApproved) {
     this.isApproved = isApproved;
+  }
+  
+  /**
+   * @return the externalImageURL
+   */
+  public String getExternalImageURL() {
+    return externalImageURL;
+  }
+
+  /**
+   * @param externalImageURL the externalImageURL to set
+   */
+  public void setExternalImageURL(String externalImageURL) {
+    this.externalImageURL = externalImageURL;
   }
 
   /**

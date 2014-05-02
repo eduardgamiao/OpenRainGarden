@@ -164,7 +164,7 @@ public class Plant extends Model {
 
   /**
    * Check if the plant has an image.
-   * @return True if the plant has an image, false otherwie.
+   * @return True if the plant has an image, false otherwise.
    */
   public boolean hasPicture() {
     return (this.image != null);

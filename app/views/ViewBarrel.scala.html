@@ -27,7 +27,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@if(rainBarrel.hasPicture()) {@routes.Application.retrieveBarrelImage(rainBarrel.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block view-header"/>
+              <img src="@routes.Application.retrieveBarrelImage(rainBarrel.getID())" class="img-responsive center-block view-header"/>
             </div>
           </div>
           <div class="row">

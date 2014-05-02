@@ -931,8 +931,13 @@ public class Application extends Controller {
    */
   public static Result retrieveGardenImage(long id) {
     RainGarden garden = RainGardenDB.getRainGarden(id);
-    if (garden != null && garden.hasPicture()) {      
-      return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
+    if (garden != null) {
+      if (garden.hasPicture()) {
+        return ok(RainGardenDB.getRainGarden(id).getImage()).as("image/jpeg");
+      }
+      else if (garden.getExternalImageURL() != null && !(garden.getExternalImageURL().isEmpty())) {
+        return redirect(garden.getExternalImageURL());
+      }
     }
     return redirect(routes.Assets.at("images/placeholder.gif"));
   }
@@ -944,8 +949,13 @@ public class Application extends Controller {
    */
   public static Result retrieveBarrelImage(long id) {
     RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
-    if ((barrel != null) && barrel.hasPicture()) {
-      return ok(RainBarrelDB.getRainBarrel(id).getImage()).as("image/jpeg");
+    if (barrel != null) {
+      if (barrel.hasPicture()) {
+        return ok(RainBarrelDB.getRainBarrel(id).getImage()).as("image/jpeg");
+      }
+      else if (barrel.getExternalImageURL() != null && !barrel.getExternalImageURL().isEmpty()) {
+        return redirect(barrel.getExternalImageURL());
+      }
     }
     return redirect(routes.Assets.at("images/placeholder.gif"));
   }
@@ -957,9 +967,13 @@ public class Application extends Controller {
    */
   public static Result retrievePaverImage(long id) {
     PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
-    if ((paver != null) && paver.hasPicture()) {
-      System.out.println("PermeablePaversDB.hasID");
-      return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
+    if (paver != null) {
+      if (paver.hasPicture()) {
+        return ok(PermeablePaversDB.getPermeablePavers(id).getImage()).as("image/jpeg");
+      }
+      else if (paver.getExternalImageURL() != null && !paver.getExternalImageURL().isEmpty()) {
+        return redirect(paver.getExternalImageURL());
+      }
     }
     return redirect(routes.Assets.at("images/placeholder.gif"));
   }

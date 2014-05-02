@@ -26,7 +26,7 @@
         <div class="panel panel-default">
           <div class="row">
             <div class="col-md-12">
-              <img src="@if(rainGarden.hasPicture()) {@routes.Application.retrieveGardenImage(rainGarden.getID())} else {@routes.Assets.at("images/placeholder.gif")}" class="img-responsive center-block view-header"/>
+              <img src="@routes.Application.retrieveGardenImage(rainGarden.getID())" class="img-responsive center-block view-header"/>
             </div>
           </div>
           <div class="row">

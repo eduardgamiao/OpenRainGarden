@@ -40,6 +40,7 @@ public class RainBarrel extends Model {
   private String installationType;
   @Lob
   private byte [] image;
+  private String externalImageURL;
   private boolean isApproved = false;
   
   @ManyToOne
@@ -340,6 +341,20 @@ public class RainBarrel extends Model {
    */
   public void setImage(byte [] image) {
     this.image = image;
+  }
+
+  /**
+   * @return the externalImageURL
+   */
+  public String getExternalImageURL() {
+    return externalImageURL;
+  }
+
+  /**
+   * @param externalImageURL the externalImageURL to set
+   */
+  public void setExternalImageURL(String externalImageURL) {
+    this.externalImageURL = externalImageURL;
   }
 
   /**

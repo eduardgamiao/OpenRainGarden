@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import models.Button;
 import models.ButtonDB;
 import models.Comment;
@@ -38,10 +37,9 @@ import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 import views.formdata.ResourceFormData;
-
 import org.mindrot.jbcrypt.BCrypt;
-
 import com.avaje.ebean.Ebean;
+import controllers.routes;
 
 /**
  * Implements a Global object for the Play Framework.
@@ -50,10 +48,6 @@ import com.avaje.ebean.Ebean;
  * 
  */
 public class Global extends GlobalSettings {
-  private static final int EXPECTED_PLANT_FILE_LENGTH = 5;
-  private static final int THREE = 3;
-  private static final int FOUR = 4;
-
   /**
    * Initialization method for this Play Framework web application.
    * 
@@ -86,11 +80,17 @@ public class Global extends GlobalSettings {
       plants.add("'Ae'ae");
       plants.add("'A'ali'i");
       RainGarden garden = RainGardenDB.addRainGarden(new RainGardenFormData("John's Rain Garden", "Residential", 
-        "564 Ulahala St.", "No", "My rain garden works and you should get one!", 
-        "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "Water flows from roof into garden.", 
+        "564 Ulahala St.", "No", "We installed our rain garden because we live in an area prone to daily rainfall. "
+            + " We used to have a problem with the water rolling off of our roof and ponding in our yard. Once we "
+            + "installed the rain garden, the water flows right through our yard and we don't have to worry about "
+            + "our yard when it rains.", 
+        "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "The primary source of water comes from our "
+            + "roof. The water is funneled through downspouts which all lead to our rain garden.", 
         "0.75 inches/hour"), UserInfoDB.getUser("johnsmith@gmail.com"));
       
       garden.setApproved(true);
+      garden.setExternalImageURL(routes.Assets.at("images/garden-1.jpg").url());
+      garden.save();
       
       if (garden != null && Comment.find().all().isEmpty()) {
         CommentDB.addComment(new CommentFormData("Wow, you garden looks nice!"), 
@@ -101,21 +101,27 @@ public class Global extends GlobalSettings {
     
     // Add rain barrel.
     if (RainBarrel.find().all().isEmpty()) {
-    RainBarrel barrel = RainBarrelDB.addRainBarrel(new RainBarrelFormData("John's Rain Barrel", "Residential", "564 Ulahala St.", 
-        "No", "My rain garden works and you should get one!", "4", "5", "2014", "Old Drum", "50 Gallons", "Orange-Red",
-        "Plastic", "25.00", "Gardening", "Once a year.", "Open", "Home Depot", "Self-Installed"), 
+    RainBarrel barrel = RainBarrelDB.addRainBarrel(new RainBarrelFormData("John's Rain Barrel", "Residential", 
+        "564 Ulahala St.", "No", "We installed a set of rain barrels on the side of our house because we wanted to "
+            + "protect the plants from excessive flooding. The water is collected from the gutters on the roof and flow"
+            + " into these barrels. The collected water is then used for gardening. It helps cutdown our water bill!", 
+            "4", "5", "2014", "Old Drum", "50 Gallons", "Blue", "Plastic", "25.00", "Gardening", "Once a year.", 
+            "Covered", "Home Depot", "Self-Installed"), 
         UserInfoDB.getUser("johnsmith@gmail.com"));
     barrel.setApproved(true);
+    barrel.setExternalImageURL(routes.Assets.at("images/barrel-1.jpg").url());
     barrel.save();
     }
     
     // Add permeable paver.
     if (PermeablePavers.find().all().isEmpty()) {
-    PermeablePavers paver = PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData("John's Permeable Paver", "Residential", 
-        "564 Ulahala St.", "No", "We installed a permeable pavement to replace our aging concrete driveway. The water "
-            + "does not pool in front of our driveway anymore.", "4", "5", "2014", "Asphalt", "Concrete", 
+    PermeablePavers paver = PermeablePaversDB.addPermeablePavers(new PermeablePaversFormData("John's Permeable Paver", 
+        "Residential", "564 Ulahala St.", "No", "Whenever it rains, our driveway becomes a mini river. The rain would "
+            + "just pool in our driveway. After we installed our permeable paver, we noticed a drastic decrease in "
+            + "pooling and the lawn around our driveway looks more green.", "4", "5", "2014", "Asphalt", "Concrete", 
             "<200 Square Feet", "Self-Installed"),  UserInfoDB.getUser("johnsmith@gmail.com"));
     paver.setApproved(true);
+    paver.setExternalImageURL(routes.Assets.at("images/paver-1.jpg").url());
     paver.save();
     }
     
@@ -146,35 +152,11 @@ public class Global extends GlobalSettings {
    * Populate plant database with plants from file.
    */
   private static void populatePlantDB() {
-    String plant1 = "‘Ahu‘awa, Mariscus javanicus, Basin, Sedge, Wet & Dry Climate";
-    /**
-    String plant2 = "‘Ākia, Wikstroemia uva-ursi, Slope/berm, low shrub, Wet & Dry Climate";
-    String plant3 = "‘Ākulikuli, Sessuvium portulacastrum, Inlet, ground cover, Wet & Dry Climate";
-    String plant4 = "Carex, Carex wahuensis, Basin, sedge, Wet & Dry Climate";
-    String plant5 = "‘Ilie‘e, Plumbago zeylanica, Slope/berm, low shrub, Wet & Dry Climate";
-    String plant6 = "‘A‘ali‘i, Dodonaea viscosa, Accent, bush, Dry Climate";
-    **/
-    String [] plantArr1 = plant1.split(", ");
-    /**
-    String [] plantArr2 = plant2.split(", ");
-    String [] plantArr3 = plant3.split(", ");
-    String [] plantArr4 = plant4.split(", ");
-    String [] plantArr5 = plant5.split(", ");
-    String [] plantArr6 = plant6.split(", ");
-    **/
     if (Plant.find().all().isEmpty()) {
       @SuppressWarnings("unchecked")
-      Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
+      Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("initial-data.yml");
       Ebean.save(all.get("plants"));
     }
-    
-    /**
-    PlantDB.addPlant(new PlantFormData(0, plantArr2[0], plantArr2[1], plantArr2[2], plantArr2[THREE], plantArr2[FOUR]));
-    PlantDB.addPlant(new PlantFormData(0, plantArr3[0], plantArr3[1], plantArr3[2], plantArr3[THREE], plantArr3[FOUR]));
-    PlantDB.addPlant(new PlantFormData(0, plantArr4[0], plantArr4[1], plantArr4[2], plantArr4[THREE], plantArr4[FOUR]));
-    PlantDB.addPlant(new PlantFormData(0, plantArr5[0], plantArr5[1], plantArr5[2], plantArr5[THREE], plantArr5[FOUR]));
-    PlantDB.addPlant(new PlantFormData(0, plantArr6[0], plantArr6[1], plantArr6[2], plantArr6[THREE], plantArr6[FOUR]));
-    **/
   }
   
   private static void populateIndexContentDB() {
