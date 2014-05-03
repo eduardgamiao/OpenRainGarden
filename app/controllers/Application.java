@@ -11,9 +11,11 @@ import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import com.google.common.io.Files;
+import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
+import play.api.Routes;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
@@ -35,16 +37,18 @@ public class Application extends Controller {
    * Returns the home page. 
    * @return The resulting home page. 
    */
-  public static Result errorReport(String s){    
+  public static Result errorReport(String s) {    
 	  	return ok(ErrorReport.render(s));	  
   }
   
+  /**
+   * Returns the index page.
+   * @return The index page.
+   */
   public static Result index() {
-    return ok(Index.render( IndexContentDB.getBlocks(), 
-				    		HeaderFooterDB.getHeader(1),
-				    		HeaderFooterDB.getSubHeader(1),
-				    		HeaderFooterDB.getFooter(1),
-				    		HeaderFooterDB.getSubFooter(1)));
+    return ok(Index.render(IndexContentDB.getIndexContents(), HeaderFooterDB.getHeader(1), 
+                           HeaderFooterDB.getSubHeader(1), HeaderFooterDB.getFooter(1),
+                           HeaderFooterDB.getSubFooter(1)));
   }
   /**
    * Returns the user profile page. 
@@ -199,7 +203,7 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result newRainGarden() {
-	  if(Secured.getUserInfo(ctx()).isConfirmed() == true) {
+	  if (Secured.getUserInfo(ctx()).isConfirmed()) {
     RainGardenFormData data = new RainGardenFormData();
     Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
     String url = routes.Application.retrieveGardenImage(data.id).url();
@@ -247,6 +251,7 @@ public class Application extends Controller {
     } 
     else {
       RainGardenFormData data = formData.get();
+      Logger.debug("GardenID: " + data.id);
       RainGarden garden = RainGardenDB.addRainGarden(data, Secured.getUserInfo(ctx()));    
       MultipartFormData body = request().body().asMultipartFormData();
       FilePart picture = body.getFile("uploadFile");
@@ -1240,68 +1245,67 @@ public class Application extends Controller {
     }
     return redirect(routes.Application.index());
   }
+  
   /**
-   * Returns the edit form for the resource matching the given header
-   * @param header
-   * @return
+   * Create an IndexContent.
+   * @return The IndexContent form.
    */
   @Security.Authenticated(Secured.class)
-  public static Result editIndexBlock(String id) {
-	  if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  BlockFormData data;
-		  if (id.equals(0)) {
-			  data = new BlockFormData();
-		  }
-		  else {
-			  data = new BlockFormData(IndexContentDB.getBlock(id));
-		  }
-		  
-		  Form<BlockFormData> formData = Form.form(BlockFormData.class).fill(data);
-		  return ok(EditIndexBlock.render(formData));
-	  }
-	  return redirect(routes.Application.index());
+  public static Result newIndexBlock() {
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+      IndexContentFormData data = new IndexContentFormData();
+      Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
+      return ok(EditIndexBlock.render(formData, routes.Application.retrieveIndexContentImage(data.id).url(), true));
+    }
+    return redirect(routes.Application.index());
   }
   
   /**
-   * Processes the edit Resource form
-   * @param find
-   * @return
-   * @throws IOException
+   * Process a submitted IndexContent form.
+   * @param isNew Specify if the registration is for a new IndexContent object.
+   * @return The admin control panel.
+   * @throws IOException When error reading uploaded image to byte array.
    */
   @Security.Authenticated(Secured.class)
-  public static Result postEditIndexBlock() throws IOException{
-	 /* if (Secured.getUserInfo(ctx()).isAdmin() == true) {
-		  Form<ResourceFormData> formData = Form.form(ResourceFormData.class).bindFromRequest();
-		  //need to implement file upload validation
-		  if (formData.hasErrors() == true) {
-			  System.out.println("Errors found in edit resource form");
-			  return badRequest(EditResource.render(formData, find));
-		  }
-		  else {
-			  System.out.println("Post Edit Resource");
-			  ResourceFormData data = formData.get();			  
-			  MultipartFormData body = request().body().asMultipartFormData();
-			  FilePart picture = body.getFile("uploadFile");
-			  
-			  Resource resource = null;
-			  if (find.equals("garden") ==  true) {
-				  resource = ResourceDB.addGardenResource(data);
-			  }
-			  else if (find.equals("barrel") == true) {
-				  resource = ResourceDB.addBarrelResource(data);
-			  }
-			  else if (find.equals("paver") == true) {
-				  resource = ResourceDB.addPaverResource(data);
-			  }
-			  
-			  if (picture != null) {
-				  resource.setImage(Files.toByteArray(picture.getFile()));
-				  System.out.println("Setting picture");
-			  }
-			  return redirect(routes.Application.adminPanel());
-		  }
-	  }*/
-	  return redirect(routes.Application.index());
+  public static Result postEditIndexBlock(boolean isNew) throws IOException {
+    Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).bindFromRequest();
+    validateIndexContentUpload(formData, request().body().asMultipartFormData());
+    if (formData.hasErrors()) {
+      Long id = Long.parseLong(formData.data().get("id"));
+      return badRequest(EditIndexBlock.render(formData, routes.Application.retrieveIndexContentImage(id).url(), isNew));
+    }
+    else {
+      IndexContentFormData data = formData.get();
+      IndexContent indexContent = IndexContentDB.add(data);
+      MultipartFormData body = request().body().asMultipartFormData();
+      FilePart picture = body.getFile("uploadFile");
+      if (picture != null) {
+        File source = picture.getFile();
+        indexContent.setImage(Files.toByteArray(source));
+        indexContent.save();
+      }
+      return redirect(routes.Application.adminPanel());
+    }
+  }
+  
+  /**
+   * Edit an IndexContent.
+   * @param id The ID of the IndexContent.
+   * @return The IndexContent form.
+   */
+  @Security.Authenticated(Secured.class)
+  public static Result editIndexBlock(Long id) {
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+        IndexContent indexContent = IndexContentDB.getIndexContent(id);
+        if (indexContent != null) {
+          IndexContentFormData data = new IndexContentFormData(indexContent);
+          Form<IndexContentFormData> formData = Form.form(IndexContentFormData.class).fill(data);
+          return ok(EditIndexBlock.render(formData, 
+                                          routes.Application.retrieveIndexContentImage(data.id).url(), 
+                                          false));
+        }
+    }
+    return redirect(routes.Application.index());    
   }
   
   /**
@@ -1312,7 +1316,6 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result switchGardenStatus(Long id, String url) {
-    Logger.debug(request().uri());
     RainGarden garden = RainGardenDB.getRainGarden(id);
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin() && garden != null) {
       garden.setApproved(!garden.isApproved());
@@ -1437,5 +1440,56 @@ public class Application extends Controller {
 				  
 		  return redirect(routes.Application.login("/"));
 	  }
+  }
+  
+  /**
+   * Retrieve an image for an IndexContent object.
+   * @param id The ID of the IndexContent.
+   * @return The image associated with the IndexContent.
+   */
+  public static Result retrieveIndexContentImage(Long id) {
+    IndexContent indexContent = IndexContentDB.getIndexContent(id);
+    if (indexContent != null) {
+      if (indexContent.hasPicture()) {
+        return ok(indexContent.getImage()).as("image/jpeg");
+      }
+      else if (indexContent.getExternalImageURL() != null && !indexContent.getExternalImageURL().isEmpty()) {
+        return redirect(indexContent.getExternalImageURL());
+      }
+    }
+    return redirect(routes.Assets.at("#"));
+  }
+  
+  /**
+   * Validate a given form's upload file.
+   * @param formData The form to check.
+   * @param body Multipart form data that holds the uploaded file to check.
+   * @return A form with validated upload data.
+   */
+  private static Form<IndexContentFormData> validateIndexContentUpload(Form<IndexContentFormData> formData, 
+      MultipartFormData body) {
+    List<ValidationError> errors = new ArrayList<ValidationError>();
+    Long id = Long.parseLong(formData.data().get("id"));
+    if (formData.errors().get("uploadFile") != null) {
+      errors = formData.errors().get("uploadFile");
+    }
+    FilePart picture = body.getFile("uploadFile");
+    if (id == -1 && picture == null) {
+      errors.add(new ValidationError("uploadFile", "A picture is required."));      
+    }
+    if (picture != null) {
+      if (!(picture.getContentType().contains("image"))) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is not an accepted "
+            + "file type. Please select a file with the extension .jpg/.jpeg or .png"));
+      }
+      if (picture.getFile().length() > MAX_FILE_SIZE) {
+        errors.add(new ValidationError("uploadFile", "The file \"" + picture.getFilename() + "\" is too large. "
+            + "Please select a file that is under 2.5 MB"));
+      }
+    }
+    if (!errors.isEmpty()) {
+      formData.errors().put("uploadFile", errors);
+    }
+    return formData;
   }
 }

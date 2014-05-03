@@ -1,10 +1,10 @@
-@(blockFormData: Form[views.formdata.BlockFormData])
+@(formData: Form[views.formdata.IndexContentFormData], url: String, isNew: Boolean)
 
 @import helper._
 @import bootstrap3._
 
 
-@Main("Admin control panel") {
+@Main("Edit Index Content") {
 <div class="container">
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
@@ -12,21 +12,17 @@
 				<div class="panel-body">
 
 					<div  class="alert alert-info"><h2></>Header Section</h2><h4>(Edit > Submit Change)</h4></div>
-
-					<div class="well">
-						
-					
-						<div class="press-banner" style="margin-top:0px;!important; background-image: url(@routes.Application.retrieveHomeBannerImage())">
-						
-						
-							<h1 class="text-center bigFont"><b>@blockFormData("header")</b></br><p style="font-size:80%">@blockFormData("content")</p></h1>
-						</div>
 					</div>
 					<div style="height:20px"></div>
-					@form(routes.Application.postIndexContentFormData(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data" ){
-						@bootstrap3.textarea(blockFormData("header"),"1", "Header:", "Header", "")
-						@bootstrap3.textarea(blockFormData("content"),"7", "SubHeader:", "SubHeader", "")
-						@file(blockFormData("uploadFile"), "Upload Image:", "Upload a 700x260 pixel image or rectangle size image")
+					@form(routes.Application.postEditIndexBlock(isNew), 'class -> "form-horizontal", 'enctype -> "multipart/form-data" ) {
+            @hidden(formData("id"))
+            @bootstrap3.text(formData("title"), "Title", "Title of the Content Block", "")
+            @bootstrap3.textarea(formData("content"), "5", "Content", "Main Content of Content Block", "")
+            @bootstrap3.text(formData("firstButtonText"), "Button 1 Text", "Text that is displayed on a button.", "")
+            @bootstrap3.text(formData("firstButtonURL"), "Button 1 URL", "Destination URL for Button 1", "")
+            @bootstrap3.text(formData("secondButtonText"), "Button 2 Text", "Text that is displayed on a button.", "")
+            @bootstrap3.text(formData("secondButtonURL"), "Button 2 URL", "Destination URL for Button 1", "")            
+            @upload(formData("uploadFile"), "Upload Picture", url, isNew, "")
 					<div style="height:100px"><button type="submit" style="color:#000" class="btn btn-default pull-right">Submit Change</button></div>		
 								
 				  

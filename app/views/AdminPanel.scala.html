@@ -35,32 +35,26 @@
 					<h3 class="panel-title">Home Page Content Blocks</h3>
 				</div>
 				<div class="col-md-6" style="text-align:right">
-					<a href="#"><button type="button"><span class="glyphicon glyphicon-plus"></span> Add Content Block</button></a>
+					<a href="@routes.Application.newIndexBlock()"><button type="button"><span class="glyphicon glyphicon-plus"></span> Add Content Block</button></a>
 				</div>
 			</div>
 			
 		</div>
 		<div class="panel-body" id="content_blocks">
-			@for(block <- IndexContentDB.getBlocks()) {
+			@for(block <- IndexContentDB.getIndexContents()) {
 			<div class="well">
 				<div class="row featurette">
 	      	  		<div class="col-md-7">
 	         			 <h2 class="featurette-heading m">@block.getTitle()</h2><br>
 	         				 <p class="lead ">@block.getContent()</p>    
 	         				 <p class="joinus text-center">
-	         				 	@for( button <- block.getButton()) {
-		          					@if(button.getNumber().equals(block.getSerial())){
-		          			 			<a href="@button.getHref()"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@button.getTitle()</button></a>	
-		          					}
-		          
-		      					}
 			  				</p>
 	       			 </div>
 	       		 	<div class="col-md-5">
-	          			<img class="featurette-image img-responsive image-center"  alt="500x500" src="@routes.Assets.at("images/"+block.getPicUrl())"></img>
+	          			<img class="featurette-image img-responsive image-center"  alt="500x500" src="@routes.Application.retrieveIndexContentImage(block.getId())"></img>
 	          		</div>
 	       		</div>
-	       		<div style="text-align:left"><a href= "/adminpanel/editindexblock/@block.getSerial()"><button type="button"><h4>Edit</h4></button></a></div>
+	       		<div style="text-align:left"><a href= "/adminpanel/editindexblock/@block.getId()"><button type="button"><h4>Edit</h4></button></a></div>
 	       	</div>
       		}
       		<div style="text-align:right"><a href="#content_blocks"><h4>Back to top</h4></a></div>

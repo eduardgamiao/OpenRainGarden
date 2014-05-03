@@ -1,68 +1,59 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import views.formdata.IndexContentBlockFormData;
+import play.Logger;
+import views.formdata.IndexContentFormData;
 
 /**
  * A database of plants.
- * @author vinson gao
- *
  */
 public class IndexContentDB {
 
-	  public static IndexContent addBlock(IndexContentBlockFormData formData) {
-		  IndexContent idexContent;
-		    
-		    if (formData.id == -1) {
-		    	idexContent = new IndexContent(formData.serial, formData.title, formData.content, formData.image);
-		    }
-		    else {
-		    	idexContent = IndexContentDB.getBlock(formData.id);
-		    	idexContent.setSerial(formData.serial);
-		    	idexContent.setTitle(formData.title);
-		    	idexContent.setContent(formData.content);
-		    	idexContent.setImage(formData.image);
-		    	
-		    }
-		    idexContent.save();
-		    
-		    return idexContent;
+  /**
+   * Add/Edit content block in database.
+   * @param formData Processed form data for an IndexContent.
+   * @return The IndexContent that has been added/ediited.
+   */
+	public static IndexContent add(IndexContentFormData formData) {
+	  IndexContent indexContent;
+	  Logger.debug("ID: " + formData.id);
+	  if (formData.id == -1) {
+	    indexContent = new IndexContent(formData.title, formData.content, formData.firstButtonText, 
+	                                    formData.firstButtonURL, formData.secondButtonText, 
+	                                    formData.secondButtonURL);
+	    indexContent.save();
 	  }
-	  public static IndexContent getBlock(long id) {
-		  return IndexContent.find().byId(id);
+	  else {
+	    indexContent = getIndexContent(formData.id);
+	    if (indexContent != null) {
+	      Logger.debug(formData.toString());
+	      indexContent.setTitle(formData.title);
+	      indexContent.setContent(formData.content);
+	      indexContent.setFirstButtonText(formData.firstButtonText);
+	      indexContent.setFirstButtonURL(formData.firstButtonURL);
+	      indexContent.setSecondButtonText(formData.secondButtonText);
+	      indexContent.setSecondButtonURL(formData.secondButtonURL);
+	      indexContent.save();
+	    }
 	  }
-	  public static IndexContent getBlock(String serial) {
-		  List<IndexContent> i = IndexContent.find().all();
-		  for(IndexContent c: i){
-			  if(c.getSerial().equals(serial)){
-				  return IndexContent.find().byId(c.getId());
-			  }
-		  }
-		  return null;
-	  }
+	  return indexContent;
+	}
 	
-		public static String getContent(long id) {
-			    return IndexContent.find().byId(id).getContent();
-		}
-		public static String getTitle(long id) {
-			    return IndexContent.find().byId(id).getTitle();
-		}
-		public static String getBlockNumber(long id) {
-			    return IndexContent.find().byId(id).getSerial();
-		}
-		public static String getPicUrl(long id) {
-		    return IndexContent.find().byId(id).getPicUrl();
-		}
-		public static List<IndexContent> getBlocks() {
-			    return IndexContent.find().all();
-		}
-	  public static boolean isEmpty() {
-		  return IndexContent.find().all().isEmpty();
-	  }
-
+	/**
+	 * Retrieve an IndexContent from the database.
+	 * @param id The ID of the IndexContent.
+	 * @return The IndexContnet with the matching ID if it exists. Otherwise null.
+	 */
+	public static IndexContent getIndexContent(Long id) {
+	  return IndexContent.find().byId(id);
+	}
 	
+	/**
+	 * Return a list of all IndexContents in the database.
+	 * @return A List of IndexContent.
+	 */
+	public static List<IndexContent> getIndexContents() {
+	  return IndexContent.find().all();
+	}
+  
 }

@@ -1,20 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import models.Button;
-import models.ButtonDB;
 import models.Comment;
 import models.CommentDB;
-import models.GardenComment;
-import models.GardenCommentDB;
-import models.HeaderFooter;
 import models.HeaderFooterDB;
 import models.IndexContent;
 import models.IndexContentDB;
 import models.PermeablePavers;
 import models.PermeablePaversDB;
 import models.Plant;
-import models.PlantDB;
 import models.RainBarrel;
 import models.RainBarrelDB;
 import models.RainGarden;
@@ -27,13 +21,10 @@ import play.Logger;
 import play.Play;
 import play.libs.Yaml;
 import models.UserInfoDB;
-import views.formdata.ButtonFormData;
 import views.formdata.CommentFormData;
-import views.formdata.GardenCommentFormData;
 import views.formdata.HeaderFooterFormData;
-import views.formdata.IndexContentBlockFormData;
+import views.formdata.IndexContentFormData;
 import views.formdata.PermeablePaversFormData;
-import views.formdata.PlantFormData;
 import views.formdata.RainBarrelFormData;
 import views.formdata.RainGardenFormData;
 import views.formdata.ResourceFormData;
@@ -136,16 +127,6 @@ public class Global extends GlobalSettings {
         ResourceDB.addPaverResource(new ResourceFormData(-1, "AquaPave", "http://www.aquapave.com/index.htm"));
         ResourceDB.addPaverResource(new ResourceFormData(-1, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
     }
-    
-  }
-
-  /**
-   * Termination method for this Play Framework web application.
-   * 
-   * @param app A Play Framework application.
-   */
-  public void onStop(Application app) {
-
   }
   
   /**
@@ -159,6 +140,9 @@ public class Global extends GlobalSettings {
     }
   }
   
+  /**
+   * Populate the Index page.
+   */
   private static void populateIndexContentDB() {
     if (HeaderFooterDB.isEmpty()) {
 	  HeaderFooterDB.add(new HeaderFooterFormData("Hawaii Rainwater Solutions: Sponsored by Hui o Koolaupoko",  
@@ -169,27 +153,39 @@ public class Global extends GlobalSettings {
 	              + "wholly or in part by a Federal Grant to the HDOH, it may not necessarily reflect the views of "
 	              + "the EPA and the HDOH and no offical endorsement should be inferred."));
     }
-    if (ButtonDB.isEmpty()) {  
-		  ButtonDB.add(new ButtonFormData("1", "Sign Up", "/signup"));
-		  ButtonDB.add(new ButtonFormData("1", "View Map", "/map"));
-		  
-		  ButtonDB.add(new ButtonFormData("2", "Learn More", "/learnmore#garden_resources"));
-		  ButtonDB.add(new ButtonFormData("2", "View Gallery", "/gallery/rain-garden"));
-		  
-		  ButtonDB.add(new ButtonFormData("3", "Learn More", "/learnmore#paver_resources"));
-		  ButtonDB.add(new ButtonFormData("3", "View Gallery", "/gallery/permeable-paver"));
-		  
-		  ButtonDB.add(new ButtonFormData("4", "Learn More", "/learnmore#barrel_resources"));
-		  ButtonDB.add(new ButtonFormData("4", "View Gallery", "/gallery/rain-barrel"));
-    }
 	  
-	if(IndexContentDB.isEmpty()){  
-		  IndexContentDB.addBlock(new IndexContentBlockFormData("1","What Harm Can A Little Rainwater Do?" ,"When it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or absorbed naturually into the Earth. Share your solutions with your community and inspire your neighbors to be green!", "alawai.png"));
-		  IndexContentDB.addBlock(new IndexContentBlockFormData("2","Solution: Rain Garden" ,"A Rain Garden is a low-lying area populated with native plants. They reduce the amount of water diverted from roofs/driveways/parking lots into storm drains by absorbing and filtering the water.", "garden.png"));
-		  IndexContentDB.addBlock(new IndexContentBlockFormData("3","Solution: Permeable Paver" ,"A permeable interlocking concrete pavement is comprised of a layer of permeable pavers separated by joints filled with small stones. The stones in the joints provide 100% surface permeability while the stone base effectively filters stormwater and reduces pollutants and debris that would otherwise be washed into streams and rivers.", "paver.png"));
-		  IndexContentDB.addBlock(new IndexContentBlockFormData("4","Solution: Rain Barrel" ,"During the summer months it is estimated that nearly 40 percent of household water is used for lawn and garden maintenance. A rain barrel collects water and stores it for those times that you need it most --- during the dry summer months. Using rain barrels potentially helps homeowners lower water bills, while also improving the vitality of plants, flowers, trees, and lawns.", "barrel.png"));
+	if (IndexContentDB.getIndexContents().isEmpty()) {  
+	  IndexContent ic1 = IndexContentDB.add(new IndexContentFormData("What Harm Can A Little Rainwater Do?", "When "
+	      + "it rains, the resulting rainwater runoff washes pollutants into Hawaii's streams, rivers, lakes and "
+	      + "the ocean. Rainwater runoff solutions allow the resulting runoff to instead be collected, reused or "
+	      + "absorbed naturually into the Earth. Share your solutions with your community and inspire your "
+	      + "neighbors to be green!", "Sign Up", "/signup", "View Map", "/map"));
+	  ic1.setExternalImageURL(routes.Assets.at("images/alawai.png").url());
+	  ic1.save();
+	  IndexContent ic2 = IndexContentDB.add(new IndexContentFormData("Solution: Rain Garden" , "A Rain Garden is a "
+	      + "low-lying area populated with native plants. They reduce the amount of water diverted from roofs/"
+	      + "driveways/parking lots into storm drains by absorbing and filtering the water.", "Learn More", 
+	      "/learnmore#garden_resources", "View Gallery", "/gallery/rain-garden"));
+    ic2.setExternalImageURL(routes.Assets.at("images/garden.png").url());
+    ic2.save();
+	  IndexContent ic3 = IndexContentDB.add(new IndexContentFormData("Solution: Permeable Paver" , "A permeable "
+	      + "interlocking concrete pavement is comprised of a layer of permeable pavers separated by joints filled "
+	      + "with small stones. The stones in the joints provide 100% surface permeability while the stone base "
+	      + "effectively filters stormwater and reduces pollutants and debris that would otherwise be washed into "
+	      + "streams and rivers.", "Learn More", "/learnmore#paver_resources", "View Gallery", 
+	      "/gallery/permeable-paver"));
+    ic3.setExternalImageURL(routes.Assets.at("images/paver.png").url());
+    ic3.save();
+	  IndexContent ic4 = IndexContentDB.add(new IndexContentFormData("Solution: Rain Barrel", "During the summer "
+	      + "months it is estimated that nearly 40 percent of household water is used for lawn and garden "
+	      + "maintenance. A rain barrel collects water and stores it for those times that you need it most --- "
+	      + "during the dry summer months. Using rain barrels potentially helps homeowners lower water bills, "
+	      + "while also improving the vitality of plants, flowers, trees, and lawns.", "Learn More", 
+	      "/learnmore#barrel_resources", "View Gallery", "/gallery/rain-barrel"));
+    ic4.setExternalImageURL(routes.Assets.at("images/barrel.png").url());
+    ic4.save();
 	}
-  }//
+  }
   
  
 }

@@ -17,16 +17,21 @@
 	          <h2 class="featurette-heading m">@block.getTitle()</h2><br>
 	          <p class="lead ">@block.getContent()</p>    
 	
+        @if(block.hasFirstButton || block.hasSecondButton) {
 			  <p class="joinus text-center">
-			
-			  @for( button <- ButtonDB.getButtonsFromOneBlock(block.getSerial())) {
-		           <a href="@button.getHref()"><button class="btn btn-info btn-large"><i class="icon-white icon-heart"></i>@button.getTitle()</button></a>			          
-		      }
+          @if(block.hasFirstButton) {
+            <a href="@block.getFirstButtonURL"><button class="btn btn-primary">@block.getFirstButtonText()</button></a>
+          }
+          @if(block.hasSecondButton) {
+            <a href="@block.getSecondButtonURL"><button class="btn btn-primary">@block.getSecondButtonText()</button></a>
+          }
 			  </p>
+        }
+        
 	        </div>
 	        <div class="col-md-5">
 	          
-	          <img class="featurette-image img-responsive image-center"  alt="500x500" src="@routes.Assets.at("images/"+block.getPicUrl())"></img>
+	          <img class="featurette-image img-responsive image-center"  alt="500x500" src="@routes.Application.retrieveIndexContentImage(block.getId())"></img>
 	        </div>
 	      </div>
 	      

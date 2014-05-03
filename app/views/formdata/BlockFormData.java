@@ -33,7 +33,7 @@ public class BlockFormData {
 	}
 	
 	public BlockFormData(IndexContent resource) {
-		this.serial = resource.getSerial();
+		//this.serial = resource.getSerial();
 		this.header = resource.getTitle();
 		this.content = resource.getContent();
 

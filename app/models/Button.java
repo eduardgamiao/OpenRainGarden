@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
-@Entity
 public class Button extends Model {
 	private static final long serialVersionUID = 1L;
 	  
