@@ -4,7 +4,7 @@
 @import bootstrap3._
 
 @Main("Manage Solutions") {
-   <div class="container">
+   <div class="container" style="padding-bottom: 75px;">
    <table class="table table-bordered table-hover">
     <tr>
       <td colspan="8" style="background-color:#3E60AD; color:white; text-align:center;">
@@ -23,17 +23,31 @@
     </tr>
     @for(garden <- RainGardenDB.getRainGardens()) {
       <tr>
-        <td><a href="@routes.Application.viewGarden(garden.getID())">View Page</a></td>
+        <td width="50px"><a href="@routes.Application.retrieveGardenImage(garden.getID())"><img src="@routes.Application.retrieveGardenImage(garden.getID())" class="" height="50px" width="50px"></a></td>
         <td>@garden.getTitle()</td>
         <td>@garden.getPropertyType()</td>
         <td>@garden.getAddress()</td>
         <td>@garden.getHideAddress()</td>
         <td>@garden.getDescription()</td>
-        <td>@if(!garden.isApproved()) {        
-        <span class="label label-danger">Not Approved</span>       
-        } else {<span class="label label-primary">Approved</span>}</td>
-        <td><a href="@routes.Application.switchGardenStatus(garden.getID(), request().uri())"> <button class="btn @if(garden.isApproved()) {btn-danger} else {btn-primary} btn-xs">@if(garden.isApproved()) {Suspend} else {Approve}</button></a></td>
-      </tr>
+        <td>@if(!garden.isApproved()) {
+            Not Approved       
+            } else {Approved}
+        </td>
+        <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+            Select An Action <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="@routes.Application.switchGardenStatus(garden.getID(), request().uri())">@if(garden.isApproved()) {Suspend} else {Approve}</a></li>
+            <li><a href="@routes.Application.viewGarden(garden.getID())">View Page</a></li>
+            <li><a href="@routes.Application.manageRainGarden(garden.getID())">Edit Page</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#delete-rg@garden.getID()">Delete Page</a></li>
+          </ul>
+        </div>
+        </td>
+        </tr>
+        @deleteGarden(garden)
     }
     <tr>
       <td colspan="8" style="background-color:#3E60AD; color:white; text-align:center;">
@@ -52,17 +66,31 @@
     </tr>
     @for(barrel <- RainBarrelDB.getRainBarrels()) {
       <tr>
-        <td><a href="@routes.Application.viewBarrel(barrel.getID())">View Page</a></td>
+        <td width="50px"><a href="@routes.Application.retrieveBarrelImage(barrel.getID())"><img src="@routes.Application.retrieveBarrelImage(barrel.getID())" class="" height="50px" width="50px"></a></td>        
         <td>@barrel.getTitle()</td>
         <td>@barrel.getPropertyType()</td>
         <td>@barrel.getAddress()</td>
         <td>@barrel.getHideAddress()</td>
         <td>@barrel.getDescription()</td>
-        <td>@if(!barrel.isApproved()) {        
-        <span class="label label-danger">Not Approved</span>       
-        } else {<span class="label label-primary">Approved</span>}</td>
-        <td><a href="@routes.Application.switchBarrelStatus(barrel.getID(), request().uri())"> <button class="btn @if(barrel.isApproved()) {btn-danger} else {btn-primary} btn-xs">@if(barrel.isApproved()) {Suspend} else {Approve}</button></a></td>      
-    </tr>
+        <td>@if(!barrel.isApproved()) {
+            Not Approved       
+            } else {Approved}
+        </td>
+        <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+            Select An Action <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="@routes.Application.switchBarrelStatus(barrel.getID(), request().uri())">@if(barrel.isApproved()) {Suspend} else {Approve}</a></li>
+            <li><a href="@routes.Application.viewBarrel(barrel.getID())">View Page</a></li>
+            <li><a href="@routes.Application.manageRainBarrel(barrel.getID())">Edit Page</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#delete-rg@barrel.getID()">Delete Page</a></li>
+          </ul>
+        </div>
+        </td>
+     </tr>
+     @deleteBarrel(barrel)
     }
     <tr>
       <td colspan="8" style="background-color:#3E60AD; color:white; text-align:center;">
@@ -81,17 +109,31 @@
     </tr>
     @for(paver <- PermeablePaversDB.getPermeablePavers()) {
       <tr>
-        <td><a href="@routes.Application.viewPaver(paver.getID())">View Page</a></td>
+        <td width="50px"><a href="@routes.Application.retrievePaverImage(paver.getID())"><img src="@routes.Application.retrievePaverImage(paver.getID())" class="" height="50px" width="50px"></a></td>  
         <td>@paver.getTitle()</td>
         <td>@paver.getPropertyType()</td>
         <td>@paver.getAddress()</td>
         <td>@paver.getHideAddress()</td>
         <td>@paver.getDescription()</td>
-        <td>@if(!paver.isApproved()) {        
-        <span class="label label-danger">Not Approved</span>       
-        } else {<span class="label label-primary">Approved</span>}</td>
-        <td><a href="@routes.Application.switchPaverStatus(paver.getID(), request().uri())"> <button class="btn @if(paver.isApproved()) {btn-danger} else {btn-primary} btn-xs">@if(paver.isApproved()) {Suspend} else {Approve}</button></a></td>      
+        <td>@if(!paver.isApproved()) {
+            Not Approved       
+            } else {Approved}
+        </td>
+        <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+            Select An Action <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="@routes.Application.switchPaverStatus(paver.getID(), request().uri())">@if(paver.isApproved()) {Suspend} else {Approve}</a></li>
+            <li><a href="@routes.Application.viewPaver(paver.getID())">View Page</a></li>
+            <li><a href="@routes.Application.managePermeablePavers(paver.getID())">Edit Page</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#delete-rg@paver.getID()">Delete Page</a></li>
+          </ul>
+        </div>
+        </td>   
       </tr>
+      @deletePaver(paver)
     }
    </table>   
    </div>

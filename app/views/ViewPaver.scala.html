@@ -19,7 +19,7 @@
       <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
          <ul class="nav nav-tabs">
           <li class="active"><a href="/view/rain-garden/@permeablePaver.getID()">View</a></li>
-          @if(Secured.isLoggedIn(ctx()) && (Secured.getUserInfo(ctx()).getEmail().equals(permeablePaver.getOwner().getEmail()))) {
+          @if(Secured.isLoggedIn(ctx()) && permeablePaver.canEdit(Secured.getUserInfo(ctx()))) {
             <li><a href="@routes.Application.managePermeablePavers(permeablePaver.getID())">Edit Information</a></li>
             <li><a href="#" onclick="javascript:OpenModal()">Delete Page</a></li>
           }
@@ -83,7 +83,7 @@
                </div>
               }
             }
-            @if(Secured.isLoggedIn(ctx()) && permeablePaver.isApproved()) {
+            @if(Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isConfirmed() && permeablePaver.isApproved()) {
             <br/>
               <!-- Comment Form -->
               @form(routes.Application.postPaverComment(permeablePaver.getID(), ctx().request().uri()), 'class -> "form-horizontal") {            

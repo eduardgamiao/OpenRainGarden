@@ -43,7 +43,6 @@ public class RainGardenDB {
       garden.setWaterFlowSourceSize(formData.waterFlowSourceSize);
       garden.setWaterFlowDescription(formData.waterFlowDescription);
       garden.setInfiltrationRate(formData.infiltrationRate);
-      garden.setOwner(userInfo);
       garden.save();
       return garden;
     }
@@ -74,7 +73,9 @@ public class RainGardenDB {
    * @param id ID of rain garden.
    */
   public static void deleteRainGarden(long id) {
-    RainGarden.find().byId(id).delete();
+    if (hasID(id)) {
+      RainGarden.find().byId(id).delete();
+    }
   }
 
   /**

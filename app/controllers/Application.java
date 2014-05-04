@@ -274,10 +274,10 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result manageRainGarden(long id) {
-    if (RainGardenDB.hasID(id)) {      
-      if (Secured.isLoggedIn(ctx()) 
-          && (Secured.getUserInfo(ctx()).getId() == RainGardenDB.getRainGarden(id).getOwner().getId())) {
-        RainGardenFormData data = new RainGardenFormData(RainGardenDB.getRainGarden(id));
+    if (RainGardenDB.hasID(id)) {  
+      RainGarden garden = RainGardenDB.getRainGarden(id);
+      if (Secured.isLoggedIn(ctx()) && garden.canEdit(Secured.getUserInfo(ctx()))) {
+        RainGardenFormData data = new RainGardenFormData(garden);
         Form<RainGardenFormData> formData = Form.form(RainGardenFormData.class).fill(data);
         String url = routes.Application.retrieveGardenImage(id).url();
         return ok(RegisterRainGarden.render(formData, false, YesNoChoiceType.getChoiceList(), 
@@ -288,7 +288,7 @@ public class Application extends Controller {
                   InfiltrationRateTypes.getTypes(data.infiltrationRate), url, Secured.getUserInfo(ctx())));        
       }
     }
-    return redirect(routes.Application.index());
+    return redirect(routes.Application.viewGarden(id));
   }
     
   /**
@@ -365,9 +365,9 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result manageRainBarrel(long id) {
     if (RainBarrelDB.hasID(id)) {
-      if (Secured.isLoggedIn(ctx()) 
-          && (Secured.getUserInfo(ctx()).getId() == RainBarrelDB.getRainBarrel(id).getOwner().getId())) {
-        RainBarrelFormData data = new RainBarrelFormData(RainBarrelDB.getRainBarrel(id));
+      RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+      if (Secured.isLoggedIn(ctx()) && barrel.canEdit(Secured.getUserInfo(ctx()))) {
+        RainBarrelFormData data = new RainBarrelFormData(barrel);
         Form<RainBarrelFormData> formData = Form.form(RainBarrelFormData.class).fill(data);
         String url = routes.Application.retrieveBarrelImage(id).url();
         return ok(RegisterRainBarrel.render(formData, false, YesNoChoiceType.getChoiceList(), 
@@ -380,7 +380,7 @@ public class Application extends Controller {
                   url));      
       }
     }
-    return redirect(routes.Application.index());
+    return redirect(routes.Application.viewBarrel(id));
   }
   
   /**
@@ -454,9 +454,9 @@ public class Application extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result managePermeablePavers(long id) {
     if (PermeablePaversDB.hasID(id)) {
-      if (Secured.isLoggedIn(ctx()) 
-          && (Secured.getUserInfo(ctx()).getId() == PermeablePaversDB.getPermeablePavers(id).getOwner().getId())) {
-            PermeablePaversFormData data = new PermeablePaversFormData(PermeablePaversDB.getPermeablePavers(id));
+      PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+      if (Secured.isLoggedIn(ctx()) && paver.canEdit(Secured.getUserInfo(ctx()))) {
+            PermeablePaversFormData data = new PermeablePaversFormData(paver);
             Form<PermeablePaversFormData> formData = Form.form(PermeablePaversFormData.class).fill(data);
             String url = routes.Application.retrievePaverImage(id).url();
             return ok(RegisterPermeablePavers.render(formData, false, YesNoChoiceType.getChoiceList(), 
@@ -498,14 +498,16 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result deleteGarden(Long id) {
-    RainGarden garden = RainGardenDB.getRainGarden(id);
-    UserInfo owner = garden.getOwner();
-    if (garden != null) {
-      garden.getOwner().deleteGarden(garden);
-      RainGardenDB.deleteRainGarden(garden.getID());
+    if (RainGardenDB.hasID(id)) {
+      RainGarden garden = RainGardenDB.getRainGarden(id);
+      if (garden != null) {
+        RainGardenDB.deleteRainGarden(garden.getID());
+      }
     }
-    // Redirect to user page once implemented.
-    return ok(Profile.render(owner));
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+      return redirect(routes.Application.viewSolutions());
+    }
+    return ok(Profile.render(Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -537,14 +539,16 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result deleteBarrel(Long id) {
-    RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
-    UserInfo owner = barrel.getOwner();
-    if (barrel != null) {
-      barrel.getOwner().deleteBarrel(barrel);
-      RainBarrelDB.deleteRainBarrel(id);
+    if (RainBarrelDB.hasID(id)) {
+      RainBarrel barrel = RainBarrelDB.getRainBarrel(id);
+      if (barrel != null) {
+        RainBarrelDB.deleteRainBarrel(id);
+      }
     }
-    // Redirect to user page once implemented.
-    return ok(Profile.render(owner));
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+      return redirect(routes.Application.viewSolutions());
+    }
+    return ok(Profile.render(Secured.getUserInfo(ctx())));
   }
   
   /**
@@ -576,14 +580,16 @@ public class Application extends Controller {
    */
   @Security.Authenticated(Secured.class)
   public static Result deletePaver(Long id) {
-    PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
-    UserInfo owner = paver.getOwner();
-    if (paver != null) {
-      paver.getOwner().deletePaver(paver);
-      PermeablePaversDB.deletePermeablePaver(paver.getID());
+    if (PermeablePaversDB.hasID(id)) {
+      PermeablePavers paver = PermeablePaversDB.getPermeablePavers(id);
+      if (paver != null) {
+        PermeablePaversDB.deletePermeablePaver(paver.getID());
+      }
     }
-    // Redirect to user page once implemented.
-    return ok(Profile.render(owner));
+    if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
+      return redirect(routes.Application.viewSolutions());
+    }
+    return ok(Profile.render(Secured.getUserInfo(ctx())));
   }
   
   /**

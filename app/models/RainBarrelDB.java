@@ -50,7 +50,6 @@ public class RainBarrelDB {
       barrel.setCover(formData.cover);
       barrel.setObtainedFrom(formData.obtainedFrom);
       barrel.setInstallationType(formData.installationType);
-      barrel.setOwner(userInfo);
       userInfo.save();
       barrel.save();
       return barrel;
@@ -81,7 +80,9 @@ public class RainBarrelDB {
    * @param id The ID of the rain barrel to delete.
    */
   public static void deleteRainBarrel(long id) {
-    RainBarrel.find().byId(id).delete();
+    if (hasID(id)) {
+      RainBarrel.find().byId(id).delete();
+    }
   }
   
   /**

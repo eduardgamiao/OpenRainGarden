@@ -19,8 +19,8 @@ public class PlantTypes {
    */
   public static Map<String, Boolean> getPlantMap() {
     Map<String, Boolean> plantMap = new LinkedHashMap<String, Boolean>();
-    for (Plant current : PlantDB.getPlants()) {
-      plantMap.put(current.getName(), false);
+    for (String current : PlantDB.getPlantNames()) {
+      plantMap.put(current, false);
     }
     return plantMap;
   }

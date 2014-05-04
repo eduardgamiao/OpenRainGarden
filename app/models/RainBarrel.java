@@ -46,7 +46,7 @@ public class RainBarrel extends Model {
   @ManyToOne
   private UserInfo owner;
 
-  @OneToMany (mappedBy = "barrel", cascade = CascadeType.PERSIST)
+  @OneToMany (mappedBy = "barrel", cascade = CascadeType.ALL)
   private List<Comment> commentList = new ArrayList<Comment>();
     
   /**
@@ -463,6 +463,19 @@ public class RainBarrel extends Model {
     }
     return (this.owner.getId() == userInfo.getId());
   }
+  
+  /**
+   * Check if a user can edit a rain barrel.
+   * @param userInfo The user to check. 
+   * @return True if the user is the owner or an admin otherwise false.
+   */
+  public boolean canEdit(UserInfo userInfo) {
+    if (userInfo == null) {
+      return false;
+    }
+    return (userInfo.isAdmin() || isOwner(userInfo));
+  }
+  
   
   /**
    * The EBean ORM finder method for database queries on ID.

@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import play.db.ebean.Model;
+import scala.reflect.internal.Trees.This;
 
 /**
  * An object that represents a rain garden.
@@ -44,7 +45,7 @@ public class RainGarden extends Model {
   @ManyToMany (cascade = CascadeType.ALL)
   private List<Plant> plants = new ArrayList<Plant>();
   
-  @OneToMany (mappedBy = "garden", cascade = CascadeType.PERSIST)
+  @OneToMany (mappedBy = "garden", cascade = CascadeType.ALL)
   private List<Comment> commentList = new ArrayList<Comment>();
   
   /**
@@ -425,6 +426,18 @@ public class RainGarden extends Model {
            + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.rainGardenSize + "\", "
            + "\"" + this.waterFlowSourceSize + "\", " + "\"" + this.waterFlowDescription + "\", " 
            + "\"" + this.infiltrationRate + "\", " + "\"" + this.getOwner().getEmail() + "\n";
+  }
+  
+  /**
+   * Check if a user can edit a rain garden.
+   * @param userInfo The user to check. 
+   * @return True if the user is the owner or an admin otherwise false.
+   */
+  public boolean canEdit(UserInfo userInfo) {
+    if (userInfo == null) {
+      return false;
+    }
+    return (userInfo.isAdmin() || isOwner(userInfo));
   }
   
   /**

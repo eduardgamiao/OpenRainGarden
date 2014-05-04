@@ -1,6 +1,8 @@
 package models;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.RawSql;
@@ -101,5 +103,14 @@ public class PlantDB {
    */
   public static void deletePlant(Long id) {
     Plant.find().byId(id).delete();
+  }
+  
+  public static List<String> getPlantNames() {
+    List<String> plants = new ArrayList<String>();
+    for (Plant plant : getPlants()) {
+      plants.add(plant.getName());
+    }
+    Collections.sort(plants);
+    return plants;
   }
 }
