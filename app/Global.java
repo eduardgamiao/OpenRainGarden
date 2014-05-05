@@ -75,9 +75,9 @@ public class Global extends GlobalSettings {
             + " We used to have a problem with the water rolling off of our roof and ponding in our yard. Once we "
             + "installed the rain garden, the water flows right through our yard and we don't have to worry about "
             + "our yard when it rains.", 
-        "4", "5", "2014", plants, "100 Square Feet", "1000 Square Feet", "The primary source of water comes from our "
-            + "roof. The water is funneled through downspouts which all lead to our rain garden.", 
-        "0.75 inches/hour"), UserInfoDB.getUser("johnsmith@gmail.com"));
+        "4", "5", "2014", plants, "0-60 Square Feet", "250-500 Square Feet", "The primary source of water comes from"
+            + " our roof. The water is funneled through downspouts which all lead to our rain garden.", 
+        "3.00"), UserInfoDB.getUser("johnsmith@gmail.com"));
       
       garden.setApproved(true);
       garden.setExternalImageURL(routes.Assets.at("images/garden-1.jpg").url());

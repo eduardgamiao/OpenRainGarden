@@ -52,9 +52,9 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="position: relative; bottom: 1.9em;">
               <div class="page-header"><h4>Additional Information</h4></div>
                 <p><b>Rain Garden Size:</b> @checkInput(rainGarden.getRainGardenSize())</p>
-                <p><b>Size of Roof/Impervious Surface:</b> @checkInput(rainGarden.getWaterFlowSourceSize())</p>
+                <p><b>Contributing Drainage Area:</b> @checkInput(rainGarden.getWaterFlowSourceSize())</p>
                 <p><b>Water Flow Description:</b> @checkInput(rainGarden.getWaterFlowDescription())</p>
-                <p><b>Infiltration Rate:</b> @checkInput(rainGarden.getInfiltrationRate())</p>                
+                <p><b>Infiltration Rate:</b> @checkInput(rainGarden.getInfiltrationRate()) @if((rainGarden.getInfiltrationRate() != null) && !(rainGarden.getInfiltrationRate().isEmpty())) {Inches/Hour}</p>                
               </div>
               </div>              
           <div class="row" style="color: black; padding-left: 1em; padding-right: 1em;">         

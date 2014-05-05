@@ -148,7 +148,20 @@ public class RainGardenFormData {
     if (!this.year.isEmpty() && (this.month.isEmpty())) {
       errors.add(new ValidationError("month", "Month is missing."));
     }
+    if (!this.infiltrationRate.isEmpty() && !isValidDouble(this.infiltrationRate)) {
+      errors.add(new ValidationError("infiltrationRate", "Not a valid number. "
+          + "Please enter numeric characters only"));      
+    }
     
     return errors.isEmpty() ? null : errors;
+  }
+  
+  /**
+   * Checks if an input is all numerical characters.
+   * @param input The input to check.
+   * @return True if the input is all numerical characters, false otherwise. 
+   */
+  private static boolean isValidDouble(String input) {
+      return input.matches("[0-9]{1,13}(\\.[0-9]*)?");
   }
 }

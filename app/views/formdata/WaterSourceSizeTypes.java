@@ -9,8 +9,8 @@ import java.util.Map;
  *
  */
 public class WaterSourceSizeTypes {
-  private static String [] types = {"Less than 1000 Square Feet", "1000 Square Feet", "1500 Square Feet",
-    "2000 Square Feet", "2500 Squere Feet", "2500+ Square Feet"};
+  private static String [] types = {"0-250 Square Feet", "250-500 Square Feet", "500-750 Square Feet",
+    "750-1000 Square Feet", "1000+ Square Feet"};
   
   /**
    * Return a mapping of the types of roof garden sizes.

@@ -32,9 +32,9 @@
               <div class="page-header"><h3>Additional Information</h3></div>
               @bootstrap3.plants(formData("plants"), "Plants", plantMap, "")
               @bootstrap3.select(formData("rainGardenSize"), "Rain Garden Size", "Please Select the Size of the Rain Garden", gardenSizeTypes, false, "")
-              @bootstrap3.select(formData("waterFlowSourceSize"), "Size of Waterflow Source for Rain Garden", "Please Select Size of Roof/Impervious Pavement that feeds Rain Garden", sourceSizeTypes, false, "")
+              @bootstrap3.select(formData("waterFlowSourceSize"), "Contributing Drainage Area", "Please Select Square Footage of Contributing Drainage Area", sourceSizeTypes, false, "")
               @bootstrap3.textarea(formData("waterFlowDescription"), "3", "Waterflow Description", "Waterflow Description. Example: Water flows from my room to the rain garden.", "")
-              @bootstrap3.select(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden's Soil", infiltrationRateTypes, false, "")
+              @bootstrap3.infiltrationRate(formData("infiltrationRate"), "Infiltration Rate", "Infiltration Rate of Rain Garden", "")
               <hr/>
               <button id="submit" type="submit" class="btn btn-primary pull-right">@registrationType(isNew)</button>
           </div>
