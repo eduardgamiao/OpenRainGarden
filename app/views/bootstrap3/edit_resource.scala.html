@@ -2,7 +2,7 @@
 
 <div class="col-sm-6 col-md-4">
 	<div class="thumbnail" style="height:320px; widget:320px">
-		<img src="@if(resource.hasPicture()) {@routes.Application.retrieveResourceImage(resource.getID())} else {@routes.Assets.at("images/placeholder.gif")}">
+		<img src="@routes.Application.retrieveResourceImage(resource.getID())">
 		<div class="caption">
 			<a href="@resource.getUrl()" target="_blank">
 				<h3 align="center">@resource.getHeader()</h3>

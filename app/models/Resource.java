@@ -22,6 +22,7 @@ public class Resource extends Model {
 	private String type;
 	@Lob
 	private byte [] image;
+	private String externalImg;
 	
 	/**
 	 * Constructor
@@ -135,6 +136,22 @@ public class Resource extends Model {
 		else {
 			return (this.image.length > 0);
 		}
+	}
+	
+	/**
+	 * Sets the external image url to the given url
+	 * @param url String
+	 */
+	public void setExternalImage(String url) {
+		this.externalImg = url;
+	}
+	
+	/**
+	 * Returns the external image url
+	 * @return
+	 */
+	public String getExternalImage() {
+		return this.externalImg;
 	}
 	
 	/**

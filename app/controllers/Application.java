@@ -1210,10 +1210,18 @@ public class Application extends Controller {
    */
   public static Result retrieveResourceImage(long id) {
 	  Resource resource = ResourceDB.getResource(id);
-	  if (resource != null && resource.hasPicture()) {
-		  return ok(resource.getImage()).as("image/jpeg");
+	  if (resource != null) {
+		  if (resource.hasPicture() == true) {
+			  System.out.println("Picture!");
+			  return ok(resource.getImage()).as("image/jpeg");
+		  }
+		  else if (resource.getExternalImage() != null && resource.getExternalImage().isEmpty() == false) {
+			  System.out.println("External Picture!");
+			  return redirect(resource.getExternalImage());
+		  }
 	  }
-	  return redirect("");
+	  System.out.println("Placeholder!");
+	  return redirect(routes.Assets.at("images/placeholder.gif"));
   }
   
   /**

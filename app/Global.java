@@ -116,16 +116,39 @@ public class Global extends GlobalSettings {
     paver.save();
     }
     
+    //Learn More Resources Database
     if (Resource.find().all().isEmpty()) {
-    	//Learn More Resource Database
-        ResourceDB.addGardenResource(new ResourceFormData(-1, "Hui o Ko'olaupoko Rain Garden Program", "http://www.huihawaii.org/rain-gardens.html"));
-        ResourceDB.addGardenResource(new ResourceFormData(-1, "Hawaii Rain Garden Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
-        ResourceDB.addGardenResource(new ResourceFormData(-1, "Native Plant Care Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
+    	Resource resource;
+    	
+    	//HOK program
+        resource = ResourceDB.addGardenResource(new ResourceFormData(-1, "Hui o Ko'olaupoko Rain Garden Program", "http://www.huihawaii.org/rain-gardens.html"));
+        resource.setExternalImage(routes.Assets.at("images/hokprogram.jpg").url());
+        resource.save();
         
-        ResourceDB.addBarrelResource(new ResourceFormData(-1, "Honolulu Board of Water Supply Rain Barrel Program", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
+        //Rain Garden Manual
+        resource = ResourceDB.addGardenResource(new ResourceFormData(-1, "Hawaii Rain Garden Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/raingardenmanual-web-res-smaller.pdf"));
+        resource.setExternalImage(routes.Assets.at("images/raingardenmanual.jpg").url());
+        resource.save();
         
-        ResourceDB.addPaverResource(new ResourceFormData(-1, "AquaPave", "http://www.aquapave.com/index.htm"));
-        ResourceDB.addPaverResource(new ResourceFormData(-1, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
+        //Native Plant Care Manual
+        resource = ResourceDB.addGardenResource(new ResourceFormData(-1, "Native Plant Care Manual", "http://www.huihawaii.org/uploads/1/6/6/3/16632890/plant_foster_parent_handbook_final_draft_for_pdf.pdf"));
+        resource.setExternalImage(routes.Assets.at("images/nativeplantmanual.jpg").url());
+        resource.save();
+        
+        //Board of Water Supply Rain Barrel Program
+        resource = ResourceDB.addBarrelResource(new ResourceFormData(-1, "Honolulu Board of Water Supply Rain Barrel Program", "http://www.hbws.org/cssweb/display.cfm?sid=2091"));
+        resource.setExternalImage(routes.Assets.at("images/watersupplyprogram.jpg").url());
+        resource.save();
+        
+        //AquaPave
+        resource = ResourceDB.addPaverResource(new ResourceFormData(-1, "AquaPave", "http://www.aquapave.com/index.htm"));
+        resource.setExternalImage(routes.Assets.at("images/aquapave.jpg").url());
+        resource.save();
+        
+        //Futura Stone
+        resource = ResourceDB.addPaverResource(new ResourceFormData(-1, "Futura Stone of Hawaii", "http://futurastonehawaii.com/"));
+        resource.setExternalImage(routes.Assets.at("images/futurastone.jpg").url());
+        resource.save();
     }
   }
   
