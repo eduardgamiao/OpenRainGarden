@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.security.MessageDigest;
@@ -10,10 +11,13 @@ import java.security.SecureRandom;
 import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+
 import com.google.common.io.Files;
 import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
+
 import org.mindrot.jbcrypt.BCrypt;
+
 import play.Logger;
 import play.api.Routes;
 import play.data.Form;
@@ -859,19 +863,40 @@ public class Application extends Controller {
     return formData;
   }
   
-
+  /**
+   * Returns the rain garden gallery page
+   * @return
+   */
   public static Result gardengallery() {
-	  return ok(RainGardenGallery.render(RainGardenDB.getRainGardens()));
+	  List<RainGarden> gardens = RainGardenDB.getRainGardens();
+	  Collections.shuffle(gardens);
+	  return ok(RainGardenGallery.render(gardens));
   }
   
+  /**
+   * Returns the rain barrel gallery page
+   * @return
+   */
   public static Result barrelgallery() {
-	  return ok(RainBarrelGallery.render(RainBarrelDB.getRainBarrels()));
+	  List<RainBarrel> barrels = RainBarrelDB.getRainBarrels();
+	  Collections.shuffle(barrels);
+	  return ok(RainBarrelGallery.render(barrels));
   }
   
+  /**
+   * returns the permeable pavers gallery page
+   * @return
+   */
   public static Result pavergallery() {
-	  return ok(PermeablePaverGallery.render(PermeablePaversDB.getPermeablePavers()));
+	  List<PermeablePavers> pavers = PermeablePaversDB.getPermeablePavers();
+	  Collections.shuffle(pavers);
+	  return ok(PermeablePaverGallery.render(pavers));
   }
   
+  /**
+   * returns the map page
+   * @return
+   */
   public static Result map() {
 	  return ok(MapPage.render("Map"));
   }
