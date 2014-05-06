@@ -24,35 +24,14 @@ public class Export extends Controller {
   @Security.Authenticated(Secured.class)
   public static Result exportRainGarden() {
     if (Secured.isLoggedIn(ctx()) && Secured.getUserInfo(ctx()).isAdmin()) {
-      // Prepare a chunked text stream
-      Chunks<String> chunks = new StringChunks() {
-
-        // Called when the stream is ready
-        public void onReady(Chunks.Out<String> out) {          
-          rainGardenOutChannel(out);
-        }
-
-      };
-
-      // Serves this stream with 200 OK
-      response().setContentType("text/csv");
-      return ok(chunks);
+      String output = "Title,Property_Type,Address,Description,Date_Installed,Rain_Garden_Size,Waterflow_Source_Size,"
+          + "Waterflow_Description,Infiltration_Rate,Owner_Email\n";
+      for (RainGarden garden : RainGardenDB.getRainGardens()) {
+        output += garden.formatToCSV();
+      }
+      return ok(output).as("text/csv");
     }
     return redirect(routes.Application.index());
-  }
-
-  /**
-   * Writes the rain garden information to a stream.
-   * @param out The stream being written to.
-   */
-  @Security.Authenticated(Secured.class)
-  public static void rainGardenOutChannel(Chunks.Out<String> out) {
-    out.write("Title,Property_Type,Address,Description,Date_Installed,Rain_Garden_Size,Waterflow_Source_Size,"
-        + "Waterflow_Description,Infiltration_Rate,Owner_Email\n");
-    for (RainGarden garden : RainGardenDB.getRainGardens()) {
-      out.write(garden.formatToCSV());
-    }
-    out.close();
   }
   
   /**

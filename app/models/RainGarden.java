@@ -401,8 +401,23 @@ public class RainGarden extends Model {
     return plants;
   }
   
+  /**
+   * Return plants as a list.
+   * @return A list of plants.
+   */
   public List<Plant> getPlantsAsList() {
     return this.plants;
+  }
+  
+  /**
+   * Return a valid date if it exists.
+   * @return The string for date installed formatted for CSV format.
+   */
+  public String getDateInstalledAsCSV() {
+    if (this.dateInstalled.length() < VALID_DATE_LENGTH) {
+      return "";
+    }
+    return dateInstalled;   
   }
   
   /**
@@ -423,9 +438,9 @@ public class RainGarden extends Model {
    */
   public String formatToCSV() {
     return "\"" + this.title + "\", " + "\"" + this.propertyType + "\", " + "\"" + this.address + "\", " + "\"" 
-           + this.description + "\", " + "\"" + this.dateInstalled + "\", " + "\"" + this.rainGardenSize + "\", "
+           + this.description + "\", " + "\"" + getDateInstalledAsCSV() + "\", " + "\"" + this.rainGardenSize + "\", "
            + "\"" + this.waterFlowSourceSize + "\", " + "\"" + this.waterFlowDescription + "\", " 
-           + "\"" + this.infiltrationRate + "\", " + "\"" + this.getOwner().getEmail() + "\n";
+           + "\"" + this.infiltrationRate + "\", " + "\"" + this.getOwner().getEmail() + "\"\n";
   }
   
   /**
