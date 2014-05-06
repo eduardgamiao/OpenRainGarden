@@ -10,7 +10,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import play.db.ebean.Model;
-import scala.reflect.internal.Trees.This;
 
 /**
  * An object that represents a rain garden.
