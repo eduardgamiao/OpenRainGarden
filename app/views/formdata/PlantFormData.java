@@ -2,7 +2,6 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
-import play.Logger;
 import play.data.validation.ValidationError;
 import models.Plant;
 import models.PlantDB;

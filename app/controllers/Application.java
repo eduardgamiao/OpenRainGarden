@@ -13,13 +13,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 import com.google.common.io.Files;
-import com.ning.http.client.Body;
 import com.typesafe.plugin.*;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import play.Logger;
-import play.api.Routes;
 import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;

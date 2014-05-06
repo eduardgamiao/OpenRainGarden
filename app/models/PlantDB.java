@@ -4,12 +4,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.RawSql;
-import com.avaje.ebean.RawSqlBuilder;
-import play.Logger;
-import play.db.ebean.Model.Finder;
-import scala.collection.parallel.ParIterableLike.Find;
 import views.formdata.PlantFormData;
 
 /**
@@ -84,6 +78,7 @@ public class PlantDB {
    * @param plantName The plant name to simplify.
    * @return The alphanumeric representation of the passed-in String.
    */
+  @SuppressWarnings("unused")
   private static String simplifyName(String plantName) {
     return Normalizer.normalize(plantName, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase();
   }

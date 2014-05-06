@@ -3,8 +3,6 @@ package views.formdata;
 import java.util.List;
 import java.util.ArrayList;
 import models.HeaderFooter;
-import models.HeaderFooterDB;
-import models.IndexContent;
 import play.data.validation.ValidationError;
 
 /**

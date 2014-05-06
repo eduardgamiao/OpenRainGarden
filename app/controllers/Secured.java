@@ -2,7 +2,6 @@ package controllers;
 
 import models.UserInfo;
 import models.UserInfoDB;
-import play.Logger;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.Http.Context;

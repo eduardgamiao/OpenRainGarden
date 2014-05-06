@@ -1,6 +1,5 @@
 package models;
 
-import play.Logger;
 import views.formdata.CommentFormData;
 
 /**

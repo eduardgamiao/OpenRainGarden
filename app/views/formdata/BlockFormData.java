@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import models.IndexContent;
-import models.Resource;
 import play.data.validation.ValidationError;
 
 /**

@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import models.Button;
-import models.HeaderFooter;
-import models.HeaderFooterDB;
-import models.IndexContent;
 import play.data.validation.ValidationError;
 
 /**
